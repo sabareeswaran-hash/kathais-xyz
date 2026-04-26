@@ -4,254 +4,391 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>OneClick Save - Video Downloader</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=DM+Sans:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg:#07080f;--surface:#0f1018;--card:#14151f;--border:#1f2030;
-  --ig-grad:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);
-  --yt:#ff0000;--fb:#1877f2;--accent:#6366f1;
-  --text:#f1f1f8;--muted:#6b6b85;--green:#22c55e;
+  --accent:#6366f1;--text:#f1f1f8;--muted:#6b6b85;
+  --green:#22c55e;--red:#ef4444;
 }
 body{font-family:'DM Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;
-  background-image:radial-gradient(ellipse 60% 40% at 10% 10%,rgba(99,102,241,.12) 0%,transparent 60%),
-  radial-gradient(ellipse 50% 40% at 90% 90%,rgba(236,72,153,.08) 0%,transparent 60%)}
+  background-image:radial-gradient(ellipse 60% 40% at 10% 10%,rgba(99,102,241,.15) 0%,transparent 60%),
+  radial-gradient(ellipse 50% 40% at 90% 90%,rgba(236,72,153,.1) 0%,transparent 60%)}
 
-nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:rgba(7,8,15,.85);backdrop-filter:blur(12px);position:sticky;top:0;z-index:100}
-.nav-logo{font-family:'Syne',sans-serif;font-size:1.3rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.nav-tabs{display:flex;gap:4px}
-.nav-tab{padding:6px 14px;border-radius:8px;font-size:13px;color:var(--muted);cursor:pointer;border:none;background:none;transition:all .2s;font-family:'DM Sans',sans-serif}
-.nav-tab:hover,.nav-tab.active{background:var(--card);color:var(--text)}
+nav{display:flex;align-items:center;justify-content:space-between;padding:1rem 2rem;border-bottom:1px solid var(--border);background:rgba(7,8,15,.9);backdrop-filter:blur(16px);position:sticky;top:0;z-index:100}
+.logo{font-family:'Syne',sans-serif;font-size:1.4rem;font-weight:800;background:linear-gradient(135deg,#a78bfa,#60a5fa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.badge{font-size:11px;background:rgba(99,102,241,.15);border:1px solid rgba(99,102,241,.3);color:#a78bfa;padding:4px 10px;border-radius:100px;font-weight:600}
 
 .hero{text-align:center;padding:3.5rem 1rem 2rem}
-.hero h1{font-family:'Syne',sans-serif;font-size:clamp(1.8rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.75rem}
-.hero h1 span{background:linear-gradient(135deg,#a78bfa 0%,#60a5fa 50%,#f472b6 100%);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
-.hero p{color:var(--muted);font-size:1rem;max-width:480px;margin:0 auto 2rem}
+.hero h1{font-family:'Syne',sans-serif;font-size:clamp(1.7rem,4vw,2.8rem);font-weight:800;line-height:1.1;margin-bottom:.75rem}
+.hero h1 span{background:linear-gradient(135deg,#a78bfa,#60a5fa,#f472b6);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.hero p{color:var(--muted);font-size:.95rem;margin:0 auto;max-width:480px}
 
-.pills{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin-bottom:2rem}
-.pill{display:flex;align-items:center;gap:6px;padding:7px 16px;border-radius:100px;font-size:13px;font-weight:500;border:1px solid transparent;cursor:pointer;transition:all .25s;background:var(--card)}
-.pill-ig{border-color:#bc1888;color:#f472b6}.pill-ig:hover,.pill-ig.on{background:linear-gradient(135deg,#f09433,#dc2743,#bc1888);color:#fff;border-color:transparent}
-.pill-yt{border-color:#ff0000;color:#f87171}.pill-yt:hover,.pill-yt.on{background:#ff0000;color:#fff;border-color:transparent}
-.pill-fb{border-color:#1877f2;color:#60a5fa}.pill-fb:hover,.pill-fb.on{background:#1877f2;color:#fff;border-color:transparent}
+.supported{display:flex;align-items:center;justify-content:center;gap:10px;margin:1.5rem 0;flex-wrap:wrap}
+.sp{display:flex;align-items:center;gap:5px;font-size:13px;color:var(--muted);background:var(--card);border:1px solid var(--border);padding:5px 14px;border-radius:100px}
 
-.main-card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2rem;max-width:600px;margin:0 auto 2rem;box-shadow:0 0 80px rgba(99,102,241,.08)}
+.wrap{max-width:620px;margin:0 auto;padding:0 1rem}
 
-.input-row{display:flex;gap:10px;margin-bottom:1rem}
-.url-box{flex:1;position:relative}
-.url-box input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:12px;padding:.85rem 2.8rem .85rem 1.1rem;color:var(--text);font-size:.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:border-color .2s}
-.url-box input:focus{border-color:var(--accent)}
-.url-box input::placeholder{color:var(--muted)}
-.clear-x{position:absolute;right:10px;top:50%;transform:translateY(-50%);background:none;border:none;color:var(--muted);cursor:pointer;font-size:16px;display:none;padding:4px}
-.paste-btn{padding:.85rem 1.2rem;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-size:.9rem;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all .2s}
-.paste-btn:hover{border-color:var(--accent);color:var(--text)}
+.card{background:var(--card);border:1px solid var(--border);border-radius:24px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 8px 60px rgba(99,102,241,.1)}
 
-.detected{display:none;align-items:center;gap:8px;padding:9px 14px;border-radius:10px;font-size:13px;margin-bottom:1rem;font-weight:500}
-.detected-ig{display:flex;background:rgba(240,148,51,.1);border:1px solid rgba(240,148,51,.25);color:#fb923c}
-.detected-yt{display:flex;background:rgba(255,0,0,.1);border:1px solid rgba(255,0,0,.25);color:#f87171}
-.detected-fb{display:flex;background:rgba(24,119,242,.1);border:1px solid rgba(24,119,242,.25);color:#60a5fa}
+/* INPUT */
+.input-wrap{position:relative;margin-bottom:.75rem}
+.url-input{width:100%;background:var(--bg);border:2px solid var(--border);border-radius:14px;padding:1rem 1.2rem;color:var(--text);font-size:.95rem;font-family:'DM Sans',sans-serif;outline:none;transition:all .25s}
+.url-input:focus{border-color:var(--accent);box-shadow:0 0 0 4px rgba(99,102,241,.1)}
+.url-input::placeholder{color:var(--muted)}
 
-.dl-btn{width:100%;padding:1rem;border:none;border-radius:12px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:700;cursor:pointer;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;letter-spacing:.3px;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:8px}
-.dl-btn:hover:not(:disabled){filter:brightness(1.1);transform:translateY(-1px)}
-.dl-btn:disabled{opacity:.5;cursor:not-allowed;transform:none}
+.btn-row{display:flex;gap:8px;margin-bottom:.75rem}
+.paste-btn{flex:1;padding:.8rem;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);color:var(--text);cursor:pointer;font-size:.9rem;font-family:'DM Sans',sans-serif;font-weight:500;transition:all .2s;display:flex;align-items:center;justify-content:center;gap:6px}
+.paste-btn:hover{border-color:var(--accent);background:rgba(99,102,241,.08)}
+.clear-btn{padding:.8rem 1.1rem;border-radius:12px;border:1.5px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;font-family:'DM Sans',sans-serif;font-size:.85rem;transition:all .2s}
+.clear-btn:hover{border-color:var(--red);color:var(--red)}
 
-.result{display:none;margin-top:1.5rem}
-.result-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:.06em;margin-bottom:10px;font-weight:600}
+/* STATUS BAR */
+.status{display:none;align-items:center;gap:8px;padding:10px 14px;border-radius:10px;font-size:13px;margin-bottom:.75rem;font-weight:500;animation:fadeUp .25s ease}
+@keyframes fadeUp{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:translateY(0)}}
+.s-detect{background:rgba(34,197,94,.08);border:1px solid rgba(34,197,94,.25);color:var(--green)}
+.s-load{background:rgba(99,102,241,.08);border:1px solid rgba(99,102,241,.2);color:#a78bfa}
+.s-err{background:rgba(239,68,68,.08);border:1px solid rgba(239,68,68,.25);color:var(--red)}
+
+/* MAIN BUTTON */
+.dl-btn{width:100%;padding:1.05rem;border:none;border-radius:13px;font-family:'Syne',sans-serif;font-size:1rem;font-weight:800;cursor:pointer;background:linear-gradient(135deg,#6366f1,#8b5cf6,#a855f7);color:#fff;letter-spacing:.3px;transition:all .25s;display:flex;align-items:center;justify-content:center;gap:8px;position:relative;overflow:hidden}
+.dl-btn::before{content:'';position:absolute;inset:0;background:linear-gradient(135deg,#4f46e5,#7c3aed);opacity:0;transition:opacity .25s}
+.dl-btn:hover:not(:disabled)::before{opacity:1}
+.dl-btn:hover:not(:disabled){transform:translateY(-2px);box-shadow:0 8px 25px rgba(99,102,241,.4)}
+.dl-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
+.dl-btn span{position:relative;z-index:1}
+
+/* RESULTS */
+.result{display:none;margin-top:1.5rem;animation:fadeUp .3s ease}
+.result-head{display:flex;align-items:center;gap:8px;margin-bottom:12px}
+.result-title{font-size:11px;color:var(--muted);text-transform:uppercase;letter-spacing:.08em;font-weight:700}
+.media-preview{display:flex;align-items:center;gap:10px;padding:12px;background:var(--bg);border:1px solid var(--border);border-radius:12px;margin-bottom:12px}
+.thumb{width:56px;height:56px;border-radius:8px;object-fit:cover;background:var(--border);flex-shrink:0}
+.thumb-placeholder{width:56px;height:56px;border-radius:8px;background:var(--border);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:22px}
+.media-info{flex:1;min-width:0}
+.media-title{font-size:.85rem;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;margin-bottom:3px}
+.media-site{font-size:12px;color:var(--muted)}
 .quality-list{display:flex;flex-direction:column;gap:8px}
-.q-row{display:flex;align-items:center;justify-content:space-between;padding:12px 16px;border-radius:11px;border:1px solid var(--border);background:var(--bg);text-decoration:none;color:var(--text);transition:all .2s;cursor:pointer}
-.q-row:hover{border-color:var(--accent);background:#0f0f1a}
+.q-row{display:flex;align-items:center;justify-content:space-between;padding:11px 15px;border-radius:11px;border:1px solid var(--border);background:var(--bg);text-decoration:none;color:var(--text);transition:all .2s;cursor:pointer}
+.q-row:hover{border-color:var(--accent);background:rgba(99,102,241,.05);transform:translateX(3px)}
 .q-left{display:flex;align-items:center;gap:10px}
-.q-icon{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:15px;background:var(--card)}
-.q-name{font-weight:600;font-size:.9rem}
-.q-ext{font-size:11px;color:var(--muted);margin-top:1px}
-.q-right{display:flex;align-items:center;gap:10px}
-.q-size{font-size:12px;color:var(--muted)}
-.q-dl{background:var(--accent);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s}
-.q-dl:hover{background:#4f46e5}
+.q-ico{width:32px;height:32px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;background:var(--card)}
+.q-name{font-weight:600;font-size:.88rem}
+.q-meta{font-size:11px;color:var(--muted);margin-top:2px}
+.q-right{display:flex;align-items:center;gap:8px}
+.q-size-badge{font-size:11px;color:var(--muted);background:var(--card);padding:3px 8px;border-radius:6px}
+.q-dl{background:var(--accent);color:#fff;border:none;padding:6px 14px;border-radius:8px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all .2s;white-space:nowrap;text-decoration:none;display:inline-block}
+.q-dl:hover{background:#4f46e5;transform:scale(1.03)}
 
-.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;max-width:600px;margin:2.5rem auto}
-.step{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;text-align:center}
-.step-num{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#8b5cf6);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:.95rem;margin:0 auto .75rem}
-.step h3{font-size:.85rem;font-weight:600;margin-bottom:.3rem}
-.step p{font-size:.78rem;color:var(--muted);line-height:1.5}
+/* STEPS */
+.steps{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.step{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:1.2rem;text-align:center;transition:border-color .2s}
+.step:hover{border-color:rgba(99,102,241,.4)}
+.sn{width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#6366f1,#a855f7);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1rem;margin:0 auto .75rem;box-shadow:0 4px 12px rgba(99,102,241,.3)}
+.step h3{font-size:.82rem;font-weight:700;margin-bottom:.3rem}
+.step p{font-size:.75rem;color:var(--muted);line-height:1.5}
 
-.features{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;max-width:600px;margin:0 auto 2.5rem}
-.feat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.1rem;display:flex;gap:10px;align-items:flex-start}
-.feat-icon{font-size:1.3rem;margin-top:1px}
-.feat h4{font-size:.85rem;font-weight:600;margin-bottom:2px}
-.feat p{font-size:.78rem;color:var(--muted);line-height:1.4}
+/* FEATURES */
+.feats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-bottom:2rem}
+.feat{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:1rem 1.1rem;display:flex;gap:10px;align-items:flex-start;transition:border-color .2s}
+.feat:hover{border-color:rgba(99,102,241,.3)}
+.fi{font-size:1.3rem;margin-top:1px}
+.feat h4{font-size:.82rem;font-weight:700;margin-bottom:2px}
+.feat p{font-size:.75rem;color:var(--muted);line-height:1.45}
 
-.notice{max-width:600px;margin:0 auto 3rem;padding:12px 16px;background:rgba(99,102,241,.07);border:1px solid rgba(99,102,241,.15);border-radius:12px;font-size:12px;color:var(--muted);text-align:center;line-height:1.6}
+.notice{padding:12px 16px;background:rgba(99,102,241,.06);border:1px solid rgba(99,102,241,.15);border-radius:12px;font-size:12px;color:var(--muted);text-align:center;line-height:1.7;margin-bottom:2.5rem}
 
 footer{border-top:1px solid var(--border);padding:1.5rem;text-align:center;font-size:12px;color:var(--muted)}
-footer b{font-family:'Syne',sans-serif;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent}
+.flogo{font-family:'Syne',sans-serif;background:linear-gradient(135deg,#a78bfa,#60a5fa);-webkit-background-clip:text;-webkit-text-fill-color:transparent;font-weight:800}
 
-.spinner{width:16px;height:16px;border:2px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite}
+.spinner{width:16px;height:16px;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
 @keyframes spin{to{transform:rotate(360deg)}}
 
-@media(max-width:480px){
-  nav{padding:.75rem 1rem}.nav-tabs{display:none}
-  .hero{padding:2rem .75rem 1.5rem}.steps{grid-template-columns:1fr}.features{grid-template-columns:1fr}
-  .input-row{flex-direction:column}
+/* KEY SETUP MODAL */
+.modal-bg{position:fixed;inset:0;background:rgba(0,0,0,.7);backdrop-filter:blur(6px);z-index:200;display:flex;align-items:center;justify-content:center;padding:1rem}
+.modal{background:var(--card);border:1px solid var(--border);border-radius:20px;padding:2rem;max-width:460px;width:100%;box-shadow:0 20px 60px rgba(0,0,0,.5)}
+.modal h2{font-family:'Syne',sans-serif;font-size:1.2rem;margin-bottom:.5rem}
+.modal p{font-size:.85rem;color:var(--muted);line-height:1.6;margin-bottom:1.25rem}
+.modal input{width:100%;background:var(--bg);border:1.5px solid var(--border);border-radius:10px;padding:.85rem 1rem;color:var(--text);font-size:.9rem;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:1rem;transition:border-color .2s}
+.modal input:focus{border-color:var(--accent)}
+.modal-btn{width:100%;padding:.9rem;border:none;border-radius:10px;background:linear-gradient(135deg,#6366f1,#8b5cf6);color:#fff;font-family:'Syne',sans-serif;font-weight:700;font-size:.95rem;cursor:pointer}
+.modal-btn:hover{filter:brightness(1.1)}
+.modal-note{font-size:11px;color:var(--muted);margin-top:.75rem;text-align:center;line-height:1.6}
+
+@media(max-width:500px){
+  nav{padding:.75rem 1rem}
+  .steps{grid-template-columns:1fr}
+  .feats{grid-template-columns:1fr}
+  .btn-row{flex-direction:column}
 }
 </style>
 </head>
 <body>
 
+<!-- API KEY MODAL -->
+<div class="modal-bg" id="modalBg">
+  <div class="modal">
+    <h2>🔑 API Key Setup</h2>
+    <p>உங்கள் RapidAPI Key enter பண்ணுங்க. இது உங்கள் browser-லயே save ஆகும் — எங்கும் அனுப்பல.</p>
+    <input type="password" id="apiKeyInput" placeholder="Paste your RapidAPI Key here...">
+    <button class="modal-btn" onclick="saveKey()">✅ Save & Continue</button>
+    <div class="modal-note">
+      Key இல்லன்னா: <a href="https://rapidapi.com/nguyenmanhict-MuTUtGWD7K/api/auto-download-all-in-one" target="_blank" style="color:#a78bfa">rapidapi.com</a> போய் subscribe பண்ணுங்க (Free plan available)
+    </div>
+  </div>
+</div>
+
 <nav>
-  <div class="nav-logo">⚡ OneClick Save</div>
-  <div class="nav-tabs">
-    <button class="nav-tab active">Video</button>
-    <button class="nav-tab">Photo</button>
-    <button class="nav-tab">Reels</button>
-    <button class="nav-tab">Story</button>
+  <div class="logo">⚡ OneClick Save</div>
+  <div style="display:flex;gap:8px;align-items:center">
+    <div class="badge">✨ Real Download</div>
+    <button onclick="resetKey()" style="background:none;border:1px solid var(--border);color:var(--muted);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif">🔑 Change Key</button>
   </div>
 </nav>
 
 <div class="hero">
-  <h1>Download <span>Instagram, YouTube</span><br>&amp; Facebook Videos</h1>
-  <p>Paste any video link and download instantly — free, fast, no login required.</p>
+  <h1>Download <span>Any Social</span><br>Video Instantly</h1>
+  <p>Instagram, YouTube, Facebook, TikTok — link paste பண்ணுங்க, நம் website-லயே download ஆகும்!</p>
 </div>
 
-<div class="pills">
-  <div class="pill pill-ig" onclick="setPlatform('ig',this)">📸 Instagram</div>
-  <div class="pill pill-yt" onclick="setPlatform('yt',this)">▶️ YouTube</div>
-  <div class="pill pill-fb" onclick="setPlatform('fb',this)">👥 Facebook</div>
+<div class="supported">
+  <div class="sp">📸 Instagram</div>
+  <div class="sp">▶️ YouTube</div>
+  <div class="sp">👥 Facebook</div>
+  <div class="sp">🎵 TikTok</div>
 </div>
 
-<div style="padding:0 1rem">
-<div class="main-card">
-  <div class="input-row">
-    <div class="url-box">
-      <input id="urlInput" type="text" placeholder="Paste Instagram / YouTube / Facebook link here..." oninput="onType()">
-      <button class="clear-x" id="clearX" onclick="clearAll()">✕</button>
+<div class="wrap">
+  <div class="card">
+
+    <div class="input-wrap">
+      <input class="url-input" id="urlInput" type="text"
+        placeholder="Paste video link here — Instagram / YouTube / Facebook / TikTok..."
+        oninput="onType()" onpaste="onPasteEv()">
     </div>
-    <button class="paste-btn" onclick="pasteClip()">📋 Paste</button>
+
+    <div class="btn-row">
+      <button class="paste-btn" onclick="pasteLink()">📋 Paste Link</button>
+      <button class="clear-btn" onclick="clearAll()">✕ Clear</button>
+    </div>
+
+    <div class="status" id="status">
+      <span id="sIcon"></span>
+      <span id="sMsg"></span>
+    </div>
+
+    <button class="dl-btn" id="dlBtn" onclick="doFetch()">
+      <span>⬇️ &nbsp;Download Now</span>
+    </button>
+
+    <div class="result" id="result">
+      <div class="result-head">
+        <div class="result-title">📥 Choose Quality to Download</div>
+      </div>
+      <div id="mediaPreview"></div>
+      <div class="quality-list" id="qualityList"></div>
+    </div>
+
   </div>
 
-  <div class="detected" id="detectedBar">
-    <span id="detectedIcon"></span>
-    <span id="detectedText"></span>
+  <div class="steps">
+    <div class="step"><div class="sn">1</div><h3>Copy Link</h3><p>Video-ல share பண்ணி link copy பண்ணுங்க</p></div>
+    <div class="step"><div class="sn">2</div><h3>Paste & Click</h3><p>Box-ல paste பண்ணி Download Now click பண்ணுங்க</p></div>
+    <div class="step"><div class="sn">3</div><h3>Save!</h3><p>Quality choose பண்ணி உடனே download ஆகும் ✅</p></div>
   </div>
 
-  <button class="dl-btn" id="dlBtn" onclick="doDownload()">
-    <span>⬇️</span><span>Download Now</span>
-  </button>
-
-  <div class="result" id="result">
-    <div class="result-label">Select Quality</div>
-    <div class="quality-list" id="qualityList"></div>
+  <div class="feats">
+    <div class="feat"><div class="fi">⚡</div><div><h4>Direct Download</h4><p>வேற site-க்கு redirect இல்ல — இங்கயே download</p></div></div>
+    <div class="feat"><div class="fi">🌐</div><div><h4>Multi Platform</h4><p>Instagram, YouTube, Facebook, TikTok support</p></div></div>
+    <div class="feat"><div class="fi">🎯</div><div><h4>HD Quality</h4><p>Original quality videos, no watermark</p></div></div>
+    <div class="feat"><div class="fi">🔒</div><div><h4>100% Private</h4><p>No login, no tracking, browser-laye process</p></div></div>
   </div>
-</div>
-</div>
 
-<div class="steps" style="padding:0 1rem">
-  <div class="step"><div class="step-num">1</div><h3>Copy the Link</h3><p>Open Instagram, YouTube or Facebook and copy the video URL</p></div>
-  <div class="step"><div class="step-num">2</div><h3>Paste &amp; Click</h3><p>Paste the link above and hit "Download Now"</p></div>
-  <div class="step"><div class="step-num">3</div><h3>Save Video</h3><p>Choose your quality and download to your device instantly</p></div>
-</div>
-
-<div class="features" style="padding:0 1rem">
-  <div class="feat"><div class="feat-icon">⚡</div><div><h4>Lightning Fast</h4><p>Optimized servers for maximum download speed</p></div></div>
-  <div class="feat"><div class="feat-icon">📱</div><div><h4>All Devices</h4><p>Works on mobile, tablet and desktop browsers</p></div></div>
-  <div class="feat"><div class="feat-icon">🎯</div><div><h4>High Quality</h4><p>Download in original HD quality, no watermarks</p></div></div>
-  <div class="feat"><div class="feat-icon">🔒</div><div><h4>No Login Needed</h4><p>No account, no tracking, 100% private</p></div></div>
-</div>
-
-<div class="notice" style="padding-left:1rem;padding-right:1rem">
-  ℹ️ OneClick Save redirects to trusted download services (FastDL, Y2Mate, FDown).<br>
-  Only download content you have rights to. Respect original creators. 🙏
+  <div class="notice">
+    ℹ️ இந்த tool RapidAPI-ஓட "Auto Download All In One" API use பண்றது.<br>
+    Free plan-ல மாசம் 100 downloads கிடைக்கும். Respect creators & copyright. 🙏
+  </div>
 </div>
 
 <footer>
-  <b>OneClick Save</b> — Made with ❤️ by Sabari Comedy Hub<br>
-  <span style="margin-top:4px;display:block">© 2026 All rights reserved.</span>
+  <span class="flogo">⚡ OneClick Save</span> — Made with ❤️ by Sabari Comedy Hub<br>
+  <span style="margin-top:4px;display:inline-block">© 2026 All rights reserved.</span>
 </footer>
 
 <script>
-const platforms={
-  ig:{name:'Instagram',icon:'📸',cls:'detected-ig',link:u=>`https://fastdl.app/?url=${encodeURIComponent(u)}`,
-    qualities:[{icon:'🎬',name:'HD Video',ext:'mp4',size:'720p'},{icon:'📹',name:'SD Video',ext:'mp4',size:'480p'},{icon:'🖼️',name:'Thumbnail',ext:'jpg',size:'Image'}]},
-  yt:{name:'YouTube',icon:'▶️',cls:'detected-yt',link:u=>`https://www.y2mate.com/youtube/${encodeURIComponent(u)}`,
-    qualities:[{icon:'🎬',name:'Full HD',ext:'mp4',size:'1080p'},{icon:'📹',name:'HD',ext:'mp4',size:'720p'},{icon:'📱',name:'SD',ext:'mp4',size:'480p'},{icon:'🎵',name:'Audio Only',ext:'mp3',size:'MP3'}]},
-  fb:{name:'Facebook',icon:'👥',cls:'detected-fb',link:u=>`https://fdown.net/?URLz=${encodeURIComponent(u)}`,
-    qualities:[{icon:'🎬',name:'HD Video',ext:'mp4',size:'720p'},{icon:'📹',name:'SD Video',ext:'mp4',size:'360p'}]}
+// ─── API KEY MANAGEMENT ───────────────────────────────────────
+function saveKey() {
+  const k = document.getElementById('apiKeyInput').value.trim();
+  if (!k) { alert('API Key enter பண்ணுங்க!'); return; }
+  localStorage.setItem('ocs_apikey', k);
+  document.getElementById('modalBg').style.display = 'none';
+}
+function resetKey() {
+  localStorage.removeItem('ocs_apikey');
+  document.getElementById('apiKeyInput').value = '';
+  document.getElementById('modalBg').style.display = 'flex';
+}
+window.onload = () => {
+  const k = localStorage.getItem('ocs_apikey');
+  if (k) document.getElementById('modalBg').style.display = 'none';
 };
 
-function detect(url){
-  if(/instagram\.com|instagr\.am/.test(url))return'ig';
-  if(/youtube\.com|youtu\.be/.test(url))return'yt';
-  if(/facebook\.com|fb\.watch|fb\.com/.test(url))return'fb';
+// ─── PLATFORM DETECT ─────────────────────────────────────────
+function detect(url) {
+  const u = url.toLowerCase();
+  if (u.includes('instagram.com') || u.includes('instagr.am')) return {name:'Instagram',icon:'📸'};
+  if (u.includes('youtube.com') || u.includes('youtu.be'))     return {name:'YouTube',icon:'▶️'};
+  if (u.includes('facebook.com') || u.includes('fb.watch'))    return {name:'Facebook',icon:'👥'};
+  if (u.includes('tiktok.com'))                                 return {name:'TikTok',icon:'🎵'};
   return null;
 }
 
-function onType(){
-  const url=document.getElementById('urlInput').value.trim();
-  document.getElementById('clearX').style.display=url?'block':'none';
-  const p=detect(url);
-  const bar=document.getElementById('detectedBar');
-  if(p&&url){
-    bar.className='detected '+platforms[p].cls;
-    document.getElementById('detectedIcon').textContent=platforms[p].icon;
-    document.getElementById('detectedText').textContent=platforms[p].name+' link detected ✓';
-  } else { bar.className='detected'; }
-  document.getElementById('result').style.display='none';
+function showStatus(type, msg, icon) {
+  const el = document.getElementById('status');
+  el.className = 'status s-' + type;
+  el.style.display = 'flex';
+  document.getElementById('sIcon').textContent = icon;
+  document.getElementById('sMsg').textContent = msg;
 }
+function hideStatus() { document.getElementById('status').style.display = 'none'; }
 
-function clearAll(){
-  document.getElementById('urlInput').value='';
-  document.getElementById('clearX').style.display='none';
-  document.getElementById('detectedBar').className='detected';
-  document.getElementById('result').style.display='none';
+function onType() {
+  const v = document.getElementById('urlInput').value.trim();
+  const p = detect(v);
+  if (p && v) showStatus('detect', p.icon + ' ' + p.name + ' link detected ✓', '✅');
+  else hideStatus();
+  document.getElementById('result').style.display = 'none';
 }
+function onPasteEv() { setTimeout(onType, 30); }
 
-async function pasteClip(){
-  try{
-    const t=await navigator.clipboard.readText();
-    document.getElementById('urlInput').value=t;
+async function pasteLink() {
+  try {
+    const t = await navigator.clipboard.readText();
+    document.getElementById('urlInput').value = t;
     onType();
-  } catch(e){
+  } catch(e) {
     document.getElementById('urlInput').focus();
+    showStatus('err', 'Input box-ல click பண்ணி Ctrl+V / Long Press பண்ணுங்க', '💡');
   }
 }
 
-function setPlatform(p,el){
-  document.querySelectorAll('.pill').forEach(x=>x.classList.remove('on'));
-  el.classList.add('on');
-  const ph={ig:'Paste Instagram video/reel/story link...',yt:'Paste YouTube video link...',fb:'Paste Facebook video link...'};
-  document.getElementById('urlInput').placeholder=ph[p];
-  document.getElementById('urlInput').focus();
+function clearAll() {
+  document.getElementById('urlInput').value = '';
+  hideStatus();
+  document.getElementById('result').style.display = 'none';
 }
 
-function doDownload(){
-  const url=document.getElementById('urlInput').value.trim();
-  if(!url){alert('Please paste a video link first! 🔗');return;}
-  const p=detect(url);
-  if(!p){alert('Please paste a valid Instagram, YouTube or Facebook link!');return;}
-  const btn=document.getElementById('dlBtn');
-  btn.disabled=true;
-  btn.innerHTML='<div class="spinner"></div><span>Processing...</span>';
-  setTimeout(()=>{
-    btn.disabled=false;
-    btn.innerHTML='<span>⬇️</span><span>Download Now</span>';
-    showResult(p,url);
-  },1600);
+// ─── MAIN FETCH ───────────────────────────────────────────────
+async function doFetch() {
+  const url = document.getElementById('urlInput').value.trim();
+  if (!url) { alert('⚠️ Video link paste பண்ணுங்க!'); return; }
+  if (!detect(url)) {
+    showStatus('err', 'Instagram / YouTube / Facebook / TikTok link மட்டும் support ஆகும்!', '❌');
+    return;
+  }
+  const apiKey = localStorage.getItem('ocs_apikey');
+  if (!apiKey) { document.getElementById('modalBg').style.display = 'flex'; return; }
+
+  const btn = document.getElementById('dlBtn');
+  btn.disabled = true;
+  btn.innerHTML = '<div class="spinner"></div><span>Fetching download links...</span>';
+  showStatus('load', 'Video information fetch பண்றேன்...', '⏳');
+  document.getElementById('result').style.display = 'none';
+
+  try {
+    const res = await fetch('https://auto-download-all-in-one.p.rapidapi.com/v1/social/autolink', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'x-rapidapi-host': 'auto-download-all-in-one.p.rapidapi.com',
+        'x-rapidapi-key': apiKey
+      },
+      body: JSON.stringify({ url })
+    });
+
+    const data = await res.json();
+    btn.disabled = false;
+    btn.innerHTML = '<span>⬇️ &nbsp;Download Now</span>';
+
+    if (!res.ok || data.error) {
+      showStatus('err', data.message || 'API error — link correct-ஆ இருக்கா check பண்ணுங்க', '❌');
+      return;
+    }
+
+    renderResults(data, url);
+
+  } catch(err) {
+    btn.disabled = false;
+    btn.innerHTML = '<span>⬇️ &nbsp;Download Now</span>';
+    showStatus('err', 'Network error — internet connection check பண்ணுங்க', '❌');
+  }
 }
 
-function showResult(p,url){
-  const pl=platforms[p];
-  const list=document.getElementById('qualityList');
-  list.innerHTML=pl.qualities.map(q=>`
-    <a href="${pl.link(url)}" target="_blank" rel="noopener" class="q-row">
+// ─── RENDER RESULTS ───────────────────────────────────────────
+function renderResults(data, origUrl) {
+  hideStatus();
+
+  // Thumbnail preview
+  const thumb = data.thumbnail || data.thumb || data.cover || '';
+  const title = data.title || data.desc || 'Video';
+  const platform = detect(origUrl);
+
+  document.getElementById('mediaPreview').innerHTML = `
+    <div class="media-preview">
+      ${thumb
+        ? `<img class="thumb" src="${thumb}" alt="thumb" onerror="this.style.display='none'">`
+        : `<div class="thumb-placeholder">${platform ? platform.icon : '🎬'}</div>`}
+      <div class="media-info">
+        <div class="media-title">${title}</div>
+        <div class="media-site">${platform ? platform.name : 'Video'} · Ready to download</div>
+      </div>
+    </div>`;
+
+  // Build download links
+  const medias = data.medias || data.links || data.data || [];
+  let html = '';
+
+  if (medias.length === 0) {
+    // Try direct url field
+    if (data.url || data.download_url) {
+      const durl = data.url || data.download_url;
+      html = renderRow('🎬', 'Download Video', 'mp4', durl, data.quality || 'HD');
+    } else {
+      showStatus('err', 'Download link கிடைக்கல — வேற link try பண்ணுங்க', '⚠️');
+      return;
+    }
+  } else {
+    medias.forEach((m, i) => {
+      const durl = m.url || m.download_url || m.link || '';
+      if (!durl) return;
+      const ext = m.extension || m.ext || (m.type === 'audio' ? 'mp3' : 'mp4');
+      const quality = m.quality || m.resolution || m.label || (i === 0 ? 'Best Quality' : 'Option ' + (i+1));
+      const icon = ext === 'mp3' || m.type === 'audio' ? '🎵' : i === 0 ? '🎬' : '📹';
+      const size = m.size || m.filesize || '';
+      html += renderRow(icon, quality, ext, durl, size);
+    });
+  }
+
+  document.getElementById('qualityList').innerHTML = html;
+  document.getElementById('result').style.display = 'block';
+}
+
+function renderRow(icon, quality, ext, url, size) {
+  return `
+    <a href="${url}" download target="_blank" rel="noopener" class="q-row">
       <div class="q-left">
-        <div class="q-icon">${q.icon}</div>
-        <div><div class="q-name">${q.name}</div><div class="q-ext">.${q.ext}</div></div>
+        <div class="q-ico">${icon}</div>
+        <div>
+          <div class="q-name">${quality}</div>
+          <div class="q-meta">.${ext} format</div>
+        </div>
       </div>
       <div class="q-right">
-        <span class="q-size">${q.size}</span>
-        <button class="q-dl">Download</button>
+        ${size ? `<span class="q-size-badge">${size}</span>` : ''}
+        <span class="q-dl">⬇️ Download</span>
       </div>
-    </a>`).join('');
-  document.getElementById('result').style.display='block';
+    </a>`;
 }
 </script>
 </body>
