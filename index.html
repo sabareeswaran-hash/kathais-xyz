@@ -3,482 +3,702 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tamil Political Vote</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>Kathai Stories | கதை கோலம் — Tamil Stories</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  * { margin:0; padding:0; box-sizing:border-box; }
-  body {
-    font-family: 'Poppins', sans-serif;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
-    min-height: 100vh;
-    padding: 20px;
-  }
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family:'Poppins',sans-serif; background:#0f0f1a; color:#fff; }
 
-  .container { max-width: 600px; margin: 0 auto; }
+/* NAV */
+nav {
+  background:linear-gradient(135deg,#1a1a2e,#16213e);
+  padding:14px 20px;
+  display:flex; align-items:center; justify-content:space-between;
+  border-bottom:3px solid #f9a825;
+  position:sticky; top:0; z-index:100;
+  flex-wrap:wrap; gap:10px;
+}
+.logo { font-size:22px; font-weight:900; color:#f9a825; }
+.logo span { color:#fff; font-family:'Tiro Tamil',serif; }
+.nav-links { display:flex; gap:14px; flex-wrap:wrap; }
+.nav-links a {
+  color:rgba(255,255,255,0.7); text-decoration:none;
+  font-size:12px; font-weight:600; transition:color 0.2s;
+}
+.nav-links a:hover { color:#f9a825; }
 
-  /* HEADER */
-  .header {
-    text-align: center;
-    padding: 20px;
-    background: linear-gradient(135deg, #ff6f00, #f9a825);
-    border-radius: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 8px 25px rgba(249,168,37,0.4);
-  }
-  .header h1 {
-    font-size: 26px;
-    font-weight: 900;
-    color: #fff;
-    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
-  }
-  .header p {
-    font-family: 'Tiro Tamil', serif;
-    font-size: 14px;
-    color: #fff3e0;
-    margin-top: 4px;
-  }
-  .header .flag { font-size: 30px; margin-bottom: 6px; }
+/* HERO */
+.hero {
+  background:linear-gradient(135deg,#1a1a2e,#0f3460);
+  padding:50px 20px 40px;
+  text-align:center;
+  border-bottom:3px solid rgba(249,168,37,0.3);
+  position:relative;
+  overflow:hidden;
+}
+.hero::before {
+  content:'📖';
+  position:absolute;
+  font-size:300px;
+  opacity:0.03;
+  top:-50px; right:-50px;
+}
+.hero h1 {
+  font-family:'Tiro Tamil',serif;
+  font-size:42px; font-weight:900;
+  color:#f9a825;
+  text-shadow:0 0 30px rgba(249,168,37,0.4);
+  margin-bottom:8px;
+}
+.hero h2 { font-size:18px; color:rgba(255,255,255,0.7); font-weight:400; margin-bottom:20px; }
+.hero-stats {
+  display:flex; justify-content:center; gap:24px;
+  flex-wrap:wrap; margin-top:20px;
+}
+.stat {
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:12px; padding:12px 20px; text-align:center;
+}
+.stat .num { font-size:22px; font-weight:900; color:#f9a825; }
+.stat .lbl { font-size:11px; color:rgba(255,255,255,0.5); }
 
-  /* QUESTION */
-  .question-box {
-    background: rgba(255,255,255,0.07);
-    border: 2px solid rgba(255,255,255,0.15);
-    border-radius: 16px;
-    padding: 16px 20px;
-    margin-bottom: 18px;
-    text-align: center;
-  }
-  .question-box h2 {
-    font-family: 'Tiro Tamil', serif;
-    font-size: 17px;
-    color: #f9a825;
-    font-weight: 700;
-  }
-  .question-box p {
-    font-size: 12px;
-    color: rgba(255,255,255,0.6);
-    margin-top: 4px;
-  }
+/* SEARCH */
+.search-wrap {
+  padding:20px;
+  max-width:600px; margin:0 auto;
+}
+.search-box {
+  display:flex; gap:10px;
+}
+.search-box input {
+  flex:1; padding:14px 18px;
+  background:rgba(255,255,255,0.08);
+  border:2px solid rgba(255,255,255,0.15);
+  border-radius:12px; color:#fff;
+  font-size:14px; font-family:'Poppins',sans-serif;
+  outline:none; transition:border-color 0.2s;
+}
+.search-box input:focus { border-color:#f9a825; }
+.search-box input::placeholder { color:rgba(255,255,255,0.3); }
+.search-btn {
+  background:linear-gradient(135deg,#f9a825,#ff6f00);
+  border:none; color:#fff; padding:14px 20px;
+  border-radius:12px; cursor:pointer;
+  font-size:16px; transition:transform 0.2s;
+}
+.search-btn:hover { transform:scale(1.05); }
 
-  /* PARTY CARDS */
-  .parties { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+/* CATEGORIES */
+.section { padding:16px 20px; max-width:1100px; margin:0 auto; }
+.section-title {
+  font-size:18px; font-weight:800;
+  color:#fff; margin-bottom:14px;
+  display:flex; align-items:center; gap:8px;
+}
+.section-title::after {
+  content:''; flex:1; height:2px;
+  background:linear-gradient(90deg,rgba(249,168,37,0.5),transparent);
+}
 
-  .party-card {
-    background: rgba(255,255,255,0.06);
-    border: 2px solid rgba(255,255,255,0.1);
-    border-radius: 14px;
-    padding: 14px 16px;
-    cursor: pointer;
-    transition: all 0.2s;
-    position: relative;
-    overflow: hidden;
-  }
-  .party-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.3); }
-  .party-card.selected { border-width: 3px; }
-  .party-card.voted { cursor: default; }
+.cat-tabs {
+  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;
+  overflow-x:auto; padding-bottom:4px;
+}
+.cat-tab {
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.15);
+  border-radius:20px; padding:7px 16px;
+  font-size:12px; font-weight:700;
+  color:rgba(255,255,255,0.6);
+  cursor:pointer; transition:all 0.2s;
+  white-space:nowrap; flex-shrink:0;
+}
+.cat-tab:hover,.cat-tab.active {
+  background:linear-gradient(135deg,#f9a825,#ff6f00);
+  border-color:transparent; color:#fff;
+}
 
-  /* Party colours */
-  .party-card.tvk        { border-color: #e53935; }
-  .party-card.tvk.selected { background: rgba(229,57,53,0.2); box-shadow: 0 4px 20px rgba(229,57,53,0.4); }
-  .party-card.dmk        { border-color: #d32f2f; }
-  .party-card.dmk.selected { background: rgba(211,47,47,0.2); box-shadow: 0 4px 20px rgba(211,47,47,0.4); }
-  .party-card.admk       { border-color: #2e7d32; }
-  .party-card.admk.selected { background: rgba(46,125,50,0.2); box-shadow: 0 4px 20px rgba(46,125,50,0.4); }
-  .party-card.bjp        { border-color: #e65100; }
-  .party-card.bjp.selected { background: rgba(230,81,0,0.2); box-shadow: 0 4px 20px rgba(230,81,0,0.4); }
-  .party-card.congress   { border-color: #1565c0; }
-  .party-card.congress.selected { background: rgba(21,101,192,0.2); box-shadow: 0 4px 20px rgba(21,101,192,0.4); }
-  .party-card.ntk        { border-color: #ff6f00; }
-  .party-card.ntk.selected { background: rgba(255,111,0,0.2); box-shadow: 0 4px 20px rgba(255,111,0,0.4); }
-  .ntk  .party-flag { background: linear-gradient(135deg,#ff6f00,#e65100); }
-  .ntk  .progress-bar-fill { background: linear-gradient(90deg,#ff6f00,#ffab40); }
-  .party-card.none.selected { background: rgba(96,125,139,0.2); }
+/* STORY CARDS GRID */
+.stories-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
+  gap:16px;
+}
 
-  .party-top { display: flex; align-items: center; gap: 12px; }
-  .party-flag {
-    width: 52px; height: 52px;
-    border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
-    flex-shrink: 0;
-    font-weight: 900;
-    color: #fff;
-  }
-  .tvk  .party-flag { background: linear-gradient(135deg,#e53935,#b71c1c); }
-  .dmk  .party-flag { background: linear-gradient(135deg,#d32f2f,#b71c1c); }
-  .admk .party-flag { background: linear-gradient(135deg,#2e7d32,#1b5e20); }
-  .bjp  .party-flag { background: linear-gradient(135deg,#e65100,#bf360c); }
-  .congress .party-flag { background: linear-gradient(135deg,#1565c0,#0d47a1); }
-  .none .party-flag { background: linear-gradient(135deg,#607d8b,#455a64); }
+.story-card {
+  background:linear-gradient(145deg,#1a1a2e,#16213e);
+  border:2px solid rgba(255,255,255,0.08);
+  border-radius:16px; overflow:hidden;
+  cursor:pointer; transition:all 0.2s;
+}
+.story-card:hover {
+  transform:translateY(-4px);
+  border-color:rgba(249,168,37,0.4);
+  box-shadow:0 8px 25px rgba(249,168,37,0.15);
+}
 
-  .party-info { flex: 1; }
-  .party-name {
-    font-size: 15px;
-    font-weight: 800;
-    color: #fff;
-  }
-  .party-leader {
-    font-family: 'Tiro Tamil', serif;
-    font-size: 12px;
-    color: rgba(255,255,255,0.65);
-    margin-top: 2px;
-  }
-  .party-symbol {
-    font-size: 11px;
-    color: rgba(255,255,255,0.45);
-  }
+.story-thumb {
+  height:120px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:52px; position:relative;
+}
+.story-badge {
+  position:absolute; top:10px; right:10px;
+  font-size:10px; font-weight:800;
+  padding:3px 10px; border-radius:10px;
+  letter-spacing:0.5px;
+}
+.badge-new { background:#00e676; color:#1a1a2e; }
+.badge-hot { background:#ff1744; color:#fff; }
+.badge-love { background:#e91e63; color:#fff; }
+.badge-classic { background:#f9a825; color:#1a1a2e; }
 
-  .select-indicator {
-    width: 24px; height: 24px;
-    border-radius: 50%;
-    border: 2px solid rgba(255,255,255,0.3);
-    display: flex; align-items: center; justify-content: center;
-    font-size: 14px;
-    flex-shrink: 0;
-    transition: all 0.2s;
-  }
-  .party-card.selected .select-indicator {
-    background: #f9a825;
-    border-color: #f9a825;
-    color: #fff;
-  }
+.story-body { padding:14px 16px; }
+.story-cat {
+  font-size:10px; font-weight:700;
+  padding:3px 10px; border-radius:10px;
+  display:inline-block; margin-bottom:8px;
+}
+.story-title {
+  font-family:'Tiro Tamil',serif;
+  font-size:16px; font-weight:700;
+  color:#fff; margin-bottom:6px; line-height:1.4;
+}
+.story-excerpt {
+  font-family:'Tiro Tamil',serif;
+  font-size:12px; color:rgba(255,255,255,0.55);
+  line-height:1.6; margin-bottom:12px;
+}
+.story-meta {
+  display:flex; justify-content:space-between;
+  align-items:center; font-size:11px;
+  color:rgba(255,255,255,0.4);
+}
+.story-meta .read-time { color:#f9a825; font-weight:600; }
 
-  /* PROGRESS BAR */
-  .progress-wrap { margin-top: 10px; display: none; }
-  .progress-bar-bg {
-    background: rgba(255,255,255,0.1);
-    border-radius: 20px;
-    height: 8px;
-    overflow: hidden;
-  }
-  .progress-bar-fill {
-    height: 100%;
-    border-radius: 20px;
-    transition: width 0.8s ease;
-  }
-  .tvk  .progress-bar-fill { background: linear-gradient(90deg,#e53935,#ff5252); }
-  .dmk  .progress-bar-fill { background: linear-gradient(90deg,#d32f2f,#ff1744); }
-  .admk .progress-bar-fill { background: linear-gradient(90deg,#2e7d32,#69f0ae); }
-  .bjp  .progress-bar-fill { background: linear-gradient(90deg,#e65100,#ff9100); }
-  .congress .progress-bar-fill { background: linear-gradient(90deg,#1565c0,#448aff); }
-  .none .progress-bar-fill { background: linear-gradient(90deg,#607d8b,#90a4ae); }
+.read-btn {
+  width:100%; padding:10px;
+  background:linear-gradient(135deg,#f9a825,#ff6f00);
+  border:none; color:#fff;
+  font-size:13px; font-weight:800;
+  cursor:pointer; transition:opacity 0.2s;
+  font-family:'Poppins',sans-serif;
+}
+.read-btn:hover { opacity:0.9; }
 
-  .progress-label {
-    display: flex;
-    justify-content: space-between;
-    font-size: 11px;
-    color: rgba(255,255,255,0.6);
-    margin-top: 4px;
-  }
-  .progress-label .pct { font-weight: 700; color: #f9a825; }
+/* MODAL / STORY READER */
+.modal {
+  display:none; position:fixed;
+  top:0; left:0; right:0; bottom:0;
+  background:rgba(0,0,0,0.95);
+  z-index:1000; overflow-y:auto;
+  padding:20px;
+}
+.modal.open { display:block; }
+.modal-inner {
+  max-width:700px; margin:0 auto;
+  background:linear-gradient(145deg,#1a1a2e,#16213e);
+  border:2px solid rgba(249,168,37,0.3);
+  border-radius:20px; overflow:hidden;
+}
+.modal-header {
+  background:linear-gradient(135deg,#f9a825,#ff6f00);
+  padding:16px 20px;
+  display:flex; justify-content:space-between; align-items:center;
+}
+.modal-header h2 { font-family:'Tiro Tamil',serif; font-size:18px; color:#fff; font-weight:800; }
+.close-btn {
+  background:rgba(0,0,0,0.3); border:none;
+  color:#fff; width:36px; height:36px;
+  border-radius:50%; font-size:18px;
+  cursor:pointer; font-weight:900;
+}
+.modal-story {
+  padding:24px 28px;
+  font-family:'Tiro Tamil',serif;
+  font-size:16px; line-height:2;
+  color:rgba(255,255,255,0.85);
+}
+.modal-story h3 {
+  font-size:22px; color:#f9a825;
+  margin-bottom:16px; text-align:center;
+}
+.modal-story p { margin-bottom:16px; }
+.modal-story .moral {
+  background:rgba(249,168,37,0.1);
+  border-left:4px solid #f9a825;
+  border-radius:8px; padding:14px 16px;
+  margin-top:20px; color:#f9a825;
+  font-weight:700;
+}
+.font-controls {
+  padding:10px 20px;
+  display:flex; gap:10px; align-items:center;
+  border-bottom:1px solid rgba(255,255,255,0.08);
+}
+.font-btn {
+  background:rgba(255,255,255,0.08);
+  border:1px solid rgba(255,255,255,0.15);
+  color:#fff; padding:6px 14px;
+  border-radius:8px; cursor:pointer;
+  font-size:13px; font-weight:700;
+  font-family:'Poppins',sans-serif;
+}
+.font-label { font-size:12px; color:rgba(255,255,255,0.4); }
 
-  /* VOTE BUTTON */
-  #voteBtn {
-    width: 100%;
-    padding: 16px;
-    background: linear-gradient(135deg, #f9a825, #ff6f00);
-    color: #fff;
-    border: none;
-    border-radius: 14px;
-    font-size: 18px;
-    font-weight: 800;
-    cursor: pointer;
-    box-shadow: 0 6px 20px rgba(249,168,37,0.4);
-    transition: all 0.2s;
-    letter-spacing: 1px;
-    display: block;
-    margin-bottom: 16px;
-  }
-  #voteBtn:disabled {
-    background: rgba(255,255,255,0.1);
-    color: rgba(255,255,255,0.3);
-    cursor: not-allowed;
-    box-shadow: none;
-  }
-  #voteBtn:not(:disabled):hover { transform: translateY(-2px); }
+/* AD */
+.ad-banner {
+  background:rgba(249,168,37,0.07);
+  border:1px dashed rgba(249,168,37,0.3);
+  border-radius:10px; margin:16px 20px;
+  padding:14px; text-align:center;
+  font-size:12px; color:rgba(255,255,255,0.3);
+  max-width:1060px; margin-left:auto; margin-right:auto;
+}
+.ad-banner span { color:#f9a825; font-weight:700; }
 
-  /* TOTAL VOTES */
-  .total-box {
-    background: rgba(255,255,255,0.06);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 16px;
-  }
-  .total-box .label { font-size: 13px; color: rgba(255,255,255,0.6); }
-  .total-box .count { font-size: 20px; font-weight: 900; color: #f9a825; }
+/* PAGINATION */
+.pagination {
+  display:flex; justify-content:center;
+  gap:8px; padding:20px; flex-wrap:wrap;
+}
+.page-btn {
+  background:rgba(255,255,255,0.07);
+  border:1px solid rgba(255,255,255,0.15);
+  color:#fff; padding:8px 16px;
+  border-radius:8px; cursor:pointer;
+  font-size:13px; font-weight:700;
+  font-family:'Poppins',sans-serif;
+  transition:all 0.2s;
+}
+.page-btn:hover,.page-btn.active {
+  background:linear-gradient(135deg,#f9a825,#ff6f00);
+  border-color:transparent;
+}
 
-  /* SUCCESS */
-  .success-msg {
-    display: none;
-    background: linear-gradient(135deg,#2e7d32,#43a047);
-    border-radius: 14px;
-    padding: 16px;
-    text-align: center;
-    color: #fff;
-    margin-bottom: 16px;
-    font-size: 15px;
-    font-weight: 700;
-    box-shadow: 0 4px 20px rgba(46,125,50,0.4);
-  }
-
-  /* FOOTER */
-  .footer { margin-top: 10px; }
-  .disclaimer-box {
-    background: rgba(255,255,255,0.05);
-    border: 1px solid rgba(255,165,0,0.3);
-    border-radius: 14px;
-    padding: 16px;
-  }
-  .disclaimer-title {
-    text-align: center;
-    font-size: 14px;
-    font-weight: 800;
-    color: #f9a825;
-    margin-bottom: 12px;
-    letter-spacing: 1px;
-    border-bottom: 1px solid rgba(255,165,0,0.2);
-    padding-bottom: 8px;
-  }
-  .disclaimer-content {
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-  }
-  .disclaimer-content p {
-    font-size: 11.5px;
-    color: rgba(255,255,255,0.6);
-    line-height: 1.6;
-    padding: 6px 10px;
-    background: rgba(255,255,255,0.03);
-    border-radius: 8px;
-    border-left: 3px solid rgba(249,168,37,0.4);
-  }
-  .disclaimer-content p strong { color: rgba(255,255,255,0.85); }
-  .disclaimer-copy {
-    text-align: center;
-    font-size: 11px;
-    color: rgba(255,255,255,0.3);
-    margin-top: 12px;
-    padding-top: 8px;
-    border-top: 1px solid rgba(255,255,255,0.08);
-  }
+/* FOOTER */
+footer {
+  background:#0a0a12;
+  border-top:2px solid rgba(249,168,37,0.2);
+  padding:24px 20px; text-align:center; margin-top:30px;
+}
+.footer-title { font-family:'Tiro Tamil',serif; font-size:20px; color:#f9a825; margin-bottom:8px; }
+footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
 </style>
 </head>
 <body>
-<div class="container">
 
-  <!-- HEADER -->
-  <div class="header">
-    <div class="flag">🗳️</div>
-    <h1>Tamil Nadu Political Vote</h1>
-    <p>உங்கள் வாக்கை பதிவு செய்யுங்கள்</p>
+<!-- NAV -->
+<nav>
+  <div class="logo">📖 Kathai<span>கதை</span></div>
+  <div class="nav-links">
+    <a href="#">🏠 Home</a>
+    <a href="#">💕 காதல்</a>
+    <a href="#">👻 பயம்</a>
+    <a href="#">😂 நகைச்சுவை</a>
+    <a href="#">🧒 குழந்தை</a>
+    <a href="#">🙏 தெய்வீகம்</a>
+    <a href="#">kathais.xyz</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <h1>கதை கோலம் 📖</h1>
+  <h2>Kathai Stories — Tamil Stories Collection</h2>
+  <div class="hero-stats">
+    <div class="stat"><div class="num">1000+</div><div class="lbl">கதைகள் Stories</div></div>
+    <div class="stat"><div class="num">15+</div><div class="lbl">வகைகள் Categories</div></div>
+    <div class="stat"><div class="num">FREE</div><div class="lbl">எப்போதும் இலவசம்</div></div>
+    <div class="stat"><div class="num">📱</div><div class="lbl">Mobile Friendly</div></div>
+  </div>
+</div>
+
+<!-- SEARCH -->
+<div class="search-wrap">
+  <div class="search-box">
+    <input type="text" id="searchInput" placeholder="🔍 கதை தேடுங்கள்... Search stories..." oninput="searchStories()">
+    <button class="search-btn">🔍</button>
+  </div>
+</div>
+
+<!-- AD -->
+<div class="ad-banner"><span>📢 Advertisement</span> — Google AdSense</div>
+
+<!-- CATEGORIES + STORIES -->
+<div class="section">
+  <div class="section-title">📚 கதை வகைகள் — Categories</div>
+  <div class="cat-tabs">
+    <div class="cat-tab active" onclick="filterCat('all',this)">📚 எல்லாம்</div>
+    <div class="cat-tab" onclick="filterCat('love',this)">💕 காதல்</div>
+    <div class="cat-tab" onclick="filterCat('horror',this)">👻 பயம்</div>
+    <div class="cat-tab" onclick="filterCat('comedy',this)">😂 நகைச்சுவை</div>
+    <div class="cat-tab" onclick="filterCat('kids',this)">🧒 குழந்தை</div>
+    <div class="cat-tab" onclick="filterCat('devotion',this)">🙏 தெய்வீகம்</div>
+    <div class="cat-tab" onclick="filterCat('moral',this)">💡 நீதி</div>
+    <div class="cat-tab" onclick="filterCat('history',this)">🏛️ வரலாறு</div>
+    <div class="cat-tab" onclick="filterCat('village',this)">🌾 கிராமம்</div>
+    <div class="cat-tab" onclick="filterCat('thriller',this)">🔥 த்ரில்லர்</div>
   </div>
 
-  <!-- QUESTION -->
-  <div class="question-box">
-    <h2>2026 தமிழ்நாடு தேர்தலில் நீங்கள் யாரை ஆதரிப்பீர்கள்?</h2>
-    <p>Who will you support in the 2026 Tamil Nadu Election?</p>
+  <div class="section-title">✨ சிறந்த கதைகள் — Featured Stories</div>
+  <div class="stories-grid" id="storiesGrid"></div>
+</div>
+
+<!-- PAGINATION -->
+<div class="pagination" id="pagination"></div>
+
+<!-- AD 2 -->
+<div class="ad-banner"><span>📢 Advertisement</span> — Google AdSense Banner</div>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-title">📖 கதை கோலம் — Kathai Stories</div>
+  <p>
+    தமிழ் கதைகளின் களஞ்சியம் | kathais.xyz<br>
+    1000+ Tamil Stories — Free Forever 🙏<br>
+    © 2026 Kathai Stories. All Rights Reserved.
+  </p>
+</footer>
+
+<!-- STORY READER MODAL -->
+<div class="modal" id="storyModal">
+  <div class="modal-inner">
+    <div class="modal-header">
+      <h2 id="modalCat">📖 கதை</h2>
+      <button class="close-btn" onclick="closeStory()">✕</button>
+    </div>
+    <div class="font-controls">
+      <span class="font-label">எழுத்து அளவு:</span>
+      <button class="font-btn" onclick="changeFont(-1)">A-</button>
+      <button class="font-btn" onclick="changeFont(1)">A+</button>
+    </div>
+    <div class="modal-story" id="modalStory"></div>
   </div>
-
-  <!-- TOTAL VOTES -->
-  <div class="total-box">
-    <span class="label">🗳️ Total Votes Cast</span>
-    <span class="count" id="totalCount">0</span>
-  </div>
-
-  <!-- SUCCESS MSG -->
-  <div class="success-msg" id="successMsg">
-    ✅ உங்கள் வாக்கு பதிவாகிவிட்டது! Your vote has been recorded!
-  </div>
-
-  <!-- PARTIES -->
-  <div class="parties" id="partiesList">
-
-    <div class="party-card tvk" data-party="tvk" onclick="selectParty(this)">
-      <div class="party-top">
-        <div class="party-flag">TVK</div>
-        <div class="party-info">
-          <div class="party-name">TVK — தமிழக வெற்றி கழகம்</div>
-          <div class="party-leader">தலைவர்: விஜய் | Leader: Vijay</div>
-          <div class="party-symbol">🌟 Rising Star</div>
-        </div>
-        <div class="select-indicator" id="ind-tvk"></div>
-      </div>
-      <div class="progress-wrap" id="prog-tvk">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-tvk" style="width:0%"></div></div>
-        <div class="progress-label"><span id="cnt-tvk">0 votes</span><span class="pct" id="pct-tvk">0%</span></div>
-      </div>
-    </div>
-
-    <div class="party-card dmk" data-party="dmk" onclick="selectParty(this)">
-      <div class="party-top">
-        <div class="party-flag">DMK</div>
-        <div class="party-info">
-          <div class="party-name">DMK — திராவிட முன்னேற்றக் கழகம்</div>
-          <div class="party-leader">தலைவர்: மு.க.ஸ்டாலின் | Leader: MK Stalin</div>
-          <div class="party-symbol">☀️ Rising Sun</div>
-        </div>
-        <div class="select-indicator" id="ind-dmk"></div>
-      </div>
-      <div class="progress-wrap" id="prog-dmk">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-dmk" style="width:0%"></div></div>
-        <div class="progress-label"><span id="cnt-dmk">0 votes</span><span class="pct" id="pct-dmk">0%</span></div>
-      </div>
-    </div>
-
-    <div class="party-card admk" data-party="admk" onclick="selectParty(this)">
-      <div class="party-top">
-        <div class="party-flag">ADMK</div>
-        <div class="party-info">
-          <div class="party-name">ADMK — அண்ணா திமுக</div>
-          <div class="party-leader">தலைவர்: எடப்பாடி பழனிசாமி | Leader: EPS</div>
-          <div class="party-symbol">🌾 Two Leaves</div>
-        </div>
-        <div class="select-indicator" id="ind-admk"></div>
-      </div>
-      <div class="progress-wrap" id="prog-admk">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-admk" style="width:0%"></div></div>
-        <div class="progress-label"><span id="cnt-admk">0 votes</span><span class="pct" id="pct-admk">0%</span></div>
-      </div>
-    </div>
-
-    <div class="party-card bjp" data-party="bjp" onclick="selectParty(this)">
-      <div class="party-top">
-        <div class="party-flag">BJP</div>
-        <div class="party-info">
-          <div class="party-name">BJP — பாரதிய ஜனதா கட்சி</div>
-          <div class="party-leader">தலைவர்: அண்ணாமலை | Leader: Annamalai</div>
-          <div class="party-symbol">🪷 Lotus</div>
-        </div>
-        <div class="select-indicator" id="ind-bjp"></div>
-      </div>
-      <div class="progress-wrap" id="prog-bjp">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-bjp" style="width:0%"></div></div>
-        <div class="progress-label"><span id="cnt-bjp">0 votes</span><span class="pct" id="pct-bjp">0%</span></div>
-      </div>
-    </div>
-
-    <div class="party-card congress" data-party="congress" onclick="selectParty(this)">
-      <div class="party-top">
-        <div class="party-flag">INC</div>
-        <div class="party-info">
-          <div class="party-name">Congress — இந்திய தேசிய காங்கிரஸ்</div>
-          <div class="party-leader">தலைவர்: ராகுல் காந்தி | Leader: Rahul Gandhi</div>
-          <div class="party-symbol">✋ Hand</div>
-        </div>
-        <div class="select-indicator" id="ind-congress"></div>
-      </div>
-      <div class="progress-wrap" id="prog-congress">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-congress" style="width:0%"></div></div>
-        <div class="progress-label"><span id="cnt-congress">0 votes</span><span class="pct" id="pct-congress">0%</span></div>
-      </div>
-    </div>
-
-    <div class="party-card ntk" data-party="ntk" onclick="selectParty(this)">
-      <div class="party-top">
-        <div class="party-flag">NTK</div>
-        <div class="party-info">
-          <div class="party-name">NTK — நாம் தமிழர் கட்சி</div>
-          <div class="party-leader">தலைவர்: சீமான் | Leader: Seeman</div>
-          <div class="party-symbol">🌅 Rising Tamil Sun</div>
-        </div>
-        <div class="select-indicator" id="ind-ntk"></div>
-      </div>
-      <div class="progress-wrap" id="prog-ntk">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-ntk" style="width:0%"></div></div>
-        <div class="progress-label"><span id="cnt-ntk">0 votes</span><span class="pct" id="pct-ntk">0%</span></div>
-      </div>
-    </div>
-
-    <div class="party-card none" data-party="none" onclick="selectParty(this)">
-      <div class="party-top">
-        <div class="party-flag">🚫</div>
-        <div class="party-info">
-          <div class="party-name">None / யாரும் இல்லை</div>
-          <div class="party-leader">எந்த கட்சியும் பிடிக்கவில்லை</div>
-          <div class="party-symbol">❌ No Vote</div>
-        </div>
-        <div class="select-indicator" id="ind-none"></div>
-      </div>
-      <div class="progress-wrap" id="prog-none">
-        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-none" style="width:0%"></div></div>
-        <div class="progress-label"><span id="cnt-none">0 votes</span><span class="pct" id="pct-none">0%</span></div>
-      </div>
-    </div>
-
-  </div>
-
-  <!-- VOTE BUTTON -->
-  <button id="voteBtn" disabled onclick="castVote()">🗳️ VOTE NOW — வாக்களிக்க</button>
-
-  <div class="footer">
-    <div class="disclaimer-box">
-      <div class="disclaimer-title">⚠️ DISCLAIMER / மறுப்பு அறிவிப்பு</div>
-      <div class="disclaimer-content">
-        <p>🗳️ This is an <strong>unofficial online opinion poll</strong> created for entertainment and awareness purposes only.</p>
-        <p>📊 இது ஒரு <strong>அதிகாரப்பூர்வமற்ற கருத்துக்கணிப்பு மட்டுமே</strong> — பொழுதுபோக்கு மற்றும் விழிப்புணர்வுக்காக உருவாக்கப்பட்டது.</p>
-        <p>🚫 This poll is <strong>NOT affiliated</strong> with any political party, government body, or Election Commission of India.</p>
-        <p>🚫 இந்த வாக்குப்பதிவு எந்த அரசியல் கட்சியுடனும், அரசாங்கத்துடனும், தேர்தல் ஆணையத்துடனும் <strong>தொடர்பற்றது</strong>.</p>
-        <p>📌 Results shown here <strong>do not represent</strong> actual election outcomes or public opinion at large.</p>
-        <p>📌 இங்கே காட்டப்படும் முடிவுகள் <strong>உண்மையான தேர்தல் முடிவுகளை பிரதிபலிக்காது</strong>.</p>
-        <p>🔒 No personal data is collected or stored. All votes are session-based only.</p>
-        <p>🔒 எந்த தனிப்பட்ட தரவும் சேகரிக்கப்படவில்லை. அனைத்து வாக்குகளும் தற்காலிகமானவை மட்டுமே.</p>
-        <p>💡 For official election information, visit <strong>eci.gov.in</strong></p>
-      </div>
-      <div class="disclaimer-copy">© 2026 kathais.xyz | Made with ❤️ for Tamil People</div>
-    </div>
-  </div>
-
 </div>
 
 <script>
-  const votes = { tvk: 0, dmk: 0, admk: 0, bjp: 0, congress: 0, ntk: 0, none: 0 };
-  let selected = null;
-  let hasVoted = false;
+// ═══════════════════════════════════════
+// STORIES DATABASE — 20 stories (expand to 1000+)
+// ═══════════════════════════════════════
+const storiesDB = [
+  {
+    id:1, cat:'love', badge:'hot', emoji:'💕',
+    bg:'linear-gradient(135deg,#880e4f,#c2185b)',
+    catLabel:'காதல்', catColor:'#e91e63',
+    title:'மழை நினைவுகள்',
+    excerpt:'அந்த மழை நாளில் அவள் கொடுத்த புன்னகை இன்னும் மனதில் மிதக்கிறது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>💕 மழை நினைவுகள்</h3>
+<p>அந்த ஆண்டு மழைக்காலம் என்னைப் பொறுத்தவரை மறக்க முடியாத ஒன்று. கல்லூரி பேருந்து நிறுத்தத்தில் திடீர் மழையில் சிக்கிக்கொண்டோம் — நானும், அவளும்.</p>
+<p>அவள் பெயர் மீனாட்சி. நீல நிற சுடிதாரில், நனைந்த கூந்தலுடன் நின்றிருந்த அவள் அழகு என் மனதில் படமாய் பதிந்தது.</p>
+<p>"உங்ககிட்ட குடை இருக்கா?" என்று கேட்டாள். என்னிடம் இருந்தது — ஆனால் தர விரும்பவில்லை. "இல்லை" என்று பொய் சொன்னேன்.</p>
+<p>அவள் சிரித்தாள். "உங்க பையன்ல குடை தெரியுதே?" என்று சொல்லி கேலியாக பார்த்தாள். நான் வெட்கத்தில் சிவந்தேன்.</p>
+<p>அன்று முதல் தினமும் அந்த பேருந்து நிறுத்தத்தில் அவளை பார்ப்பேன். ஒவ்வொரு முறையும் மழை வரும்போது அந்த நினைவு வரும்.</p>
+<p>ஆண்டுகள் கடந்தன. ஒருநாள் அவளே என்னை தொடர்புகொண்டாள். "அன்று நீங்கள் பொய் சொன்னீர்கள் — அது தெரியும். ஆனால் அந்த பொய் என் மனதில் உங்களை நிலைத்துவிட்டது."</p>
+<p>இன்று அவள் என் மனைவி. மழை பெய்யும் போதெல்லாம் இருவரும் பார்த்துக்கொண்டு சிரிக்கிறோம்.</p>
+<div class="moral">💡 நீதி: சில பொய்கள் உண்மையான காதலை உருவாக்கும்! 😄</div>`
+  },
+  {
+    id:2, cat:'horror', badge:'hot', emoji:'👻',
+    bg:'linear-gradient(135deg,#1a1a2e,#4a148c)',
+    catLabel:'பயம்', catColor:'#7c4dff',
+    title:'இரவு 3 மணி',
+    excerpt:'ஒவ்வொரு இரவும் சரியாக 3 மணிக்கு அந்த ஓசை கேட்கும்...',
+    readTime:'7 நிமிஷம்',
+    story:`<h3>👻 இரவு 3 மணி</h3>
+<p>நான் புதிதாக குடி புகுந்த வீடு பழையதாகத்தான் இருந்தது. ஆனால் வாடகை குறைவாக இருந்ததால் எடுத்தேன்.</p>
+<p>முதல் இரவே அது ஆரம்பித்தது. சரியாக இரவு 3 மணிக்கு மேல்தட்டில் ஒரு நடை சப்தம். டக்.. டக்.. டக்..</p>
+<p>முதல் நாள் நினைத்தேன் — பூனை இருக்கும். இரண்டாம் நாளும் அதே சப்தம். மூன்றாம் நாள் தைரியமாக மேலே ஏறினேன்.</p>
+<p>மேல்தட்டு வெறுமையாக இருந்தது. ஆனால் தூசியில் காலடி தடங்கள் தெளிவாக தெரிந்தன. சிறிய காலடி தடங்கள்.</p>
+<p>மறுநாள் வீட்டு உரிமையாளரிடம் கேட்டேன். அவர் கண்கள் கலங்கின. "என் மகள்... ஐந்து வயதில் போய்விட்டாள். இந்த வீட்டில்தான் விளையாடுவாள்."</p>
+<p>அன்று இரவு 3 மணிக்கு மீண்டும் சப்தம் கேட்டது. இம்முறை நான் பயப்படவில்லை. "குழந்தே, நீ விளையாடலாம்" என்று மெதுவாக சொன்னேன்.</p>
+<p>சப்தம் நின்றது. ஒரு சிறு குரல் — "நன்றி அங்கிள்" என்று கேட்டது. அன்று முதல் அந்த வீடு என் வீடானது.</p>
+<div class="moral">💡 எல்லா ஆவிகளும் கெட்டவை அல்ல!</div>`
+  },
+  {
+    id:3, cat:'comedy', badge:'hot', emoji:'😂',
+    bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
+    catLabel:'நகைச்சுவை', catColor:'#00c853',
+    title:'ஆட்டோ ஆரம்பித்தது',
+    excerpt:'அந்த ஆட்டோக்காரர் கேட்ட கேள்வி என் வாழ்க்கையையே மாற்றிவிட்டது...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>😂 ஆட்டோ ஆரம்பித்தது</h3>
+<p>காலை 8 மணி. Interview-க்கு போகணும். ஆட்டோ பிடித்தேன்.</p>
+<p>"எங்க போணும்?" என்று கேட்டார் ஆட்டோக்காரர்.</p>
+<p>"அண்ணா நகர் போணும்" என்றேன்.</p>
+<p>"மீட்டர்ல போவோமா, பேரம் பேசுவோமா?" என்று கேட்டார்.</p>
+<p>"மீட்டர்ல போங்க" என்றேன்.</p>
+<p>கிளம்பினோம். 5 நிமிஷம் கழித்து, "நீங்க என்ன வேலை பார்க்கீங்க?" என்று கேட்டார்.</p>
+<p>"வேலை தேடுறேன், Interview போறேன்" என்றேன்.</p>
+<p>"என்ன படிச்சீங்க?"</p>
+<p>"MBA."</p>
+<p>அவர் ஒரு நிமிஷம் யோசித்தார். "நான் ஆட்டோ ஓட்டுறேன். மாசம் 40,000 வருது. MBA-க்கு என்ன வருது?"</p>
+<p>நான் பதில் சொல்ல முடியவில்லை.</p>
+<p>"Interview-ல கேக்கணும்னா கேளுங்க — Salary என்னன்னு. இல்லன்னா திரும்பி வாங்க. ஆட்டோ ஒட்ட கத்துக்கிடலாம்!" என்று சிரித்தார்.</p>
+<p>அன்று Interview-ல் Salary பேசி 60,000 வாங்கினேன். அந்த ஆட்டோக்காரர்தான் என் முதல் Business Mentor!</p>
+<div class="moral">💡 நீதி: ஞானம் படிப்பிலிருந்து மட்டும் வராது!</div>`
+  },
+  {
+    id:4, cat:'kids', badge:'new', emoji:'🧒',
+    bg:'linear-gradient(135deg,#0d47a1,#1976d2)',
+    catLabel:'குழந்தை', catColor:'#2196f3',
+    title:'சின்னஞ்சிறு யானை',
+    excerpt:'காட்டில் ஒரு சிறிய யானைக்குட்டி இருந்தது. அது எப்போதும் தனிமையாக உணர்ந்தது...',
+    readTime:'3 நிமிஷம்',
+    story:`<h3>🐘 சின்னஞ்சிறு யானை</h3>
+<p>காட்டில் ஒரு சிறிய யானைக்குட்டி இருந்தது. அதன் பெயர் கண்ணன். அது மற்ற யானைகளை விட சிறியதாக இருந்தது.</p>
+<p>"நீ சிறியவன்! நீ விளையாட்டில் வர வேண்டாம்" என்று மற்ற யானைகள் சொன்னன.</p>
+<p>கண்ணன் வருத்தப்பட்டான். ஒரு நாள் காட்டில் நெருப்பு பரவியது! எல்லா யானைகளும் ஓடின.</p>
+<p>ஆனால் ஒரு சிறு குழந்தை மான் மரத்தடியில் மாட்டிக்கொண்டது. பெரிய யானைகளால் உள்ளே செல்ல இயலவில்லை — இடம் சிறியதாக இருந்தது!</p>
+<p>கண்ணன் தைரியமாக உள்ளே சென்று, தன் துதிக்கையால் மான்குட்டியை எடுத்துக்கொண்டு வந்தான்!</p>
+<p>"கண்ணன்தான் ஹீரோ!" என்று எல்லோரும் கூறினர்.</p>
+<p>அன்று முதல் கண்ணனுக்கு நிறைய நண்பர்கள் கிடைத்தனர்.</p>
+<div class="moral">💡 நீதி: உயரம் முக்கியமில்லை — தைரியம் முக்கியம்!</div>`
+  },
+  {
+    id:5, cat:'devotion', badge:'classic', emoji:'🙏',
+    bg:'linear-gradient(135deg,#bf360c,#e64a19)',
+    catLabel:'தெய்வீகம்', catColor:'#ff6d00',
+    title:'முருகனின் அருள்',
+    excerpt:'அந்த ஏழை அம்மாவின் விசுவாசம் அற்புதத்தை நடக்கச்செய்தது...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🙏 முருகனின் அருள்</h3>
+<p>வேலுத்தாய் ஒரு ஏழைப் பெண்மணி. கோவிலில் ஒவ்வொரு நாளும் முருகனுக்கு ஒரு பூ கொண்டு வருவாள்.</p>
+<p>ஒரு நாள் மிகவும் கஷ்டமான நேரம் வந்தது. மகன் நோய்வாய்ப்பட்டான். மருத்துவமனை பணம் இல்லை.</p>
+<p>அவள் கோவிலுக்கு சென்று, "ஆண்டவா, என்னிடம் கொடுக்க பணம் இல்லை. ஆனால் என் மகனை காப்பாற்று" என்று அழுதாள்.</p>
+<p>திரும்பி வரும்போது சாலையில் ஒரு பணப்பை கிடந்தது. அதை எடுக்காமல் அருகில் உள்ள காவல் நிலையத்தில் கொடுத்தாள்.</p>
+<p>காவல்காரர் ஆச்சரியப்பட்டார். "உங்களுக்கு பணம் தேவையில்லையா?" என்று கேட்டார்.</p>
+<p>"தேவை இருக்கு. ஆனால் கடவுள் கொடுக்கணும், திருடி வாங்கக்கூடாது" என்று சொன்னாள்.</p>
+<p>பணப்பை உரிமையாளர் நேரில் வந்தார். அவர் ஒரு பெரிய மருத்துவர். வேலுத்தாயின் கதை கேட்டு, மகனுக்கு இலவசமாக சிகிச்சை செய்தார்.</p>
+<div class="moral">💡 நீதி: நேர்மை எப்போதும் வெல்லும்!</div>`
+  },
+  {
+    id:6, cat:'moral', badge:'classic', emoji:'💡',
+    bg:'linear-gradient(135deg,#4a148c,#7b1fa2)',
+    catLabel:'நீதி', catColor:'#9c27b0',
+    title:'இரண்டு நண்பர்கள்',
+    excerpt:'காட்டில் இரண்டு நண்பர்கள் பயணம் செய்தனர். ஆபத்தில் உண்மையான நட்பு தெரியும்...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>💡 இரண்டு நண்பர்கள்</h3>
+<p>ராமனும் கிருஷ்ணனும் நெருங்கிய நண்பர்கள். ஒரு நாள் காட்டு வழியாக பயணம் செய்தனர்.</p>
+<p>திடீரென்று ஒரு கரடி வந்தது! கிருஷ்ணன் உடனே மரம் ஏறிவிட்டான். ராமனுக்கு மரம் ஏற தெரியாது.</p>
+<p>ராமன் கரடியிடம் கேட்டிருந்த ஒரு விஷயம் நினைவுக்கு வந்தது — "கரடி இறந்தவரை தொடாது."</p>
+<p>அவன் தரையில் படுத்துக்கொண்டான். மூச்சை அடக்கிக்கொண்டான்.</p>
+<p>கரடி வந்து, முகத்தை முகர்ந்து சென்றது.</p>
+<p>மரத்திலிருந்து இறங்கி வந்த கிருஷ்ணன், "கரடி உன் காதில் என்ன சொன்னது?" என்று சிரித்துக்கேட்டான்.</p>
+<p>"ஆபத்தில் விட்டுவிட்டு போகும் நண்பனை நம்பாதே என்று சொன்னது" என்றான் ராமன்.</p>
+<p>கிருஷ்ணன் வெட்கத்தில் தலை குனிந்தான்.</p>
+<div class="moral">💡 நீதி: உண்மையான நண்பன் ஆபத்தில் விட்டுவிட மாட்டான்!</div>`
+  },
+  {
+    id:7, cat:'village', badge:'new', emoji:'🌾',
+    bg:'linear-gradient(135deg,#1b5e20,#388e3c)',
+    catLabel:'கிராமம்', catColor:'#4caf50',
+    title:'மண்ணின் மகன்',
+    excerpt:'ஆர்வமுடன் நகரம் சென்ற இளைஞன், திரும்பி வந்தபோது கிராமம் வேறாக இருந்தது...',
+    readTime:'8 நிமிஷம்',
+    story:`<h3>🌾 மண்ணின் மகன்</h3>
+<p>முருகேசன் ஒரு சிறிய கிராமத்தில் பிறந்தான். படிக்க நகரம் சென்றான். பட்டம் பெற்றான். வேலை கிடைத்தது.</p>
+<p>ஆண்டுகள் கடந்தன. ஒரு நாள் அப்பா அழைத்தார்: "மகனே, வீட்டுக்கு வா."</p>
+<p>திரும்பி வந்தான். கிராமம் மாறியிருந்தது. பச்சை வயல்கள் இல்லை. ஆறு வற்றியிருந்தது.</p>
+<p>"என்ன ஆச்சு?" என்று கேட்டான்.</p>
+<p>"நீரில்லை மகனே. விவசாயம் போச்சு. பசி வருது" என்றார் அப்பா.</p>
+<p>முருகேசன் யோசித்தான். தன் சம்பளத்தை சேமித்ததை எடுத்தான். கிராமத்தில் நீர் சேமிப்பு கட்டமைப்பு அமைத்தான். மரம் நட்டான். இளைஞர்களுக்கு விவசாயம் கற்றான்.</p>
+<p>இரண்டு ஆண்டுகளில் கிராமம் பசுமையானது. அவன் வேலையை விட்டு கிராமத்திலேயே தங்கினான்.</p>
+<p>"இங்கே இருக்கும் திருப்தி எந்த நகரத்திலும் கிடைக்காது" என்றான்.</p>
+<div class="moral">💡 நீதி: வேர்களை மறவாதே!</div>`
+  },
+  {
+    id:8, cat:'thriller', badge:'hot', emoji:'🔥',
+    bg:'linear-gradient(135deg,#b71c1c,#c62828)',
+    catLabel:'த்ரில்லர்', catColor:'#f44336',
+    title:'தொலைந்த கடிகாரம்',
+    excerpt:'அந்த பழைய கடிகாரம் 50 ஆண்டுகளாக நின்றுவிட்டிருந்தது — ஆனால் இன்று திடீரென்று ஓட ஆரம்பித்தது...',
+    readTime:'9 நிமிஷம்',
+    story:`<h3>🔥 தொலைந்த கடிகாரம்</h3>
+<p>அந்த பழைய மாளிகையில் ஒரு கடிகாரம் இருந்தது. 50 ஆண்டுகளாக அது நின்றுவிட்டிருந்தது.</p>
+<p>யாரும் அதை தொட மாட்டார்கள். "அந்த கடிகாரம் ஓடும் நாள் — ஒரு இரகசியம் வெளியாகும்" என்று கிழவர்கள் சொல்வார்கள்.</p>
+<p>ஒரு நாள் இரவு — டிக்.. டிக்.. டிக்..</p>
+<p>கடிகாரம் ஓட ஆரம்பித்தது!</p>
+<p>வீட்டில் இருந்த அனைவரும் கூடினர். கடிகாரத்தின் பின்னால் ஒரு மறைவிடம் இருந்தது. அதில் ஒரு கடிதம்.</p>
+<p>"என் சொத்தை என் உண்மையான வாரிசுக்கு கொடுங்கள். அவன் யார் என்று தெரிய — கடிகாரம் ஓடும் நாளில் அந்த வீட்டில் இருப்பவன்."</p>
+<p>50 ஆண்டுகளாக சொத்துக்காக சண்டையிட்டவர்கள் அன்று அமைதியானார்கள்.</p>
+<p>கடிகாரம் திடீரென்று மீண்டும் நின்றது.</p>
+<div class="moral">💡 சில இரகசியங்கள் சரியான நேரத்தில் வெளியாகும்!</div>`
+  },
+  {
+    id:9, cat:'love', badge:'new', emoji:'💖',
+    bg:'linear-gradient(135deg,#880e4f,#ad1457)',
+    catLabel:'காதல்', catColor:'#e91e63',
+    title:'கடைசி கடிதம்',
+    excerpt:'அவள் போன பின்னர் கண்டுபிடிக்கப்பட்ட கடிதம் அவனை நொறுக்கியது...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>💖 கடைசி கடிதம்</h3>
+<p>அர்ஜுன் அவளை நேசித்தான். ஆனால் சொல்ல தைரியமில்லை. வருடங்கள் கடந்தன.</p>
+<p>ஒரு நாள் கவிதா வேறு நகரம் சென்றாள். திருமணமும் நடந்தது.</p>
+<p>பத்து ஆண்டுகளுக்கு பின் அர்ஜுனுக்கு ஒரு கடிதம் வந்தது. கவிதாவின் கையெழுத்தில்.</p>
+<p>"அர்ஜுன், இது படிக்கும்போது நான் இல்லாமல் போயிருப்பேன். நான் நோயில் இருக்கிறேன்."</p>
+<p>"நீ என்னை நேசித்தாய் என்று தெரியும். நானும் நேசித்தேன். இருவரும் சொல்லவில்லை."</p>
+<p>"உன் வாழ்க்கையில் அடுத்த முறை யாரையாவது நேசித்தால் — சொல்லு. காத்திரு."</p>
+<p>அர்ஜுன் அழுதான். அன்று முதல் அவன் பிறரிடம் "நேசிக்கிறேன்" என்று சொல்ல கற்றுக்கொண்டான்.</p>
+<div class="moral">💡 நீதி: உணர்வுகளை சொல்லாமல் வைக்காதே!</div>`
+  },
+  {
+    id:10, cat:'history', badge:'classic', emoji:'🏛️',
+    bg:'linear-gradient(135deg,#37474f,#546e7a)',
+    catLabel:'வரலாறு', catColor:'#78909c',
+    title:'வீரத் தமிழன்',
+    excerpt:'பாண்டிய மன்னன் காலத்தில் நடந்த ஒரு தியாக வீரனின் கதை...',
+    readTime:'10 நிமிஷம்',
+    story:`<h3>🏛️ வீரத் தமிழன்</h3>
+<p>பாண்டிய நாட்டில் வீரன் என்ற இளைஞன் வாழ்ந்தான். வறிய குடும்பம். ஆனால் மனத்தில் மன்னர் நேர்மை.</p>
+<p>நாட்டில் பஞ்சம் வந்தது. மன்னர் வரி கொடுக்க ஆணையிட்டார். ஏழை மக்கள் கஷ்டப்பட்டனர்.</p>
+<p>வீரன் மன்னரிடம் சென்றான். "மன்னரே, மக்கள் பசியில் இருக்கிறார்கள். வரியை நிறுத்துங்கள்" என்று கேட்டான்.</p>
+<p>மன்னர் கோபமடைந்தார். "தண்டனை விதிக்கிறேன்!" என்றார்.</p>
+<p>"என்னை தண்டியுங்கள். ஆனால் மக்களை விடுங்கள்" என்று வீரன் நின்றான்.</p>
+<p>அரசவையில் அமைதி. அமைச்சர்கள் ஒருவர் கூட பேசவில்லை.</p>
+<p>மன்னர் தலை குனிந்தார். "இந்த நாட்டில் இப்படி ஒரு வீரன் இருக்கிறான். நான் வரி நிறுத்துகிறேன்" என்றார்.</p>
+<p>வீரன் இன்று வரலாற்றில் பதிந்துள்ளான்.</p>
+<div class="moral">💡 நீதி: உண்மைக்காக குரல் எழுப்பு!</div>`
+  },
+  {
+    id:11, cat:'comedy', badge:'hot', emoji:'🤣',
+    bg:'linear-gradient(135deg,#e65100,#f57c00)',
+    catLabel:'நகைச்சுவை', catColor:'#ff9800',
+    title:'அப்பாவின் WhatsApp',
+    excerpt:'அப்பா WhatsApp பயன்படுத்த கற்றுக்கொண்டபோது வீட்டே நடுங்கியது...',
+    readTime:'3 நிமிஷம்',
+    story:`<h3>🤣 அப்பாவின் WhatsApp</h3>
+<p>அப்பாவுக்கு smartphone வாங்கிக்கொடுத்தோம். தப்புடா என்று புரிந்தது 3 நாளிலேயே!</p>
+<p>முதல் நாள் — Family group-ல் "Good morning" பதிலாக "Goof morning" என்று அனுப்பினார். 40 emoji-யுடன்.</p>
+<p>இரண்டாம் நாள் — என் Boss-கு அனுப்பும் message-ஐ அப்பாவுக்கு, அப்பாவுக்கு அனுப்பும் message-ஐ Boss-கு அனுப்பிவிட்டேன்!</p>
+<p>அப்பா அனுப்பிய message Boss-கு: "ஐய்யா, கடன் வாங்கினேன். இந்த மாசம் திரும்ப கொடுக்க கஷ்டமா இருக்கு. கொஞ்சம் பொறுங்க."</p>
+<p>Boss reply: "வரோணும்னா சொல்லுங்க, நான் உதவுகிறேன்!" 😂</p>
+<p>மூன்றாம் நாள் — அப்பா Video call பண்ணினார். Camera கீழே போய் இருந்தது. கால் மட்டுமே தெரிந்தது.</p>
+<p>"அப்பா, உங்க முகம் தெரியலை!"</p>
+<p>"முகம் தெரியணுமா? அதுக்கு என்ன button அழுக்கணும்?"</p>
+<div class="moral">💡 Technology-யும் அப்பாவும் எப்போதும் funny combo! 😄</div>`
+  },
+  {
+    id:12, cat:'kids', badge:'new', emoji:'⭐',
+    bg:'linear-gradient(135deg,#006064,#00838f)',
+    catLabel:'குழந்தை', catColor:'#00bcd4',
+    title:'நட்சத்திர நண்பன்',
+    excerpt:'சிறுமி ஒவ்வொரு இரவும் ஒரு நட்சத்திரத்திடம் பேசுவாள்...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>⭐ நட்சத்திர நண்பன்</h3>
+<p>ஐந்து வயது மேகலா ஒவ்வொரு இரவும் வானை பார்த்து ஒரு நட்சத்திரத்திடம் பேசுவாள்.</p>
+<p>"நட்சத்திர தோழா, இன்று பள்ளியில் ஒரு பையன் என்னை தள்ளினான். நான் அழுதேன்."</p>
+<p>அம்மா கேட்டாள். "யாரிடம் பேசுகிறாய்?"</p>
+<p>"என் நட்சத்திர நண்பன். அவன் எப்போதும் கேட்கிறான். பதில் சொல்வதில்லை — ஆனால் ஒளிர்கிறான்!"</p>
+<p>அம்மா கண்கள் கலங்கின. "அந்த நட்சத்திரம் யாரென்று தெரியுமா?"</p>
+<p>"யார்?"</p>
+<p>"உன் தாத்தா. அவர் போனபோது சொன்னார் — நான் நட்சத்திரமாக வந்து உன்னை பார்ப்பேன் என்று."</p>
+<p>மேகலா வானை பார்த்தாள். நட்சத்திரம் கொஞ்சம் அதிகமாக ஒளிர்ந்தது போல் தோன்றியது.</p>
+<p>"தாத்தா! நான் உன்னை நேசிக்கிறேன்!" என்று கத்தினாள்.</p>
+<div class="moral">💡 நேசிப்பவர்கள் எங்கும் நம்மருகிலேயே இருக்கிறார்கள்!</div>`
+  }
+];
 
-  function selectParty(card) {
-    if (hasVoted) return;
-    document.querySelectorAll('.party-card').forEach(c => c.classList.remove('selected'));
-    card.classList.add('selected');
-    selected = card.dataset.party;
-    document.getElementById('voteBtn').disabled = false;
+let currentPage = 1;
+const perPage = 6;
+let filtered = [...storiesDB];
+let fontSize = 16;
+
+function renderStories() {
+  const grid = document.getElementById('storiesGrid');
+  const start = (currentPage - 1) * perPage;
+  const page = filtered.slice(start, start + perPage);
+
+  if (!page.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.4);font-family:'Tiro Tamil',serif;font-size:16px">கதை கிடைக்கவில்லை 😔</div>`;
+    return;
   }
 
-  function castVote() {
-    if (!selected || hasVoted) return;
-    hasVoted = true;
-    votes[selected]++;
+  grid.innerHTML = page.map(s => `
+    <div class="story-card" onclick="openStory(${s.id})">
+      <div class="story-thumb" style="background:${s.bg}">
+        <span>${s.emoji}</span>
+        ${s.badge ? `<div class="story-badge badge-${s.badge}">${s.badge.toUpperCase()}</div>` : ''}
+      </div>
+      <div class="story-body">
+        <div class="story-cat" style="background:${s.catColor}22;color:${s.catColor}">${s.catLabel}</div>
+        <div class="story-title">${s.title}</div>
+        <div class="story-excerpt">${s.excerpt}</div>
+        <div class="story-meta">
+          <span>📖 கதை</span>
+          <span class="read-time">⏱ ${s.readTime}</span>
+        </div>
+      </div>
+      <button class="read-btn">📖 படிக்க — Read Now</button>
+    </div>
+  `).join('');
 
-    // Disable button
-    document.getElementById('voteBtn').disabled = true;
-    document.getElementById('voteBtn').textContent = '✅ வாக்களிக்கப்பட்டது! Voted!';
+  renderPagination();
+}
 
-    // Show success
-    document.getElementById('successMsg').style.display = 'block';
-
-    // Make all cards non-clickable
-    document.querySelectorAll('.party-card').forEach(c => c.classList.add('voted'));
-
-    // Show results
-    showResults();
+function renderPagination() {
+  const total = Math.ceil(filtered.length / perPage);
+  const pg = document.getElementById('pagination');
+  if (total <= 1) { pg.innerHTML = ''; return; }
+  let html = '';
+  if (currentPage > 1) html += `<button class="page-btn" onclick="goPage(${currentPage-1})">← முந்தைய</button>`;
+  for (let i = 1; i <= total; i++) {
+    html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
   }
+  if (currentPage < total) html += `<button class="page-btn" onclick="goPage(${currentPage+1})">அடுத்தது →</button>`;
+  pg.innerHTML = html;
+}
 
-  function showResults() {
-    const total = Object.values(votes).reduce((a, b) => a + b, 0);
-    document.getElementById('totalCount').textContent = total;
+function goPage(p) {
+  currentPage = p;
+  renderStories();
+  window.scrollTo({top:0,behavior:'smooth'});
+}
 
-    Object.keys(votes).forEach(party => {
-      const pct = total > 0 ? Math.round((votes[party] / total) * 100) : 0;
-      document.getElementById('bar-' + party).style.width = pct + '%';
-      document.getElementById('pct-' + party).textContent = pct + '%';
-      document.getElementById('cnt-' + party).textContent = votes[party] + ' vote' + (votes[party] !== 1 ? 's' : '');
-      document.getElementById('prog-' + party).style.display = 'block';
-    });
-  }
+function filterCat(cat, el) {
+  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  filtered = cat === 'all' ? [...storiesDB] : storiesDB.filter(s => s.cat === cat);
+  currentPage = 1;
+  renderStories();
+}
+
+function searchStories() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  filtered = q ? storiesDB.filter(s =>
+    s.title.toLowerCase().includes(q) ||
+    s.excerpt.toLowerCase().includes(q) ||
+    s.catLabel.includes(q)
+  ) : [...storiesDB];
+  currentPage = 1;
+  renderStories();
+}
+
+function openStory(id) {
+  const s = storiesDB.find(s => s.id === id);
+  if (!s) return;
+  document.getElementById('modalCat').textContent = s.catLabel + ' கதை';
+  document.getElementById('modalStory').innerHTML = s.story;
+  document.getElementById('modalStory').style.fontSize = fontSize + 'px';
+  document.getElementById('storyModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeStory() {
+  document.getElementById('storyModal').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function changeFont(d) {
+  fontSize = Math.min(22, Math.max(13, fontSize + d));
+  document.getElementById('modalStory').style.fontSize = fontSize + 'px';
+}
+
+// Init
+renderStories();
 </script>
 </body>
 </html>
