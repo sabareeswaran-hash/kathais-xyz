@@ -3,507 +3,1019 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tamil Kathaikal | படித்து மகிளுங்கள் — Tamil Stories</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>Tamilகதைகள் | படித்து மகிளுங்கள் — Tamil Stories Collection</title>
+
+<!-- ═══ SEO & OG META TAGS ═══ -->
+<meta name="description" content="Tamilகதைகள் — 1000+ Tamil stories free forever. காதல், நகைச்சுவை, பயம், நீதி கதைகள். Read Tamil stories online.">
+<meta name="keywords" content="Tamil stories, தமிழ் கதைகள், Tamil kathaigal, Tamil moral stories, Tamil comedy stories">
+<meta name="author" content="Tamilகதைகள்">
+<meta property="og:title" content="Tamilகதைகள் | படித்து மகிளுங்கள்">
+<meta property="og:description" content="1000+ Free Tamil Stories — காதல், நகைச்சுவை, பயம், நீதி கதைகள் எல்லாம் ஒரே இடத்தில்!">
+<meta property="og:image" content="https://kathais.xyz/og-image.png">
+<meta property="og:url" content="https://kathais.xyz">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Tamilகதைகள் | படித்து மகிளுங்கள்">
+<meta name="twitter:description" content="1000+ Free Tamil Stories online — Read now!">
+
+<!-- ═══ PWA ═══ -->
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#f9a825">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Tamilகதைகள்">
+
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Serif+Tamil:wght@400;700&family=Catamaran:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
 <style>
+:root {
+  --gold: #f5a623;
+  --gold2: #ff8c00;
+  --gold-glow: rgba(245,166,35,0.25);
+  --bg: #0b0c14;
+  --bg2: #111320;
+  --bg3: #181a2a;
+  --surface: rgba(255,255,255,0.04);
+  --surface2: rgba(255,255,255,0.07);
+  --border: rgba(255,255,255,0.09);
+  --border-gold: rgba(245,166,35,0.35);
+  --text: #e8e6f0;
+  --text-muted: rgba(232,230,240,0.45);
+  --text-dim: rgba(232,230,240,0.25);
+  --green: #00e676;
+  --green2: #00c853;
+  --purple: #7c4dff;
+  --radius: 18px;
+  --radius-sm: 10px;
+}
+
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Poppins',sans-serif; background:#0f0f1a; color:#fff; }
 
-/* NAV */
+body {
+  font-family:'DM Sans',sans-serif;
+  background:var(--bg);
+  color:var(--text);
+  min-height:100vh;
+}
+
+/* ─── NOISE TEXTURE OVERLAY ─── */
+body::before {
+  content:'';
+  position:fixed; inset:0;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none; z-index:0; opacity:0.4;
+}
+
+/* ─── NAV ─── */
 nav {
-  background:linear-gradient(135deg,#1a1a2e,#16213e);
-  padding:14px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:3px solid #f9a825;
-  position:sticky; top:0; z-index:100;
-  flex-wrap:wrap; gap:10px;
+  background:rgba(11,12,20,0.85);
+  backdrop-filter:blur(20px);
+  -webkit-backdrop-filter:blur(20px);
+  padding:0 24px;
+  height:58px;
+  display:grid;
+  grid-template-columns:auto 1fr auto;
+  align-items:center;
+  border-bottom:1px solid var(--border-gold);
+  position:sticky; top:0; z-index:200;
+  gap:12px;
 }
-.logo { font-size:22px; font-weight:900; color:#f9a825; }
-.logo span { color:#fff; font-family:'Tiro Tamil',serif; }
-.nav-links { display:flex; gap:14px; flex-wrap:wrap; }
-.nav-links a {
-  color:rgba(255,255,255,0.7); text-decoration:none;
-  font-size:12px; font-weight:600; transition:color 0.2s;
+.logo {
+  font-family:'DM Serif Display',serif;
+  font-size:20px; font-weight:400;
+  color:var(--gold);
+  letter-spacing:-0.3px;
+  display:flex; align-items:center; gap:6px;
+  white-space:nowrap;
 }
-.nav-links a:hover { color:#f9a825; }
-
-/* HERO */
-.hero {
-  background:linear-gradient(135deg,#1a1a2e,#0f3460);
-  padding:50px 20px 40px;
-  text-align:center;
-  border-bottom:3px solid rgba(249,168,37,0.3);
-  position:relative;
+.logo span { color:var(--text); font-family:'Tiro Tamil',serif; }
+.nav-links {
+  display:flex; gap:2px; flex-wrap:nowrap;
+  justify-content:center; align-items:center;
   overflow:hidden;
 }
-.hero::before {
-  content:'📖';
-  position:absolute;
-  font-size:300px;
-  opacity:0.03;
-  top:-50px; right:-50px;
+.nav-links a {
+  color:var(--text-muted); text-decoration:none;
+  font-size:12px; font-weight:600;
+  padding:5px 9px; border-radius:8px;
+  transition:all 0.2s; white-space:nowrap;
+}
+.nav-links a:hover { color:var(--gold); background:var(--gold-glow); }
+
+.theme-toggle {
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--text-muted); padding:6px 14px;
+  border-radius:20px; cursor:pointer;
+  font-size:12px; font-weight:700;
+  font-family:'DM Sans',sans-serif;
+  transition:all 0.2s; white-space:nowrap;
+}
+.theme-toggle:hover { border-color:var(--gold); color:var(--gold); }
+
+/* ─── HERO ─── */
+.hero {
+  position:relative; overflow:hidden;
+  background:radial-gradient(ellipse 80% 60% at 50% -10%, rgba(245,166,35,0.14) 0%, transparent 70%),
+              linear-gradient(180deg, var(--bg2) 0%, var(--bg) 100%);
+  padding:56px 24px 44px;
+  text-align:center;
+  border-bottom:1px solid var(--border);
+}
+.hero::after {
+  content:'';
+  position:absolute; bottom:0; left:0; right:0;
+  height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.hero-eyebrow {
+  display:inline-flex; align-items:center; gap:6px;
+  background:var(--gold-glow);
+  border:1px solid var(--border-gold);
+  border-radius:20px; padding:4px 14px;
+  font-size:11px; font-weight:700; color:var(--gold);
+  letter-spacing:1.5px; text-transform:uppercase;
+  margin-bottom:18px;
 }
 .hero h1 {
-  font-family:'Tiro Tamil',serif;
-  font-size:42px; font-weight:900;
-  color:#f9a825;
-  text-shadow:0 0 30px rgba(249,168,37,0.4);
-  margin-bottom:8px;
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(36px,7vw,58px);
+  font-weight:400; letter-spacing:-1px;
+  color:#fff;
+  line-height:1.1;
+  margin-bottom:6px;
 }
-.hero h2 { font-size:18px; color:rgba(255,255,255,0.7); font-weight:400; margin-bottom:20px; }
+.hero h1 span { color:var(--gold); }
+.hero h2 {
+  font-family:'Tiro Tamil',serif;
+  font-size:16px; color:var(--text-muted); font-weight:400;
+  margin-bottom:30px; line-height:1.6;
+}
 .hero-stats {
-  display:flex; justify-content:center; gap:24px;
-  flex-wrap:wrap; margin-top:20px;
+  display:flex; justify-content:center; gap:12px;
+  flex-wrap:wrap; margin-top:8px;
 }
 .stat {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px; padding:12px 20px; text-align:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:12px 18px;
+  text-align:center; transition:all 0.2s; cursor:default;
+  position:relative; overflow:hidden;
 }
-.stat .num { font-size:22px; font-weight:900; color:#f9a825; }
-.stat .lbl { font-size:11px; color:rgba(255,255,255,0.5); }
+.stat::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+  opacity:0.4;
+}
+.stat .num {
+  font-family:'DM Serif Display',serif;
+  font-size:22px; color:var(--gold); display:block;
+}
+.stat .lbl { font-size:10px; color:var(--text-dim); font-weight:600; letter-spacing:0.5px; margin-top:2px; }
 
-/* SEARCH */
-.search-wrap {
-  padding:20px;
-  max-width:600px; margin:0 auto;
-}
-.search-box {
-  display:flex; gap:10px;
-}
+/* ─── SEARCH ─── */
+.search-wrap { padding:20px 24px; max-width:620px; margin:0 auto; position:relative; }
+.search-box { display:flex; gap:8px; }
 .search-box input {
-  flex:1; padding:14px 18px;
-  background:rgba(255,255,255,0.08);
-  border:2px solid rgba(255,255,255,0.15);
-  border-radius:12px; color:#fff;
-  font-size:14px; font-family:'Poppins',sans-serif;
-  outline:none; transition:border-color 0.2s;
+  flex:1; padding:13px 18px;
+  background:var(--surface2);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); color:var(--text);
+  font-size:14px; font-family:'DM Sans',sans-serif;
+  outline:none; transition:all 0.2s;
 }
-.search-box input:focus { border-color:#f9a825; }
-.search-box input::placeholder { color:rgba(255,255,255,0.3); }
+.search-box input:focus { border-color:var(--gold); background:rgba(255,255,255,0.06); box-shadow:0 0 0 3px var(--gold-glow); }
+.search-box input::placeholder { color:var(--text-dim); }
 .search-btn {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border:none; color:#fff; padding:14px 20px;
-  border-radius:12px; cursor:pointer;
-  font-size:16px; transition:transform 0.2s;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; padding:13px 18px;
+  border-radius:var(--radius-sm); cursor:pointer;
+  font-size:16px; transition:all 0.2s; font-weight:700;
 }
-.search-btn:hover { transform:scale(1.05); }
+.search-btn:hover { transform:scale(1.05); box-shadow:0 4px 20px var(--gold-glow); }
 
-/* CATEGORIES */
-.section { padding:16px 20px; max-width:1100px; margin:0 auto; }
+/* ─── AUTOCOMPLETE ─── */
+.autocomplete-list {
+  position:absolute; top:100%; left:24px; right:24px;
+  background:var(--bg3);
+  border:1.5px solid var(--border-gold);
+  border-radius:var(--radius-sm);
+  z-index:100; overflow:hidden;
+  box-shadow:0 16px 40px rgba(0,0,0,0.5);
+}
+.autocomplete-item {
+  padding:10px 16px; cursor:pointer;
+  font-family:'Tiro Tamil',serif; font-size:13px;
+  color:var(--text); border-bottom:1px solid var(--border);
+  transition:background 0.15s;
+}
+.autocomplete-item:last-child { border-bottom:none; }
+.autocomplete-item:hover { background:var(--gold-glow); color:var(--gold); }
+
+/* ─── MOOD STRIP ─── */
+.mood-strip {
+  display:flex; gap:6px; flex-wrap:wrap;
+  padding:0 24px 16px; max-width:1120px; margin:0 auto;
+  align-items:center;
+}
+.mood-label { font-size:10px; color:var(--text-dim); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.mood-btn {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px; padding:5px 12px;
+  font-size:12px; cursor:pointer; color:var(--text-muted);
+  transition:all 0.2s; font-family:'DM Sans',sans-serif;
+}
+.mood-btn:hover, .mood-btn.active {
+  background:var(--gold-glow); border-color:var(--gold); color:var(--gold);
+}
+
+/* ─── AD BANNER ─── */
+.ad-banner {
+  background:var(--surface);
+  border:1px dashed var(--border);
+  border-radius:var(--radius-sm); margin:0 24px 16px;
+  padding:12px; text-align:center;
+  font-size:11px; color:var(--text-dim);
+  max-width:1072px; margin-left:auto; margin-right:auto;
+}
+.ad-banner span { color:var(--gold); font-weight:700; }
+
+/* ─── SECTION ─── */
+.section { padding:16px 24px; max-width:1120px; margin:0 auto; }
 .section-title {
-  font-size:18px; font-weight:800;
-  color:#fff; margin-bottom:14px;
+  font-size:16px; font-weight:800; letter-spacing:-0.3px;
+  color:var(--text); margin-bottom:14px;
   display:flex; align-items:center; gap:8px;
 }
 .section-title::after {
-  content:''; flex:1; height:2px;
-  background:linear-gradient(90deg,rgba(249,168,37,0.5),transparent);
+  content:''; flex:1; height:1px;
+  background:linear-gradient(90deg,var(--border-gold),transparent);
 }
 
+/* ─── CATEGORY TABS ─── */
 .cat-tabs {
-  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;
+  display:flex; gap:6px; flex-wrap:wrap; margin-bottom:18px;
   overflow-x:auto; padding-bottom:4px;
 }
 .cat-tab {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:20px; padding:7px 16px;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:20px; padding:6px 16px;
   font-size:12px; font-weight:700;
-  color:rgba(255,255,255,0.6);
+  color:var(--text-muted);
   cursor:pointer; transition:all 0.2s;
   white-space:nowrap; flex-shrink:0;
+  font-family:'DM Sans',sans-serif;
 }
-.cat-tab:hover,.cat-tab.active {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border-color:transparent; color:#fff;
+.cat-tab:hover { border-color:var(--border-gold); color:var(--text); }
+.cat-tab.active {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-color:transparent; color:#1a1200; font-weight:800;
 }
 
-/* STORY CARDS GRID */
+/* ─── TOOLBAR ─── */
+.toolbar { display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin-bottom:14px; }
+.sort-select {
+  background:var(--surface2);
+  border:1.5px solid var(--border);
+  color:var(--text); padding:8px 12px;
+  border-radius:var(--radius-sm); font-size:12px; font-weight:600;
+  font-family:'DM Sans',sans-serif; cursor:pointer;
+  outline:none;
+}
+.sort-select option { background:var(--bg3); }
+.random-btn {
+  background:linear-gradient(135deg,var(--purple),#651fff);
+  border:none; color:#fff; padding:8px 16px;
+  border-radius:var(--radius-sm); cursor:pointer; font-size:12px;
+  font-weight:800; font-family:'DM Sans',sans-serif;
+  transition:all 0.2s; white-space:nowrap;
+}
+.random-btn:hover { opacity:0.9; transform:scale(1.03); }
+
+/* ─── STORY CARDS ─── */
 .stories-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(285px,1fr));
+  gap:14px;
 }
 
-.story-card {
-  background:linear-gradient(145deg,#1a1a2e,#16213e);
-  border:2px solid rgba(255,255,255,0.08);
-  border-radius:16px; overflow:hidden;
-  cursor:pointer; transition:all 0.2s;
+@keyframes cardIn {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
 }
+.story-card {
+  background:var(--bg2);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius); overflow:hidden;
+  cursor:pointer;
+  transition:transform 0.25s cubic-bezier(.34,1.56,.64,1), border-color 0.2s, box-shadow 0.2s;
+  animation:cardIn 0.4s ease both;
+  position:relative;
+}
+.story-card:nth-child(1){animation-delay:0.04s}
+.story-card:nth-child(2){animation-delay:0.08s}
+.story-card:nth-child(3){animation-delay:0.12s}
+.story-card:nth-child(4){animation-delay:0.16s}
+.story-card:nth-child(5){animation-delay:0.20s}
+.story-card:nth-child(6){animation-delay:0.24s}
 .story-card:hover {
-  transform:translateY(-4px);
-  border-color:rgba(249,168,37,0.4);
-  box-shadow:0 8px 25px rgba(249,168,37,0.15);
+  transform:translateY(-6px) scale(1.01);
+  border-color:var(--border-gold);
+  box-shadow:0 20px 40px rgba(0,0,0,0.4), 0 0 0 1px var(--border-gold);
 }
 
 .story-thumb {
-  height:120px;
+  height:115px;
   display:flex; align-items:center; justify-content:center;
-  font-size:52px; position:relative;
+  font-size:50px; position:relative;
+}
+.story-thumb::after {
+  content:''; position:absolute;
+  bottom:0; left:0; right:0; height:40px;
+  background:linear-gradient(transparent,var(--bg2));
 }
 .story-badge {
   position:absolute; top:10px; right:10px;
-  font-size:10px; font-weight:800;
-  padding:3px 10px; border-radius:10px;
-  letter-spacing:0.5px;
+  font-size:9px; font-weight:800;
+  padding:3px 9px; border-radius:20px;
+  letter-spacing:0.8px; text-transform:uppercase;
+  font-family:'DM Sans',sans-serif;
 }
-.badge-new { background:#00e676; color:#1a1a2e; }
+.badge-new { background:#00e676; color:#001a0a; }
 .badge-hot { background:#ff1744; color:#fff; }
 .badge-love { background:#e91e63; color:#fff; }
-.badge-classic { background:#f9a825; color:#1a1a2e; }
+.badge-classic { background:var(--gold); color:#1a1200; }
 
-.story-body { padding:14px 16px; }
+.story-body { padding:14px 16px 10px; }
 .story-cat {
-  font-size:10px; font-weight:700;
-  padding:3px 10px; border-radius:10px;
+  font-size:9px; font-weight:800;
+  padding:3px 9px; border-radius:20px;
   display:inline-block; margin-bottom:8px;
+  letter-spacing:0.8px; text-transform:uppercase;
+  font-family:'DM Sans',sans-serif;
 }
 .story-title {
   font-family:'Tiro Tamil',serif;
-  font-size:16px; font-weight:700;
-  color:#fff; margin-bottom:6px; line-height:1.4;
+  font-size:15px; font-weight:700;
+  color:var(--text); margin-bottom:6px; line-height:1.45;
 }
 .story-excerpt {
   font-family:'Tiro Tamil',serif;
-  font-size:12px; color:rgba(255,255,255,0.55);
-  line-height:1.6; margin-bottom:12px;
+  font-size:12px; color:var(--text-muted);
+  line-height:1.65; margin-bottom:10px;
+  display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden;
 }
 .story-meta {
   display:flex; justify-content:space-between;
-  align-items:center; font-size:11px;
-  color:rgba(255,255,255,0.4);
+  align-items:center; font-size:10px; color:var(--text-dim);
 }
-.story-meta .read-time { color:#f9a825; font-weight:600; }
+.story-meta .read-time { color:var(--gold); font-weight:700; }
+.view-count { display:flex; align-items:center; gap:3px; }
 
+/* CARD ACTIONS */
+.card-actions {
+  display:flex; gap:5px; padding:8px 16px 10px;
+  border-top:1px solid var(--border);
+}
+.card-action-btn {
+  flex:1; background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text-muted); padding:6px 4px;
+  border-radius:8px; cursor:pointer; font-size:10px;
+  font-weight:700; font-family:'DM Sans',sans-serif;
+  transition:all 0.2s; display:flex; align-items:center;
+  justify-content:center; gap:3px;
+}
+.card-action-btn:hover { background:var(--surface2); color:var(--text); }
+.card-action-btn.liked { background:rgba(255,23,68,0.12); border-color:rgba(255,23,68,0.35); color:#ff4b4b; }
+.card-action-btn.bookmarked { background:var(--gold-glow); border-color:var(--border-gold); color:var(--gold); }
+
+/* READ BUTTON */
 .read-btn {
-  width:100%; padding:10px;
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border:none; color:#fff;
+  width:100%; padding:11px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200;
   font-size:13px; font-weight:800;
-  cursor:pointer; transition:opacity 0.2s;
-  font-family:'Poppins',sans-serif;
+  cursor:pointer; transition:all 0.2s;
+  font-family:'DM Sans',sans-serif; letter-spacing:0.3px;
 }
-.read-btn:hover { opacity:0.9; }
+.read-btn:hover { opacity:0.92; }
 
-/* MODAL / STORY READER */
+/* ─── SHARE POPUP ─── */
+.share-popup {
+  display:none; position:fixed;
+  bottom:88px; left:50%; transform:translateX(-50%);
+  background:var(--bg3);
+  border:1.5px solid var(--border-gold);
+  border-radius:var(--radius); padding:18px;
+  z-index:3000; min-width:270px;
+  box-shadow:0 20px 60px rgba(0,0,0,0.6);
+}
+.share-popup.open { display:block; }
+.share-popup-title { font-size:11px; font-weight:800; color:var(--text-dim); margin-bottom:12px; letter-spacing:1.5px; text-transform:uppercase; }
+.share-btns { display:flex; gap:8px; flex-wrap:wrap; }
+.share-btn {
+  flex:1; min-width:100px; padding:10px 8px;
+  border:none; border-radius:var(--radius-sm); cursor:pointer;
+  font-size:12px; font-weight:800; font-family:'DM Sans',sans-serif;
+  transition:all 0.2s;
+}
+.share-btn:hover { opacity:0.85; }
+.share-wa { background:#25D366; color:#fff; }
+.share-copy { background:var(--surface2); color:var(--text); border:1.5px solid var(--border); }
+.share-close-btn { width:100%; margin-top:10px; background:var(--surface); border:1px solid var(--border); color:var(--text-muted); padding:8px; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:12px; }
+
+/* ─── MODAL ─── */
 .modal {
   display:none; position:fixed;
   top:0; left:0; right:0; bottom:0;
-  background:rgba(0,0,0,0.95);
-  z-index:1000; overflow-y:auto;
-  padding:20px;
+  background:rgba(5,5,12,0.96);
+  z-index:1000; overflow-y:auto; padding:16px;
+  backdrop-filter:blur(4px);
 }
 .modal.open { display:block; }
 .modal-inner {
-  max-width:700px; margin:0 auto;
-  background:linear-gradient(145deg,#1a1a2e,#16213e);
-  border:2px solid rgba(249,168,37,0.3);
-  border-radius:20px; overflow:hidden;
+  max-width:720px; margin:0 auto;
+  background:var(--bg2);
+  border:1.5px solid var(--border-gold);
+  border-radius:var(--radius); overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,0.7);
 }
 .modal-header {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
   padding:16px 20px;
   display:flex; justify-content:space-between; align-items:center;
 }
-.modal-header h2 { font-family:'Tiro Tamil',serif; font-size:18px; color:#fff; font-weight:800; }
+.modal-header h2 { font-family:'Tiro Tamil',serif; font-size:17px; color:#1a1200; font-weight:800; }
 .close-btn {
-  background:rgba(0,0,0,0.3); border:none;
-  color:#fff; width:36px; height:36px;
-  border-radius:50%; font-size:18px;
-  cursor:pointer; font-weight:900;
+  background:rgba(0,0,0,0.25); border:none;
+  color:#1a1200; width:34px; height:34px;
+  border-radius:50%; font-size:16px;
+  cursor:pointer; font-weight:900; transition:background 0.2s;
 }
+.close-btn:hover { background:rgba(0,0,0,0.4); }
+
 .modal-story {
-  padding:24px 28px;
+  padding:28px 30px;
   font-family:'Tiro Tamil',serif;
-  font-size:16px; line-height:2;
-  color:rgba(255,255,255,0.85);
+  font-size:16px; line-height:2.1;
+  color:rgba(232,230,240,0.88);
+  background:var(--bg2);
 }
 .modal-story h3 {
-  font-size:22px; color:#f9a825;
-  margin-bottom:16px; text-align:center;
+  font-size:21px; color:var(--gold);
+  margin-bottom:18px; text-align:center;
+  font-family:'Tiro Tamil',serif;
 }
-.modal-story p { margin-bottom:16px; }
+.modal-story p { margin-bottom:18px; }
 .modal-story .moral {
-  background:rgba(249,168,37,0.1);
-  border-left:4px solid #f9a825;
-  border-radius:8px; padding:14px 16px;
-  margin-top:20px; color:#f9a825;
-  font-weight:700;
+  background:rgba(245,166,35,0.08);
+  border-left:3px solid var(--gold);
+  border-radius:var(--radius-sm); padding:14px 18px;
+  margin-top:24px; color:var(--gold); font-weight:700;
 }
+
+/* FONT CONTROLS */
 .font-controls {
   padding:10px 20px;
-  display:flex; gap:10px; align-items:center;
-  border-bottom:1px solid rgba(255,255,255,0.08);
+  display:flex; gap:8px; align-items:center;
+  border-bottom:1px solid var(--border);
 }
 .font-btn {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:6px 14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  color:var(--text); padding:5px 12px;
   border-radius:8px; cursor:pointer;
   font-size:13px; font-weight:700;
-  font-family:'Poppins',sans-serif;
+  font-family:'DM Sans',sans-serif; transition:all 0.2s;
 }
-.font-label { font-size:12px; color:rgba(255,255,255,0.4); }
+.font-btn:hover { border-color:var(--gold); color:var(--gold); }
+.font-label { font-size:11px; color:var(--text-dim); }
 
-/* VOICE READER */
-.voice-controls {
-  padding:14px 20px;
-  background:rgba(0,0,0,0.3);
-  border-bottom:1px solid rgba(255,255,255,0.08);
+/* FONT SWITCHER */
+.font-switcher {
+  display:flex; align-items:center; gap:8px;
+  padding:10px 20px; border-bottom:1px solid var(--border);
+  background:rgba(0,0,0,0.15); flex-wrap:wrap;
 }
-.voice-title {
-  font-size:11px; font-weight:700;
-  color:rgba(255,255,255,0.4);
-  letter-spacing:1px; text-transform:uppercase;
-  margin-bottom:10px;
+.font-switcher-label { font-size:10px; color:var(--text-dim); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.font-opt {
+  padding:4px 12px; border-radius:8px; cursor:pointer;
+  font-size:12px; border:1px solid var(--border);
+  background:var(--surface); color:var(--text-muted);
+  transition:all 0.2s; font-family:'DM Sans',sans-serif;
 }
-.voice-btns {
-  display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px;
+.font-opt:hover, .font-opt.active { background:var(--gold-glow); border-color:var(--gold); color:var(--gold); }
+
+/* TTS BAR */
+.tts-bar {
+  padding:10px 20px;
+  display:flex; gap:8px; align-items:center;
+  background:rgba(0,230,118,0.04);
+  border-bottom:1px solid rgba(0,230,118,0.1); flex-wrap:wrap;
 }
-.voice-btn {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:8px 14px;
-  border-radius:10px; cursor:pointer;
-  font-size:13px; font-weight:700;
-  font-family:'Poppins',sans-serif;
-  transition:all 0.2s; display:flex; align-items:center; gap:5px;
+.tts-btn {
+  background:linear-gradient(135deg,var(--green2),var(--green));
+  border:none; color:#001a0a; padding:7px 14px;
+  border-radius:var(--radius-sm); cursor:pointer;
+  font-size:12px; font-weight:800;
+  font-family:'DM Sans',sans-serif; transition:opacity 0.2s;
 }
-.voice-btn:hover { background:rgba(255,255,255,0.15); }
-.voice-btn.play-btn {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border-color:transparent;
+.tts-btn:hover { opacity:0.85; }
+.tts-speed-select {
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--text); padding:6px 10px;
+  border-radius:8px; font-size:12px; font-family:'DM Sans',sans-serif; cursor:pointer;
 }
-.voice-btn.play-btn:hover { opacity:0.9; }
-.voice-btn.stop-btn { border-color:rgba(255,100,100,0.4); color:#ff6b6b; }
-.voice-btn.stop-btn:hover { background:rgba(255,100,100,0.15); }
-.speed-wrap {
-  display:flex; align-items:center; gap:8px; margin-left:auto;
-}
-.speed-label { font-size:11px; color:rgba(255,255,255,0.4); white-space:nowrap; }
-.speed-select {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:6px 10px;
-  border-radius:8px; font-size:12px;
-  font-family:'Poppins',sans-serif; cursor:pointer;
-}
-.speed-select option { background:#1a1a2e; color:#fff; }
-.progress-wrap {
+.tts-label { font-size:11px; color:var(--text-dim); }
+.tts-highlight { background:rgba(245,166,35,0.25); border-radius:3px; }
+
+/* STORY PROGRESS */
+.story-progress-wrap {
+  padding:8px 20px 0;
   display:flex; align-items:center; gap:10px;
 }
-.progress-bar-bg {
-  flex:1; height:6px; background:rgba(255,255,255,0.1);
-  border-radius:10px; overflow:hidden; cursor:pointer;
+.story-progress-bg {
+  flex:1; height:3px; background:var(--border);
+  border-radius:10px; overflow:hidden;
 }
-.progress-bar-fill {
+.story-progress-fill {
   height:100%; width:0%;
-  background:linear-gradient(90deg,#f9a825,#ff6f00);
-  border-radius:10px; transition:width 0.3s;
+  background:linear-gradient(90deg,var(--gold),var(--gold2));
+  border-radius:10px; transition:width 0.2s;
 }
-.progress-time {
-  font-size:11px; color:rgba(255,255,255,0.4);
-  white-space:nowrap; min-width:70px; text-align:right;
+.story-progress-pct { font-size:10px; color:var(--text-dim); min-width:30px; text-align:right; }
+
+/* REACTIONS */
+.reactions-bar {
+  display:flex; gap:8px; align-items:center;
+  padding:12px 20px; border-top:1px solid var(--border); flex-wrap:wrap;
 }
-.reading-highlight {
-  background:rgba(249,168,37,0.18);
-  border-radius:4px;
-  transition:background 0.3s;
+.reaction-btn {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px; padding:6px 12px;
+  cursor:pointer; font-size:13px; transition:all 0.2s;
+  color:var(--text-muted);
+}
+.reaction-btn:hover { transform:scale(1.12); }
+.reaction-btn.reacted { background:var(--gold-glow); border-color:var(--gold); }
+.reaction-count { font-size:11px; color:var(--text-dim); margin-left:auto; }
+
+/* COMMENTS */
+.comments-section {
+  padding:16px 20px 22px;
+  border-top:1px solid var(--border);
+}
+.comments-title {
+  font-size:11px; font-weight:800; color:var(--text-dim);
+  letter-spacing:1.5px; margin-bottom:12px; text-transform:uppercase;
+}
+.comment-list { max-height:190px; overflow-y:auto; margin-bottom:12px; }
+.comment-item {
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:10px 14px; margin-bottom:8px;
+}
+.comment-name { font-size:11px; font-weight:700; color:var(--gold); margin-bottom:3px; }
+.comment-text { font-family:'Tiro Tamil',serif; font-size:13px; color:rgba(232,230,240,0.7); line-height:1.6; }
+.comment-input-row { display:flex; gap:8px; }
+.comment-input {
+  flex:1; padding:10px 14px;
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); color:var(--text); font-size:13px;
+  font-family:'Tiro Tamil',serif; outline:none; transition:border-color 0.2s;
+}
+.comment-input:focus { border-color:var(--gold); }
+.comment-input::placeholder { color:var(--text-dim); }
+.comment-submit {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; padding:10px 16px;
+  border-radius:var(--radius-sm); cursor:pointer; font-size:12px;
+  font-weight:800; font-family:'DM Sans',sans-serif; white-space:nowrap;
 }
 
-/* GAMES MODAL */
+/* NEXT STORY ROW */
+.next-story-row {
+  padding:14px 20px;
+  border-top:1px solid var(--border);
+  display:flex; gap:8px; flex-wrap:wrap;
+}
+.next-story-btn {
+  flex:1; padding:12px 16px;
+  background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); cursor:pointer; text-align:left;
+  color:var(--text); transition:all 0.2s;
+}
+.next-story-btn:hover { border-color:var(--border-gold); background:var(--gold-glow); }
+.next-story-btn .nsb-label { font-size:10px; color:var(--text-dim); display:block; margin-bottom:4px; }
+.next-story-btn .nsb-title { font-family:'Tiro Tamil',serif; font-size:14px; color:var(--text); }
+.next-story-btn .nsb-emoji { font-size:18px; margin-bottom:4px; display:block; }
+
+/* STORY END CTA */
+.story-end-cta {
+  padding:16px 20px;
+  background:rgba(37,211,102,0.05);
+  border-top:1px solid rgba(37,211,102,0.12);
+  text-align:center;
+}
+.story-end-cta p { font-family:'Tiro Tamil',serif; font-size:14px; color:var(--text-muted); margin-bottom:10px; }
+.story-end-wa-btn {
+  background:#25D366; border:none; color:#fff;
+  padding:10px 22px; border-radius:var(--radius-sm); cursor:pointer;
+  font-size:13px; font-weight:800; font-family:'DM Sans',sans-serif;
+}
+
+/* SERIES BADGE */
+.series-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  background:rgba(124,77,255,0.12); border:1px solid rgba(124,77,255,0.25);
+  border-radius:8px; padding:3px 10px;
+  font-size:10px; font-weight:700; color:var(--purple);
+}
+
+/* SHARE COUNT BADGE */
+.share-count-badge { font-size:10px; color:var(--text-dim); display:flex; align-items:center; gap:3px; }
+
+/* PAGINATION */
+.pagination { display:flex; justify-content:center; gap:6px; padding:20px 24px; flex-wrap:wrap; }
+.page-btn {
+  background:var(--surface2);
+  border:1.5px solid var(--border);
+  color:var(--text-muted); padding:8px 16px;
+  border-radius:8px; cursor:pointer;
+  font-size:12px; font-weight:700;
+  font-family:'DM Sans',sans-serif; transition:all 0.2s;
+}
+.page-btn:hover, .page-btn.active {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border-color:transparent; color:#1a1200;
+}
+
+/* ─── FOOTER ─── */
+footer {
+  background:var(--bg);
+  border-top:1px solid var(--border);
+  padding:32px 24px 96px; text-align:center; margin-top:20px;
+}
+.footer-title {
+  font-family:'DM Serif Display',serif;
+  font-size:22px; color:var(--gold); margin-bottom:8px; font-weight:400;
+}
+footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
+
+/* ─── STORY OF THE DAY ─── */
+.sotd-section {
+  background:linear-gradient(135deg,rgba(245,166,35,0.08),rgba(255,140,0,0.04));
+  border:1.5px solid var(--border-gold);
+  border-radius:var(--radius); margin:0 24px 16px;
+  max-width:1072px; margin-left:auto; margin-right:auto;
+  padding:18px 20px; position:relative; overflow:hidden;
+}
+.sotd-section::before {
+  content:''; position:absolute;
+  top:0; left:0; right:0; height:1px;
+  background:linear-gradient(90deg,transparent,var(--gold),transparent);
+}
+.sotd-label {
+  font-size:10px; font-weight:800; letter-spacing:2px;
+  color:var(--gold); text-transform:uppercase; margin-bottom:12px;
+  display:flex; align-items:center; gap:8px;
+}
+.sotd-label::after { content:''; flex:1; height:1px; background:var(--border-gold); opacity:0.5; }
+.sotd-card {
+  display:flex; gap:16px; align-items:center;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:14px;
+  cursor:pointer; transition:all 0.2s;
+}
+.sotd-card:hover { background:var(--gold-glow); border-color:var(--border-gold); transform:translateY(-2px); }
+.sotd-emoji { font-size:38px; flex-shrink:0; }
+.sotd-info { flex:1; }
+.sotd-info .story-title { font-size:16px; margin-bottom:4px; }
+.sotd-info .story-excerpt { font-size:12px; }
+.sotd-read-btn {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; padding:8px 16px;
+  border-radius:var(--radius-sm); cursor:pointer; font-size:12px;
+  font-weight:800; white-space:nowrap; font-family:'DM Sans',sans-serif;
+}
+
+/* ─── RECENTLY READ ─── */
+.history-section { max-width:1120px; margin:0 auto; padding:0 24px 16px; }
+.history-scroll { display:flex; gap:8px; overflow-x:auto; padding-bottom:6px; }
+.history-scroll::-webkit-scrollbar { height:3px; }
+.history-scroll::-webkit-scrollbar-thumb { background:var(--border-gold); border-radius:3px; }
+.history-item {
+  flex-shrink:0; background:var(--surface);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); padding:10px 14px;
+  cursor:pointer; transition:all 0.2s;
+  max-width:160px; min-width:130px;
+}
+.history-item:hover { border-color:var(--border-gold); background:var(--gold-glow); }
+.history-item .hi-emoji { font-size:20px; margin-bottom:4px; }
+.history-item .hi-title { font-family:'Tiro Tamil',serif; font-size:12px; color:var(--text); font-weight:700; white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.history-item .hi-cat { font-size:10px; color:var(--text-dim); margin-top:2px; }
+
+/* ─── BOTTOM NAV (mobile) ─── */
+.bottom-nav {
+  display:none;
+  position:fixed; bottom:0; left:0; right:0;
+  background:rgba(11,12,20,0.95);
+  backdrop-filter:blur(20px);
+  border-top:1px solid var(--border);
+  z-index:500; padding:6px 0 env(safe-area-inset-bottom,6px);
+  flex-direction:row;
+}
+.bn-item {
+  flex:1; display:flex; flex-direction:column; align-items:center;
+  justify-content:center; padding:6px 4px; cursor:pointer;
+  color:var(--text-dim); transition:color 0.2s;
+  font-size:10px; font-weight:700; gap:2px;
+  background:none; border:none; font-family:'DM Sans',sans-serif;
+}
+.bn-item .bn-icon { font-size:20px; }
+.bn-item.active, .bn-item:hover { color:var(--gold); }
+@media(max-width:700px){
+  .bottom-nav { display:flex; }
+  nav .nav-links { display:none; }
+  nav { grid-template-columns:auto auto; justify-content:space-between; }
+}
+
+/* ─── BOOKMARKS PANEL ─── */
+#bookmarksPanel { display:none; }
+#bookmarksPanel.active { display:block; }
+#mainContent.hidden { display:none; }
+
+/* ─── READING PROGRESS BAR ─── */
+#readingProgressBar {
+  position:fixed; top:0; left:0; height:2px; width:0%;
+  background:linear-gradient(90deg,var(--gold),var(--gold2),#ff4081);
+  z-index:9999; transition:width 0.1s; border-radius:0 1px 1px 0;
+  display:none;
+}
+
+/* ─── SKELETON LOADER ─── */
+@keyframes shimmer {
+  0%{background-position:-600px 0}
+  100%{background-position:600px 0}
+}
+.skeleton {
+  background:linear-gradient(90deg,rgba(255,255,255,0.04) 25%,rgba(255,255,255,0.08) 50%,rgba(255,255,255,0.04) 75%);
+  background-size:600px 100%;
+  animation:shimmer 1.4s infinite;
+  border-radius:8px;
+}
+.skeleton-card { background:var(--surface); border:1.5px solid var(--border); border-radius:var(--radius); overflow:hidden; }
+.skeleton-thumb { height:115px; }
+.skeleton-body { padding:14px 16px; }
+.skeleton-line { height:11px; margin-bottom:10px; border-radius:6px; }
+.skeleton-line.short { width:55%; }
+.skeleton-line.medium { width:80%; }
+.skeleton-line.long { width:96%; }
+
+/* ─── CONFETTI ─── */
+#confettiCanvas { position:fixed; top:0; left:0; width:100%; height:100%; pointer-events:none; z-index:9998; display:none; }
+
+/* ─── STREAK CHIP ─── */
+.streak-chip {
+  background:var(--gold-glow); border:1px solid var(--border-gold);
+  border-radius:20px; padding:5px 14px;
+  font-size:12px; font-weight:700; color:var(--gold);
+  display:inline-flex; align-items:center; gap:6px;
+}
+
+/* ─── LEADERBOARD ─── */
+.leaderboard-section { max-width:1120px; margin:0 auto; padding:0 24px 16px; }
+.leaderboard-list { display:flex; flex-direction:column; gap:8px; }
+.lb-item {
+  display:flex; align-items:center; gap:12px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:10px 14px;
+}
+.lb-rank { font-size:16px; font-weight:900; color:var(--gold); min-width:28px; text-align:center; }
+.lb-name { font-size:14px; font-weight:700; flex:1; }
+.lb-score { font-size:13px; color:var(--green); font-weight:700; }
+.lb-streak { font-size:12px; color:var(--text-dim); }
+
+/* ─── PWA BANNER ─── */
+.pwa-banner {
+  display:none; position:fixed;
+  bottom:74px; left:50%; transform:translateX(-50%);
+  background:var(--bg3);
+  border:1.5px solid var(--border-gold);
+  border-radius:var(--radius); padding:14px 18px;
+  z-index:4000; max-width:320px; width:90%;
+  box-shadow:0 12px 40px rgba(0,0,0,0.5);
+  align-items:center; gap:12px;
+}
+.pwa-banner.show { display:flex; }
+.pwa-banner-text strong { font-size:13px; color:var(--gold); display:block; }
+.pwa-banner-text span { font-size:11px; color:var(--text-muted); }
+.pwa-install-btn {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; padding:8px 14px;
+  border-radius:var(--radius-sm); cursor:pointer; font-size:12px;
+  font-weight:800; font-family:'DM Sans',sans-serif; white-space:nowrap;
+}
+.pwa-dismiss { background:none; border:none; color:var(--text-dim); font-size:18px; cursor:pointer; padding:0 4px; }
+
+/* ─── GAMES MODAL ─── */
 .games-modal {
   display:none; position:fixed;
   top:0; left:0; right:0; bottom:0;
-  background:rgba(0,0,0,0.96);
-  z-index:2000; overflow-y:auto; padding:20px;
+  background:rgba(5,5,12,0.97);
+  z-index:2000; overflow-y:auto; padding:16px;
+  backdrop-filter:blur(4px);
 }
 .games-modal.open { display:block; }
 .games-modal-inner {
-  max-width:750px; margin:0 auto;
-  background:linear-gradient(145deg,#0d1117,#1a1a2e);
-  border:2px solid rgba(0,230,118,0.3);
-  border-radius:20px; overflow:hidden;
+  max-width:760px; margin:0 auto;
+  background:var(--bg2);
+  border:1.5px solid rgba(0,230,118,0.3);
+  border-radius:var(--radius); overflow:hidden;
+  box-shadow:0 32px 80px rgba(0,0,0,0.7);
 }
 .games-modal-header {
-  background:linear-gradient(135deg,#00c853,#00e676);
+  background:linear-gradient(135deg,var(--green2),var(--green));
   padding:16px 22px;
   display:flex; justify-content:space-between; align-items:center;
 }
-.games-modal-header h2 { font-size:18px; font-weight:900; color:#0a1a0a; }
+.games-modal-header h2 { font-size:17px; font-weight:900; color:#001a0a; font-family:'DM Sans',sans-serif; }
 .games-modal-close {
   background:rgba(0,0,0,0.2); border:none;
-  color:#0a1a0a; width:36px; height:36px;
-  border-radius:50%; font-size:18px; cursor:pointer; font-weight:900;
+  color:#001a0a; width:34px; height:34px;
+  border-radius:50%; font-size:16px; cursor:pointer; font-weight:900;
 }
-.games-nav {
-  display:flex; gap:0; border-bottom:2px solid rgba(0,230,118,0.15);
-}
+.games-nav { display:flex; gap:0; border-bottom:1px solid rgba(0,230,118,0.12); }
 .game-tab-btn {
   flex:1; padding:12px; background:transparent;
-  border:none; color:rgba(255,255,255,0.4);
-  font-size:13px; font-weight:700; cursor:pointer;
-  font-family:'Poppins',sans-serif; transition:all 0.2s;
-  border-bottom:3px solid transparent;
+  border:none; color:var(--text-dim);
+  font-size:12px; font-weight:700; cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:all 0.2s;
+  border-bottom:2px solid transparent;
 }
-.game-tab-btn.active {
-  color:#00e676; border-bottom-color:#00e676;
-  background:rgba(0,230,118,0.06);
-}
+.game-tab-btn.active { color:var(--green); border-bottom-color:var(--green); background:rgba(0,230,118,0.04); }
 .game-panel { display:none; padding:24px; }
 .game-panel.active { display:block; }
 
 /* Word Guess Game */
 .word-guess-area { text-align:center; }
-.word-display {
-  display:flex; justify-content:center; gap:10px;
-  flex-wrap:wrap; margin:20px 0;
-}
+.word-display { display:flex; justify-content:center; gap:8px; flex-wrap:wrap; margin:20px 0; }
 .letter-box {
   width:44px; height:50px;
-  background:rgba(255,255,255,0.06);
-  border:2px solid rgba(255,255,255,0.2);
-  border-radius:10px;
+  background:var(--surface);
+  border:2px solid var(--border);
+  border-radius:var(--radius-sm);
   display:flex; align-items:center; justify-content:center;
-  font-size:22px; font-weight:900; color:#fff;
-  font-family:'Tiro Tamil',serif;
-  transition:all 0.3s;
+  font-size:22px; font-weight:900; color:var(--text);
+  font-family:'Tiro Tamil',serif; transition:all 0.3s;
 }
-.letter-box.filled { border-color:#00e676; background:rgba(0,230,118,0.1); }
-.letter-box.correct { background:#00c853; border-color:#00c853; }
-.letter-box.wrong { background:#f44336; border-color:#f44336; }
-.hint-text {
-  font-family:'Tiro Tamil',serif;
-  font-size:14px; color:rgba(255,255,255,0.6);
-  margin:10px 0 20px; line-height:1.6;
-}
-.tamil-keyboard {
-  display:flex; flex-wrap:wrap; gap:6px;
-  justify-content:center; margin:16px 0;
-}
+.letter-box.filled { border-color:var(--green); background:rgba(0,230,118,0.08); }
+.letter-box.correct { background:var(--green2); border-color:var(--green2); }
+.letter-box.wrong { background:rgba(244,67,54,0.8); border-color:#f44336; }
+.hint-text { font-family:'Tiro Tamil',serif; font-size:14px; color:var(--text-muted); margin:10px 0 20px; line-height:1.6; }
+.tamil-keyboard { display:flex; flex-wrap:wrap; gap:5px; justify-content:center; margin:16px 0; }
 .key-btn {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:8px 12px;
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--text); padding:7px 11px;
   border-radius:8px; cursor:pointer;
   font-size:15px; font-family:'Tiro Tamil',serif;
   transition:all 0.15s; min-width:40px;
 }
-.key-btn:hover { background:rgba(0,230,118,0.2); border-color:#00e676; }
-.key-btn:disabled { opacity:0.3; cursor:not-allowed; }
-.key-btn.used-correct { background:#00c853; border-color:#00c853; }
-.key-btn.used-wrong { background:rgba(244,67,54,0.3); border-color:#f44336; }
-.game-score {
-  display:flex; justify-content:center; gap:20px;
-  margin:14px 0; flex-wrap:wrap;
-}
+.key-btn:hover { background:rgba(0,230,118,0.15); border-color:var(--green); }
+.key-btn:disabled { opacity:0.25; cursor:not-allowed; }
+.key-btn.used-correct { background:var(--green2); border-color:var(--green2); }
+.key-btn.used-wrong { background:rgba(244,67,54,0.2); border-color:#f44336; }
+.game-score { display:flex; justify-content:center; gap:16px; margin:14px 0; flex-wrap:wrap; }
 .score-chip {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.12);
+  background:var(--surface); border:1px solid var(--border);
   border-radius:20px; padding:6px 16px;
-  font-size:12px; font-weight:700;
+  font-size:12px; font-weight:700; font-family:'DM Sans',sans-serif;
 }
-.score-chip span { color:#00e676; }
+.score-chip span { color:var(--green); }
 .game-action-btn {
-  background:linear-gradient(135deg,#00c853,#00e676);
-  border:none; color:#0a1a0a; padding:12px 28px;
-  border-radius:12px; cursor:pointer;
-  font-size:14px; font-weight:900;
-  font-family:'Poppins',sans-serif;
+  background:linear-gradient(135deg,var(--green2),var(--green));
+  border:none; color:#001a0a; padding:12px 28px;
+  border-radius:var(--radius-sm); cursor:pointer;
+  font-size:14px; font-weight:900; font-family:'DM Sans',sans-serif;
   margin-top:10px; transition:opacity 0.2s;
 }
 .game-action-btn:hover { opacity:0.85; }
-.game-msg {
-  font-size:15px; font-weight:700; margin:12px 0;
-  min-height:24px; font-family:'Tiro Tamil',serif;
-}
+.game-msg { font-size:15px; font-weight:700; margin:12px 0; min-height:24px; font-family:'Tiro Tamil',serif; }
 
 /* Quiz Game */
 .quiz-question {
   font-family:'Tiro Tamil',serif;
-  font-size:17px; color:#fff;
-  line-height:1.7; margin-bottom:20px;
-  background:rgba(255,255,255,0.05);
-  border-left:4px solid #00e676;
-  border-radius:8px; padding:14px 18px;
+  font-size:16px; color:var(--text); line-height:1.7; margin-bottom:20px;
+  background:var(--surface); border-left:3px solid var(--green);
+  border-radius:var(--radius-sm); padding:14px 18px;
 }
-.quiz-options { display:flex; flex-direction:column; gap:10px; }
+.quiz-options { display:flex; flex-direction:column; gap:8px; }
 .quiz-opt {
-  background:rgba(255,255,255,0.07);
-  border:2px solid rgba(255,255,255,0.12);
-  border-radius:12px; padding:13px 18px;
+  background:var(--surface); border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); padding:12px 16px;
   cursor:pointer; font-family:'Tiro Tamil',serif;
-  font-size:15px; color:rgba(255,255,255,0.85);
+  font-size:14px; color:rgba(232,230,240,0.8);
   text-align:left; transition:all 0.2s;
 }
-.quiz-opt:hover:not(:disabled) { border-color:#00e676; background:rgba(0,230,118,0.08); }
-.quiz-opt.correct { background:rgba(0,200,83,0.2); border-color:#00c853; color:#00e676; }
-.quiz-opt.wrong { background:rgba(244,67,54,0.15); border-color:#f44336; color:#ff6b6b; }
-.quiz-progress {
-  display:flex; justify-content:space-between;
-  font-size:12px; color:rgba(255,255,255,0.4);
-  margin-bottom:16px;
-}
-.quiz-progress-bar {
-  height:4px; background:rgba(255,255,255,0.1);
-  border-radius:10px; overflow:hidden; margin-bottom:16px;
-}
-.quiz-progress-fill {
-  height:100%; background:linear-gradient(90deg,#00c853,#00e676);
-  border-radius:10px; transition:width 0.4s;
-}
-.quiz-result {
-  text-align:center; padding:20px 0;
-  font-family:'Tiro Tamil',serif;
-}
-.quiz-result .big-score {
-  font-size:52px; font-weight:900; color:#00e676;
-}
-.quiz-result p { font-size:15px; color:rgba(255,255,255,0.7); margin:8px 0; }
+.quiz-opt:hover:not(:disabled) { border-color:var(--green); background:rgba(0,230,118,0.06); }
+.quiz-opt.correct { background:rgba(0,200,83,0.18); border-color:var(--green2); color:var(--green); }
+.quiz-opt.wrong { background:rgba(244,67,54,0.12); border-color:#f44336; color:#ff6b6b; }
+.quiz-progress { display:flex; justify-content:space-between; font-size:11px; color:var(--text-dim); margin-bottom:14px; }
+.quiz-progress-bar { height:3px; background:var(--border); border-radius:10px; overflow:hidden; margin-bottom:16px; }
+.quiz-progress-fill { height:100%; background:linear-gradient(90deg,var(--green2),var(--green)); border-radius:10px; transition:width 0.4s; }
+.quiz-result { text-align:center; padding:20px 0; font-family:'Tiro Tamil',serif; }
+.quiz-result .big-score { font-size:52px; font-weight:900; color:var(--green); font-family:'DM Serif Display',serif; }
+.quiz-result p { font-size:15px; color:var(--text-muted); margin:8px 0; }
 
-/* AD */
-.ad-banner {
-  background:rgba(249,168,37,0.07);
-  border:1px dashed rgba(249,168,37,0.3);
-  border-radius:10px; margin:16px 20px;
-  padding:14px; text-align:center;
-  font-size:12px; color:rgba(255,255,255,0.3);
-  max-width:1060px; margin-left:auto; margin-right:auto;
+/* ─── LIGHT MODE ─── */
+body.light {
+  --bg:#f4f2ed; --bg2:#fafaf7; --bg3:#fff;
+  --surface:rgba(0,0,0,0.04); --surface2:rgba(0,0,0,0.06);
+  --border:rgba(0,0,0,0.1); --border-gold:rgba(200,120,0,0.35);
+  --text:#1a1a2e; --text-muted:rgba(26,26,46,0.6); --text-dim:rgba(26,26,46,0.35);
+  --gold:#c87800; --gold2:#a05f00; --gold-glow:rgba(200,120,0,0.12);
+  color:#1a1a2e; background:#f4f2ed;
 }
-.ad-banner span { color:#f9a825; font-weight:700; }
+body.light nav { background:rgba(244,242,237,0.9); border-bottom-color:rgba(200,120,0,0.3); }
+body.light .logo span { color:#1a1a2e; }
+body.light .nav-links a { color:rgba(26,26,46,0.5); }
+body.light .hero { background:radial-gradient(ellipse 80% 60% at 50% -10%,rgba(200,120,0,0.12) 0%,transparent 70%), linear-gradient(180deg,#fff8ec 0%,#f4f2ed 100%); }
+body.light .hero h2 { color:rgba(26,26,46,0.55); }
+body.light .stat { background:rgba(0,0,0,0.04); border-color:rgba(0,0,0,0.1); }
+body.light .stat .lbl { color:rgba(26,26,46,0.45); }
+body.light .search-box input { background:#fff; border-color:rgba(0,0,0,0.15); color:#1a1a2e; }
+body.light .story-card { background:#fff; border-color:rgba(0,0,0,0.1); }
+body.light .story-title { color:#1a1a2e; }
+body.light .story-excerpt { color:rgba(26,26,46,0.5); }
+body.light .story-meta { color:rgba(26,26,46,0.4); }
+body.light .section-title { color:#1a1a2e; }
+body.light .modal-inner { background:#fff; }
+body.light .modal-story { background:#fff; color:rgba(26,26,46,0.85); }
+body.light .modal-story .moral { background:rgba(200,120,0,0.08); }
+body.light .font-btn { background:rgba(0,0,0,0.05); border-color:rgba(0,0,0,0.12); color:#1a1a2e; }
+body.light footer { background:#f4f2ed; }
+body.light footer p { color:rgba(26,26,46,0.4); }
+body.light .sotd-section { background:linear-gradient(135deg,rgba(200,120,0,0.08),rgba(200,120,0,0.04)); }
+body.light .sotd-card { background:#fff; }
+body.light .history-item { background:rgba(0,0,0,0.04); }
+body.light .history-item .hi-title { color:#1a1a2e; }
+body.light .sort-select { background:#fff; border-color:rgba(0,0,0,0.15); color:#1a1a2e; }
+body.light .bottom-nav { background:rgba(244,242,237,0.95); border-top-color:rgba(0,0,0,0.1); }
+body.light .bn-item { color:rgba(26,26,46,0.4); }
+body.light .bn-item.active { color:var(--gold); }
+body.light .share-popup { background:#fff; }
+body.light .card-action-btn { background:rgba(0,0,0,0.04); border-color:rgba(0,0,0,0.1); color:rgba(26,26,46,0.5); }
+body.light .history-item .hi-cat { color:rgba(26,26,46,0.4); }
+body.light .comment-item { background:rgba(0,0,0,0.04); }
+body.light .comment-text { color:rgba(26,26,46,0.7); }
+body.light .comment-input { background:#fff; border-color:rgba(0,0,0,0.15); color:#1a1a2e; }
+body.light .next-story-btn { background:rgba(0,0,0,0.04); border-color:rgba(0,0,0,0.1); color:#1a1a2e; }
+body.light .next-story-btn .nsb-title { color:#1a1a2e; }
+body.light .next-story-btn .nsb-label { color:rgba(26,26,46,0.4); }
+body.light .lb-item { background:rgba(0,0,0,0.04); }
+body.light .lb-name { color:#1a1a2e; }
+body.light .mood-btn { background:rgba(0,0,0,0.05); border-color:rgba(0,0,0,0.1); color:rgba(26,26,46,0.6); }
+body.light .tts-speed-select { background:#fff; border-color:rgba(0,0,0,0.15); color:#1a1a2e; }
 
-/* PAGINATION */
-.pagination {
-  display:flex; justify-content:center;
-  gap:8px; padding:20px; flex-wrap:wrap;
+/* ─── NIGHT MODE ─── */
+body.night {
+  --bg:#030308; --bg2:#07080f; --bg3:#0a0b14;
+  --surface:rgba(255,220,150,0.03); --surface2:rgba(255,220,150,0.05);
+  --border:rgba(255,220,150,0.07); --border-gold:rgba(212,149,26,0.25);
+  --text:#e8d5b0; --text-muted:rgba(232,213,176,0.5); --text-dim:rgba(232,213,176,0.25);
+  --gold:#d4951a; --gold2:#b07a10; --gold-glow:rgba(212,149,26,0.1);
+  background:#030308; color:#e8d5b0;
 }
-.page-btn {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:8px 16px;
-  border-radius:8px; cursor:pointer;
-  font-size:13px; font-weight:700;
-  font-family:'Poppins',sans-serif;
-  transition:all 0.2s;
-}
-.page-btn:hover,.page-btn.active {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border-color:transparent;
-}
+body.night nav { background:rgba(3,3,8,0.9); }
+body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(212,149,26,0.1) 0%,transparent 70%), linear-gradient(180deg,#07080f 0%,#030308 100%); }
 
-/* FOOTER */
-footer {
-  background:#0a0a12;
-  border-top:2px solid rgba(249,168,37,0.2);
-  padding:24px 20px; text-align:center; margin-top:30px;
-}
-.footer-title { font-family:'Tiro Tamil',serif; font-size:20px; color:#f9a825; margin-bottom:8px; }
-footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
+/* ─── WORD GUESS RESTART / NEXT ─── */
+#wg-restart-btn { display:none; }
+#wg-next-btn { display:none; }
 </style>
 </head>
 <body>
+<!-- Reading progress bar -->
+<div id="readingProgressBar"></div>
+<!-- Confetti -->
+<canvas id="confettiCanvas"></canvas>
+<!-- PWA Install Banner -->
+<div class="pwa-banner" id="pwaBanner">
+  <div class="pwa-banner-text">
+    <strong>📱 App-ஆக Install செய்யுங்கள்!</strong>
+    <span>Offline-லும் படிக்கலாம் — Always Free!</span>
+  </div>
+  <button class="pwa-install-btn" onclick="installPWA()">Install</button>
+  <button class="pwa-dismiss" onclick="dismissPWA()">✕</button>
+</div>
 
 <!-- NAV -->
 <nav>
@@ -517,17 +1029,22 @@ footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
     <a href="#">🙏 தெய்வீகம்</a>
     <a href="#">kathais.xyz</a>
   </div>
+  <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Light</button>
 </nav>
 
 <!-- HERO -->
 <div class="hero">
-  <h1>படித்து மகிளுங்கள் 📖</h1>
-  <h2>Tamil Kathaikal — Tamil Stories Collection</h2>
+  <div class="hero-eyebrow">📖 FREE FOREVER</div>
+  <h1>Tamil<span>கதைகள்</span></h1>
+  <h2>படித்து மகிளுங்கள் --- Tamil Stories Collection</h2>
   <div class="hero-stats">
     <div class="stat"><div class="num">1000+</div><div class="lbl">கதைகள் Stories</div></div>
     <div class="stat"><div class="num">15+</div><div class="lbl">வகைகள் Categories</div></div>
     <div class="stat"><div class="num">FREE</div><div class="lbl">எப்போதும் இலவசம்</div></div>
-    <div class="stat"><div class="num">📱</div><div class="lbl">Mobile Friendly</div></div>
+    <div class="stat" id="streakStat" style="cursor:default">
+      <div class="num" style="color:#f9a825" id="heroStreak">🔥 1</div>
+      <div class="lbl">நாள் streak</div>
+    </div>
     <div class="stat" onclick="openGamesModal()" style="cursor:pointer;border-color:rgba(0,230,118,0.5);background:rgba(0,230,118,0.08);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
       <div class="num" style="color:#00e676;font-size:26px;">🎮</div>
       <div class="lbl" style="color:#00e676;font-weight:700;">Fun Games<br>விளையாடு!</div>
@@ -536,17 +1053,50 @@ footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
 </div>
 
 <!-- SEARCH -->
-<div class="search-wrap">
+<div class="search-wrap" id="searchWrap">
   <div class="search-box">
-    <input type="text" id="searchInput" placeholder="🔍 கதை தேடுங்கள்... Search stories..." oninput="searchStories()">
-    <button class="search-btn">🔍</button>
+    <input type="text" id="searchInput" placeholder="🔍 கதை தேடுங்கள்... Search stories..." oninput="searchStories()" autocomplete="off" onblur="hideAutocomplete()">
+    <button class="search-btn" onclick="searchStories()">🔍</button>
   </div>
+  <div class="autocomplete-list" id="autocompleteList" style="display:none"></div>
+</div>
+
+<!-- MOOD PICKER -->
+<div class="mood-strip" id="moodStrip">
+  <span class="mood-label">இன்று உணர்வு:</span>
+  <button class="mood-btn" onclick="filterMood('comedy',this)">😂 நகைச்சுவை</button>
+  <button class="mood-btn" onclick="filterMood('love',this)">💕 காதல்</button>
+  <button class="mood-btn" onclick="filterMood('horror',this)">😱 பயம்</button>
+  <button class="mood-btn" onclick="filterMood('kids',this)">🧒 குழந்தை</button>
+  <button class="mood-btn" onclick="filterMood('moral',this)">💡 நீதி</button>
+  <button class="mood-btn" onclick="filterMood('devotion',this)">🙏 தெய்வீகம்</button>
+  <button class="mood-btn" id="moodClear" onclick="clearMood()" style="display:none;border-color:rgba(255,100,100,0.4);color:#ff6b6b;">✕ அழி</button>
 </div>
 
 <!-- AD -->
 <div class="ad-banner"><span>📢 Advertisement</span> — Google AdSense</div>
 
+<!-- STORY OF THE DAY -->
+<div class="sotd-section" id="sotdSection">
+  <div class="sotd-label">⭐ இன்றைய கதை — Story of the Day</div>
+  <div class="sotd-card" id="sotdCard" onclick="">
+    <div class="sotd-emoji" id="sotdEmoji">📖</div>
+    <div class="sotd-info">
+      <div class="story-title" id="sotdTitle">ஏற்றுகிறது...</div>
+      <div class="story-excerpt" id="sotdExcerpt"></div>
+    </div>
+    <button class="sotd-read-btn">படிக்க →</button>
+  </div>
+</div>
+
+<!-- RECENTLY READ -->
+<div class="history-section" id="historySection" style="display:none">
+  <div class="section-title">🕐 சமீபத்தில் படித்தவை — Recently Read</div>
+  <div class="history-scroll" id="historyScroll"></div>
+</div>
+
 <!-- CATEGORIES + STORIES -->
+<div id="mainContent">
 <div class="section">
   <div class="section-title">📚 கதை வகைகள் — Categories</div>
   <div class="cat-tabs">
@@ -562,8 +1112,27 @@ footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
     <div class="cat-tab" onclick="filterCat('thriller',this)">🔥 த்ரில்லர்</div>
   </div>
 
-  <div class="section-title">✨ சிறந்த கதைகள் — Featured Stories</div>
+  <div class="toolbar">
+    <div class="section-title" style="margin-bottom:0;flex:1">✨ கதைகள் — Stories</div>
+    <select class="sort-select" id="sortSelect" onchange="sortStories()">
+      <option value="default">📋 Default</option>
+      <option value="readtime">⏱ Read Time</option>
+      <option value="liked">❤️ Most Liked</option>
+      <option value="views">👁 Most Viewed</option>
+    </select>
+    <button class="random-btn" onclick="openRandomStory()">🎲 Random</button>
+  </div>
+
   <div class="stories-grid" id="storiesGrid"></div>
+</div>
+</div>
+
+<!-- BOOKMARKS PANEL -->
+<div id="bookmarksPanel">
+  <div class="section">
+    <div class="section-title">🔖 சேமித்தவை — Bookmarks</div>
+    <div class="stories-grid" id="bookmarksGrid"></div>
+  </div>
 </div>
 
 <!-- PAGINATION -->
@@ -574,13 +1143,39 @@ footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
 
 <!-- FOOTER -->
 <footer>
-  <div class="footer-title">📖 படித்து மகிளுங்கள் — Tamil Kathaikal</div>
+  <div class="footer-title">📖 படித்து மகிளுங்கள் — Tamilகதைகள்</div>
   <p>
     தமிழ் கதைகளின் களஞ்சியம் | kathais.xyz<br>
     1000+ Tamil Stories — Free Forever 🙏<br>
-    © 2026 Tamil Kathaikal. All Rights Reserved.
+    © 2026 Tamilகதைகள். All Rights Reserved.
   </p>
 </footer>
+
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav" id="bottomNav">
+  <button class="bn-item active" id="bn-home" onclick="showTab('home',this)">
+    <span class="bn-icon">🏠</span>Home
+  </button>
+  <button class="bn-item" id="bn-search" onclick="showTab('search',this)">
+    <span class="bn-icon">🔍</span>தேடு
+  </button>
+  <button class="bn-item" id="bn-bookmarks" onclick="showTab('bookmarks',this)">
+    <span class="bn-icon">🔖</span>Saved
+  </button>
+  <button class="bn-item" id="bn-games" onclick="openGamesModal()">
+    <span class="bn-icon">🎮</span>Games
+  </button>
+</nav>
+
+<!-- SHARE POPUP -->
+<div class="share-popup" id="sharePopup">
+  <div class="share-popup-title">📤 SHARE THIS STORY</div>
+  <div class="share-btns">
+    <button class="share-btn share-wa" onclick="shareWhatsApp()">💬 WhatsApp</button>
+    <button class="share-btn share-copy" onclick="copyLink()">🔗 Copy Link</button>
+  </div>
+  <button class="share-close-btn" onclick="closeShare()">✕ Close</button>
+</div>
 
 <!-- GAMES MODAL -->
 <div class="games-modal" id="gamesModal">
@@ -589,9 +1184,14 @@ footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
       <h2>🎮 Fun Games — விளையாட்டு நேரம்!</h2>
       <button class="games-modal-close" onclick="closeGamesModal()">✕</button>
     </div>
-    <div class="games-nav">
-      <button class="game-tab-btn active" onclick="switchGame('wordguess',this)">🔤 சொல் யூகம்</button>
-      <button class="game-tab-btn" onclick="switchGame('quiz',this)">🧠 கதை குவிஸ்</button>
+    <div class="games-nav" style="overflow-x:auto;display:flex;flex-wrap:nowrap">
+      <button class="game-tab-btn active" onclick="switchGame('wordguess',this)">🔤 சொல்</button>
+      <button class="game-tab-btn" onclick="switchGame('quiz',this)">🧠 குவிஸ்</button>
+      <button class="game-tab-btn" onclick="switchGame('snake',this)">🐍 Snake</button>
+      <button class="game-tab-btn" onclick="switchGame('racing',this)">🏎️ Racing</button>
+      <button class="game-tab-btn" onclick="switchGame('chess',this)">♟️ Chess</button>
+      <button class="game-tab-btn" onclick="switchGame('birds',this)">🐦 Birds</button>
+      <button class="game-tab-btn" onclick="switchGame('leaderboard',this)">🏆 Board</button>
     </div>
 
     <!-- GAME 1: Tamil Word Guess -->
@@ -626,6 +1226,74 @@ footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
         <div class="game-msg" id="quiz-msg"></div>
       </div>
     </div>
+    <!-- GAME 3: Snake -->
+    <div class="game-panel" id="game-snake">
+      <div style="text-align:center">
+        <div class="game-score" style="margin-bottom:12px">
+          <div class="score-chip">மதிப்பெண்: <span id="snake-score">0</span></div>
+          <div class="score-chip">சாதனை: <span id="snake-best">0</span></div>
+        </div>
+        <canvas id="snakeCanvas" width="300" height="300" style="border:2px solid rgba(0,230,118,0.4);border-radius:10px;background:#0a0f0a;display:block;margin:0 auto"></canvas>
+        <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4)">Arrow keys / WASD / Swipe to move</div>
+        <div class="game-msg" id="snake-msg" style="margin-top:8px"></div>
+        <button class="game-action-btn" id="snake-start-btn" onclick="startSnake()" style="margin-top:10px">▶ ஆரம்பி</button>
+      </div>
+    </div>
+
+    <!-- GAME 4: Racing -->
+    <div class="game-panel" id="game-racing">
+      <div style="text-align:center">
+        <div class="game-score" style="margin-bottom:12px">
+          <div class="score-chip">Score: <span id="race-score">0</span></div>
+          <div class="score-chip">Speed: <span id="race-speed">1</span>x</div>
+          <div class="score-chip">Best: <span id="race-best">0</span></div>
+        </div>
+        <canvas id="raceCanvas" width="300" height="400" style="border:2px solid rgba(249,168,37,0.4);border-radius:10px;background:#1a1a1a;display:block;margin:0 auto"></canvas>
+        <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4)">← → Arrow / A D to steer | Avoid cars!</div>
+        <div class="game-msg" id="race-msg" style="margin-top:8px"></div>
+        <button class="game-action-btn" id="race-start-btn" onclick="startRacing()" style="margin-top:10px">🏎️ Race Start!</button>
+      </div>
+    </div>
+
+    <!-- GAME 5: Chess -->
+    <div class="game-panel" id="game-chess">
+      <div style="text-align:center">
+        <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px">நீங்கள் வெள்ளை ♙ | AI கருப்பு ♟</div>
+        <div id="chessBoard" style="display:inline-grid;grid-template-columns:repeat(8,38px);border:2px solid rgba(255,255,255,0.2);border-radius:6px;overflow:hidden;margin:0 auto"></div>
+        <div class="game-msg" id="chess-msg" style="margin-top:10px;font-family:'Tiro Tamil',serif"></div>
+        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
+          <button class="game-action-btn" onclick="resetChess()">🔄 New Game</button>
+          <button class="game-action-btn" onclick="chessUndo()" style="background:rgba(255,255,255,0.1);color:#fff">↩ Undo</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- GAME 6: Angry Birds style (Slingshot) -->
+    <div class="game-panel" id="game-birds">
+      <div style="text-align:center">
+        <div class="game-score" style="margin-bottom:12px">
+          <div class="score-chip">Score: <span id="birds-score">0</span></div>
+          <div class="score-chip">Birds: <span id="birds-left">5</span></div>
+          <div class="score-chip">Best: <span id="birds-best">0</span></div>
+        </div>
+        <canvas id="birdsCanvas" width="500" height="300" style="border:2px solid rgba(255,100,0,0.4);border-radius:10px;background:linear-gradient(180deg,#1a3a6b 0%,#2d5a27 75%,#2d5a27 100%);display:block;margin:0 auto;max-width:100%;cursor:crosshair"></canvas>
+        <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4)">Click & drag on bird to aim and shoot!</div>
+        <div class="game-msg" id="birds-msg" style="margin-top:6px"></div>
+        <button class="game-action-btn" onclick="resetBirds()" style="margin-top:8px">🐦 New Round</button>
+      </div>
+    </div>
+
+    <!-- LEADERBOARD -->
+    <div class="game-panel" id="game-leaderboard">
+      <div style="text-align:center;margin-bottom:16px">
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">உங்கள் பெயர் சேர்க்க:</div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
+          <input id="lb-name-input" class="comment-input" placeholder="பெயர் எழுதுங்கள்..." style="max-width:180px">
+          <button class="game-action-btn" onclick="saveToLeaderboard()">சேர்க்க ✓</button>
+        </div>
+      </div>
+      <div class="leaderboard-list" id="lbList"></div>
+    </div>
   </div>
 </div>
 
@@ -636,38 +1304,64 @@ footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
       <h2 id="modalCat">📖 கதை</h2>
       <button class="close-btn" onclick="closeStory()">✕</button>
     </div>
+    <!-- Story reading progress -->
+    <div class="story-progress-wrap">
+      <div class="story-progress-bg">
+        <div class="story-progress-fill" id="storyProgressFill"></div>
+      </div>
+      <div class="story-progress-pct" id="storyProgressPct">0%</div>
+    </div>
     <div class="font-controls">
       <span class="font-label">எழுத்து அளவு:</span>
       <button class="font-btn" onclick="changeFont(-1)">A-</button>
       <button class="font-btn" onclick="changeFont(1)">A+</button>
     </div>
-
-    <!-- VOICE READER CONTROLS -->
-    <div class="voice-controls">
-      <div class="voice-title">🔊 AI Voice Reader — தானியங்கி வாசிப்பு</div>
-      <div class="voice-btns">
-        <button class="voice-btn play-btn" id="playPauseBtn" onclick="togglePlay()">▶ Play</button>
-        <button class="voice-btn stop-btn" onclick="stopReading()">⏹ Stop</button>
-        <div class="speed-wrap">
-          <span class="speed-label">⚡ Speed:</span>
-          <select class="speed-select" id="speedSelect" onchange="changeSpeed()">
-            <option value="0.7">0.7x Slow</option>
-            <option value="0.9">0.9x</option>
-            <option value="1" selected>1x Normal</option>
-            <option value="1.2">1.2x</option>
-            <option value="1.5">1.5x Fast</option>
-            <option value="2">2x Very Fast</option>
-          </select>
-        </div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-bar-bg" onclick="seekProgress(event)">
-          <div class="progress-bar-fill" id="progressFill"></div>
-        </div>
-        <div class="progress-time" id="progressTime">0% படிக்கப்பட்டது</div>
-      </div>
+    <!-- Font switcher -->
+    <div class="font-switcher">
+      <span class="font-switcher-label">FONT:</span>
+      <button class="font-opt active" onclick="setFont('tiro',this)">Tiro Tamil</button>
+      <button class="font-opt" onclick="setFont('noto',this)">Noto Serif</button>
+      <button class="font-opt" onclick="setFont('catamaran',this)">Catamaran</button>
+    </div>
+    <!-- TTS Bar -->
+    <div class="tts-bar">
+      <span class="tts-label">🔊 கேட்கலாம்:</span>
+      <button class="tts-btn" id="ttsPlayBtn" onclick="toggleTTS()">▶ படி</button>
+      <select class="tts-speed-select" id="ttsSpeed" onchange="updateTTSSpeed()">
+        <option value="0.75">0.75×</option>
+        <option value="1" selected>1×</option>
+        <option value="1.25">1.25×</option>
+        <option value="1.5">1.5×</option>
+      </select>
+      <span class="tts-label" id="ttsStatus"></span>
     </div>
     <div class="modal-story" id="modalStory"></div>
+    <!-- End of story CTA share -->
+    <div class="story-end-cta" id="storyEndCTA" style="display:none">
+      <p>இந்த கதை பிடித்ததா? நண்பர்களுடன் பகிருங்கள்! 😊</p>
+      <button class="story-end-wa-btn" onclick="shareWhatsAppCurrent()">💬 WhatsApp-ல் பகிர</button>
+    </div>
+    <!-- Reactions -->
+    <div class="reactions-bar" id="reactionsBar">
+      <span style="font-size:12px;color:rgba(255,255,255,0.4)">உணர்வு:</span>
+      <button class="reaction-btn" data-emoji="❤️" onclick="addReaction('❤️',this)">❤️ <span class="r-count">0</span></button>
+      <button class="reaction-btn" data-emoji="😂" onclick="addReaction('😂',this)">😂 <span class="r-count">0</span></button>
+      <button class="reaction-btn" data-emoji="😮" onclick="addReaction('😮',this)">😮 <span class="r-count">0</span></button>
+      <button class="reaction-btn" data-emoji="😢" onclick="addReaction('😢',this)">😢 <span class="r-count">0</span></button>
+      <button class="reaction-btn" data-emoji="👏" onclick="addReaction('👏',this)">👏 <span class="r-count">0</span></button>
+    </div>
+    <!-- Next story suggestions -->
+    <div class="next-story-row" id="nextStoryRow"></div>
+    <!-- Comments -->
+    <div class="comments-section">
+      <div class="comments-title">💬 கருத்துக்கள்</div>
+      <div class="comment-list" id="commentList"></div>
+      <div class="comment-input-row">
+        <input class="comment-input" id="commentNameInput" placeholder="உங்கள் பெயர்..." style="max-width:120px">
+        <input class="comment-input" id="commentTextInput" placeholder="கருத்து எழுதுங்கள்...">
+        <button class="comment-submit" onclick="submitComment()">அனுப்பு</button>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -1431,24 +2125,481 @@ const storiesDB = [
 <p>Meeting-ல் இருந்த எல்லோரும் சிரித்தனர். "Best meeting of the year!" என்று client சொன்னார்.</p>
 <div class="moral">💡 நீதி: குழந்தைகள் எந்த meeting-ஐயும் brighten பண்ணலாம்! 😂</div>`
   }
+  ,
+  {
+    id:51, cat:'love', badge:'new', emoji:'🌹',
+    bg:'linear-gradient(135deg,#b71c1c,#c62828)',
+    catLabel:'காதல்', catColor:'#e91e63',
+    title:'கடிதமில்லா காதல்',
+    excerpt:'அவன் ஒவ்வொரு நாளும் கடிதம் எழுதினான் — ஆனால் ஒரு நாளும் அனுப்பவில்லை...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🌹 கடிதமில்லா காதல்</h3>
+<p>அர்ஜுன் ஒவ்வொரு நாளும் காலை கடிதம் எழுதினான். பக்கம் பக்கமாக — அவள் சிரிப்பைப் பற்றி, அவள் குரலைப் பற்றி, அவள் நடை பற்றி.</p>
+<p>ஆனால் ஒரு கடிதமும் அனுப்பவில்லை. காரணம்? அவள் வேறொருவனை விரும்புகிறாள் என்று நினைத்தான்.</p>
+<p>மூன்று ஆண்டுகளில் 900 கடிதங்கள். எல்லாம் ஒரு பழைய கார்டுபோர்டு பெட்டியில்.</p>
+<p>ஒரு நாள் அவள் வீட்டு மாற்றத்தில் உதவ வந்தாள். தவறுதலாக அந்த பெட்டியை திறந்தாள்.</p>
+<p>அவள் வாசித்தாள். கண்கள் நிரம்பின. "இவ்வளவு நாளாக ஏன் சொல்லவில்லை?"</p>
+<p>அர்ஜுன் தலை குனிந்தான். "நீ வேறொருவனை..."</p>
+<p>"அவன் என் அண்ணன்!" என்று அவள் சிரித்தாள்.</p>
+<p>900 கடிதங்கள் — ஒரே ஒரு பதிலுக்காக காத்திருந்தன.</p>
+<div class="moral">💡 நீதி: காதலை சொல்லாமல் வைத்திருக்காதே — நேரம் போய்விடும்!</div>`
+  },
+  {
+    id:52, cat:'horror', badge:'hot', emoji:'🪟',
+    bg:'linear-gradient(135deg,#0d0d0d,#1a0a2e)',
+    catLabel:'பயம்', catColor:'#7c4dff',
+    title:'ஜன்னல் பக்கம்',
+    excerpt:'ஒவ்வொரு இரவும் அந்த ஜன்னல் வழியே ஒரு நிழல் தெரியும்...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🪟 ஜன்னல் பக்கம்</h3>
+<p>புதிய flat. நான்காவது மாடி. பக்கத்தில் கட்டிடமே இல்லை. ஆனால் ஜன்னல் பக்கம் ஒவ்வொரு இரவும் ஒரு நிழல்.</p>
+<p>முதல் இரவு: ஒரு உருவம் ஜன்னல் வழியே பார்த்தது. நான் விளக்கை போட்டேன் — இல்லை.</p>
+<p>இரண்டாவது இரவு: நிழல் இருந்தது. இம்முறை கையை அசைத்தது.</p>
+<p>மூன்றாவது இரவு: தைரியமாக ஜன்னலை திறந்தேன். யாரும் இல்லை. கீழே பார்த்தேன் — நான்காவது மாடி. யாரும் தொங்க முடியாது.</p>
+<p>நான்காவது இரவு: நிழல் ஒரு தாள் காட்டியது. ஒரு முகவரி எழுதி இருந்தது.</p>
+<p>அந்த முகவரிக்கு போனேன். ஒரு முதியவர் திறந்தார். "என் மகன் இந்த flat-ல் இறந்தான். அவன் ஒரு கடிதம் விட்டு சென்றான் — கிடைக்கவில்லை."</p>
+<p>அடுத்த இரவு ஜன்னல் திறந்து கேட்டேன். ஒரு குரல்: "படுக்கையடியில்."</p>
+<p>கடிதம் கிடைத்தது. அந்த கடிதம் அவரிடம் சேர்த்தேன். நிழல் இனி வரவில்லை.</p>
+<div class="moral">💡 நீதி: சில ஆவிகள் தண்டனை தர அல்ல — கடமை முடிக்க வருகின்றன!</div>`
+  },
+  {
+    id:53, cat:'comedy', badge:'new', emoji:'🍛',
+    bg:'linear-gradient(135deg,#e65100,#bf360c)',
+    catLabel:'நகைச்சுவை', catColor:'#ff6d00',
+    title:'சமையல் சண்டை',
+    excerpt:'கணவன் சமைக்க முயன்றது வீட்டையே தலைகீழாக மாற்றியது...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>🍛 சமையல் சண்டை</h3>
+<p>மனைவி ஊரில் போனதால் நான் சமைக்க முடிவு செய்தேன். YouTube பார்த்தேன். "சுலபம்" என்று நினைத்தேன்.</p>
+<p>வெங்காயம் நறுக்கும்போது கண்ணீர். "இதுக்கு விஷம் ஏன் போடுறாங்க?" என்று யோசித்தேன்.</p>
+<p>குழம்பு வைத்தேன். 10 நிமிடம் கழித்து நினைவு வந்தது — மிளகாய் போடவில்லை. போட்டேன். அதிகமாக போட்டேன்.</p>
+<p>சாப்பிட்டேன். நாக்கு எரிந்தது. தண்ணீர் குடித்தேன். இன்னும் எரிந்தது. பால் குடித்தேன். கொஞ்சம் சரியானது.</p>
+<p>மனைவிக்கு Phone: "சாப்பிட்டேன், நல்லா இருக்கு."</p>
+<p>"என்ன சமைச்ச?"</p>
+<p>"குழம்பு."</p>
+<p>"ஒரே ஒரு item-ஆ?"</p>
+<p>"ஆமா. ஆனா 3 பேர் சாப்பிட்டா போதுமான அளவு இருக்கு — நான் ஒருத்தன் மட்டும் தான் இருக்கேன்."</p>
+<p>அவள் திரும்பி வந்தாள். "இனி நீ சமைக்கவே வேண்டாம்" என்றாள்.</p>
+<div class="moral">💡 நீதி: சமையல் கலை — எல்லாரும் பிறக்கும்போது தெரிவதில்லை! 😂</div>`
+  },
+  {
+    id:54, cat:'kids', badge:'new', emoji:'🚀',
+    bg:'linear-gradient(135deg,#0d47a1,#1565c0)',
+    catLabel:'குழந்தை', catColor:'#64b5f6',
+    title:'விண்வெளி கனவு',
+    excerpt:'ஏழு வயது குழந்தை விண்வெளியில் பறக்க கனவு கண்டான் — அந்த கனவு உண்மையானது...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>🚀 விண்வெளி கனவு</h3>
+<p>ஸ்ரீராம் ஏழு வயது. ஒவ்வொரு இரவும் கூரை மேல் படுத்து நட்சத்திரங்களை எண்ணுவான்.</p>
+<p>"அம்மா, நான் விண்வெளிவீரன் ஆவேன்!" என்று சொன்னான்.</p>
+<p>"நல்லது மகா. படி" என்றாள் அம்மா.</p>
+<p>அவன் படித்தான். கஷ்டமான கணக்குகளை கற்றான். விஞ்ஞான கண்காட்சிகளில் பரிசு பெற்றான்.</p>
+<p>25 ஆண்டுகள் கழித்து — ISRO-வில் தேர்வானான். கனவு நிறைவேறுவதற்கு ஒரே ஒரு படி தான் பாக்கி.</p>
+<p>முதல் launch-க்கு முன் அம்மாவை கட்டி அணைத்தான். "அம்மா, அன்று நீ சொன்ன 'நல்லது மகா' — அதுதான் என் எரிபொருள்."</p>
+<p>அம்மா கண்களில் நீர். "அப்போ நம்பினேன். இப்போவும் நம்புகிறேன். போய் வா மகா."</p>
+<div class="moral">💡 நீதி: கனவுக்கு வயதில்லை — நம்பிக்கையே எரிபொருள்!</div>`
+  },
+  {
+    id:55, cat:'moral', badge:'new', emoji:'🌱',
+    bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
+    catLabel:'நீதி', catColor:'#66bb6a',
+    title:'விதை விதைத்தவன்',
+    excerpt:'ஒரு விவசாயி விதைத்த மரங்கள் — அவன் பார்க்காத நிழலை தந்தன...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>🌱 விதை விதைத்தவன்</h3>
+<p>80 வயது முரளி ஐயா ஒவ்வொரு காலையும் சாலையோரம் மரக்கன்றுகள் நடுவார்.</p>
+<p>இளைஞர்கள் கேட்டார்கள்: "ஐயா, இந்த மரங்கள் பெரியதாக ஆவதை நீங்கள் பார்க்கவே மாட்டீர்கள்."</p>
+<p>ஐயா சிரித்தார். "நான் இன்று நிழலில் உட்கார்கிறேன் — அந்த நிழல் யாரோ பல ஆண்டுகளுக்கு முன் நட்ட மரம். நான் அவரை பார்க்கவில்லை. ஆனால் அவர் என்னை நேசித்தார்."</p>
+<p>"நானும் அப்படியே யாரோ ஒரு குழந்தைக்கு நிழல் கொடுக்கிறேன்."</p>
+<p>ஐயா மறைந்தார். 10 ஆண்டுகளில் அந்த சாலை பச்சை பச்சையாக மாறியது.</p>
+<p>ஒரு குழந்தை அந்த நிழலில் உட்கார்ந்து படித்து மாவட்ட முதலிடம் பெற்றது. "என் வெற்றியின் ஒரு பகுதி இந்த மரங்களுக்கு" என்று சொன்னான்.</p>
+<div class="moral">💡 நீதி: நாம் காணாத தலைமுறைக்காகவும் நல்லது செய்யலாம்!</div>`
+  },
+  {
+    id:56, cat:'devotion', badge:'new', emoji:'🕌',
+    bg:'linear-gradient(135deg,#e65100,#f57f17)',
+    catLabel:'தெய்வீகம்', catColor:'#ffca28',
+    title:'நம்பிக்கை மட்டுமே',
+    excerpt:'எல்லாம் இழந்த ஒரு வணிகர் கடவுளிடம் வைத்த நம்பிக்கை அவரை மீட்டது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🕌 நம்பிக்கை மட்டுமே</h3>
+<p>ரகுராம் ஒரு வணிகர். வியாபாரம் நட்டம். கடன் மலை. வீடு போச்சு. மனைவி போச்சு.</p>
+<p>இருட்டான இரவில் கோவிலுக்கு போனார். "கடவுளே, என்னிடம் எதுவும் இல்லை. ஆனால் நம்பிக்கை மட்டும் உள்ளது" என்று சொன்னார்.</p>
+<p>திரும்பும்போது கோவில் படிகளில் ஒரு பழைய notebook கிடந்தது. திறந்தார். ஒரு சூத்திரம் — ஒரு வியாபார யோசனை.</p>
+<p>அந்த யோசனையை செய்தார். சிறிய முதலீடு. படிப்படியாக வளர்ந்தது.</p>
+<p>3 ஆண்டுகளில் எல்லாம் திரும்பி வந்தது. யாருடைய notebook என்று தேடினார் — யாருக்கும் தெரியவில்லை.</p>
+<p>"கடவுள் நேரடியாக தர மாட்டார். வழி மட்டும் காட்டுவார்" என்று சொல்கிறார் இப்போது.</p>
+<div class="moral">💡 நீதி: நம்பிக்கை உள்ள இடத்தில் வழி உண்டாகும்!</div>`
+  },
+  {
+    id:57, cat:'history', badge:'classic', emoji:'🏛️',
+    bg:'linear-gradient(135deg,#4e342e,#5d4037)',
+    catLabel:'வரலாறு', catColor:'#a1887f',
+    title:'தஞ்சை கோபுரம்',
+    excerpt:'1000 ஆண்டுகளுக்கு முன் ஒரு கல் சிற்பி செய்த தியாகம் இன்றும் நிலைத்திருக்கிறது...',
+    readTime:'7 நிமிஷம்',
+    story:`<h3>🏛️ தஞ்சை கோபுரம்</h3>
+<p>ராஜராஜ சோழன் காலம். தஞ்சாவூர் பெரிய கோவில் கட்டப்படுகிறது. ஆயிரக்கணக்கான கல் சிற்பிகள் உழைக்கின்றனர்.</p>
+<p>அவர்களில் ஒருவன் — சுந்தரன். 18 வயது. கோபுர உச்சியில் ஒரு சிற்பம் செய்ய வேண்டும்.</p>
+<p>மிக உயரம். மிக கஷ்டம். பலர் மறுத்தனர். சுந்தரன் ஒப்புக்கொண்டான்.</p>
+<p>60 நாட்கள் உயரத்தில் தொங்கி வேலை செய்தான். உணவை மேலே கொண்டு போவார்கள். தண்ணீரை மேலே கொண்டு போவார்கள்.</p>
+<p>ஒரு நாள் கை நழுவியது. விழுந்தான். கீழே இல்லை — ஒரு சிற்ப பாறை அவனை பிடித்தது. காயம் ஆனது. மீண்டும் ஏறினான்.</p>
+<p>60ஆவது நாள் சிற்பம் முடிந்தது. ராஜராஜன் பார்த்தான். "இது மனிதன் செய்தது அல்ல — தெய்வம் செய்தது" என்றான்.</p>
+<p>அந்த சிற்பம் இன்றும் இருக்கிறது. சுந்தரனின் பெயர் வரலாற்றில் இல்லை. ஆனால் அவன் கை வேலை 1000 ஆண்டுகள் நிலைத்திருக்கிறது.</p>
+<div class="moral">💡 நீதி: செயல் நிலைக்கும் — பெயர் தேவையில்லை!</div>`
+  },
+  {
+    id:58, cat:'village', badge:'new', emoji:'🌄',
+    bg:'linear-gradient(135deg,#33691e,#558b2f)',
+    catLabel:'கிராமம்', catColor:'#9ccc65',
+    title:'மலை பாதை',
+    excerpt:'கிராமத்திலிருந்து நகரம் போன மகன் திரும்பி வந்தபோது கண்ட உண்மை...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🌄 மலை பாதை</h3>
+<p>வேலு 20 ஆண்டுகளுக்கு முன் கிராமம் விட்டு நகரம் போனான். IT வேலை. நல்ல சம்பளம். பெரிய flat.</p>
+<p>அப்பா கத்தி அழைத்தார். "வேலு, திரும்பி வா." அப்பாவுக்கு உடல்நலம் சரியில்லை.</p>
+<p>20 ஆண்டுகளுக்கு பின் கிராமம் திரும்பினான். அதே மலை பாதை. அதே வயல்கள். அதே மரங்கள்.</p>
+<p>ஆனால் ஒன்று மாறியிருந்தது — அப்பா செய்த மரங்கள் இப்போது பெரிய நிழல் தருகின்றன. கிராமத்தினர் அந்த நிழலில் ஓய்வெடுக்கிறார்கள்.</p>
+<p>அப்பா சொன்னார்: "நகரத்தில் உனக்கு flat இருக்கு. இங்கே இந்த மலை, இந்த வயல், இந்த மரங்கள் — எல்லாம் உன்னுடையது."</p>
+<p>வேலு திரும்பவில்லை. கிராமத்திலேயே நிறுத்தினான். Online-ல் வேலை செய்யத் தொடங்கினான்.</p>
+<p>"நகரம் வாழ்க்கை தரும். கிராமம் வாழ வைக்கும்" என்கிறான் இப்போது.</p>
+<div class="moral">💡 நீதி: வேர்களை மறந்தால் மரம் வளராது!</div>`
+  },
+  {
+    id:59, cat:'thriller', badge:'hot', emoji:'🔦',
+    bg:'linear-gradient(135deg,#212121,#37474f)',
+    catLabel:'த்ரில்லர்', catColor:'#78909c',
+    title:'இருட்டு அறை',
+    excerpt:'மின்சாரம் போன இரவில் வீட்டில் ஒரு அறையிலிருந்து ஒளி வந்தது...',
+    readTime:'7 நிமிஷம்',
+    story:`<h3>🔦 இருட்டு அறை</h3>
+<p>புயல் இரவு. மின்சாரம் போனது. மொத்த தெருவும் இருட்டு. என் வீட்டில் மட்டும் ஒரு அறையிலிருந்து ஒளி வந்தது.</p>
+<p>பிரச்சனை என்னவென்றால் — அந்த அறை பூட்டப்பட்டு 5 ஆண்டுகளாக திறக்கவில்லை. திறவுகோல் என்னிடம் இல்லை.</p>
+<p>மனைவியை பார்த்தேன். அவளும் பயந்தாள். அக்கம் பக்கத்தினர் யாரும் வர மறுத்தனர்.</p>
+<p>தனியாக கதவை தட்டினேன். சப்தம் வந்தது. "யார்?"</p>
+<p>என் குரல் நடுங்கியது. "நானே... வீட்டு உரிமையாளர்."</p>
+<p>கதவு திறந்தது. ஒரு வயதான பெண். "மன்னிக்கவும். நான் 5 ஆண்டுகளாக இங்கே இருக்கிறேன். வாடகை தர பணம் இல்லை. போக இடமும் இல்லை."</p>
+<p>5 ஆண்டுகள் அவள் அந்த அறையில் மறைந்து வாழ்ந்திருந்தாள். சோற்றுக்கு கஷ்டப்பட்டிருந்தாள்.</p>
+<p>அன்று முதல் அவள் என் வீட்டு "பாட்டி" ஆனாள். வாடகை வேண்டாம்.</p>
+<div class="moral">💡 நீதி: அனைத்து மர்மங்களும் கெட்டவை அல்ல — சில நெஞ்சை உருக்கும்!</div>`
+  },
+  {
+    id:60, cat:'love', badge:'new', emoji:'🎓',
+    bg:'linear-gradient(135deg,#4a148c,#6a1b9a)',
+    catLabel:'காதல்', catColor:'#ce93d8',
+    title:'Library காதல்',
+    excerpt:'Library-ல் அதே புத்தகத்தை இரண்டு பேர் ஒரே நேரத்தில் எடுக்க முயன்றனர்...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🎓 Library காதல்</h3>
+<p>கல்லூரி library. கவிதைகள் பிரிவு. "புதுமைப்பித்தன் சிறுகதைகள்" — இரண்டு கைகள் ஒரே நேரத்தில் எடுக்க முயன்றன.</p>
+<p>பார்த்தோம். நான் — அவள். அவள் — நான்.</p>
+<p>"முன்னே வந்தேன்" என்று இரண்டு பேரும் சொன்னோம்.</p>
+<p>Library-ல் ஒரே ஒரு copy. "பாதிப்பாதி படிக்கலாம்" என்று அவள் சொன்னாள். "முடியாது — நான் முதல் page-லிருந்து படிப்பேன், நீ கடைசியிலிருந்து" என்றேன்.</p>
+<p>அவள் சிரித்தாள். "ஓகே, ஒவ்வொரு நாளும் ஒரு chapter-씩 மாறி மாறி படிப்போம்."</p>
+<p>ஒவ்வொரு நாளும் புத்தகம் மாறியது. புத்தகத்தோடு சிறு குறிப்புகளும் வந்தன. "இந்த பக்கம் அருமை." "இந்த character உன்னை போல இருக்கிறான்."</p>
+<p>புத்தகம் முடிந்தது. குறிப்புகள் தொடர்ந்தன. காதல் ஆரம்பித்தது.</p>
+<div class="moral">💡 நீதி: நல்ல புத்தகங்கள் நல்ல மனிதர்களை இணைக்கும்!</div>`
+  }
 ];
 
 let currentPage = 1;
 const perPage = 6;
 let filtered = [...storiesDB];
 let fontSize = 16;
+let currentShareId = null;
+let currentFont = 'tiro';
 
-function renderStories() {
+// ── Persistent state ──
+function loadState() {
+  try {
+    return {
+      likes: JSON.parse(localStorage.getItem('tk_likes') || '{}'),
+      bookmarks: JSON.parse(localStorage.getItem('tk_bookmarks') || '[]'),
+      history: JSON.parse(localStorage.getItem('tk_history') || '[]'),
+      views: JSON.parse(localStorage.getItem('tk_views') || '{}'),
+      theme: localStorage.getItem('tk_theme') || 'dark'
+    };
+  } catch(e) { return { likes:{}, bookmarks:[], history:[], views:{}, theme:'dark' }; }
+}
+function saveState(key, val) {
+  try { localStorage.setItem('tk_' + key, JSON.stringify(val)); } catch(e) {}
+}
+let state = loadState();
+
+// ── Theme (dark / light / night) ──
+const themes = ['dark','light','night'];
+const themeLabels = { dark:'☀️ Light', light:'🌙 Night', night:'🌕 Dark' };
+function applyTheme(t) {
+  document.body.classList.remove('light','night');
+  if (t === 'light') document.body.classList.add('light');
+  if (t === 'night') document.body.classList.add('night');
+  document.getElementById('themeBtn').textContent = themeLabels[t];
+  document.querySelector('meta[name="theme-color"]').setAttribute('content',
+    t === 'light' ? '#fff8e1' : t === 'night' ? '#050508' : '#1a1a2e');
+}
+function toggleTheme() {
+  const idx = themes.indexOf(state.theme);
+  state.theme = themes[(idx + 1) % themes.length];
+  saveState('theme', state.theme);
+  applyTheme(state.theme);
+}
+
+// ── Story of the Day ──
+function initSOTD() {
+  const idx = new Date().getDate() % storiesDB.length;
+  const s = storiesDB[idx];
+  document.getElementById('sotdEmoji').textContent = s.emoji;
+  document.getElementById('sotdTitle').textContent = s.title;
+  document.getElementById('sotdExcerpt').textContent = s.excerpt;
+  document.getElementById('sotdCard').onclick = () => openStory(s.id);
+}
+
+// ── Recently Read ──
+function addToHistory(id) {
+  state.history = [id, ...state.history.filter(x => x !== id)].slice(0, 10);
+  saveState('history', state.history);
+  renderHistory();
+}
+function renderHistory() {
+  const sec = document.getElementById('historySection');
+  const scroll = document.getElementById('historyScroll');
+  if (!state.history.length) { sec.style.display = 'none'; return; }
+  sec.style.display = 'block';
+  scroll.innerHTML = state.history.map(id => {
+    const s = storiesDB.find(x => x.id === id);
+    if (!s) return '';
+    return `<div class="history-item" onclick="openStory(${s.id})">
+      <div class="hi-emoji">${s.emoji}</div>
+      <div class="hi-title">${s.title}</div>
+      <div class="hi-cat">${s.catLabel}</div>
+    </div>`;
+  }).join('');
+}
+
+// ── View Counter ──
+function trackView(id) {
+  state.views[id] = (state.views[id] || 0) + 1;
+  saveState('views', state.views);
+}
+
+// ── Likes ──
+function toggleLike(id, e) {
+  e.stopPropagation();
+  if (state.likes[id]) { delete state.likes[id]; }
+  else { state.likes[id] = 1; }
+  saveState('likes', state.likes);
+  renderStories();
+}
+
+// ── Bookmarks ──
+function toggleBookmark(id, e) {
+  e.stopPropagation();
+  if (state.bookmarks.includes(id)) {
+    state.bookmarks = state.bookmarks.filter(x => x !== id);
+  } else {
+    state.bookmarks.push(id);
+  }
+  saveState('bookmarks', state.bookmarks);
+  renderStories();
+  renderBookmarks();
+}
+
+// ── Share ──
+function openShare(id, e) {
+  e.stopPropagation();
+  currentShareId = id;
+  document.getElementById('sharePopup').classList.add('open');
+}
+function closeShare() { document.getElementById('sharePopup').classList.remove('open'); }
+function shareWhatsApp() {
+  const s = storiesDB.find(x => x.id === currentShareId);
+  if (!s) return;
+  const text = `📖 "${s.title}" — Tamilகதைகள்\n\nkathais.xyz\n\n${s.excerpt}`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  closeShare();
+}
+function copyLink() {
+  const s = storiesDB.find(x => x.id === currentShareId);
+  const text = `📖 "${s ? s.title : ''}" — Tamilகதைகள் | kathais.xyz`;
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.querySelector('.share-copy');
+    btn.textContent = '✅ Copied!';
+    setTimeout(() => { btn.textContent = '🔗 Copy Link'; }, 1500);
+  });
+}
+
+// ── Sort ──
+function sortStories() {
+  const val = document.getElementById('sortSelect').value;
+  if (val === 'readtime') {
+    filtered.sort((a,b) => parseInt(a.readTime) - parseInt(b.readTime));
+  } else if (val === 'liked') {
+    filtered.sort((a,b) => (state.likes[b.id]?1:0) - (state.likes[a.id]?1:0));
+  } else if (val === 'views') {
+    filtered.sort((a,b) => (state.views[b.id]||0) - (state.views[a.id]||0));
+  } else {
+    filtered.sort((a,b) => a.id - b.id);
+  }
+  currentPage = 1;
+  renderStories();
+}
+
+// ── Random Story ──
+function openRandomStory() {
+  const rand = storiesDB[Math.floor(Math.random() * storiesDB.length)];
+  openStory(rand.id);
+}
+
+// ── Font Switcher ──
+const fontMap = { tiro:"'Tiro Tamil',serif", noto:"'Noto Serif Tamil',serif", catamaran:"'Catamaran',sans-serif" };
+function setFont(font, el) {
+  currentFont = font;
+  document.querySelectorAll('.font-opt').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const ms = document.getElementById('modalStory');
+  if (ms) ms.style.fontFamily = fontMap[font];
+}
+
+// ── Story Reading Progress (scroll inside modal) ──
+function initStoryProgress() {
+  const modal = document.getElementById('storyModal');
+  const fill = document.getElementById('storyProgressFill');
+  const pct = document.getElementById('storyProgressPct');
+  modal.addEventListener('scroll', () => {
+    const scrolled = modal.scrollTop;
+    const total = modal.scrollHeight - modal.clientHeight;
+    const p = total > 0 ? Math.round((scrolled / total) * 100) : 0;
+    fill.style.width = p + '%';
+    pct.textContent = p + '%';
+    // Confetti when reaching 100%
+    if (p >= 98 && !modal.dataset.confettiFired) {
+      modal.dataset.confettiFired = 'true';
+      launchConfetti();
+    }
+  });
+}
+
+// ── Confetti ──
+function launchConfetti() {
+  const canvas = document.getElementById('confettiCanvas');
+  canvas.style.display = 'block';
+  const ctx = canvas.getContext('2d');
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+  const pieces = Array.from({length:120}, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height - canvas.height,
+    r: Math.random() * 7 + 3,
+    d: Math.random() * 80 + 20,
+    color: ['#f9a825','#ff6f00','#00e676','#e91e63','#7c4dff','#00bcd4'][Math.floor(Math.random()*6)],
+    tilt: Math.floor(Math.random()*10) - 10,
+    tiltAngle: 0, tiltAngleInc: (Math.random() * 0.07) + 0.05
+  }));
+  let angle = 0, frame;
+  function draw() {
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    angle += 0.01;
+    pieces.forEach(p => {
+      p.tiltAngle += p.tiltAngleInc;
+      p.y += (Math.cos(angle + p.d) + 2);
+      p.x += Math.sin(angle) * 1.5;
+      p.tilt = Math.sin(p.tiltAngle) * 12;
+      ctx.beginPath();
+      ctx.lineWidth = p.r;
+      ctx.strokeStyle = p.color;
+      ctx.moveTo(p.x + p.tilt + p.r/2, p.y);
+      ctx.lineTo(p.x + p.tilt, p.y + p.tilt + p.r/2);
+      ctx.stroke();
+      if (p.y > canvas.height) { p.y = -10; p.x = Math.random() * canvas.width; }
+    });
+    frame = requestAnimationFrame(draw);
+  }
+  draw();
+  setTimeout(() => { cancelAnimationFrame(frame); ctx.clearRect(0,0,canvas.width,canvas.height); canvas.style.display='none'; }, 3500);
+}
+
+// ── Page Reading Progress Bar ──
+function initPageProgress() {
+  const bar = document.getElementById('readingProgressBar');
+  bar.style.display = 'block';
+  window.addEventListener('scroll', () => {
+    const scrolled = document.documentElement.scrollTop;
+    const total = document.documentElement.scrollHeight - window.innerHeight;
+    bar.style.width = (total > 0 ? (scrolled/total)*100 : 0) + '%';
+  });
+}
+
+// ── Skeleton Loader ──
+function showSkeletons() {
   const grid = document.getElementById('storiesGrid');
-  const start = (currentPage - 1) * perPage;
-  const page = filtered.slice(start, start + perPage);
+  grid.innerHTML = Array.from({length:6}, () => `
+    <div class="skeleton-card">
+      <div class="skeleton-thumb skeleton"></div>
+      <div class="skeleton-body">
+        <div class="skeleton-line short skeleton"></div>
+        <div class="skeleton-line medium skeleton"></div>
+        <div class="skeleton-line long skeleton"></div>
+        <div class="skeleton-line short skeleton"></div>
+      </div>
+    </div>`).join('');
+}
 
-  if (!page.length) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.4);font-family:'Tiro Tamil',serif;font-size:16px">கதை கிடைக்கவில்லை 😔</div>`;
+// ── PWA Install ──
+let deferredPrompt = null;
+window.addEventListener('beforeinstallprompt', e => {
+  e.preventDefault();
+  deferredPrompt = e;
+  if (!localStorage.getItem('tk_pwa_dismissed')) {
+    setTimeout(() => document.getElementById('pwaBanner').classList.add('show'), 3000);
+  }
+});
+function installPWA() {
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    deferredPrompt.userChoice.then(() => { deferredPrompt = null; dismissPWA(); });
+  }
+}
+function dismissPWA() {
+  document.getElementById('pwaBanner').classList.remove('show');
+  localStorage.setItem('tk_pwa_dismissed', '1');
+}
+
+// ── Bottom Nav Tabs ──
+function showTab(tab, el) {
+  document.querySelectorAll('.bn-item').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  const main = document.getElementById('mainContent');
+  const bkmarks = document.getElementById('bookmarksPanel');
+  const search = document.getElementById('searchWrap');
+  if (tab === 'home') {
+    main.style.display = ''; bkmarks.style.display = 'none';
+    if (search) search.style.display = '';
+  } else if (tab === 'bookmarks') {
+    main.style.display = 'none'; bkmarks.style.display = '';
+    if (search) search.style.display = 'none';
+    renderBookmarks();
+  } else if (tab === 'search') {
+    main.style.display = ''; bkmarks.style.display = 'none';
+    if (search) search.style.display = '';
+    setTimeout(() => document.getElementById('searchInput').focus(), 100);
+  }
+}
+
+function renderBookmarks() {
+  const grid = document.getElementById('bookmarksGrid');
+  const list = storiesDB.filter(s => state.bookmarks.includes(s.id));
+  if (!list.length) {
+    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.4);font-family:'Tiro Tamil',serif;font-size:16px">🔖 இன்னும் எந்த கதையும் சேமிக்கவில்லை!<br><small>Press the 🔖 button on any story to save it.</small></div>`;
     return;
   }
+  grid.innerHTML = list.map(s => buildCard(s)).join('');
+}
 
-  grid.innerHTML = page.map(s => `
+function buildCard(s) {
+  const liked = state.likes[s.id] ? 'liked' : '';
+  const bookmarked = state.bookmarks.includes(s.id) ? 'bookmarked' : '';
+  const views = state.views[s.id] || 0;
+  return `
     <div class="story-card" onclick="openStory(${s.id})">
       <div class="story-thumb" style="background:${s.bg}">
         <span>${s.emoji}</span>
@@ -1459,15 +2610,32 @@ function renderStories() {
         <div class="story-title">${s.title}</div>
         <div class="story-excerpt">${s.excerpt}</div>
         <div class="story-meta">
-          <span>📖 கதை</span>
+          <span class="view-count">👁 ${views > 0 ? views : ''} படிக்கப்பட்டது</span>
           <span class="read-time">⏱ ${s.readTime}</span>
         </div>
       </div>
-      <button class="read-btn">📖 படிக்க — Read Now</button>
-    </div>
-  `).join('');
+      <div class="card-actions">
+        <button class="card-action-btn ${liked}" onclick="toggleLike(${s.id},event)">❤️ ${state.likes[s.id] ? 'Liked' : 'Like'}</button>
+        <button class="card-action-btn ${bookmarked}" onclick="toggleBookmark(${s.id},event)">${bookmarked ? '🔖 Saved' : '🔖 Save'}</button>
+        <button class="card-action-btn" onclick="openShare(${s.id},event)">📤 Share</button>
+      </div>
+      <button class="read-btn" onclick="event.stopPropagation();openStory(${s.id})">📖 படிக்க — Read Now</button>
+    </div>`;
+}
 
-  renderPagination();
+function renderStories() {
+  const grid = document.getElementById('storiesGrid');
+  showSkeletons();
+  setTimeout(() => {
+    const start = (currentPage - 1) * perPage;
+    const page = filtered.slice(start, start + perPage);
+    if (!page.length) {
+      grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.4);font-family:'Tiro Tamil',serif;font-size:16px">கதை கிடைக்கவில்லை 😔</div>`;
+      return;
+    }
+    grid.innerHTML = page.map(s => buildCard(s)).join('');
+    renderPagination();
+  }, 400);
 }
 
 function renderPagination() {
@@ -1511,17 +2679,23 @@ function searchStories() {
 function openStory(id) {
   const s = storiesDB.find(s => s.id === id);
   if (!s) return;
-  stopReading();
+  addToHistory(id);
+  trackView(id);
   document.getElementById('modalCat').textContent = s.catLabel + ' கதை';
   document.getElementById('modalStory').innerHTML = s.story;
   document.getElementById('modalStory').style.fontSize = fontSize + 'px';
-  document.getElementById('storyModal').classList.add('open');
+  document.getElementById('modalStory').style.fontFamily = fontMap[currentFont];
+  // Reset progress
+  const modal = document.getElementById('storyModal');
+  modal.scrollTop = 0;
+  modal.dataset.confettiFired = '';
+  document.getElementById('storyProgressFill').style.width = '0%';
+  document.getElementById('storyProgressPct').textContent = '0%';
+  modal.classList.add('open');
   document.body.style.overflow = 'hidden';
-  resetVoiceUI();
 }
 
 function closeStory() {
-  stopReading();
   document.getElementById('storyModal').classList.remove('open');
   document.body.style.overflow = '';
 }
@@ -1531,151 +2705,7 @@ function changeFont(d) {
   document.getElementById('modalStory').style.fontSize = fontSize + 'px';
 }
 
-// ═══════════════════════════════════════
-// VOICE READER — Browser TTS
-// ═══════════════════════════════════════
-let ttsUtterances = [];
-let ttsIndex = 0;
-let ttsPlaying = false;
-let ttsPaused = false;
 
-function getStoryText() {
-  const el = document.getElementById('modalStory');
-  const paras = el.querySelectorAll('p, h3, .moral');
-  return Array.from(paras).map(p => p.innerText.trim()).filter(t => t.length > 0);
-}
-
-function resetVoiceUI() {
-  ttsUtterances = [];
-  ttsIndex = 0;
-  ttsPlaying = false;
-  ttsPaused = false;
-  document.getElementById('playPauseBtn').textContent = '▶ Play';
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressTime').textContent = '0% படிக்கப்பட்டது';
-  document.querySelectorAll('.reading-highlight').forEach(el => el.classList.remove('reading-highlight'));
-}
-
-function highlightPara(index) {
-  const el = document.getElementById('modalStory');
-  const paras = el.querySelectorAll('p, h3, .moral');
-  paras.forEach(p => p.classList.remove('reading-highlight'));
-  if (paras[index]) {
-    paras[index].classList.add('reading-highlight');
-    paras[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-function updateProgress(index, total) {
-  const pct = total > 0 ? Math.round((index / total) * 100) : 0;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressTime').textContent = pct + '% படிக்கப்பட்டது';
-}
-
-function speakFrom(index) {
-  const texts = getStoryText();
-  if (index >= texts.length) {
-    ttsPlaying = false;
-    ttsPaused = false;
-    document.getElementById('playPauseBtn').textContent = '▶ Play';
-    updateProgress(texts.length, texts.length);
-    document.querySelectorAll('.reading-highlight').forEach(el => el.classList.remove('reading-highlight'));
-    return;
-  }
-  ttsIndex = index;
-  const speed = parseFloat(document.getElementById('speedSelect').value);
-  const utter = new SpeechSynthesisUtterance(texts[index]);
-  utter.lang = 'ta-IN';
-  utter.rate = speed;
-
-  // Try to find a Tamil voice
-  const voices = window.speechSynthesis.getVoices();
-  const tamilVoice = voices.find(v => v.lang === 'ta-IN' || v.lang === 'ta');
-  if (tamilVoice) utter.voice = tamilVoice;
-
-  utter.onstart = () => {
-    highlightPara(index);
-    updateProgress(index, texts.length);
-  };
-  utter.onend = () => {
-    if (ttsPlaying && !ttsPaused) {
-      speakFrom(index + 1);
-    }
-  };
-  utter.onerror = () => {
-    if (ttsPlaying && !ttsPaused) speakFrom(index + 1);
-  };
-
-  window.speechSynthesis.speak(utter);
-}
-
-function togglePlay() {
-  if (!ttsPlaying && !ttsPaused) {
-    // Fresh start
-    ttsPlaying = true;
-    ttsPaused = false;
-    document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-    window.speechSynthesis.cancel();
-    speakFrom(0);
-  } else if (ttsPlaying && !ttsPaused) {
-    // Pause
-    ttsPaused = true;
-    ttsPlaying = false;
-    window.speechSynthesis.pause();
-    document.getElementById('playPauseBtn').textContent = '▶ Resume';
-  } else if (ttsPaused) {
-    // Resume
-    ttsPaused = false;
-    ttsPlaying = true;
-    window.speechSynthesis.resume();
-    document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-    // If resume doesn't work (some browsers), restart from current index
-    setTimeout(() => {
-      if (!window.speechSynthesis.speaking) {
-        speakFrom(ttsIndex);
-      }
-    }, 300);
-  }
-}
-
-function stopReading() {
-  ttsPlaying = false;
-  ttsPaused = false;
-  window.speechSynthesis.cancel();
-  document.getElementById('playPauseBtn') && (document.getElementById('playPauseBtn').textContent = '▶ Play');
-  document.getElementById('progressFill') && (document.getElementById('progressFill').style.width = '0%');
-  document.getElementById('progressTime') && (document.getElementById('progressTime').textContent = '0% படிக்கப்பட்டது');
-  document.querySelectorAll('.reading-highlight').forEach(el => el.classList.remove('reading-highlight'));
-  ttsIndex = 0;
-}
-
-function changeSpeed() {
-  if (ttsPlaying) {
-    window.speechSynthesis.cancel();
-    speakFrom(ttsIndex);
-  }
-}
-
-function seekProgress(e) {
-  const bar = e.currentTarget;
-  const rect = bar.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
-  const texts = getStoryText();
-  const newIndex = Math.floor(pct * texts.length);
-  window.speechSynthesis.cancel();
-  if (ttsPlaying || ttsPaused) {
-    ttsPlaying = true;
-    ttsPaused = false;
-    document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-    speakFrom(newIndex);
-  } else {
-    updateProgress(newIndex, texts.length);
-    ttsIndex = newIndex;
-  }
-}
-
-// Ensure voices are loaded
-window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
 
 // ═══════════════════════════════════════
 // GAMES
@@ -1899,9 +2929,875 @@ function showQuizResult() {
     </div>`;
 }
 
+// ─── LEADERBOARD ───
+function saveToLeaderboard() {
+  const name = document.getElementById('lb-name-input').value.trim();
+  if (!name) return;
+  try {
+    let lb = JSON.parse(localStorage.getItem('tk_leaderboard') || '[]');
+    const existing = lb.findIndex(x => x.name === name);
+    const score = quizScore * 10 + wgScore;
+    const streak = getStreak();
+    if (existing > -1) {
+      if (score > lb[existing].score) lb[existing].score = score;
+      lb[existing].streak = streak;
+    } else {
+      lb.push({ name, score, streak });
+    }
+    lb.sort((a, b) => b.score - a.score);
+    lb = lb.slice(0, 10);
+    localStorage.setItem('tk_leaderboard', JSON.stringify(lb));
+    renderLeaderboard();
+    document.getElementById('lb-name-input').value = '';
+  } catch(e) {}
+}
+
+function renderLeaderboard() {
+  try {
+    const lb = JSON.parse(localStorage.getItem('tk_leaderboard') || '[]');
+    const el = document.getElementById('lbList');
+    if (!lb.length) {
+      el.innerHTML = '<div style="text-align:center;color:rgba(255,255,255,0.4);padding:20px;font-family:\'Tiro Tamil\',serif">இன்னும் யாரும் சேரவில்லை!</div>';
+      return;
+    }
+    const medals = ['🥇','🥈','🥉'];
+    el.innerHTML = lb.map((p, i) => `
+      <div class="lb-item">
+        <div class="lb-rank">${medals[i] || (i+1)}</div>
+        <div class="lb-name">${p.name}</div>
+        <div class="lb-score">⭐ ${p.score}</div>
+        <div class="lb-streak">🔥 ${p.streak} நாள்</div>
+      </div>`).join('');
+  } catch(e) {}
+}
+
+// ─── DAILY STREAK ───
+function getStreak() {
+  try {
+    const today = new Date().toDateString();
+    const data = JSON.parse(localStorage.getItem('tk_streak') || '{"last":"","count":0}');
+    return data.count || 1;
+  } catch(e) { return 1; }
+}
+
+function initStreak() {
+  try {
+    const today = new Date().toDateString();
+    const data = JSON.parse(localStorage.getItem('tk_streak') || '{"last":"","count":0}');
+    const yesterday = new Date(Date.now() - 86400000).toDateString();
+    let count = data.count || 0;
+    if (data.last === today) { /* already counted */ }
+    else if (data.last === yesterday) { count++; }
+    else { count = 1; }
+    localStorage.setItem('tk_streak', JSON.stringify({ last: today, count }));
+    const el = document.getElementById('heroStreak');
+    if (el) el.textContent = '🔥 ' + count;
+  } catch(e) {}
+}
+
+// ─── AUTOCOMPLETE SEARCH ───
+function searchStories() {
+  const q = document.getElementById('searchInput').value.trim().toLowerCase();
+  filtered = q ? storiesDB.filter(s =>
+    s.title.toLowerCase().includes(q) ||
+    s.excerpt.toLowerCase().includes(q) ||
+    s.catLabel.includes(q)
+  ) : [...storiesDB];
+  currentPage = 1;
+  renderStories();
+  showAutocomplete(q);
+}
+
+function showAutocomplete(q) {
+  const list = document.getElementById('autocompleteList');
+  if (!q || q.length < 1) { list.style.display = 'none'; return; }
+  const matches = storiesDB.filter(s =>
+    s.title.toLowerCase().includes(q) || s.catLabel.includes(q)
+  ).slice(0, 6);
+  if (!matches.length) { list.style.display = 'none'; return; }
+  list.innerHTML = matches.map(s =>
+    `<div class="autocomplete-item" onmousedown="selectAutocomplete(${s.id})">
+      <span class="ac-emoji">${s.emoji}</span>
+      <span>${s.title}</span>
+      <span class="ac-cat">${s.catLabel} · ${s.readTime}</span>
+    </div>`
+  ).join('');
+  list.style.display = 'block';
+}
+
+function hideAutocomplete() {
+  setTimeout(() => {
+    const list = document.getElementById('autocompleteList');
+    if (list) list.style.display = 'none';
+  }, 150);
+}
+
+function selectAutocomplete(id) {
+  hideAutocomplete();
+  document.getElementById('searchInput').value = '';
+  openStory(id);
+}
+
+// ─── MOOD FILTER ───
+function filterMood(cat, el) {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('moodClear').style.display = '';
+  filtered = storiesDB.filter(s => s.cat === cat);
+  currentPage = 1;
+  renderStories();
+  // Sync category tabs
+  document.querySelectorAll('.cat-tab').forEach(t => {
+    t.classList.toggle('active', t.getAttribute('onclick') && t.getAttribute('onclick').includes("'"+cat+"'"));
+  });
+}
+
+function clearMood() {
+  document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('moodClear').style.display = 'none';
+  filtered = [...storiesDB];
+  currentPage = 1;
+  renderStories();
+}
+
+// ─── IMPROVED WhatsApp SHARE (with story first line) ───
+function shareWhatsApp() {
+  const s = storiesDB.find(x => x.id === currentShareId);
+  if (!s) return;
+  const firstLine = s.excerpt;
+  const text = `📖 "${s.title}" — Tamilகதைகள்\n\n${firstLine}\n\nமேலும் படிக்க 👇\nhttps://kathais.xyz\n\n1000+ Tamil Stories — Free Forever! 🙏`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+  // track share count
+  try {
+    let sc = JSON.parse(localStorage.getItem('tk_shares') || '{}');
+    sc[currentShareId] = (sc[currentShareId] || 0) + 1;
+    localStorage.setItem('tk_shares', JSON.stringify(sc));
+  } catch(e) {}
+  closeShare();
+}
+
+function shareWhatsAppCurrent() {
+  const s = storiesDB.find(x => x.id === currentOpenStoryId);
+  if (!s) return;
+  const text = `📖 "${s.title}" — Tamilகதைகள்\n\n${s.excerpt}\n\nமேலும் படிக்க 👇\nhttps://kathais.xyz\n\n1000+ Tamil Stories — Free Forever! 🙏`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+}
+
+// ─── TEXT TO SPEECH ───
+let ttsUtterance = null;
+let ttsActive = false;
+let currentOpenStoryId = null;
+
+function cleanTextForTTS(el) {
+  // Clone so we don't mutate the DOM
+  const clone = el.cloneNode(true);
+  // Remove moral box (has emojis + "நீதி:" label)
+  clone.querySelectorAll('.moral').forEach(n => n.remove());
+  // Remove heading (h3) which has emoji at start
+  clone.querySelectorAll('h3').forEach(n => {
+    // Keep the text but strip leading emoji
+    const cleaned = n.innerText.replace(/^[\p{Emoji}\s]+/u, '').trim();
+    const t = document.createTextNode(cleaned + '. ');
+    n.replaceWith(t);
+  });
+  let text = clone.innerText || clone.textContent || '';
+  // Strip ALL emoji unicode characters (covers full emoji range)
+  text = text.replace(/[\u{1F000}-\u{1FFFF}\u{2600}-\u{27FF}\u{2B00}-\u{2BFF}\u{FE00}-\u{FEFF}\u{1F900}-\u{1F9FF}\u{1FA00}-\u{1FA9F}]/gu, '');
+  // Strip leftover symbols like 💡 that might survive
+  text = text.replace(/[^\u0000-\u007F\u0B80-\u0BFF\u0020-\u007E\n\r\t]/g, function(ch) {
+    // Keep Tamil (0B80–0BFF), ASCII, space, newline
+    const cp = ch.codePointAt(0);
+    if (cp >= 0x0B80 && cp <= 0x0BFF) return ch;
+    if (cp <= 0x007E) return ch;
+    return ' ';
+  });
+  // Collapse multiple spaces/newlines
+  text = text.replace(/\s{2,}/g, ' ').trim();
+  return text;
+}
+
+function toggleTTS() {
+  const btn = document.getElementById('ttsPlayBtn');
+  const status = document.getElementById('ttsStatus');
+  if (!window.speechSynthesis) {
+    status.textContent = 'Browser-ல் TTS இல்லை';
+    return;
+  }
+  if (ttsActive) {
+    window.speechSynthesis.cancel();
+    ttsActive = false;
+    btn.textContent = '▶ படி';
+    status.textContent = '';
+    return;
+  }
+  const storyEl = document.getElementById('modalStory');
+  const text = cleanTextForTTS(storyEl);
+  if (!text) { status.textContent = 'உரை இல்லை'; return; }
+  // Load voices (Chrome lazy-loads them)
+  const doSpeak = () => {
+    ttsUtterance = new SpeechSynthesisUtterance(text);
+    const voices = window.speechSynthesis.getVoices();
+    const tamilVoice = voices.find(v => v.lang === 'ta-IN' || v.lang.startsWith('ta'));
+    if (tamilVoice) ttsUtterance.voice = tamilVoice;
+    ttsUtterance.lang = 'ta-IN';
+    ttsUtterance.rate = parseFloat(document.getElementById('ttsSpeed').value);
+    ttsUtterance.volume = 1;
+    ttsUtterance.onend = () => {
+      ttsActive = false;
+      btn.textContent = '▶ படி';
+      status.textContent = '\u2705 முடிந்தது';
+      setTimeout(() => { status.textContent = ''; }, 2500);
+    };
+    ttsUtterance.onerror = () => {
+      ttsActive = false;
+      btn.textContent = '▶ படி';
+      status.textContent = '';
+    };
+    ttsUtterance.onstart = () => { status.textContent = '\u23F3 படிக்கிறது...'; };
+    window.speechSynthesis.speak(ttsUtterance);
+  };
+  window.speechSynthesis.cancel();
+  // Voices may not be loaded yet
+  if (window.speechSynthesis.getVoices().length === 0) {
+    window.speechSynthesis.onvoiceschanged = () => { doSpeak(); };
+  } else {
+    setTimeout(doSpeak, 80);
+  }
+  ttsActive = true;
+  btn.textContent = '\u23F8 நிறுத்து';
+}
+function updateTTSSpeed() {
+  if (ttsActive) {
+    window.speechSynthesis.cancel();
+    const storyEl = document.getElementById('modalStory');
+    const text = cleanTextForTTS(storyEl);
+    ttsUtterance = new SpeechSynthesisUtterance(text);
+    ttsUtterance.lang = 'ta-IN';
+    ttsUtterance.rate = parseFloat(document.getElementById('ttsSpeed').value);
+    const btn = document.getElementById('ttsPlayBtn');
+    const status = document.getElementById('ttsStatus');
+    ttsUtterance.onend = () => { ttsActive = false; btn.textContent = '▶ படி'; status.textContent = ''; };
+    ttsUtterance.onerror = () => { ttsActive = false; btn.textContent = '▶ படி'; };
+    window.speechSynthesis.speak(ttsUtterance);
+  }
+}
+
+function stopTTS() {
+  if (window.speechSynthesis) window.speechSynthesis.cancel();
+  ttsActive = false;
+  const btn = document.getElementById('ttsPlayBtn');
+  if (btn) { btn.textContent = '▶ படி'; }
+}
+
+// ─── REACTIONS ───
+function addReaction(emoji, btn) {
+  const id = currentOpenStoryId;
+  if (!id) return;
+  try {
+    let reactions = JSON.parse(localStorage.getItem('tk_reactions') || '{}');
+    if (!reactions[id]) reactions[id] = {};
+    reactions[id][emoji] = (reactions[id][emoji] || 0) + 1;
+    localStorage.setItem('tk_reactions', JSON.stringify(reactions));
+    btn.classList.add('reacted');
+    const countEl = btn.querySelector('.r-count');
+    if (countEl) countEl.textContent = reactions[id][emoji];
+  } catch(e) {}
+}
+
+function loadReactions(id) {
+  try {
+    const reactions = JSON.parse(localStorage.getItem('tk_reactions') || '{}');
+    const storyReactions = reactions[id] || {};
+    document.querySelectorAll('.reaction-btn').forEach(btn => {
+      btn.classList.remove('reacted');
+      const emoji = btn.getAttribute('data-emoji');
+      const countEl = btn.querySelector('.r-count');
+      if (countEl) countEl.textContent = storyReactions[emoji] || 0;
+    });
+  } catch(e) {}
+}
+
+// ─── COMMENTS ───
+function submitComment() {
+  const name = document.getElementById('commentNameInput').value.trim();
+  const text = document.getElementById('commentTextInput').value.trim();
+  if (!name || !text) return;
+  const id = currentOpenStoryId;
+  if (!id) return;
+  try {
+    let comments = JSON.parse(localStorage.getItem('tk_comments') || '{}');
+    if (!comments[id]) comments[id] = [];
+    comments[id].unshift({ name, text, time: Date.now() });
+    comments[id] = comments[id].slice(0, 20);
+    localStorage.setItem('tk_comments', JSON.stringify(comments));
+    document.getElementById('commentTextInput').value = '';
+    renderComments(id);
+  } catch(e) {}
+}
+
+function renderComments(id) {
+  try {
+    const comments = JSON.parse(localStorage.getItem('tk_comments') || '{}');
+    const list = comments[id] || [];
+    const el = document.getElementById('commentList');
+    if (!list.length) {
+      el.innerHTML = '<div style="color:rgba(255,255,255,0.3);font-size:13px;padding:8px 0;font-family:\'Tiro Tamil\',serif">இன்னும் கருத்துக்கள் இல்லை. முதலில் எழுதுங்கள்!</div>';
+      return;
+    }
+    el.innerHTML = list.map(c => `
+      <div class="comment-item">
+        <div class="comment-name">${c.name}</div>
+        <div class="comment-text">${c.text}</div>
+      </div>`).join('');
+  } catch(e) {}
+}
+
+// ─── NEXT STORY SUGGESTIONS ───
+function renderNextStories(currentId) {
+  const current = storiesDB.find(s => s.id === currentId);
+  if (!current) return;
+  const samecat = storiesDB.filter(s => s.id !== currentId && s.cat === current.cat).slice(0, 2);
+  const el = document.getElementById('nextStoryRow');
+  if (!samecat.length) { el.innerHTML = ''; return; }
+  el.innerHTML = samecat.map(s => `
+    <button class="next-story-btn" onclick="openStory(${s.id})">
+      <span class="nsb-emoji">${s.emoji}</span>
+      <span class="nsb-label">இந்த வகையில் மேலும் →</span>
+      <span class="nsb-title">${s.title}</span>
+    </button>`).join('');
+}
+
+// ─── ENHANCED OPEN STORY ───
+const _origOpenStory = openStory;
+openStory = function(id) {
+  currentOpenStoryId = id;
+  stopTTS();
+  _origOpenStory(id);
+  loadReactions(id);
+  renderComments(id);
+  renderNextStories(id);
+  // Show end CTA after scrolling 80%
+  const modal = document.getElementById('storyModal');
+  modal.addEventListener('scroll', function ctaCheck() {
+    const scrolled = modal.scrollTop;
+    const total = modal.scrollHeight - modal.clientHeight;
+    const pct = total > 0 ? (scrolled / total) * 100 : 0;
+    if (pct >= 80) {
+      document.getElementById('storyEndCTA').style.display = '';
+      modal.removeEventListener('scroll', ctaCheck);
+    }
+  }, { once: false });
+  document.getElementById('storyEndCTA').style.display = 'none';
+};
+
+// Override closeStory to also stop TTS
+const _origCloseStory = closeStory;
+closeStory = function() {
+  stopTTS();
+  _origCloseStory();
+};
+
+// Switch game enhanced
+const _origSwitchGame = switchGame;
+switchGame = function(id, el) {
+  _origSwitchGame(id, el);
+  if (id === 'leaderboard') renderLeaderboard();
+};
+
+// ═══════════════════════════════════════
+// SNAKE GAME
+// ═══════════════════════════════════════
+let snakeGame = null;
+function startSnake() {
+  const btn = document.getElementById('snake-start-btn');
+  const scoreEl = document.getElementById('snake-score');
+  const bestEl = document.getElementById('snake-best');
+  const msgEl = document.getElementById('snake-msg');
+  const canvas = document.getElementById('snakeCanvas');
+  const ctx = canvas.getContext('2d');
+  const SIZE = 15, COLS = 20, ROWS = 20;
+  let snake = [{x:10,y:10},{x:9,y:10},{x:8,y:10}];
+  let dir = {x:1,y:0}, nextDir = {x:1,y:0};
+  let food = {}, score = 0;
+  let best = parseInt(localStorage.getItem('snake_best')||'0');
+  bestEl.textContent = best;
+  function placeFood() {
+    do { food = {x:Math.floor(Math.random()*COLS),y:Math.floor(Math.random()*ROWS)}; }
+    while (snake.some(s=>s.x===food.x&&s.y===food.y));
+  }
+  placeFood();
+  function draw() {
+    ctx.fillStyle='#0a0f0a'; ctx.fillRect(0,0,300,300);
+    // food
+    ctx.fillStyle='#f5a623';
+    ctx.beginPath(); ctx.arc(food.x*SIZE+SIZE/2,food.y*SIZE+SIZE/2,SIZE/2-1,0,Math.PI*2); ctx.fill();
+    // snake
+    snake.forEach((s,i) => {
+      ctx.fillStyle = i===0 ? '#00e676' : 'rgba(0,200,83,0.7)';
+      ctx.beginPath(); ctx.roundRect(s.x*SIZE+1,s.y*SIZE+1,SIZE-2,SIZE-2,3); ctx.fill();
+    });
+    // score
+    ctx.fillStyle='rgba(255,255,255,0.3)'; ctx.font='11px DM Sans'; ctx.fillText('Score: '+score,5,12);
+  }
+  function step() {
+    dir = nextDir;
+    const head = {x:snake[0].x+dir.x, y:snake[0].y+dir.y};
+    if (head.x<0||head.x>=COLS||head.y<0||head.y>=ROWS||snake.some(s=>s.x===head.x&&s.y===head.y)) {
+      clearInterval(snakeGame); snakeGame=null;
+      if (score>best) { best=score; localStorage.setItem('snake_best',best); bestEl.textContent=best; }
+      msgEl.textContent='😔 Game Over! Score: '+score;
+      btn.textContent='▶ மீண்டும்'; btn.style.display='';
+      return;
+    }
+    snake.unshift(head);
+    if (head.x===food.x&&head.y===food.y) { score++; scoreEl.textContent=score; placeFood(); }
+    else snake.pop();
+    draw();
+  }
+  if (snakeGame) clearInterval(snakeGame);
+  btn.style.display='none'; msgEl.textContent='';
+  draw();
+  snakeGame = setInterval(step, 130);
+  // Keyboard
+  document.onkeydown = e => {
+    const map = {ArrowUp:{x:0,y:-1},ArrowDown:{x:0,y:1},ArrowLeft:{x:-1,y:0},ArrowRight:{x:1,y:0},
+                 KeyW:{x:0,y:-1},KeyS:{x:0,y:1},KeyA:{x:-1,y:0},KeyD:{x:1,y:0}};
+    const nd = map[e.code];
+    if (nd && !(nd.x===-dir.x&&nd.y===-dir.y)) { nextDir=nd; e.preventDefault(); }
+  };
+  // Touch/swipe
+  let tx=0,ty=0;
+  canvas.ontouchstart = e => { tx=e.touches[0].clientX; ty=e.touches[0].clientY; e.preventDefault(); };
+  canvas.ontouchmove = e => e.preventDefault();
+  canvas.ontouchend = e => {
+    const dx=e.changedTouches[0].clientX-tx, dy=e.changedTouches[0].clientY-ty;
+    if (Math.abs(dx)>Math.abs(dy)) nextDir=dx>0?{x:1,y:0}:{x:-1,y:0};
+    else nextDir=dy>0?{x:0,y:1}:{x:0,y:-1};
+    e.preventDefault();
+  };
+}
+
+// ═══════════════════════════════════════
+// RACING GAME
+// ═══════════════════════════════════════
+let raceGame = null;
+function startRacing() {
+  const btn = document.getElementById('race-start-btn');
+  const scoreEl = document.getElementById('race-score');
+  const speedEl = document.getElementById('race-speed');
+  const bestEl = document.getElementById('race-best');
+  const msgEl = document.getElementById('race-msg');
+  const canvas = document.getElementById('raceCanvas');
+  const ctx = canvas.getContext('2d');
+  const W=300, H=400;
+  let score=0, speed=2, roadY=0;
+  let best = parseInt(localStorage.getItem('race_best')||'0');
+  bestEl.textContent=best;
+  let player = {x:W/2-20,y:H-80,w:40,h:60,color:'#f5a623'};
+  let obstacles = [];
+  let keys = {};
+  function spawnObstacle() {
+    const colors=['#e53935','#7c4dff','#00bcd4','#43a047'];
+    obstacles.push({x:Math.random()*(W-50)+10,y:-70,w:40,h:60,color:colors[Math.floor(Math.random()*4)]});
+  }
+  function drawCar(x,y,w,h,col) {
+    ctx.fillStyle=col; ctx.beginPath(); ctx.roundRect(x,y,w,h,8); ctx.fill();
+    ctx.fillStyle='rgba(0,0,0,0.5)'; ctx.fillRect(x+5,y+8,w-10,h*0.3); ctx.fillRect(x+5,y+h*0.55,w-10,h*0.25);
+    ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(x+8,y+h-8,5,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x+w-8,y+h-8,5,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x+8,y+8,5,0,Math.PI*2); ctx.fill();
+    ctx.beginPath(); ctx.arc(x+w-8,y+8,5,0,Math.PI*2); ctx.fill();
+  }
+  function drawRoad() {
+    // road bg
+    ctx.fillStyle='#2a2a2a'; ctx.fillRect(0,0,W,H);
+    // lane lines
+    ctx.strokeStyle='rgba(255,255,255,0.2)'; ctx.setLineDash([30,20]); ctx.lineWidth=2;
+    [W/3,W*2/3].forEach(x => {
+      ctx.beginPath(); ctx.moveTo(x,(roadY%50)-50); ctx.lineTo(x,H+50); ctx.stroke();
+    });
+    ctx.setLineDash([]);
+  }
+  function gameLoop() {
+    roadY += speed;
+    score++;
+    if (score % 300 === 0) { speed = Math.min(speed+0.5, 8); speedEl.textContent=speed.toFixed(1); }
+    scoreEl.textContent = Math.floor(score/10);
+    if (keys['ArrowLeft']||keys['KeyA']) player.x = Math.max(0, player.x-4);
+    if (keys['ArrowRight']||keys['KeyD']) player.x = Math.min(W-player.w, player.x+4);
+    obstacles.forEach(o => o.y += speed);
+    obstacles = obstacles.filter(o => o.y < H+80);
+    if (Math.random()<0.015) spawnObstacle();
+    // collision
+    for (const o of obstacles) {
+      if (player.x<o.x+o.w-6&&player.x+player.w>o.x+6&&player.y<o.y+o.h-6&&player.y+player.h>o.y+6) {
+        clearInterval(raceGame); raceGame=null;
+        const sc=Math.floor(score/10);
+        if (sc>best){best=sc;localStorage.setItem('race_best',best);bestEl.textContent=best;}
+        msgEl.textContent='💥 Crash! Score: '+sc;
+        btn.style.display=''; btn.textContent='🏎️ Try Again';
+        document.onkeydown=null;
+        return;
+      }
+    }
+    drawRoad();
+    obstacles.forEach(o => drawCar(o.x,o.y,o.w,o.h,o.color));
+    drawCar(player.x,player.y,player.w,player.h,player.color);
+    // score display
+    ctx.fillStyle='rgba(255,255,255,0.7)'; ctx.font='bold 13px DM Sans';
+    ctx.fillText('Score: '+Math.floor(score/10),8,20);
+    ctx.fillText('Speed: '+speed.toFixed(1)+'x',8,36);
+  }
+  if (raceGame) clearInterval(raceGame);
+  obstacles=[]; score=0; speed=2; player.x=W/2-20;
+  btn.style.display='none'; msgEl.textContent='';
+  speedEl.textContent='2';
+  document.onkeydown = e => { keys[e.code]=true; if(['ArrowLeft','ArrowRight'].includes(e.key)) e.preventDefault(); };
+  document.onkeyup = e => { keys[e.code]=false; };
+  // Touch steering
+  canvas.ontouchstart = e => { const x=e.touches[0].clientX-canvas.getBoundingClientRect().left; keys[x<W/2?'ArrowLeft':'ArrowRight']=true; e.preventDefault(); };
+  canvas.ontouchend = e => { keys['ArrowLeft']=false; keys['ArrowRight']=false; e.preventDefault(); };
+  raceGame = setInterval(gameLoop, 16);
+}
+
+// ═══════════════════════════════════════
+// CHESS GAME (vs simple AI)
+// ═══════════════════════════════════════
+const PIECES = {
+  wK:'♔',wQ:'♕',wR:'♖',wB:'♗',wN:'♘',wP:'♙',
+  bK:'♚',bQ:'♛',bR:'♜',bB:'♝',bN:'♞',bP:'♟'
+};
+let chessBoard = [], chessSelected = null, chessTurn = 'w', chessHistory = [], chessGameOver = false;
+function initChessBoard() {
+  chessBoard = [
+    ['bR','bN','bB','bQ','bK','bB','bN','bR'],
+    ['bP','bP','bP','bP','bP','bP','bP','bP'],
+    [...Array(8)].map(()=>null),[...Array(8)].map(()=>null),
+    [...Array(8)].map(()=>null),[...Array(8)].map(()=>null),
+    ['wP','wP','wP','wP','wP','wP','wP','wP'],
+    ['wR','wN','wB','wQ','wK','wB','wN','wR']
+  ];
+}
+function resetChess() {
+  initChessBoard(); chessSelected=null; chessTurn='w'; chessHistory=[]; chessGameOver=false;
+  document.getElementById('chess-msg').textContent='நீங்கள் ஆரம்பியுங்கள் (வெள்ளை)';
+  renderChess();
+}
+function renderChess(highlights=[]) {
+  const board = document.getElementById('chessBoard');
+  board.innerHTML='';
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++) {
+    const cell = document.createElement('div');
+    const isLight=(r+c)%2===0;
+    const isSelected=chessSelected&&chessSelected[0]===r&&chessSelected[1]===c;
+    const isHighlight=highlights.some(h=>h[0]===r&&h[1]===c);
+    cell.style.cssText=`width:38px;height:38px;display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;user-select:none;
+      background:${isSelected?'#f5a62366':isHighlight?'rgba(0,230,118,0.3)':isLight?'#f0d9b5':'#b58863'};`;
+    const p = chessBoard[r][c];
+    if(p) cell.textContent = PIECES[p];
+    cell.onclick=()=>chessClick(r,c);
+    board.appendChild(cell);
+  }
+}
+function chessGetMoves(r,c) {
+  const p = chessBoard[r][c]; if(!p) return [];
+  const color=p[0], type=p[1], moves=[];
+  const inBounds=(r,c)=>r>=0&&r<8&&c>=0&&c<8;
+  const enemy=(r,c)=>inBounds(r,c)&&chessBoard[r][c]&&chessBoard[r][c][0]!==color;
+  const empty=(r,c)=>inBounds(r,c)&&!chessBoard[r][c];
+  const slide=(dr,dc)=>{ let nr=r+dr,nc=c+dc; while(inBounds(nr,nc)){if(chessBoard[nr][nc]){if(chessBoard[nr][nc][0]!==color)moves.push([nr,nc]);break;}moves.push([nr,nc]);nr+=dr;nc+=dc;} };
+  if(type==='P'){
+    const dir=color==='w'?-1:1,start=color==='w'?6:1;
+    if(empty(r+dir,c)){moves.push([r+dir,c]);if(r===start&&empty(r+2*dir,c))moves.push([r+2*dir,c]);}
+    if(enemy(r+dir,c-1))moves.push([r+dir,c-1]);
+    if(enemy(r+dir,c+1))moves.push([r+dir,c+1]);
+  }else if(type==='N'){[[2,1],[2,-1],[-2,1],[-2,-1],[1,2],[1,-2],[-1,2],[-1,-2]].forEach(([dr,dc])=>{if(inBounds(r+dr,c+dc)&&(!chessBoard[r+dr][c+dc]||chessBoard[r+dr][c+dc][0]!==color))moves.push([r+dr,c+dc]);});}
+  else if(type==='B'){[[-1,-1],[-1,1],[1,-1],[1,1]].forEach(([dr,dc])=>slide(dr,dc));}
+  else if(type==='R'){[[-1,0],[1,0],[0,-1],[0,1]].forEach(([dr,dc])=>slide(dr,dc));}
+  else if(type==='Q'){[[-1,-1],[-1,1],[1,-1],[1,1],[-1,0],[1,0],[0,-1],[0,1]].forEach(([dr,dc])=>slide(dr,dc));}
+  else if(type==='K'){[[-1,-1],[-1,0],[-1,1],[0,-1],[0,1],[1,-1],[1,0],[1,1]].forEach(([dr,dc])=>{if(inBounds(r+dr,c+dc)&&(!chessBoard[r+dr][c+dc]||chessBoard[r+dr][c+dc][0]!==color))moves.push([r+dr,c+dc]);});}
+  return moves;
+}
+function chessMove(board,fr,fc,tr,tc){
+  const nb=board.map(r=>[...r]);
+  const p=nb[fr][fc];
+  nb[tr][tc]=p; nb[fr][fc]=null;
+  // Pawn promotion
+  if(p==='wP'&&tr===0)nb[tr][tc]='wQ';
+  if(p==='bP'&&tr===7)nb[tr][tc]='bQ';
+  return nb;
+}
+function chessClick(r,c) {
+  if(chessGameOver||chessTurn!=='w') return;
+  const p=chessBoard[r][c];
+  if(chessSelected){
+    const [sr,sc]=chessSelected;
+    const moves=chessGetMoves(sr,sc);
+    if(moves.some(m=>m[0]===r&&m[1]===c)){
+      chessHistory.push(JSON.parse(JSON.stringify(chessBoard)));
+      chessBoard=chessMove(chessBoard,sr,sc,r,c);
+      chessSelected=null; chessTurn='b';
+      renderChess();
+      checkChessEnd();
+      if(!chessGameOver) setTimeout(chessAI,400);
+    } else {
+      chessSelected=(p&&p[0]==='w')?[r,c]:null;
+      renderChess(chessSelected?chessGetMoves(r,c):[]);
+    }
+  } else {
+    if(p&&p[0]==='w'){chessSelected=[r,c]; renderChess(chessGetMoves(r,c));}
+  }
+}
+function chessAI() {
+  // Simple AI: capture best piece or random move
+  const pieceVal={K:1000,Q:9,R:5,B:3,N:3,P:1};
+  let best=null,bestScore=-999;
+  for(let r=0;r<8;r++) for(let c=0;c<8;c++) {
+    const p=chessBoard[r][c];
+    if(!p||p[0]!=='b') continue;
+    const moves=chessGetMoves(r,c);
+    moves.forEach(([tr,tc])=>{
+      const captured=chessBoard[tr][tc];
+      let score=(captured?pieceVal[captured[1]]:0)+Math.random()*0.5;
+      if(score>bestScore){bestScore=score;best={fr:r,fc:c,tr,tc};}
+    });
+  }
+  if(best){
+    chessHistory.push(JSON.parse(JSON.stringify(chessBoard)));
+    chessBoard=chessMove(chessBoard,best.fr,best.fc,best.tr,best.tc);
+  }
+  chessTurn='w'; renderChess(); checkChessEnd();
+}
+function checkChessEnd() {
+  const wK=chessBoard.flat().includes('wK');
+  const bK=chessBoard.flat().includes('bK');
+  const msg=document.getElementById('chess-msg');
+  if(!wK){chessGameOver=true;msg.textContent='😔 நீங்கள் தோற்றீர்கள்!';}
+  else if(!bK){chessGameOver=true;msg.textContent='🎉 நீங்கள் வென்றீர்கள்!';}
+  else msg.textContent=chessTurn==='w'?'உங்கள் turn (வெள்ளை)':'AI யோசிக்கிறது...';
+}
+function chessUndo() {
+  if(chessHistory.length<2) return;
+  chessHistory.pop(); chessHistory.pop();
+  chessBoard=chessHistory.pop()||chessBoard;
+  chessHistory.push(JSON.parse(JSON.stringify(chessBoard)));
+  chessTurn='w'; chessSelected=null; chessGameOver=false;
+  renderChess();
+  document.getElementById('chess-msg').textContent='Undone — உங்கள் turn';
+}
+
+// ═══════════════════════════════════════
+// ANGRY BIRDS STYLE (Slingshot)
+// ═══════════════════════════════════════
+let birdsCtx, birdsAnim=null, birdsList=[], pigsList=[], birdsScore=0, birdsLeft=5, birdsLaunched=false;
+let birdsBest=0, birdsProjectile=null, sling={x:60,y:220};
+function resetBirds() {
+  const canvas=document.getElementById('birdsCanvas');
+  birdsCtx=canvas.getContext('2d');
+  birdsList=[]; pigsList=[]; birdsProjectile=null; birdsLaunched=false;
+  birdsScore=0; birdsLeft=5;
+  birdsBest=parseInt(localStorage.getItem('birds_best')||'0');
+  document.getElementById('birds-score').textContent=0;
+  document.getElementById('birds-best').textContent=birdsBest;
+  document.getElementById('birds-left').textContent=birdsLeft;
+  document.getElementById('birds-msg').textContent='';
+  // Create pigs/targets
+  pigsList=[
+    {x:340,y:230,r:18,hp:2,col:'#4caf50'},{x:390,y:205,r:15,hp:1,col:'#66bb6a'},
+    {x:420,y:230,r:18,hp:2,col:'#388e3c'},{x:460,y:215,r:15,hp:1,col:'#81c784'},
+    {x:350,y:170,r:14,hp:1,col:'#4caf50'},{x:430,y:170,r:14,hp:1,col:'#388e3c'}
+  ];
+  if(birdsAnim) cancelAnimationFrame(birdsAnim);
+  // Blocks
+  pigsList.blocks=[
+    {x:320,y:195,w:110,h:8},{x:315,y:155,w:60,h:8},{x:400,y:155,w:60,h:8},
+    {x:320,y:135,w:150,h:8}
+  ];
+  drawBirds();
+  setupBirdsInput(canvas);
+}
+function drawBirds() {
+  const c=birdsCtx, canvas=c.canvas;
+  const W=canvas.width,H=canvas.height;
+  // Sky
+  const grad=c.createLinearGradient(0,0,0,H*0.7);
+  grad.addColorStop(0,'#1a3a6b'); grad.addColorStop(1,'#4a90d9');
+  c.fillStyle=grad; c.fillRect(0,0,W,H*0.75);
+  // Ground
+  c.fillStyle='#2d5a27'; c.fillRect(0,H*0.75,W,H*0.25);
+  c.fillStyle='#3d7a35'; c.fillRect(0,H*0.75,W,8);
+  // Slingshot
+  c.fillStyle='#8b5e3c'; c.fillRect(sling.x-4,sling.y-40,8,50);
+  c.fillStyle='#6d4c1e'; c.beginPath(); c.arc(sling.x-12,sling.y-35,6,0,Math.PI*2); c.fill();
+  c.beginPath(); c.arc(sling.x+12,sling.y-35,6,0,Math.PI*2); c.fill();
+  // Blocks
+  (pigsList.blocks||[]).forEach(b => {
+    c.fillStyle='#8d6e63'; c.fillRect(b.x,b.y,b.w,b.h);
+    c.strokeStyle='#5d4037'; c.lineWidth=1; c.strokeRect(b.x,b.y,b.w,b.h);
+  });
+  // Pigs
+  pigsList.forEach(p => {
+    c.fillStyle=p.col; c.beginPath(); c.arc(p.x,p.y,p.r,0,Math.PI*2); c.fill();
+    c.fillStyle='#1b5e20'; c.beginPath(); c.arc(p.x,p.y,p.r-4,0,Math.PI*2); c.stroke();
+    c.fillStyle='#fff'; c.font='bold 12px sans-serif'; c.textAlign='center';
+    c.fillText(p.hp>1?'😤':'🐷',p.x,p.y+4);
+  });
+  // Projectile / bird on sling
+  if(birdsProjectile) {
+    c.fillStyle='#f44336';
+    c.beginPath(); c.arc(birdsProjectile.x,birdsProjectile.y,12,0,Math.PI*2); c.fill();
+    c.fillStyle='#fff'; c.font='16px sans-serif'; c.textAlign='center';
+    c.fillText('🐦',birdsProjectile.x,birdsProjectile.y+5);
+    // trail
+    birdsProjectile.trail&&birdsProjectile.trail.forEach((t,i)=>{
+      c.fillStyle=`rgba(244,67,54,${i/birdsProjectile.trail.length*0.3})`;
+      c.beginPath(); c.arc(t.x,t.y,4,0,Math.PI*2); c.fill();
+    });
+  } else if(birdsLeft>0 && !birdsLaunched) {
+    c.fillStyle='#f44336'; c.beginPath(); c.arc(sling.x,sling.y-35,12,0,Math.PI*2); c.fill();
+    c.fillStyle='#fff'; c.font='16px sans-serif'; c.textAlign='center';
+    c.fillText('🐦',sling.x,sling.y-30);
+  }
+  // Waiting birds
+  for(let i=0;i<Math.max(0,birdsLeft-(birdsLaunched?0:1));i++) {
+    c.fillStyle='#ef5350'; c.beginPath(); c.arc(20+i*22,H-20,9,0,Math.PI*2); c.fill();
+    c.font='12px sans-serif'; c.textAlign='center'; c.fillText('🐦',20+i*22,H-16);
+  }
+  c.textAlign='left';
+}
+function setupBirdsInput(canvas) {
+  let dragging=false, dragStart={x:0,y:0};
+  canvas.onmousedown=canvas.ontouchstart=e=>{
+    if(birdsLaunched||birdsLeft<=0) return;
+    const r=canvas.getBoundingClientRect();
+    const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+    const cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
+    const scale=canvas.width/r.width;
+    const sx=cx*scale, sy=cy*scale;
+    if(Math.hypot(sx-sling.x,sy-(sling.y-35))<30){dragging=true;dragStart={x:sx,y:sy};}
+    e.preventDefault();
+  };
+  canvas.onmousemove=canvas.ontouchmove=e=>{
+    if(!dragging) return;
+    const r=canvas.getBoundingClientRect();
+    const cx=(e.touches?e.touches[0].clientX:e.clientX)-r.left;
+    const cy=(e.touches?e.touches[0].clientY:e.clientY)-r.top;
+    const scale=canvas.width/r.width;
+    const sx=Math.min(Math.max(cx*scale,sling.x-50),sling.x+50);
+    const sy=Math.min(Math.max(cy*scale,sling.y-80),sling.y);
+    birdsProjectile={x:sx,y:sy,vx:0,vy:0,trail:[]};
+    drawBirds();
+    // Draw rubber band
+    const bc=birdsCtx;
+    bc.strokeStyle='#795548'; bc.lineWidth=2;
+    bc.beginPath(); bc.moveTo(sling.x-12,sling.y-35); bc.lineTo(sx,sy); bc.stroke();
+    bc.beginPath(); bc.moveTo(sling.x+12,sling.y-35); bc.lineTo(sx,sy); bc.stroke();
+    e.preventDefault();
+  };
+  canvas.onmouseup=canvas.ontouchend=e=>{
+    if(!dragging||!birdsProjectile) return; dragging=false;
+    const dx=sling.x-birdsProjectile.x, dy=(sling.y-35)-birdsProjectile.y;
+    birdsProjectile.vx=dx*0.22; birdsProjectile.vy=dy*0.22;
+    birdsProjectile.trail=[];
+    birdsLaunched=true; birdsLeft--;
+    document.getElementById('birds-left').textContent=Math.max(0,birdsLeft);
+    if(birdsAnim) cancelAnimationFrame(birdsAnim);
+    animateBird();
+    e.preventDefault();
+  };
+}
+function animateBird() {
+  if(!birdsProjectile) return;
+  birdsProjectile.trail.push({x:birdsProjectile.x,y:birdsProjectile.y});
+  if(birdsProjectile.trail.length>12) birdsProjectile.trail.shift();
+  birdsProjectile.x+=birdsProjectile.vx;
+  birdsProjectile.y+=birdsProjectile.vy;
+  birdsProjectile.vy+=0.4; // gravity
+  // Bounce off ground
+  const groundY=document.getElementById('birdsCanvas').height*0.75;
+  if(birdsProjectile.y>groundY-12){
+    birdsProjectile.y=groundY-12; birdsProjectile.vy*=-0.4; birdsProjectile.vx*=0.8;
+    if(Math.abs(birdsProjectile.vy)<0.5){birdsProjectile=null; birdsLaunched=false; birdsNextTurn(); return;}
+  }
+  // Hit pigs
+  for(let i=pigsList.length-1;i>=0;i--){
+    const p=pigsList[i];
+    if(birdsProjectile&&Math.hypot(birdsProjectile.x-p.x,birdsProjectile.y-p.y)<p.r+10){
+      p.hp--;
+      if(p.hp<=0){
+        pigsList.splice(i,1);
+        birdsScore+=100;
+        document.getElementById('birds-score').textContent=birdsScore;
+      }
+      birdsProjectile.vx*=-0.3; birdsProjectile.vy*=-0.5;
+    }
+  }
+  // Out of screen
+  const W=document.getElementById('birdsCanvas').width;
+  if(birdsProjectile&&(birdsProjectile.x>W+20||birdsProjectile.x<-20||birdsProjectile.y>document.getElementById('birdsCanvas').height+20)){
+    birdsProjectile=null; birdsLaunched=false; birdsNextTurn(); return;
+  }
+  drawBirds();
+  if(birdsProjectile) birdsAnim=requestAnimationFrame(animateBird);
+}
+function birdsNextTurn() {
+  drawBirds();
+  if(pigsList.length===0){
+    birdsScore+=birdsLeft*50;
+    document.getElementById('birds-score').textContent=birdsScore;
+    if(birdsScore>birdsBest){birdsBest=birdsScore;localStorage.setItem('birds_best',birdsBest);document.getElementById('birds-best').textContent=birdsBest;}
+    document.getElementById('birds-msg').textContent='🎉 அனைத்து பன்றிகளும் தோற்றன! Score: '+birdsScore;
+  } else if(birdsLeft<=0){
+    if(birdsScore>birdsBest){birdsBest=birdsScore;localStorage.setItem('birds_best',birdsBest);document.getElementById('birds-best').textContent=birdsBest;}
+    document.getElementById('birds-msg').textContent='😔 Birds முடிந்தன! Score: '+birdsScore+' | '+pigsList.length+' pigs மிச்சம்';
+  }
+}
+
+// Patch switchGame to init chess/birds/snake
+const _origSwitchGame2 = switchGame;
+switchGame = function(id, el) {
+  _origSwitchGame2(id, el);
+  if(id==='chess') { initChessBoard(); resetChess(); }
+  if(id==='birds') resetBirds();
+  if(id==='snake') {
+    const btn=document.getElementById('snake-start-btn');
+    btn.style.display=''; btn.textContent='▶ ஆரம்பி';
+    document.getElementById('snake-msg').textContent='';
+    const canvas=document.getElementById('snakeCanvas');
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle='#0a0f0a'; ctx.fillRect(0,0,300,300);
+    ctx.fillStyle='rgba(0,230,118,0.4)'; ctx.font='16px DM Sans'; ctx.textAlign='center';
+    ctx.fillText('▶ Start button click பண்ணுங்கள்',150,150); ctx.textAlign='left';
+    if(snakeGame){clearInterval(snakeGame);snakeGame=null;}
+  }
+  if(id==='racing') {
+    const btn=document.getElementById('race-start-btn');
+    btn.style.display=''; btn.textContent='🏎️ Race Start!';
+    if(raceGame){clearInterval(raceGame);raceGame=null;}
+    const canvas=document.getElementById('raceCanvas');
+    const ctx=canvas.getContext('2d');
+    ctx.fillStyle='#1a1a1a'; ctx.fillRect(0,0,300,400);
+    ctx.fillStyle='rgba(249,168,37,0.6)'; ctx.font='16px DM Sans'; ctx.textAlign='center';
+    ctx.fillText('🏎️ Racing Game',150,180); ctx.fillText('Start button click பண்ணுங்கள்',150,210); ctx.textAlign='left';
+  }
+  if(id==='leaderboard') renderLeaderboard();
+};
+
 // ═══════════════════════════════════════
 // Init
+applyTheme(state.theme);
+initSOTD();
+renderHistory();
 renderStories();
+renderBookmarks();
+initStreak();
+initPageProgress();
+initStoryProgress();
+// Close share popup on outside click
+document.addEventListener('click', e => {
+  if (!e.target.closest('.share-popup') && !e.target.closest('.card-action-btn')) closeShare();
+  if (!e.target.closest('.search-wrap')) hideAutocomplete();
+});
 </script>
 </body>
 </html>
