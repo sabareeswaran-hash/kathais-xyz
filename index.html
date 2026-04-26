@@ -1,398 +1,484 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ta">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🚗 Car Racing Game</title>
+<title>Tamil Political Vote</title>
+<link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin:0; padding:0; box-sizing:border-box; }
   body {
-    background: #1a1a2e;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    font-family: 'Poppins', sans-serif;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
     min-height: 100vh;
-    font-family: 'Arial', sans-serif;
-    overflow: hidden;
+    padding: 20px;
   }
-  #gameWrapper {
-    position: relative;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
+
+  .container { max-width: 600px; margin: 0 auto; }
+
+  /* HEADER */
+  .header {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(135deg, #ff6f00, #f9a825);
+    border-radius: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 8px 25px rgba(249,168,37,0.4);
   }
-  #topBar {
-    display: flex;
-    justify-content: space-between;
-    width: 400px;
-    padding: 8px 14px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 30px;
+  .header h1 {
+    font-size: 26px;
+    font-weight: 900;
     color: #fff;
-    font-size: 15px;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+  }
+  .header p {
+    font-family: 'Tiro Tamil', serif;
+    font-size: 14px;
+    color: #fff3e0;
+    margin-top: 4px;
+  }
+  .header .flag { font-size: 30px; margin-bottom: 6px; }
+
+  /* QUESTION */
+  .question-box {
+    background: rgba(255,255,255,0.07);
+    border: 2px solid rgba(255,255,255,0.15);
+    border-radius: 16px;
+    padding: 16px 20px;
+    margin-bottom: 18px;
+    text-align: center;
+  }
+  .question-box h2 {
+    font-family: 'Tiro Tamil', serif;
+    font-size: 17px;
+    color: #f9a825;
     font-weight: 700;
   }
-  #topBar span { color: #f9a825; }
-
-  canvas {
-    border: 4px solid #f9a825;
-    border-radius: 8px;
-    display: block;
-    box-shadow: 0 0 30px rgba(249,168,37,0.4);
+  .question-box p {
+    font-size: 12px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
   }
 
-  #overlay {
-    position: absolute;
-    top: 50px;
-    left: 0; right: 0;
-    width: 400px;
-    margin: auto;
-    height: 600px;
-    background: rgba(0,0,0,0.82);
-    border-radius: 8px;
+  /* PARTY CARDS */
+  .parties { display: flex; flex-direction: column; gap: 14px; margin-bottom: 20px; }
+
+  .party-card {
+    background: rgba(255,255,255,0.06);
+    border: 2px solid rgba(255,255,255,0.1);
+    border-radius: 14px;
+    padding: 14px 16px;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  .party-card:hover { transform: translateY(-2px); border-color: rgba(255,255,255,0.3); }
+  .party-card.selected { border-width: 3px; }
+  .party-card.voted { cursor: default; }
+
+  /* Party colours */
+  .party-card.tvk        { border-color: #e53935; }
+  .party-card.tvk.selected { background: rgba(229,57,53,0.2); box-shadow: 0 4px 20px rgba(229,57,53,0.4); }
+  .party-card.dmk        { border-color: #d32f2f; }
+  .party-card.dmk.selected { background: rgba(211,47,47,0.2); box-shadow: 0 4px 20px rgba(211,47,47,0.4); }
+  .party-card.admk       { border-color: #2e7d32; }
+  .party-card.admk.selected { background: rgba(46,125,50,0.2); box-shadow: 0 4px 20px rgba(46,125,50,0.4); }
+  .party-card.bjp        { border-color: #e65100; }
+  .party-card.bjp.selected { background: rgba(230,81,0,0.2); box-shadow: 0 4px 20px rgba(230,81,0,0.4); }
+  .party-card.congress   { border-color: #1565c0; }
+  .party-card.congress.selected { background: rgba(21,101,192,0.2); box-shadow: 0 4px 20px rgba(21,101,192,0.4); }
+  .party-card.ntk        { border-color: #ff6f00; }
+  .party-card.ntk.selected { background: rgba(255,111,0,0.2); box-shadow: 0 4px 20px rgba(255,111,0,0.4); }
+  .ntk  .party-flag { background: linear-gradient(135deg,#ff6f00,#e65100); }
+  .ntk  .progress-bar-fill { background: linear-gradient(90deg,#ff6f00,#ffab40); }
+  .party-card.none.selected { background: rgba(96,125,139,0.2); }
+
+  .party-top { display: flex; align-items: center; gap: 12px; }
+  .party-flag {
+    width: 52px; height: 52px;
+    border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    flex-shrink: 0;
+    font-weight: 900;
+    color: #fff;
+  }
+  .tvk  .party-flag { background: linear-gradient(135deg,#e53935,#b71c1c); }
+  .dmk  .party-flag { background: linear-gradient(135deg,#d32f2f,#b71c1c); }
+  .admk .party-flag { background: linear-gradient(135deg,#2e7d32,#1b5e20); }
+  .bjp  .party-flag { background: linear-gradient(135deg,#e65100,#bf360c); }
+  .congress .party-flag { background: linear-gradient(135deg,#1565c0,#0d47a1); }
+  .none .party-flag { background: linear-gradient(135deg,#607d8b,#455a64); }
+
+  .party-info { flex: 1; }
+  .party-name {
+    font-size: 15px;
+    font-weight: 800;
+    color: #fff;
+  }
+  .party-leader {
+    font-family: 'Tiro Tamil', serif;
+    font-size: 12px;
+    color: rgba(255,255,255,0.65);
+    margin-top: 2px;
+  }
+  .party-symbol {
+    font-size: 11px;
+    color: rgba(255,255,255,0.45);
+  }
+
+  .select-indicator {
+    width: 24px; height: 24px;
+    border-radius: 50%;
+    border: 2px solid rgba(255,255,255,0.3);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 14px;
+    flex-shrink: 0;
+    transition: all 0.2s;
+  }
+  .party-card.selected .select-indicator {
+    background: #f9a825;
+    border-color: #f9a825;
+    color: #fff;
+  }
+
+  /* PROGRESS BAR */
+  .progress-wrap { margin-top: 10px; display: none; }
+  .progress-bar-bg {
+    background: rgba(255,255,255,0.1);
+    border-radius: 20px;
+    height: 8px;
+    overflow: hidden;
+  }
+  .progress-bar-fill {
+    height: 100%;
+    border-radius: 20px;
+    transition: width 0.8s ease;
+  }
+  .tvk  .progress-bar-fill { background: linear-gradient(90deg,#e53935,#ff5252); }
+  .dmk  .progress-bar-fill { background: linear-gradient(90deg,#d32f2f,#ff1744); }
+  .admk .progress-bar-fill { background: linear-gradient(90deg,#2e7d32,#69f0ae); }
+  .bjp  .progress-bar-fill { background: linear-gradient(90deg,#e65100,#ff9100); }
+  .congress .progress-bar-fill { background: linear-gradient(90deg,#1565c0,#448aff); }
+  .none .progress-bar-fill { background: linear-gradient(90deg,#607d8b,#90a4ae); }
+
+  .progress-label {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 16px;
-    border: 4px solid #f9a825;
+    justify-content: space-between;
+    font-size: 11px;
+    color: rgba(255,255,255,0.6);
+    margin-top: 4px;
   }
-  #overlay h1 { font-size: 36px; color: #f9a825; text-shadow: 0 0 20px #f9a825; }
-  #overlay p  { font-size: 15px; color: #fff; text-align: center; line-height: 1.7; }
-  #overlay .score-display { font-size: 22px; color: #4fc3f7; font-weight: 800; }
-  #startBtn {
+  .progress-label .pct { font-weight: 700; color: #f9a825; }
+
+  /* VOTE BUTTON */
+  #voteBtn {
+    width: 100%;
+    padding: 16px;
     background: linear-gradient(135deg, #f9a825, #ff6f00);
     color: #fff;
     border: none;
-    padding: 14px 40px;
-    border-radius: 30px;
+    border-radius: 14px;
     font-size: 18px;
     font-weight: 800;
     cursor: pointer;
-    box-shadow: 0 4px 15px rgba(249,168,37,0.5);
+    box-shadow: 0 6px 20px rgba(249,168,37,0.4);
+    transition: all 0.2s;
     letter-spacing: 1px;
-    transition: transform 0.1s;
+    display: block;
+    margin-bottom: 16px;
   }
-  #startBtn:hover { transform: scale(1.05); }
+  #voteBtn:disabled {
+    background: rgba(255,255,255,0.1);
+    color: rgba(255,255,255,0.3);
+    cursor: not-allowed;
+    box-shadow: none;
+  }
+  #voteBtn:not(:disabled):hover { transform: translateY(-2px); }
 
-  #controls {
-    display: flex;
-    gap: 10px;
-    margin-top: 4px;
-  }
-  .ctrl-btn {
-    background: rgba(255,255,255,0.15);
-    border: 2px solid #f9a825;
-    color: #fff;
-    font-size: 22px;
-    width: 60px; height: 60px;
+  /* TOTAL VOTES */
+  .total-box {
+    background: rgba(255,255,255,0.06);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px;
-    cursor: pointer;
-    display: flex; align-items: center; justify-content: center;
-    user-select: none;
-    transition: background 0.1s;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
   }
-  .ctrl-btn:active { background: rgba(249,168,37,0.4); }
+  .total-box .label { font-size: 13px; color: rgba(255,255,255,0.6); }
+  .total-box .count { font-size: 20px; font-weight: 900; color: #f9a825; }
+
+  /* SUCCESS */
+  .success-msg {
+    display: none;
+    background: linear-gradient(135deg,#2e7d32,#43a047);
+    border-radius: 14px;
+    padding: 16px;
+    text-align: center;
+    color: #fff;
+    margin-bottom: 16px;
+    font-size: 15px;
+    font-weight: 700;
+    box-shadow: 0 4px 20px rgba(46,125,50,0.4);
+  }
+
+  /* FOOTER */
+  .footer { margin-top: 10px; }
+  .disclaimer-box {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,165,0,0.3);
+    border-radius: 14px;
+    padding: 16px;
+  }
+  .disclaimer-title {
+    text-align: center;
+    font-size: 14px;
+    font-weight: 800;
+    color: #f9a825;
+    margin-bottom: 12px;
+    letter-spacing: 1px;
+    border-bottom: 1px solid rgba(255,165,0,0.2);
+    padding-bottom: 8px;
+  }
+  .disclaimer-content {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .disclaimer-content p {
+    font-size: 11.5px;
+    color: rgba(255,255,255,0.6);
+    line-height: 1.6;
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.03);
+    border-radius: 8px;
+    border-left: 3px solid rgba(249,168,37,0.4);
+  }
+  .disclaimer-content p strong { color: rgba(255,255,255,0.85); }
+  .disclaimer-copy {
+    text-align: center;
+    font-size: 11px;
+    color: rgba(255,255,255,0.3);
+    margin-top: 12px;
+    padding-top: 8px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
 </style>
 </head>
 <body>
-<div id="gameWrapper">
-  <div id="topBar">
-    <div>⏱ Time: <span id="timeDisplay">0</span>s</div>
-    <div>🏆 Best: <span id="bestDisplay">0</span>s</div>
-    <div>⚡ Speed: <span id="speedDisplay">1</span>x</div>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="flag">🗳️</div>
+    <h1>Tamil Nadu Political Vote</h1>
+    <p>உங்கள் வாக்கை பதிவு செய்யுங்கள்</p>
   </div>
 
-  <canvas id="gameCanvas" width="400" height="600"></canvas>
-
-  <div id="controls">
-    <button class="ctrl-btn" id="leftBtn">◀</button>
-    <button class="ctrl-btn" id="rightBtn">▶</button>
+  <!-- QUESTION -->
+  <div class="question-box">
+    <h2>2026 தமிழ்நாடு தேர்தலில் நீங்கள் யாரை ஆதரிப்பீர்கள்?</h2>
+    <p>Who will you support in the 2026 Tamil Nadu Election?</p>
   </div>
 
-  <div id="overlay">
-    <h1>🚗 RACING</h1>
-    <p>Dodge the traffic!<br>Use ◀ ▶ or Arrow Keys<br>Survive as long as possible!</p>
-    <div class="score-display" id="finalScore" style="display:none"></div>
-    <button id="startBtn">START GAME</button>
+  <!-- TOTAL VOTES -->
+  <div class="total-box">
+    <span class="label">🗳️ Total Votes Cast</span>
+    <span class="count" id="totalCount">0</span>
   </div>
+
+  <!-- SUCCESS MSG -->
+  <div class="success-msg" id="successMsg">
+    ✅ உங்கள் வாக்கு பதிவாகிவிட்டது! Your vote has been recorded!
+  </div>
+
+  <!-- PARTIES -->
+  <div class="parties" id="partiesList">
+
+    <div class="party-card tvk" data-party="tvk" onclick="selectParty(this)">
+      <div class="party-top">
+        <div class="party-flag">TVK</div>
+        <div class="party-info">
+          <div class="party-name">TVK — தமிழக வெற்றி கழகம்</div>
+          <div class="party-leader">தலைவர்: விஜய் | Leader: Vijay</div>
+          <div class="party-symbol">🌟 Rising Star</div>
+        </div>
+        <div class="select-indicator" id="ind-tvk"></div>
+      </div>
+      <div class="progress-wrap" id="prog-tvk">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-tvk" style="width:0%"></div></div>
+        <div class="progress-label"><span id="cnt-tvk">0 votes</span><span class="pct" id="pct-tvk">0%</span></div>
+      </div>
+    </div>
+
+    <div class="party-card dmk" data-party="dmk" onclick="selectParty(this)">
+      <div class="party-top">
+        <div class="party-flag">DMK</div>
+        <div class="party-info">
+          <div class="party-name">DMK — திராவிட முன்னேற்றக் கழகம்</div>
+          <div class="party-leader">தலைவர்: மு.க.ஸ்டாலின் | Leader: MK Stalin</div>
+          <div class="party-symbol">☀️ Rising Sun</div>
+        </div>
+        <div class="select-indicator" id="ind-dmk"></div>
+      </div>
+      <div class="progress-wrap" id="prog-dmk">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-dmk" style="width:0%"></div></div>
+        <div class="progress-label"><span id="cnt-dmk">0 votes</span><span class="pct" id="pct-dmk">0%</span></div>
+      </div>
+    </div>
+
+    <div class="party-card admk" data-party="admk" onclick="selectParty(this)">
+      <div class="party-top">
+        <div class="party-flag">ADMK</div>
+        <div class="party-info">
+          <div class="party-name">ADMK — அண்ணா திமுக</div>
+          <div class="party-leader">தலைவர்: எடப்பாடி பழனிசாமி | Leader: EPS</div>
+          <div class="party-symbol">🌾 Two Leaves</div>
+        </div>
+        <div class="select-indicator" id="ind-admk"></div>
+      </div>
+      <div class="progress-wrap" id="prog-admk">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-admk" style="width:0%"></div></div>
+        <div class="progress-label"><span id="cnt-admk">0 votes</span><span class="pct" id="pct-admk">0%</span></div>
+      </div>
+    </div>
+
+    <div class="party-card bjp" data-party="bjp" onclick="selectParty(this)">
+      <div class="party-top">
+        <div class="party-flag">BJP</div>
+        <div class="party-info">
+          <div class="party-name">BJP — பாரதிய ஜனதா கட்சி</div>
+          <div class="party-leader">தலைவர்: அண்ணாமலை | Leader: Annamalai</div>
+          <div class="party-symbol">🪷 Lotus</div>
+        </div>
+        <div class="select-indicator" id="ind-bjp"></div>
+      </div>
+      <div class="progress-wrap" id="prog-bjp">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-bjp" style="width:0%"></div></div>
+        <div class="progress-label"><span id="cnt-bjp">0 votes</span><span class="pct" id="pct-bjp">0%</span></div>
+      </div>
+    </div>
+
+    <div class="party-card congress" data-party="congress" onclick="selectParty(this)">
+      <div class="party-top">
+        <div class="party-flag">INC</div>
+        <div class="party-info">
+          <div class="party-name">Congress — இந்திய தேசிய காங்கிரஸ்</div>
+          <div class="party-leader">தலைவர்: ராகுல் காந்தி | Leader: Rahul Gandhi</div>
+          <div class="party-symbol">✋ Hand</div>
+        </div>
+        <div class="select-indicator" id="ind-congress"></div>
+      </div>
+      <div class="progress-wrap" id="prog-congress">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-congress" style="width:0%"></div></div>
+        <div class="progress-label"><span id="cnt-congress">0 votes</span><span class="pct" id="pct-congress">0%</span></div>
+      </div>
+    </div>
+
+    <div class="party-card ntk" data-party="ntk" onclick="selectParty(this)">
+      <div class="party-top">
+        <div class="party-flag">NTK</div>
+        <div class="party-info">
+          <div class="party-name">NTK — நாம் தமிழர் கட்சி</div>
+          <div class="party-leader">தலைவர்: சீமான் | Leader: Seeman</div>
+          <div class="party-symbol">🌅 Rising Tamil Sun</div>
+        </div>
+        <div class="select-indicator" id="ind-ntk"></div>
+      </div>
+      <div class="progress-wrap" id="prog-ntk">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-ntk" style="width:0%"></div></div>
+        <div class="progress-label"><span id="cnt-ntk">0 votes</span><span class="pct" id="pct-ntk">0%</span></div>
+      </div>
+    </div>
+
+    <div class="party-card none" data-party="none" onclick="selectParty(this)">
+      <div class="party-top">
+        <div class="party-flag">🚫</div>
+        <div class="party-info">
+          <div class="party-name">None / யாரும் இல்லை</div>
+          <div class="party-leader">எந்த கட்சியும் பிடிக்கவில்லை</div>
+          <div class="party-symbol">❌ No Vote</div>
+        </div>
+        <div class="select-indicator" id="ind-none"></div>
+      </div>
+      <div class="progress-wrap" id="prog-none">
+        <div class="progress-bar-bg"><div class="progress-bar-fill" id="bar-none" style="width:0%"></div></div>
+        <div class="progress-label"><span id="cnt-none">0 votes</span><span class="pct" id="pct-none">0%</span></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- VOTE BUTTON -->
+  <button id="voteBtn" disabled onclick="castVote()">🗳️ VOTE NOW — வாக்களிக்க</button>
+
+  <div class="footer">
+    <div class="disclaimer-box">
+      <div class="disclaimer-title">⚠️ DISCLAIMER / மறுப்பு அறிவிப்பு</div>
+      <div class="disclaimer-content">
+        <p>🗳️ This is an <strong>unofficial online opinion poll</strong> created for entertainment and awareness purposes only.</p>
+        <p>📊 இது ஒரு <strong>அதிகாரப்பூர்வமற்ற கருத்துக்கணிப்பு மட்டுமே</strong> — பொழுதுபோக்கு மற்றும் விழிப்புணர்வுக்காக உருவாக்கப்பட்டது.</p>
+        <p>🚫 This poll is <strong>NOT affiliated</strong> with any political party, government body, or Election Commission of India.</p>
+        <p>🚫 இந்த வாக்குப்பதிவு எந்த அரசியல் கட்சியுடனும், அரசாங்கத்துடனும், தேர்தல் ஆணையத்துடனும் <strong>தொடர்பற்றது</strong>.</p>
+        <p>📌 Results shown here <strong>do not represent</strong> actual election outcomes or public opinion at large.</p>
+        <p>📌 இங்கே காட்டப்படும் முடிவுகள் <strong>உண்மையான தேர்தல் முடிவுகளை பிரதிபலிக்காது</strong>.</p>
+        <p>🔒 No personal data is collected or stored. All votes are session-based only.</p>
+        <p>🔒 எந்த தனிப்பட்ட தரவும் சேகரிக்கப்படவில்லை. அனைத்து வாக்குகளும் தற்காலிகமானவை மட்டுமே.</p>
+        <p>💡 For official election information, visit <strong>eci.gov.in</strong></p>
+      </div>
+      <div class="disclaimer-copy">© 2026 kathais.xyz | Made with ❤️ for Tamil People</div>
+    </div>
+  </div>
+
 </div>
 
 <script>
-const canvas = document.getElementById('gameCanvas');
-const ctx = canvas.getContext('2d');
-const overlay = document.getElementById('overlay');
-const startBtn = document.getElementById('startBtn');
-const timeDisplay = document.getElementById('timeDisplay');
-const bestDisplay = document.getElementById('bestDisplay');
-const speedDisplay = document.getElementById('speedDisplay');
-const finalScore = document.getElementById('finalScore');
+  const votes = { tvk: 0, dmk: 0, admk: 0, bjp: 0, congress: 0, ntk: 0, none: 0 };
+  let selected = null;
+  let hasVoted = false;
 
-const W = 400, H = 600;
-const LANE_COUNT = 4;
-const LANE_W = W / LANE_COUNT;
+  function selectParty(card) {
+    if (hasVoted) return;
+    document.querySelectorAll('.party-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    selected = card.dataset.party;
+    document.getElementById('voteBtn').disabled = false;
+  }
 
-// Road markings
-const stripes = Array.from({length: 10}, (_, i) => ({ y: i * 70 }));
+  function castVote() {
+    if (!selected || hasVoted) return;
+    hasVoted = true;
+    votes[selected]++;
 
-// Player car
-const player = { lane: 1, x: 0, y: H - 130, w: 50, h: 80, color: '#00e5ff' };
+    // Disable button
+    document.getElementById('voteBtn').disabled = true;
+    document.getElementById('voteBtn').textContent = '✅ வாக்களிக்கப்பட்டது! Voted!';
 
-// Enemy cars - colorful
-const enemyColors = ['#ff1744','#76ff03','#f9a825','#e040fb','#ff6d00','#00e676'];
-let enemies = [];
-let particles = [];
+    // Show success
+    document.getElementById('successMsg').style.display = 'block';
 
-let running = false;
-let gameTime = 0;
-let bestTime = 0;
-let speed = 3;
-let spawnTimer = 0;
-let animId;
-let lastTime = 0;
+    // Make all cards non-clickable
+    document.querySelectorAll('.party-card').forEach(c => c.classList.add('voted'));
 
-function laneX(lane) { return lane * LANE_W + LANE_W / 2 - player.w / 2; }
+    // Show results
+    showResults();
+  }
 
-function spawnEnemy() {
-  const lane = Math.floor(Math.random() * LANE_COUNT);
-  // avoid spawning same lane as player too often
-  enemies.push({
-    lane,
-    x: laneX(lane),
-    y: -90,
-    w: 50, h: 80,
-    color: enemyColors[Math.floor(Math.random() * enemyColors.length)],
-    id: Math.random()
-  });
-}
+  function showResults() {
+    const total = Object.values(votes).reduce((a, b) => a + b, 0);
+    document.getElementById('totalCount').textContent = total;
 
-function drawRoad() {
-  // Road bg
-  ctx.fillStyle = '#37474f';
-  ctx.fillRect(0, 0, W, H);
-
-  // Side grass
-  ctx.fillStyle = '#2e7d32';
-  ctx.fillRect(0, 0, 10, H);
-  ctx.fillRect(W - 10, 0, 10, H);
-
-  // Road surface
-  ctx.fillStyle = '#455a64';
-  ctx.fillRect(10, 0, W - 20, H);
-
-  // Lane dividers
-  for (let i = 1; i < LANE_COUNT; i++) {
-    stripes.forEach(s => {
-      ctx.fillStyle = 'rgba(255,255,255,0.6)';
-      ctx.fillRect(i * LANE_W - 2, s.y, 4, 45);
+    Object.keys(votes).forEach(party => {
+      const pct = total > 0 ? Math.round((votes[party] / total) * 100) : 0;
+      document.getElementById('bar-' + party).style.width = pct + '%';
+      document.getElementById('pct-' + party).textContent = pct + '%';
+      document.getElementById('cnt-' + party).textContent = votes[party] + ' vote' + (votes[party] !== 1 ? 's' : '');
+      document.getElementById('prog-' + party).style.display = 'block';
     });
   }
-
-  // Edge lines
-  ctx.fillStyle = '#fff';
-  ctx.fillRect(10, 0, 4, H);
-  ctx.fillRect(W - 14, 0, 4, H);
-}
-
-function drawCar(x, y, w, h, color, isPlayer) {
-  // Body
-  ctx.fillStyle = color;
-  ctx.beginPath();
-  ctx.roundRect(x + 5, y + 10, w - 10, h - 20, 6);
-  ctx.fill();
-
-  // Roof
-  ctx.fillStyle = isPlayer ? '#006064' : '#333';
-  ctx.beginPath();
-  ctx.roundRect(x + 10, y + 20, w - 20, h - 45, 5);
-  ctx.fill();
-
-  // Windshield
-  ctx.fillStyle = 'rgba(150,240,255,0.7)';
-  ctx.beginPath();
-  ctx.roundRect(x + 12, y + 22, w - 24, 18, 3);
-  ctx.fill();
-
-  // Wheels
-  ctx.fillStyle = '#212121';
-  [[x + 3, y + 14], [x + w - 10, y + 14], [x + 3, y + h - 26], [x + w - 10, y + h - 26]].forEach(([wx, wy]) => {
-    ctx.beginPath();
-    ctx.roundRect(wx, wy, 7, 12, 2);
-    ctx.fill();
-  });
-
-  // Headlights / taillights
-  if (isPlayer) {
-    ctx.fillStyle = '#fff176';
-    ctx.beginPath(); ctx.arc(x + 12, y + 12, 4, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(x + w - 12, y + 12, 4, 0, Math.PI * 2); ctx.fill();
-  } else {
-    ctx.fillStyle = '#ff1744';
-    ctx.beginPath(); ctx.arc(x + 12, y + h - 12, 4, 0, Math.PI * 2); ctx.fill();
-    ctx.beginPath(); ctx.arc(x + w - 12, y + h - 12, 4, 0, Math.PI * 2); ctx.fill();
-  }
-}
-
-function spawnParticles(x, y) {
-  for (let i = 0; i < 20; i++) {
-    particles.push({
-      x: x + 25, y: y + 40,
-      vx: (Math.random() - 0.5) * 6,
-      vy: (Math.random() - 0.5) * 6,
-      r: Math.random() * 8 + 3,
-      color: enemyColors[Math.floor(Math.random() * enemyColors.length)],
-      life: 1
-    });
-  }
-}
-
-function drawParticles() {
-  particles.forEach(p => {
-    ctx.globalAlpha = p.life;
-    ctx.fillStyle = p.color;
-    ctx.beginPath();
-    ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
-    ctx.fill();
-  });
-  ctx.globalAlpha = 1;
-}
-
-function updateParticles() {
-  particles = particles.filter(p => p.life > 0);
-  particles.forEach(p => {
-    p.x += p.vx; p.y += p.vy;
-    p.life -= 0.04;
-    p.r *= 0.97;
-  });
-}
-
-function checkCollision(e) {
-  return !(player.x + 6 > e.x + e.w - 6 ||
-           player.x + player.w - 6 < e.x + 6 ||
-           player.y + 5 > e.y + e.h - 5 ||
-           player.y + player.h - 5 < e.y + 5);
-}
-
-function gameLoop(ts) {
-  const dt = Math.min((ts - lastTime) / 16.67, 3);
-  lastTime = ts;
-
-  // Update stripe scroll
-  stripes.forEach(s => {
-    s.y += speed * dt;
-    if (s.y > H) s.y -= 700;
-  });
-
-  // Spawn enemies
-  spawnTimer -= dt;
-  if (spawnTimer <= 0) {
-    spawnEnemy();
-    spawnTimer = Math.max(30, 80 - speed * 6);
-  }
-
-  // Move enemies
-  enemies.forEach(e => { e.y += speed * dt * 1.1; });
-  enemies = enemies.filter(e => e.y < H + 100);
-
-  // Collision
-  for (let e of enemies) {
-    if (checkCollision(e)) {
-      spawnParticles(player.x, player.y);
-      endGame();
-      // draw one last frame with particles
-      drawRoad();
-      enemies.forEach(en => drawCar(en.x, en.y, en.w, en.h, en.color, false));
-      drawCar(player.x, player.y, player.w, player.h, '#ff1744', true);
-      drawParticles();
-      return;
-    }
-  }
-
-  // Increase speed
-  speed = 3 + Math.floor(gameTime / 8) * 0.5;
-  speedDisplay.textContent = (1 + Math.floor(gameTime / 8) * 0.5).toFixed(1);
-  gameTime += dt / 60;
-  timeDisplay.textContent = Math.floor(gameTime);
-
-  updateParticles();
-
-  // Draw
-  drawRoad();
-  enemies.forEach(e => drawCar(e.x, e.y, e.w, e.h, e.color, false));
-  drawCar(player.x, player.y, player.w, player.h, player.color, true);
-  drawParticles();
-
-  animId = requestAnimationFrame(gameLoop);
-}
-
-function startGame() {
-  player.lane = 1;
-  player.x = laneX(1);
-  enemies = [];
-  particles = [];
-  gameTime = 0;
-  speed = 3;
-  spawnTimer = 60;
-  running = true;
-  overlay.style.display = 'none';
-  finalScore.style.display = 'none';
-  lastTime = performance.now();
-  animId = requestAnimationFrame(gameLoop);
-}
-
-function endGame() {
-  running = false;
-  cancelAnimationFrame(animId);
-  if (Math.floor(gameTime) > bestTime) {
-    bestTime = Math.floor(gameTime);
-    bestDisplay.textContent = bestTime;
-  }
-  finalScore.style.display = 'block';
-  finalScore.textContent = `⏱ Your Time: ${Math.floor(gameTime)}s`;
-  overlay.querySelector('h1').textContent = '💥 CRASHED!';
-  startBtn.textContent = '▶ PLAY AGAIN';
-  overlay.style.display = 'flex';
-}
-
-// Controls
-let keys = {};
-document.addEventListener('keydown', e => {
-  if (!running) return;
-  if ((e.key === 'ArrowLeft' || e.key === 'a') && player.lane > 0) {
-    player.lane--;
-    player.x = laneX(player.lane);
-  }
-  if ((e.key === 'ArrowRight' || e.key === 'd') && player.lane < LANE_COUNT - 1) {
-    player.lane++;
-    player.x = laneX(player.lane);
-  }
-});
-
-document.getElementById('leftBtn').addEventListener('click', () => {
-  if (!running || player.lane <= 0) return;
-  player.lane--; player.x = laneX(player.lane);
-});
-document.getElementById('rightBtn').addEventListener('click', () => {
-  if (!running || player.lane >= LANE_COUNT - 1) return;
-  player.lane++; player.x = laneX(player.lane);
-});
-
-// Touch swipe
-let touchStartX = 0;
-canvas.addEventListener('touchstart', e => { touchStartX = e.touches[0].clientX; });
-canvas.addEventListener('touchend', e => {
-  if (!running) return;
-  const dx = e.changedTouches[0].clientX - touchStartX;
-  if (dx < -30 && player.lane > 0) { player.lane--; player.x = laneX(player.lane); }
-  if (dx > 30 && player.lane < LANE_COUNT - 1) { player.lane++; player.x = laneX(player.lane); }
-});
-
-startBtn.addEventListener('click', startGame);
-
-// Initial draw
-drawRoad();
-drawCar(laneX(1), player.y, player.w, player.h, player.color, true);
 </script>
 </body>
 </html>
