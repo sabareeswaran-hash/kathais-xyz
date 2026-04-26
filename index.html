@@ -1,1907 +1,731 @@
 <!DOCTYPE html>
-<html lang="ta">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Tamil Kathaikal | படித்து மகிளுங்கள் — Tamil Stories</title>
-<link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=Poppins:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<title>GameZone — Free Online Games</title>
+<meta name="description" content="Play free online games — Action, Racing, Puzzle, Sports, IO Games and more. No download needed!">
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700;900&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ✅ GOOGLE ADSENSE — Replace YOUR_PUB_ID with your Publisher ID to activate ads -->
+<!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-YOUR_PUB_ID" crossorigin="anonymous"></script> -->
+
 <style>
-* { margin:0; padding:0; box-sizing:border-box; }
-body { font-family:'Poppins',sans-serif; background:#0f0f1a; color:#fff; }
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --bg:#0a0b0f;
+  --surface:#111318;
+  --surface2:#1a1c24;
+  --surface3:#22253a;
+  --accent:#00e5ff;
+  --accent2:#ff3d6b;
+  --accent3:#ffe600;
+  --accent4:#a259ff;
+  --text:#e8eaf2;
+  --muted:#6b7080;
+  --border:rgba(255,255,255,0.07);
+  --radius:12px;
+}
+html{scroll-behavior:smooth}
+body{font-family:'Rajdhani',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;overflow-x:hidden}
+::-webkit-scrollbar{width:5px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--surface3);border-radius:3px}
 
-/* NAV */
-nav {
-  background:linear-gradient(135deg,#1a1a2e,#16213e);
-  padding:14px 20px;
-  display:flex; align-items:center; justify-content:space-between;
-  border-bottom:3px solid #f9a825;
-  position:sticky; top:0; z-index:100;
-  flex-wrap:wrap; gap:10px;
-}
-.logo { font-size:22px; font-weight:900; color:#f9a825; }
-.logo span { color:#fff; font-family:'Tiro Tamil',serif; }
-.nav-links { display:flex; gap:14px; flex-wrap:wrap; }
-.nav-links a {
-  color:rgba(255,255,255,0.7); text-decoration:none;
-  font-size:12px; font-weight:600; transition:color 0.2s;
-}
-.nav-links a:hover { color:#f9a825; }
+/* ── NAV ── */
+nav{background:rgba(10,11,15,0.97);border-bottom:1px solid var(--border);padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:60px;position:sticky;top:0;z-index:1000;backdrop-filter:blur(12px)}
+.logo{font-family:'Orbitron',monospace;font-size:22px;font-weight:900;color:var(--accent);letter-spacing:-1px;text-shadow:0 0 30px rgba(0,229,255,0.4);cursor:pointer;text-decoration:none}
+.logo span{color:var(--accent2)}
+.nav-links{display:flex;gap:4px}
+.nav-link{color:var(--muted);text-decoration:none;font-size:12px;font-weight:700;padding:6px 12px;border-radius:6px;text-transform:uppercase;letter-spacing:1px;transition:all 0.2s;cursor:pointer;background:none;border:none;font-family:'Rajdhani',sans-serif}
+.nav-link:hover,.nav-link.active{color:var(--accent);background:rgba(0,229,255,0.08)}
+.nav-right{display:flex;align-items:center;gap:10px}
+.search-box{position:relative}
+.search-box svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);width:14px;height:14px;fill:none;stroke:var(--muted);stroke-width:2;pointer-events:none}
+#searchInput{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:7px 14px 7px 34px;color:var(--text);font-size:13px;font-family:'Rajdhani',sans-serif;outline:none;width:200px;transition:all 0.25s}
+#searchInput:focus{border-color:var(--accent);width:240px;box-shadow:0 0 0 3px rgba(0,229,255,0.1)}
+#searchInput::placeholder{color:var(--muted)}
+.sign-btn{background:transparent;border:1px solid var(--border);color:var(--muted);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:700;font-family:'Rajdhani',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 0.2s}
+.sign-btn:hover{border-color:var(--accent);color:var(--accent)}
+.join-btn{background:var(--accent);color:#000;border:none;border-radius:8px;padding:7px 16px;font-size:12px;font-weight:700;font-family:'Rajdhani',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 0.2s}
+.join-btn:hover{background:#26f0ff;transform:translateY(-1px)}
 
-/* HERO */
-.hero {
-  background:linear-gradient(135deg,#1a1a2e,#0f3460);
-  padding:50px 20px 40px;
-  text-align:center;
-  border-bottom:3px solid rgba(249,168,37,0.3);
-  position:relative;
-  overflow:hidden;
-}
-.hero::before {
-  content:'📖';
-  position:absolute;
-  font-size:300px;
-  opacity:0.03;
-  top:-50px; right:-50px;
-}
-.hero h1 {
-  font-family:'Tiro Tamil',serif;
-  font-size:42px; font-weight:900;
-  color:#f9a825;
-  text-shadow:0 0 30px rgba(249,168,37,0.4);
-  margin-bottom:8px;
-}
-.hero h2 { font-size:18px; color:rgba(255,255,255,0.7); font-weight:400; margin-bottom:20px; }
-.hero-stats {
-  display:flex; justify-content:center; gap:24px;
-  flex-wrap:wrap; margin-top:20px;
-}
-.stat {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:12px; padding:12px 20px; text-align:center;
-}
-.stat .num { font-size:22px; font-weight:900; color:#f9a825; }
-.stat .lbl { font-size:11px; color:rgba(255,255,255,0.5); }
+/* ── AD BANNER TOP 728×90 ── */
+.ad-top{background:var(--surface);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:center;padding:10px;gap:12px}
+.ad-label{background:rgba(255,230,0,0.1);color:var(--accent3);font-size:9px;font-weight:700;padding:3px 8px;border-radius:4px;text-transform:uppercase;letter-spacing:1.5px;border:1px solid rgba(255,230,0,0.2);flex-shrink:0}
+.ad-slot-top{background:var(--surface2);border:1px dashed rgba(255,255,255,0.1);border-radius:6px;width:728px;height:90px;max-width:calc(100% - 80px);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;font-weight:600}
+/* REAL ADSENSE: replace .ad-slot-top content with:
+<ins class="adsbygoogle" style="display:block;width:728px;height:90px" data-ad-client="ca-pub-YOUR_ID" data-ad-slot="YOUR_SLOT"></ins>
+<script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+*/
 
-/* SEARCH */
-.search-wrap {
-  padding:20px;
-  max-width:600px; margin:0 auto;
-}
-.search-box {
-  display:flex; gap:10px;
-}
-.search-box input {
-  flex:1; padding:14px 18px;
-  background:rgba(255,255,255,0.08);
-  border:2px solid rgba(255,255,255,0.15);
-  border-radius:12px; color:#fff;
-  font-size:14px; font-family:'Poppins',sans-serif;
-  outline:none; transition:border-color 0.2s;
-}
-.search-box input:focus { border-color:#f9a825; }
-.search-box input::placeholder { color:rgba(255,255,255,0.3); }
-.search-btn {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border:none; color:#fff; padding:14px 20px;
-  border-radius:12px; cursor:pointer;
-  font-size:16px; transition:transform 0.2s;
-}
-.search-btn:hover { transform:scale(1.05); }
+/* ── LAYOUT ── */
+.wrap{max-width:1180px;margin:0 auto;padding:0 24px}
 
-/* CATEGORIES */
-.section { padding:16px 20px; max-width:1100px; margin:0 auto; }
-.section-title {
-  font-size:18px; font-weight:800;
-  color:#fff; margin-bottom:14px;
-  display:flex; align-items:center; gap:8px;
-}
-.section-title::after {
-  content:''; flex:1; height:2px;
-  background:linear-gradient(90deg,rgba(249,168,37,0.5),transparent);
-}
+/* ── HERO ── */
+.hero{padding:28px 0 0}
+.hero-grid{display:grid;grid-template-columns:2.2fr 1fr;gap:14px}
+.hero-main{position:relative;border-radius:var(--radius);overflow:hidden;min-height:310px;background:linear-gradient(135deg,#060c1e 0%,#120020 50%,#001a0d 100%);border:1px solid var(--border);cursor:pointer;display:flex;align-items:center;justify-content:center;transition:border-color 0.3s}
+.hero-main:hover{border-color:rgba(0,229,255,0.3)}
+.hero-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;pointer-events:none}
+.hero-badges{position:absolute;top:14px;left:14px;display:flex;gap:6px;z-index:2}
+.badge{font-size:9px;font-weight:700;padding:3px 10px;border-radius:20px;text-transform:uppercase;letter-spacing:1px}
+.b-fire{background:var(--accent2);color:#fff}
+.b-new{background:var(--accent);color:#000}
+.b-top{background:var(--accent3);color:#000}
+.b-orig{background:var(--accent4);color:#fff}
+.b-hot{background:#ff6b2b;color:#fff}
+.b-upd{background:#1db954;color:#fff}
+.hero-play-btn{position:absolute;width:64px;height:64px;background:var(--accent);border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all 0.25s;z-index:2;border:3px solid rgba(255,255,255,0.15)}
+.hero-play-btn:hover{transform:scale(1.12);background:#26f0ff}
+.hero-play-btn svg{width:22px;height:22px;fill:#000;margin-left:3px}
+.hero-info{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.92));padding:36px 18px 16px;z-index:2}
+.hero-info h2{font-family:'Orbitron',monospace;font-size:20px;color:#fff;margin-bottom:4px;letter-spacing:-0.5px}
+.hero-info p{color:rgba(255,255,255,0.5);font-size:13px}
+.hero-side{display:flex;flex-direction:column;gap:10px}
+.side-card{border-radius:10px;border:1px solid var(--border);cursor:pointer;position:relative;display:flex;flex-direction:column;justify-content:flex-end;padding:12px 13px;overflow:hidden;transition:all 0.22s;flex:1}
+.side-card:hover{border-color:rgba(0,229,255,0.25);transform:translateX(3px)}
+.side-bg{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:42px;opacity:0.18;user-select:none}
+.side-badge{position:absolute;top:8px;left:8px;z-index:1}
+.side-name{font-family:'Orbitron',monospace;font-size:11px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,0.9);position:relative;z-index:1;font-weight:700;line-height:1.3}
+.side-sub{font-size:11px;color:rgba(255,255,255,0.4);position:relative;z-index:1;margin-top:2px}
 
-.cat-tabs {
-  display:flex; gap:8px; flex-wrap:wrap; margin-bottom:20px;
-  overflow-x:auto; padding-bottom:4px;
-}
-.cat-tab {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.15);
-  border-radius:20px; padding:7px 16px;
-  font-size:12px; font-weight:700;
-  color:rgba(255,255,255,0.6);
-  cursor:pointer; transition:all 0.2s;
-  white-space:nowrap; flex-shrink:0;
-}
-.cat-tab:hover,.cat-tab.active {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border-color:transparent; color:#fff;
-}
+/* ── SECTION ── */
+.section{padding:28px 0 0}
+.sec-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:14px}
+.sec-title{font-family:'Orbitron',monospace;font-size:12px;font-weight:700;color:var(--text);letter-spacing:2px;text-transform:uppercase;display:flex;align-items:center;gap:10px}
+.sec-title::before{content:'';width:3px;height:16px;background:var(--accent);border-radius:2px;flex-shrink:0}
+.see-all{color:var(--accent);font-size:12px;font-weight:700;cursor:pointer;letter-spacing:0.5px;transition:opacity 0.2s;border:none;background:none;font-family:'Rajdhani',sans-serif}
+.see-all:hover{opacity:0.65}
 
-/* STORY CARDS GRID */
-.stories-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(280px,1fr));
-  gap:16px;
-}
+/* ── CATEGORIES ── */
+.cats{display:flex;gap:8px;flex-wrap:wrap}
+.cat{background:var(--surface2);border:1px solid var(--border);border-radius:24px;padding:6px 16px;font-size:12px;font-weight:700;color:var(--muted);cursor:pointer;transition:all 0.2s;text-transform:uppercase;letter-spacing:0.5px;white-space:nowrap;border:none;font-family:'Rajdhani',sans-serif}
+.cat:hover{color:var(--text);background:var(--surface3)}
+.cat.active{background:rgba(0,229,255,0.12);color:var(--accent);box-shadow:inset 0 0 0 1px rgba(0,229,255,0.3)}
 
-.story-card {
-  background:linear-gradient(145deg,#1a1a2e,#16213e);
-  border:2px solid rgba(255,255,255,0.08);
-  border-radius:16px; overflow:hidden;
-  cursor:pointer; transition:all 0.2s;
-}
-.story-card:hover {
-  transform:translateY(-4px);
-  border-color:rgba(249,168,37,0.4);
-  box-shadow:0 8px 25px rgba(249,168,37,0.15);
-}
+/* ── GAME GRID ── */
+.game-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(168px,1fr));gap:14px}
+.game-card{background:var(--surface);border-radius:10px;border:1px solid var(--border);cursor:pointer;transition:all 0.22s;overflow:hidden;position:relative}
+.game-card:hover{transform:translateY(-5px);border-color:rgba(0,229,255,0.22);box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+.thumb{aspect-ratio:1;display:flex;align-items:center;justify-content:center;font-size:40px;position:relative;overflow:hidden}
+.thumb-badge{position:absolute;top:7px;left:7px}
+.thumb-rating{position:absolute;bottom:6px;right:8px;font-size:10px;color:var(--accent3);font-weight:700;text-shadow:0 1px 4px rgba(0,0,0,0.8)}
+.thumb-plays{position:absolute;bottom:6px;left:8px;font-size:10px;color:rgba(255,255,255,0.4)}
+.game-body{padding:9px 11px 12px}
+.game-name{font-size:13px;font-weight:700;color:var(--text);margin-bottom:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.game-cat{font-size:11px;color:var(--muted)}
 
-.story-thumb {
-  height:120px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:52px; position:relative;
-}
-.story-badge {
-  position:absolute; top:10px; right:10px;
-  font-size:10px; font-weight:800;
-  padding:3px 10px; border-radius:10px;
-  letter-spacing:0.5px;
-}
-.badge-new { background:#00e676; color:#1a1a2e; }
-.badge-hot { background:#ff1744; color:#fff; }
-.badge-love { background:#e91e63; color:#fff; }
-.badge-classic { background:#f9a825; color:#1a1a2e; }
+/* ── AD MID ── */
+.ad-mid{padding:24px 0 0}
+.ad-rect{background:var(--surface2);border:1px dashed rgba(255,255,255,0.08);border-radius:10px;height:100px;display:flex;align-items:center;justify-content:center;gap:12px;color:var(--muted);font-size:12px;font-weight:600}
+/* REAL: replace with <ins class="adsbygoogle"... data-ad-slot="LEADERBOARD_SLOT"> */
 
-.story-body { padding:14px 16px; }
-.story-cat {
-  font-size:10px; font-weight:700;
-  padding:3px 10px; border-radius:10px;
-  display:inline-block; margin-bottom:8px;
-}
-.story-title {
-  font-family:'Tiro Tamil',serif;
-  font-size:16px; font-weight:700;
-  color:#fff; margin-bottom:6px; line-height:1.4;
-}
-.story-excerpt {
-  font-family:'Tiro Tamil',serif;
-  font-size:12px; color:rgba(255,255,255,0.55);
-  line-height:1.6; margin-bottom:12px;
-}
-.story-meta {
-  display:flex; justify-content:space-between;
-  align-items:center; font-size:11px;
-  color:rgba(255,255,255,0.4);
-}
-.story-meta .read-time { color:#f9a825; font-weight:600; }
+/* ── FEATURED BIG CARDS ── */
+.feat-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+.feat-card{border-radius:12px;border:1px solid var(--border);cursor:pointer;position:relative;aspect-ratio:16/8;display:flex;align-items:flex-end;overflow:hidden;transition:all 0.22s}
+.feat-card:hover{transform:translateY(-3px);border-color:rgba(0,229,255,0.2)}
+.feat-art{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:56px;opacity:0.22;user-select:none}
+.feat-info{padding:10px 14px 12px;background:linear-gradient(transparent,rgba(0,0,0,0.9));width:100%;position:relative;z-index:1}
+.feat-name{font-size:14px;font-weight:700;color:#fff;margin-bottom:2px}
+.feat-sub{font-size:11px;color:rgba(255,255,255,0.45)}
+.feat-badge{position:absolute;top:10px;left:10px;z-index:1}
 
-.read-btn {
-  width:100%; padding:10px;
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border:none; color:#fff;
-  font-size:13px; font-weight:800;
-  cursor:pointer; transition:opacity 0.2s;
-  font-family:'Poppins',sans-serif;
-}
-.read-btn:hover { opacity:0.9; }
+/* ── AD SIDEBAR (on game play) ── */
+/* ── GAME MODAL / PLAY PAGE ── */
+#playPage{display:none;position:fixed;inset:0;background:var(--bg);z-index:3000;flex-direction:column}
+#playPage.open{display:flex}
+.play-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:0 20px;height:52px;display:flex;align-items:center;gap:14px;flex-shrink:0}
+.back-btn{background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:6px 14px;font-size:13px;font-weight:700;font-family:'Rajdhani',sans-serif;cursor:pointer;transition:all 0.2s;display:flex;align-items:center;gap:6px}
+.back-btn:hover{border-color:var(--accent);color:var(--accent)}
+.back-btn svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:2}
+#playGameTitle{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--text)}
+.play-body{display:flex;flex:1;min-height:0}
+.play-main{flex:1;background:#000;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+#gameFrame{width:100%;height:100%;border:none;display:block}
+.play-side{width:290px;background:var(--surface);border-left:1px solid var(--border);display:flex;flex-direction:column;flex-shrink:0;overflow-y:auto}
+.play-ad{padding:14px;border-bottom:1px solid var(--border)}
+.play-ad-box{background:var(--surface2);border:1px dashed rgba(255,255,255,0.08);border-radius:8px;width:100%;height:250px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;color:var(--muted);font-size:12px;font-weight:600}
+/* REAL: <ins class="adsbygoogle"... data-ad-slot="SIDEBAR_SLOT"> */
+.play-info{padding:14px;border-bottom:1px solid var(--border)}
+.play-info h3{font-family:'Orbitron',monospace;font-size:13px;font-weight:700;color:var(--text);margin-bottom:6px}
+.play-info p{font-size:13px;color:var(--muted);line-height:1.6}
+.play-related-title{padding:14px 14px 8px;font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:1.5px}
+.related-card{display:flex;gap:10px;align-items:center;padding:8px 14px;cursor:pointer;transition:background 0.2s}
+.related-card:hover{background:var(--surface2)}
+.rel-thumb{width:46px;height:46px;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+.rel-name{font-size:13px;font-weight:700;color:var(--text)}
+.rel-cat{font-size:11px;color:var(--muted)}
 
-/* MODAL / STORY READER */
-.modal {
-  display:none; position:fixed;
-  top:0; left:0; right:0; bottom:0;
-  background:rgba(0,0,0,0.95);
-  z-index:1000; overflow-y:auto;
-  padding:20px;
-}
-.modal.open { display:block; }
-.modal-inner {
-  max-width:700px; margin:0 auto;
-  background:linear-gradient(145deg,#1a1a2e,#16213e);
-  border:2px solid rgba(249,168,37,0.3);
-  border-radius:20px; overflow:hidden;
-}
-.modal-header {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  padding:16px 20px;
-  display:flex; justify-content:space-between; align-items:center;
-}
-.modal-header h2 { font-family:'Tiro Tamil',serif; font-size:18px; color:#fff; font-weight:800; }
-.close-btn {
-  background:rgba(0,0,0,0.3); border:none;
-  color:#fff; width:36px; height:36px;
-  border-radius:50%; font-size:18px;
-  cursor:pointer; font-weight:900;
-}
-.modal-story {
-  padding:24px 28px;
-  font-family:'Tiro Tamil',serif;
-  font-size:16px; line-height:2;
-  color:rgba(255,255,255,0.85);
-}
-.modal-story h3 {
-  font-size:22px; color:#f9a825;
-  margin-bottom:16px; text-align:center;
-}
-.modal-story p { margin-bottom:16px; }
-.modal-story .moral {
-  background:rgba(249,168,37,0.1);
-  border-left:4px solid #f9a825;
-  border-radius:8px; padding:14px 16px;
-  margin-top:20px; color:#f9a825;
-  font-weight:700;
-}
-.font-controls {
-  padding:10px 20px;
-  display:flex; gap:10px; align-items:center;
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.font-btn {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:6px 14px;
-  border-radius:8px; cursor:pointer;
-  font-size:13px; font-weight:700;
-  font-family:'Poppins',sans-serif;
-}
-.font-label { font-size:12px; color:rgba(255,255,255,0.4); }
+/* ── INTERSTITIAL AD ── */
+#interAd{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.92);z-index:5000;flex-direction:column;align-items:center;justify-content:center;gap:20px}
+#interAd.open{display:flex}
+.inter-box{background:var(--surface);border:1px solid var(--border);border-radius:16px;width:600px;max-width:94vw;padding:24px;text-align:center}
+.inter-title{font-family:'Orbitron',monospace;font-size:12px;color:var(--muted);margin-bottom:14px;text-transform:uppercase;letter-spacing:1.5px}
+.inter-slot{background:var(--surface2);border:1px dashed rgba(255,255,255,0.1);border-radius:10px;width:100%;height:250px;display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:12px;font-weight:600;margin-bottom:16px}
+/* REAL: replace with <ins class="adsbygoogle"... data-ad-slot="INTERSTITIAL_SLOT"> */
+.inter-countdown{font-size:13px;color:var(--muted)}
+#interBtn{background:var(--accent);color:#000;border:none;border-radius:8px;padding:10px 28px;font-size:14px;font-weight:700;font-family:'Rajdhani',sans-serif;cursor:pointer;text-transform:uppercase;letter-spacing:1px;transition:all 0.2s;display:none}
+#interBtn:hover{background:#26f0ff}
 
-/* VOICE READER */
-.voice-controls {
-  padding:14px 20px;
-  background:rgba(0,0,0,0.3);
-  border-bottom:1px solid rgba(255,255,255,0.08);
-}
-.voice-title {
-  font-size:11px; font-weight:700;
-  color:rgba(255,255,255,0.4);
-  letter-spacing:1px; text-transform:uppercase;
-  margin-bottom:10px;
-}
-.voice-btns {
-  display:flex; gap:8px; align-items:center; flex-wrap:wrap; margin-bottom:10px;
-}
-.voice-btn {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:8px 14px;
-  border-radius:10px; cursor:pointer;
-  font-size:13px; font-weight:700;
-  font-family:'Poppins',sans-serif;
-  transition:all 0.2s; display:flex; align-items:center; gap:5px;
-}
-.voice-btn:hover { background:rgba(255,255,255,0.15); }
-.voice-btn.play-btn {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border-color:transparent;
-}
-.voice-btn.play-btn:hover { opacity:0.9; }
-.voice-btn.stop-btn { border-color:rgba(255,100,100,0.4); color:#ff6b6b; }
-.voice-btn.stop-btn:hover { background:rgba(255,100,100,0.15); }
-.speed-wrap {
-  display:flex; align-items:center; gap:8px; margin-left:auto;
-}
-.speed-label { font-size:11px; color:rgba(255,255,255,0.4); white-space:nowrap; }
-.speed-select {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:6px 10px;
-  border-radius:8px; font-size:12px;
-  font-family:'Poppins',sans-serif; cursor:pointer;
-}
-.speed-select option { background:#1a1a2e; color:#fff; }
-.progress-wrap {
-  display:flex; align-items:center; gap:10px;
-}
-.progress-bar-bg {
-  flex:1; height:6px; background:rgba(255,255,255,0.1);
-  border-radius:10px; overflow:hidden; cursor:pointer;
-}
-.progress-bar-fill {
-  height:100%; width:0%;
-  background:linear-gradient(90deg,#f9a825,#ff6f00);
-  border-radius:10px; transition:width 0.3s;
-}
-.progress-time {
-  font-size:11px; color:rgba(255,255,255,0.4);
-  white-space:nowrap; min-width:70px; text-align:right;
-}
-.reading-highlight {
-  background:rgba(249,168,37,0.18);
-  border-radius:4px;
-  transition:background 0.3s;
-}
+/* ── REWARDED AD TOAST ── */
+#rewardToast{display:none;position:fixed;bottom:20px;right:20px;background:var(--surface);border:1px solid rgba(0,229,255,0.25);border-radius:12px;padding:14px 18px;z-index:4000;max-width:300px;animation:slideUp 0.3s ease}
+#rewardToast.open{display:block}
+@keyframes slideUp{from{transform:translateY(20px);opacity:0}to{transform:translateY(0);opacity:1}}
+.toast-head{font-family:'Orbitron',monospace;font-size:11px;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:1px}
+.toast-text{font-size:13px;color:var(--muted);margin-bottom:10px}
+.toast-btn{background:var(--accent3);color:#000;border:none;border-radius:6px;padding:6px 14px;font-size:12px;font-weight:700;font-family:'Rajdhani',sans-serif;cursor:pointer;text-transform:uppercase}
 
-/* GAMES MODAL */
-.games-modal {
-  display:none; position:fixed;
-  top:0; left:0; right:0; bottom:0;
-  background:rgba(0,0,0,0.96);
-  z-index:2000; overflow-y:auto; padding:20px;
-}
-.games-modal.open { display:block; }
-.games-modal-inner {
-  max-width:750px; margin:0 auto;
-  background:linear-gradient(145deg,#0d1117,#1a1a2e);
-  border:2px solid rgba(0,230,118,0.3);
-  border-radius:20px; overflow:hidden;
-}
-.games-modal-header {
-  background:linear-gradient(135deg,#00c853,#00e676);
-  padding:16px 22px;
-  display:flex; justify-content:space-between; align-items:center;
-}
-.games-modal-header h2 { font-size:18px; font-weight:900; color:#0a1a0a; }
-.games-modal-close {
-  background:rgba(0,0,0,0.2); border:none;
-  color:#0a1a0a; width:36px; height:36px;
-  border-radius:50%; font-size:18px; cursor:pointer; font-weight:900;
-}
-.games-nav {
-  display:flex; gap:0; border-bottom:2px solid rgba(0,230,118,0.15);
-}
-.game-tab-btn {
-  flex:1; padding:12px; background:transparent;
-  border:none; color:rgba(255,255,255,0.4);
-  font-size:13px; font-weight:700; cursor:pointer;
-  font-family:'Poppins',sans-serif; transition:all 0.2s;
-  border-bottom:3px solid transparent;
-}
-.game-tab-btn.active {
-  color:#00e676; border-bottom-color:#00e676;
-  background:rgba(0,230,118,0.06);
-}
-.game-panel { display:none; padding:24px; }
-.game-panel.active { display:block; }
+/* ── FOOTER ── */
+footer{margin-top:36px;background:var(--surface);border-top:1px solid var(--border);padding:32px 0 20px}
+.footer-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:32px;margin-bottom:28px}
+.footer-brand .logo-f{font-family:'Orbitron',monospace;font-size:18px;font-weight:900;color:var(--accent);margin-bottom:10px}
+.footer-brand .logo-f span{color:var(--accent2)}
+.footer-brand p{font-size:13px;color:var(--muted);line-height:1.7;max-width:240px}
+.footer-col h4{font-family:'Orbitron',monospace;font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+.footer-col a{display:block;font-size:13px;color:var(--muted);text-decoration:none;margin-bottom:7px;transition:color 0.2s;cursor:pointer}
+.footer-col a:hover{color:var(--accent)}
+.footer-bottom{border-top:1px solid var(--border);padding-top:18px;display:flex;align-items:center;justify-content:space-between}
+.footer-bottom p{font-size:12px;color:var(--muted)}
+.footer-adsense{display:flex;align-items:center;gap:8px;background:rgba(0,229,255,0.05);border:1px solid rgba(0,229,255,0.12);border-radius:8px;padding:6px 14px}
+.footer-adsense span{font-size:11px;color:var(--accent);font-weight:700}
 
-/* Word Guess Game */
-.word-guess-area { text-align:center; }
-.word-display {
-  display:flex; justify-content:center; gap:10px;
-  flex-wrap:wrap; margin:20px 0;
-}
-.letter-box {
-  width:44px; height:50px;
-  background:rgba(255,255,255,0.06);
-  border:2px solid rgba(255,255,255,0.2);
-  border-radius:10px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:22px; font-weight:900; color:#fff;
-  font-family:'Tiro Tamil',serif;
-  transition:all 0.3s;
-}
-.letter-box.filled { border-color:#00e676; background:rgba(0,230,118,0.1); }
-.letter-box.correct { background:#00c853; border-color:#00c853; }
-.letter-box.wrong { background:#f44336; border-color:#f44336; }
-.hint-text {
-  font-family:'Tiro Tamil',serif;
-  font-size:14px; color:rgba(255,255,255,0.6);
-  margin:10px 0 20px; line-height:1.6;
-}
-.tamil-keyboard {
-  display:flex; flex-wrap:wrap; gap:6px;
-  justify-content:center; margin:16px 0;
-}
-.key-btn {
-  background:rgba(255,255,255,0.08);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:8px 12px;
-  border-radius:8px; cursor:pointer;
-  font-size:15px; font-family:'Tiro Tamil',serif;
-  transition:all 0.15s; min-width:40px;
-}
-.key-btn:hover { background:rgba(0,230,118,0.2); border-color:#00e676; }
-.key-btn:disabled { opacity:0.3; cursor:not-allowed; }
-.key-btn.used-correct { background:#00c853; border-color:#00c853; }
-.key-btn.used-wrong { background:rgba(244,67,54,0.3); border-color:#f44336; }
-.game-score {
-  display:flex; justify-content:center; gap:20px;
-  margin:14px 0; flex-wrap:wrap;
-}
-.score-chip {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.12);
-  border-radius:20px; padding:6px 16px;
-  font-size:12px; font-weight:700;
-}
-.score-chip span { color:#00e676; }
-.game-action-btn {
-  background:linear-gradient(135deg,#00c853,#00e676);
-  border:none; color:#0a1a0a; padding:12px 28px;
-  border-radius:12px; cursor:pointer;
-  font-size:14px; font-weight:900;
-  font-family:'Poppins',sans-serif;
-  margin-top:10px; transition:opacity 0.2s;
-}
-.game-action-btn:hover { opacity:0.85; }
-.game-msg {
-  font-size:15px; font-weight:700; margin:12px 0;
-  min-height:24px; font-family:'Tiro Tamil',serif;
-}
+/* ── GAME BACKGROUNDS ── */
+.g1{background:linear-gradient(135deg,#060c20,#12003a)}
+.g2{background:linear-gradient(135deg,#061a06,#003a12)}
+.g3{background:linear-gradient(135deg,#1a0606,#3a0c00)}
+.g4{background:linear-gradient(135deg,#061a1a,#001230)}
+.g5{background:linear-gradient(135deg,#1a1006,#3a2800)}
+.g6{background:linear-gradient(135deg,#12063a,#2a0630)}
+.g7{background:linear-gradient(135deg,#061230,#061a12)}
+.g8{background:linear-gradient(135deg,#3a0612,#12063a)}
+.g9{background:linear-gradient(135deg,#063a2a,#062a3a)}
+.g10{background:linear-gradient(135deg,#1a1a06,#2a2a00)}
+.g11{background:linear-gradient(135deg,#200a1a,#0a0a20)}
+.g12{background:linear-gradient(135deg,#0a2000,#201000)}
 
-/* Quiz Game */
-.quiz-question {
-  font-family:'Tiro Tamil',serif;
-  font-size:17px; color:#fff;
-  line-height:1.7; margin-bottom:20px;
-  background:rgba(255,255,255,0.05);
-  border-left:4px solid #00e676;
-  border-radius:8px; padding:14px 18px;
-}
-.quiz-options { display:flex; flex-direction:column; gap:10px; }
-.quiz-opt {
-  background:rgba(255,255,255,0.07);
-  border:2px solid rgba(255,255,255,0.12);
-  border-radius:12px; padding:13px 18px;
-  cursor:pointer; font-family:'Tiro Tamil',serif;
-  font-size:15px; color:rgba(255,255,255,0.85);
-  text-align:left; transition:all 0.2s;
-}
-.quiz-opt:hover:not(:disabled) { border-color:#00e676; background:rgba(0,230,118,0.08); }
-.quiz-opt.correct { background:rgba(0,200,83,0.2); border-color:#00c853; color:#00e676; }
-.quiz-opt.wrong { background:rgba(244,67,54,0.15); border-color:#f44336; color:#ff6b6b; }
-.quiz-progress {
-  display:flex; justify-content:space-between;
-  font-size:12px; color:rgba(255,255,255,0.4);
-  margin-bottom:16px;
-}
-.quiz-progress-bar {
-  height:4px; background:rgba(255,255,255,0.1);
-  border-radius:10px; overflow:hidden; margin-bottom:16px;
-}
-.quiz-progress-fill {
-  height:100%; background:linear-gradient(90deg,#00c853,#00e676);
-  border-radius:10px; transition:width 0.4s;
-}
-.quiz-result {
-  text-align:center; padding:20px 0;
-  font-family:'Tiro Tamil',serif;
-}
-.quiz-result .big-score {
-  font-size:52px; font-weight:900; color:#00e676;
-}
-.quiz-result p { font-size:15px; color:rgba(255,255,255,0.7); margin:8px 0; }
+/* ── SEARCH OVERLAY ── */
+#searchResults{display:none;position:absolute;top:100%;left:0;right:0;background:var(--surface);border:1px solid var(--border);border-radius:0 0 10px 10px;max-height:320px;overflow-y:auto;z-index:200;box-shadow:0 10px 30px rgba(0,0,0,0.5)}
+#searchResults.open{display:block}
+.search-result{display:flex;align-items:center;gap:12px;padding:10px 16px;cursor:pointer;transition:background 0.15s}
+.search-result:hover{background:var(--surface2)}
+.sr-thumb{width:38px;height:38px;border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0}
+.sr-name{font-size:13px;font-weight:700;color:var(--text)}
+.sr-cat{font-size:11px;color:var(--muted)}
 
-/* AD */
-.ad-banner {
-  background:rgba(249,168,37,0.07);
-  border:1px dashed rgba(249,168,37,0.3);
-  border-radius:10px; margin:16px 20px;
-  padding:14px; text-align:center;
-  font-size:12px; color:rgba(255,255,255,0.3);
-  max-width:1060px; margin-left:auto; margin-right:auto;
-}
-.ad-banner span { color:#f9a825; font-weight:700; }
+/* ── STATS BAR ── */
+.stats-bar{background:var(--surface);border-bottom:1px solid var(--border);padding:10px 0}
+.stats-inner{display:flex;align-items:center;justify-content:center;gap:40px}
+.stat{display:flex;align-items:center;gap:8px}
+.stat-num{font-family:'Orbitron',monospace;font-size:15px;font-weight:700;color:var(--accent)}
+.stat-label{font-size:12px;color:var(--muted);text-transform:uppercase;letter-spacing:0.5px}
+.stat-dot{width:4px;height:4px;border-radius:50%;background:var(--border)}
 
-/* PAGINATION */
-.pagination {
-  display:flex; justify-content:center;
-  gap:8px; padding:20px; flex-wrap:wrap;
-}
-.page-btn {
-  background:rgba(255,255,255,0.07);
-  border:1px solid rgba(255,255,255,0.15);
-  color:#fff; padding:8px 16px;
-  border-radius:8px; cursor:pointer;
-  font-size:13px; font-weight:700;
-  font-family:'Poppins',sans-serif;
-  transition:all 0.2s;
-}
-.page-btn:hover,.page-btn.active {
-  background:linear-gradient(135deg,#f9a825,#ff6f00);
-  border-color:transparent;
-}
+/* ── LOADING ── */
+#loader{position:fixed;inset:0;background:var(--bg);z-index:9999;display:flex;align-items:center;justify-content:center;flex-direction:column;gap:16px;transition:opacity 0.5s}
+#loader.done{opacity:0;pointer-events:none}
+.loader-logo{font-family:'Orbitron',monospace;font-size:28px;font-weight:900;color:var(--accent);animation:pulse 1s ease infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.loader-bar{width:200px;height:3px;background:var(--surface2);border-radius:2px;overflow:hidden}
+.loader-fill{height:100%;background:var(--accent);width:0;animation:fill 1.2s ease forwards}
+@keyframes fill{to{width:100%}}
 
-/* FOOTER */
-footer {
-  background:#0a0a12;
-  border-top:2px solid rgba(249,168,37,0.2);
-  padding:24px 20px; text-align:center; margin-top:30px;
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  .hero-grid{grid-template-columns:1fr}
+  .hero-side{flex-direction:row}
+  .feat-grid{grid-template-columns:repeat(2,1fr)}
+  .footer-grid{grid-template-columns:1fr 1fr}
+  .nav-links{display:none}
 }
-.footer-title { font-family:'Tiro Tamil',serif; font-size:20px; color:#f9a825; margin-bottom:8px; }
-footer p { font-size:12px; color:rgba(255,255,255,0.3); line-height:1.8; }
+@media(max-width:600px){
+  nav{padding:0 14px}
+  .wrap{padding:0 14px}
+  .game-grid{grid-template-columns:repeat(auto-fill,minmax(140px,1fr))}
+  .feat-grid{grid-template-columns:1fr}
+  .hero-side{flex-direction:column}
+  .stats-inner{gap:20px}
+  .footer-grid{grid-template-columns:1fr}
+  #searchInput{width:140px}
+  .join-btn,.sign-btn{display:none}
+}
 </style>
 </head>
 <body>
 
+<!-- LOADER -->
+<div id="loader">
+  <div class="loader-logo">GAME<span style="color:var(--accent2)">ZONE</span></div>
+  <div class="loader-bar"><div class="loader-fill"></div></div>
+</div>
+
 <!-- NAV -->
 <nav>
-  <div class="logo">📖 Tamil<span>கதைகள்</span></div>
+  <a class="logo" onclick="showHome()">GAME<span>ZONE</span></a>
   <div class="nav-links">
-    <a href="#">🏠 Home</a>
-    <a href="#">💕 காதல்</a>
-    <a href="#">👻 பயம்</a>
-    <a href="#">😂 நகைச்சுவை</a>
-    <a href="#">🧒 குழந்தை</a>
-    <a href="#">🙏 தெய்வீகம்</a>
-    <a href="#">kathais.xyz</a>
+    <button class="nav-link active" onclick="filterCat('All')">Home</button>
+    <button class="nav-link" onclick="filterCat('Action')">Action</button>
+    <button class="nav-link" onclick="filterCat('Racing')">Racing</button>
+    <button class="nav-link" onclick="filterCat('Puzzle')">Puzzle</button>
+    <button class="nav-link" onclick="filterCat('Sports')">Sports</button>
+    <button class="nav-link" onclick="filterCat('IO')">IO Games</button>
+    <button class="nav-link" onclick="filterCat('Multiplayer')">Multiplayer</button>
+  </div>
+  <div class="nav-right">
+    <div class="search-box" style="position:relative">
+      <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <input id="searchInput" type="text" placeholder="Search games..." oninput="doSearch(this.value)" onblur="setTimeout(()=>closeSearch(),200)">
+      <div id="searchResults"></div>
+    </div>
+    <button class="sign-btn" onclick="alert('Sign In — connect your AdSense account here')">Sign In</button>
+    <button class="join-btn" onclick="alert('Join Free — build your profile & track scores!')">Join Free</button>
   </div>
 </nav>
 
-<!-- HERO -->
-<div class="hero">
-  <h1>படித்து மகிளுங்கள் 📖</h1>
-  <h2>Tamil Kathaikal — Tamil Stories Collection</h2>
-  <div class="hero-stats">
-    <div class="stat"><div class="num">1000+</div><div class="lbl">கதைகள் Stories</div></div>
-    <div class="stat"><div class="num">15+</div><div class="lbl">வகைகள் Categories</div></div>
-    <div class="stat"><div class="num">FREE</div><div class="lbl">எப்போதும் இலவசம்</div></div>
-    <div class="stat"><div class="num">📱</div><div class="lbl">Mobile Friendly</div></div>
-    <div class="stat" onclick="openGamesModal()" style="cursor:pointer;border-color:rgba(0,230,118,0.5);background:rgba(0,230,118,0.08);transition:all 0.2s;" onmouseover="this.style.transform='translateY(-3px)'" onmouseout="this.style.transform=''">
-      <div class="num" style="color:#00e676;font-size:26px;">🎮</div>
-      <div class="lbl" style="color:#00e676;font-weight:700;">Fun Games<br>விளையாடு!</div>
+<!-- TOP AD — 728×90 Leaderboard -->
+<div class="ad-top">
+  <span class="ad-label">Ad</span>
+  <div class="ad-slot-top">📢 Google AdSense Leaderboard 728×90 — Paste your &lt;ins&gt; tag here</div>
+</div>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stats-inner">
+    <div class="stat"><span class="stat-num" id="sGames">0</span><span class="stat-label">Games</span></div>
+    <div class="stat-dot"></div>
+    <div class="stat"><span class="stat-num">2.4M</span><span class="stat-label">Players Online</span></div>
+    <div class="stat-dot"></div>
+    <div class="stat"><span class="stat-num">100%</span><span class="stat-label">Free</span></div>
+    <div class="stat-dot"></div>
+    <div class="stat"><span class="stat-num">No Download</span><span class="stat-label">Play Instantly</span></div>
+  </div>
+</div>
+
+<!-- MAIN PAGE -->
+<div id="mainPage">
+
+  <!-- HERO -->
+  <div class="wrap">
+    <div class="section hero" style="padding-top:24px">
+      <div class="hero-grid">
+        <div class="hero-main" onclick="openGame(0)">
+          <div class="hero-art">
+            <svg width="320" height="200" viewBox="0 0 320 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <circle cx="160" cy="100" r="90" stroke="#00e5ff" stroke-width="1" stroke-dasharray="6 4" opacity="0.3"/>
+              <circle cx="160" cy="100" r="60" stroke="#ff3d6b" stroke-width="1.5" opacity="0.4"/>
+              <circle cx="160" cy="100" r="30" stroke="#ffe600" stroke-width="1" opacity="0.3"/>
+              <line x1="70" y1="100" x2="250" y2="100" stroke="#00e5ff" stroke-width="0.8" opacity="0.3"/>
+              <line x1="160" y1="10" x2="160" y2="190" stroke="#00e5ff" stroke-width="0.8" opacity="0.3"/>
+              <polygon points="160,60 190,120 130,120" fill="none" stroke="#00e5ff" stroke-width="1.5" opacity="0.6"/>
+              <circle cx="160" cy="100" r="8" fill="#00e5ff" opacity="0.8"/>
+              <circle cx="200" cy="70" r="4" fill="#ff3d6b" opacity="0.9"/>
+              <circle cx="120" cy="130" r="4" fill="#ffe600" opacity="0.9"/>
+              <circle cx="210" cy="140" r="3" fill="#a259ff" opacity="0.8"/>
+            </svg>
+          </div>
+          <div class="hero-badges">
+            <span class="badge b-fire">🔥 Trending</span>
+            <span class="badge b-orig">✦ Original</span>
+          </div>
+          <div class="hero-play-btn">
+            <svg viewBox="0 0 24 24"><polygon points="5,3 19,12 5,21"/></svg>
+          </div>
+          <div class="hero-info">
+            <h2>NEON STRIKE ARENA</h2>
+            <p>Sci-fi action shooter &nbsp;·&nbsp; 1.4M players &nbsp;·&nbsp; ★ 4.9</p>
+          </div>
+        </div>
+        <div class="hero-side">
+          <div class="side-card g3" onclick="openGame(1)">
+            <div class="side-bg">🏎</div>
+            <div class="side-badge"><span class="badge b-top">Top</span></div>
+            <div class="side-name">TURBO DRIFT X</div>
+            <div class="side-sub">Racing · 980K plays</div>
+          </div>
+          <div class="side-card g6" onclick="openGame(2)">
+            <div class="side-bg">⚔️</div>
+            <div class="side-badge"><span class="badge b-new">New</span></div>
+            <div class="side-name">SHADOW REALM</div>
+            <div class="side-sub">RPG · 670K plays</div>
+          </div>
+          <div class="side-card g4" onclick="openGame(3)">
+            <div class="side-bg">🧩</div>
+            <div class="side-name">MIND MAZE PRO</div>
+            <div class="side-sub">Puzzle · 1.2M plays</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CATEGORIES -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-title">Browse Categories</span>
+      </div>
+      <div class="cats" id="catList">
+        <button class="cat active" onclick="filterCat('All')">🎮 All Games</button>
+        <button class="cat" onclick="filterCat('Action')">⚡ Action</button>
+        <button class="cat" onclick="filterCat('Racing')">🏎 Racing</button>
+        <button class="cat" onclick="filterCat('Puzzle')">🧩 Puzzle</button>
+        <button class="cat" onclick="filterCat('Sports')">⚽ Sports</button>
+        <button class="cat" onclick="filterCat('Shooting')">🎯 Shooting</button>
+        <button class="cat" onclick="filterCat('Strategy')">♟ Strategy</button>
+        <button class="cat" onclick="filterCat('Adventure')">🗺 Adventure</button>
+        <button class="cat" onclick="filterCat('IO')">🌐 IO Games</button>
+        <button class="cat" onclick="filterCat('Multiplayer')">👥 Multiplayer</button>
+        <button class="cat" onclick="filterCat('Idle')">💤 Idle</button>
+        <button class="cat" onclick="filterCat('Arcade')">👾 Arcade</button>
+      </div>
+    </div>
+
+    <!-- HOT NOW -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-title">🔥 Hot Right Now</span>
+        <button class="see-all" onclick="filterCat('All')">See all →</button>
+      </div>
+      <div class="game-grid" id="hotGrid"></div>
+    </div>
+
+    <!-- MID AD — 728×90 or 336×280 -->
+    <div class="ad-mid">
+      <div class="ad-rect">
+        <span class="ad-label">Ad</span>
+        Google AdSense Rectangle 336×280 / Leaderboard — Paste &lt;ins&gt; tag here
+      </div>
+    </div>
+
+    <!-- FEATURED -->
+    <div class="section">
+      <div class="sec-head">
+        <span class="sec-title">⭐ Featured Games</span>
+        <button class="see-all" onclick="filterCat('All')">See all →</button>
+      </div>
+      <div class="feat-grid" id="featGrid"></div>
+    </div>
+
+    <!-- ALL GAMES -->
+    <div class="section" id="allSection">
+      <div class="sec-head">
+        <span class="sec-title" id="allTitle">🎮 All Games</span>
+        <span id="gameCount" style="font-size:12px;color:var(--muted)"></span>
+      </div>
+      <div class="game-grid" id="allGrid"></div>
+    </div>
+
+    <!-- BOTTOM AD -->
+    <div class="ad-mid" style="padding-bottom:10px">
+      <div class="ad-rect">
+        <span class="ad-label">Ad</span>
+        Google AdSense Bottom Banner — Paste &lt;ins&gt; tag here
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="wrap">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo-f">GAME<span>ZONE</span></div>
+          <p>Play 500+ free online games instantly in your browser. No download, no login required. New games added every week.</p>
+        </div>
+        <div class="footer-col">
+          <h4>Categories</h4>
+          <a onclick="filterCat('Action')">Action Games</a>
+          <a onclick="filterCat('Racing')">Racing Games</a>
+          <a onclick="filterCat('Puzzle')">Puzzle Games</a>
+          <a onclick="filterCat('Sports')">Sports Games</a>
+          <a onclick="filterCat('IO')">IO Games</a>
+        </div>
+        <div class="footer-col">
+          <h4>Company</h4>
+          <a href="#">About Us</a>
+          <a href="#">Blog</a>
+          <a href="#">Advertise</a>
+          <a href="#">Submit Game</a>
+          <a href="#">Contact</a>
+        </div>
+        <div class="footer-col">
+          <h4>Legal</h4>
+          <a href="#">Privacy Policy</a>
+          <a href="#">Terms of Service</a>
+          <a href="#">Cookie Policy</a>
+          <a href="#">GDPR</a>
+          <a href="#">Sitemap</a>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2026 GameZone. All rights reserved.</p>
+        <div class="footer-adsense">
+          <span>💰 Monetized with Google AdSense H5 Games Ads</span>
+        </div>
+      </div>
+    </div>
+  </footer>
+</div><!-- /mainPage -->
+
+<!-- PLAY PAGE -->
+<div id="playPage">
+  <div class="play-bar">
+    <button class="back-btn" onclick="closePlay()">
+      <svg viewBox="0 0 24 24"><polyline points="15,18 9,12 15,6"/></svg>
+      Back
+    </button>
+    <span id="playGameTitle">Game</span>
+    <div style="margin-left:auto;display:flex;gap:8px">
+      <button class="sign-btn" onclick="showRewardToast()" style="font-size:11px;padding:5px 12px">🎁 Reward</button>
+      <button class="sign-btn" onclick="toggleFullscreen()" style="font-size:11px;padding:5px 12px">⛶ Fullscreen</button>
+    </div>
+  </div>
+  <div class="play-body">
+    <div class="play-main">
+      <iframe id="gameFrame" allowfullscreen sandbox="allow-scripts allow-same-origin allow-forms allow-popups"></iframe>
+    </div>
+    <div class="play-side">
+      <!-- SIDEBAR AD 300×250 -->
+      <div class="play-ad">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <span class="ad-label">Ad</span>
+          <span style="font-size:11px;color:var(--muted)">Advertisement</span>
+        </div>
+        <div class="play-ad-box">
+          <span style="font-size:20px">📢</span>
+          AdSense 300×250<br>Paste &lt;ins&gt; tag here
+        </div>
+        <!-- REAL:
+        <ins class="adsbygoogle" style="display:block;width:300px;height:250px"
+             data-ad-client="ca-pub-YOUR_ID" data-ad-slot="YOUR_SLOT"></ins>
+        <script>(adsbygoogle=window.adsbygoogle||[]).push({})</script>
+        -->
+      </div>
+      <!-- GAME INFO -->
+      <div class="play-info">
+        <h3 id="playInfoTitle">Game</h3>
+        <p id="playInfoDesc" style="font-size:13px;color:var(--muted);line-height:1.6;margin-top:6px"></p>
+        <div style="display:flex;gap:8px;margin-top:10px;flex-wrap:wrap" id="playTags"></div>
+      </div>
+      <!-- RELATED -->
+      <div class="play-related-title">More Games</div>
+      <div id="relatedGames"></div>
+      <!-- SECOND SIDEBAR AD -->
+      <div class="play-ad" style="margin-top:auto">
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:8px">
+          <span class="ad-label">Ad</span>
+        </div>
+        <div class="play-ad-box" style="height:200px">
+          AdSense 300×200<br>Paste &lt;ins&gt; tag here
+        </div>
+      </div>
     </div>
   </div>
 </div>
 
-<!-- SEARCH -->
-<div class="search-wrap">
-  <div class="search-box">
-    <input type="text" id="searchInput" placeholder="🔍 கதை தேடுங்கள்... Search stories..." oninput="searchStories()">
-    <button class="search-btn">🔍</button>
+<!-- INTERSTITIAL AD (shown before game loads) -->
+<div id="interAd">
+  <div class="inter-box">
+    <div class="inter-title">📢 Advertisement — Game loading...</div>
+    <div class="inter-slot">
+      AdSense Interstitial 600×250<br>
+      Paste &lt;ins&gt; tag here for interstitial ad
+      <!-- REAL: <ins class="adsbygoogle" style="display:block;width:600px;height:250px"
+           data-ad-client="ca-pub-YOUR_ID" data-ad-slot="INTERSTITIAL_SLOT"></ins> -->
+    </div>
+    <div class="inter-countdown" id="interCountdown">Game starts in <strong id="countNum">5</strong> seconds...</div>
+    <button id="interBtn" onclick="skipAd()">Play Now ▶</button>
   </div>
 </div>
 
-<!-- AD -->
-<div class="ad-banner"><span>📢 Advertisement</span> — Google AdSense</div>
-
-<!-- CATEGORIES + STORIES -->
-<div class="section">
-  <div class="section-title">📚 கதை வகைகள் — Categories</div>
-  <div class="cat-tabs">
-    <div class="cat-tab active" onclick="filterCat('all',this)">📚 எல்லாம்</div>
-    <div class="cat-tab" onclick="filterCat('love',this)">💕 காதல்</div>
-    <div class="cat-tab" onclick="filterCat('horror',this)">👻 பயம்</div>
-    <div class="cat-tab" onclick="filterCat('comedy',this)">😂 நகைச்சுவை</div>
-    <div class="cat-tab" onclick="filterCat('kids',this)">🧒 குழந்தை</div>
-    <div class="cat-tab" onclick="filterCat('devotion',this)">🙏 தெய்வீகம்</div>
-    <div class="cat-tab" onclick="filterCat('moral',this)">💡 நீதி</div>
-    <div class="cat-tab" onclick="filterCat('history',this)">🏛️ வரலாறு</div>
-    <div class="cat-tab" onclick="filterCat('village',this)">🌾 கிராமம்</div>
-    <div class="cat-tab" onclick="filterCat('thriller',this)">🔥 த்ரில்லர்</div>
-  </div>
-
-  <div class="section-title">✨ சிறந்த கதைகள் — Featured Stories</div>
-  <div class="stories-grid" id="storiesGrid"></div>
-</div>
-
-<!-- PAGINATION -->
-<div class="pagination" id="pagination"></div>
-
-<!-- AD 2 -->
-<div class="ad-banner"><span>📢 Advertisement</span> — Google AdSense Banner</div>
-
-<!-- FOOTER -->
-<footer>
-  <div class="footer-title">📖 படித்து மகிளுங்கள் — Tamil Kathaikal</div>
-  <p>
-    தமிழ் கதைகளின் களஞ்சியம் | kathais.xyz<br>
-    1000+ Tamil Stories — Free Forever 🙏<br>
-    © 2026 Tamil Kathaikal. All Rights Reserved.
-  </p>
-</footer>
-
-<!-- GAMES MODAL -->
-<div class="games-modal" id="gamesModal">
-  <div class="games-modal-inner">
-    <div class="games-modal-header">
-      <h2>🎮 Fun Games — விளையாட்டு நேரம்!</h2>
-      <button class="games-modal-close" onclick="closeGamesModal()">✕</button>
-    </div>
-    <div class="games-nav">
-      <button class="game-tab-btn active" onclick="switchGame('wordguess',this)">🔤 சொல் யூகம்</button>
-      <button class="game-tab-btn" onclick="switchGame('quiz',this)">🧠 கதை குவிஸ்</button>
-    </div>
-
-    <!-- GAME 1: Tamil Word Guess -->
-    <div class="game-panel active" id="game-wordguess">
-      <div class="word-guess-area">
-        <div class="game-score">
-          <div class="score-chip">மதிப்பெண்: <span id="wg-score">0</span></div>
-          <div class="score-chip">சுற்று: <span id="wg-round">1</span>/5</div>
-          <div class="score-chip">வாய்ப்புகள்: <span id="wg-lives">❤️❤️❤️❤️❤️</span></div>
-        </div>
-        <div class="hint-text" id="wg-hint">குறிப்பு ஏற்றுகிறது...</div>
-        <div class="word-display" id="wg-word-display"></div>
-        <div class="game-msg" id="wg-msg"></div>
-        <div class="tamil-keyboard" id="wg-keyboard"></div>
-        <button class="game-action-btn" id="wg-next-btn" onclick="nextWordGuess()" style="display:none">அடுத்த சொல் →</button>
-        <button class="game-action-btn" onclick="startWordGuess()" id="wg-restart-btn" style="display:none">மீண்டும் விளையாடு 🔄</button>
-      </div>
-    </div>
-
-    <!-- GAME 2: Story Quiz -->
-    <div class="game-panel" id="game-quiz">
-      <div id="quiz-area">
-        <div class="quiz-progress">
-          <span id="quiz-q-num">கேள்வி 1/8</span>
-          <span id="quiz-score-display">மதிப்பெண்: 0</span>
-        </div>
-        <div class="quiz-progress-bar">
-          <div class="quiz-progress-fill" id="quiz-prog-fill" style="width:0%"></div>
-        </div>
-        <div class="quiz-question" id="quiz-question">குவிஸ் ஏற்றுகிறது...</div>
-        <div class="quiz-options" id="quiz-options"></div>
-        <div class="game-msg" id="quiz-msg"></div>
-      </div>
-    </div>
-  </div>
-</div>
-
-<!-- STORY READER MODAL -->
-<div class="modal" id="storyModal">
-  <div class="modal-inner">
-    <div class="modal-header">
-      <h2 id="modalCat">📖 கதை</h2>
-      <button class="close-btn" onclick="closeStory()">✕</button>
-    </div>
-    <div class="font-controls">
-      <span class="font-label">எழுத்து அளவு:</span>
-      <button class="font-btn" onclick="changeFont(-1)">A-</button>
-      <button class="font-btn" onclick="changeFont(1)">A+</button>
-    </div>
-
-    <!-- VOICE READER CONTROLS -->
-    <div class="voice-controls">
-      <div class="voice-title">🔊 AI Voice Reader — தானியங்கி வாசிப்பு</div>
-      <div class="voice-btns">
-        <button class="voice-btn play-btn" id="playPauseBtn" onclick="togglePlay()">▶ Play</button>
-        <button class="voice-btn stop-btn" onclick="stopReading()">⏹ Stop</button>
-        <div class="speed-wrap">
-          <span class="speed-label">⚡ Speed:</span>
-          <select class="speed-select" id="speedSelect" onchange="changeSpeed()">
-            <option value="0.7">0.7x Slow</option>
-            <option value="0.9">0.9x</option>
-            <option value="1" selected>1x Normal</option>
-            <option value="1.2">1.2x</option>
-            <option value="1.5">1.5x Fast</option>
-            <option value="2">2x Very Fast</option>
-          </select>
-        </div>
-      </div>
-      <div class="progress-wrap">
-        <div class="progress-bar-bg" onclick="seekProgress(event)">
-          <div class="progress-bar-fill" id="progressFill"></div>
-        </div>
-        <div class="progress-time" id="progressTime">0% படிக்கப்பட்டது</div>
-      </div>
-    </div>
-    <div class="modal-story" id="modalStory"></div>
-  </div>
+<!-- REWARD TOAST -->
+<div id="rewardToast">
+  <div class="toast-head">🎁 Rewarded Ad Offer</div>
+  <div class="toast-text">Watch a short ad to get 50 bonus coins and an extra life!</div>
+  <button class="toast-btn" onclick="watchReward()">Watch Ad (+50 🪙)</button>
 </div>
 
 <script>
-// ═══════════════════════════════════════
-// STORIES DATABASE — 22 stories (expand to 1000+)
-// ═══════════════════════════════════════
-const storiesDB = [
-  {
-    id:1, cat:'love', badge:'hot', emoji:'💕',
-    bg:'linear-gradient(135deg,#880e4f,#c2185b)',
-    catLabel:'காதல்', catColor:'#e91e63',
-    title:'மழை நினைவுகள்',
-    excerpt:'அந்த மழை நாளில் அவள் கொடுத்த புன்னகை இன்னும் மனதில் மிதக்கிறது...',
-    readTime:'5 நிமிஷம்',
-    story:`<h3>💕 மழை நினைவுகள்</h3>
-<p>அந்த ஆண்டு மழைக்காலம் என்னைப் பொறுத்தவரை மறக்க முடியாத ஒன்று. கல்லூரி பேருந்து நிறுத்தத்தில் திடீர் மழையில் சிக்கிக்கொண்டோம் — நானும், அவளும்.</p>
-<p>அவள் பெயர் மீனாட்சி. நீல நிற சுடிதாரில், நனைந்த கூந்தலுடன் நின்றிருந்த அவள் அழகு என் மனதில் படமாய் பதிந்தது.</p>
-<p>"உங்ககிட்ட குடை இருக்கா?" என்று கேட்டாள். என்னிடம் இருந்தது — ஆனால் தர விரும்பவில்லை. "இல்லை" என்று பொய் சொன்னேன்.</p>
-<p>அவள் சிரித்தாள். "உங்க பையன்ல குடை தெரியுதே?" என்று சொல்லி கேலியாக பார்த்தாள். நான் வெட்கத்தில் சிவந்தேன்.</p>
-<p>அன்று முதல் தினமும் அந்த பேருந்து நிறுத்தத்தில் அவளை பார்ப்பேன். ஒவ்வொரு முறையும் மழை வரும்போது அந்த நினைவு வரும்.</p>
-<p>ஆண்டுகள் கடந்தன. ஒருநாள் அவளே என்னை தொடர்புகொண்டாள். "அன்று நீங்கள் பொய் சொன்னீர்கள் — அது தெரியும். ஆனால் அந்த பொய் என் மனதில் உங்களை நிலைத்துவிட்டது."</p>
-<p>இன்று அவள் என் மனைவி. மழை பெய்யும் போதெல்லாம் இருவரும் பார்த்துக்கொண்டு சிரிக்கிறோம்.</p>
-<div class="moral">💡 நீதி: சில பொய்கள் உண்மையான காதலை உருவாக்கும்! 😄</div>`
-  },
-  {
-    id:2, cat:'horror', badge:'hot', emoji:'👻',
-    bg:'linear-gradient(135deg,#1a1a2e,#4a148c)',
-    catLabel:'பயம்', catColor:'#7c4dff',
-    title:'இரவு 3 மணி',
-    excerpt:'ஒவ்வொரு இரவும் சரியாக 3 மணிக்கு அந்த ஓசை கேட்கும்...',
-    readTime:'7 நிமிஷம்',
-    story:`<h3>👻 இரவு 3 மணி</h3>
-<p>நான் புதிதாக குடி புகுந்த வீடு பழையதாகத்தான் இருந்தது. ஆனால் வாடகை குறைவாக இருந்ததால் எடுத்தேன்.</p>
-<p>முதல் இரவே அது ஆரம்பித்தது. சரியாக இரவு 3 மணிக்கு மேல்தட்டில் ஒரு நடை சப்தம். டக்.. டக்.. டக்..</p>
-<p>முதல் நாள் நினைத்தேன் — பூனை இருக்கும். இரண்டாம் நாளும் அதே சப்தம். மூன்றாம் நாள் தைரியமாக மேலே ஏறினேன்.</p>
-<p>மேல்தட்டு வெறுமையாக இருந்தது. ஆனால் தூசியில் காலடி தடங்கள் தெளிவாக தெரிந்தன. சிறிய காலடி தடங்கள்.</p>
-<p>மறுநாள் வீட்டு உரிமையாளரிடம் கேட்டேன். அவர் கண்கள் கலங்கின. "என் மகள்... ஐந்து வயதில் போய்விட்டாள். இந்த வீட்டில்தான் விளையாடுவாள்."</p>
-<p>அன்று இரவு 3 மணிக்கு மீண்டும் சப்தம் கேட்டது. இம்முறை நான் பயப்படவில்லை. "குழந்தே, நீ விளையாடலாம்" என்று மெதுவாக சொன்னேன்.</p>
-<p>சப்தம் நின்றது. ஒரு சிறு குரல் — "நன்றி அங்கிள்" என்று கேட்டது. அன்று முதல் அந்த வீடு என் வீடானது.</p>
-<div class="moral">💡 எல்லா ஆவிகளும் கெட்டவை அல்ல!</div>`
-  },
-  {
-    id:3, cat:'comedy', badge:'hot', emoji:'😂',
-    bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
-    catLabel:'நகைச்சுவை', catColor:'#00c853',
-    title:'ஆட்டோ ஆரம்பித்தது',
-    excerpt:'அந்த ஆட்டோக்காரர் கேட்ட கேள்வி என் வாழ்க்கையையே மாற்றிவிட்டது...',
-    readTime:'4 நிமிஷம்',
-    story:`<h3>😂 ஆட்டோ ஆரம்பித்தது</h3>
-<p>காலை 8 மணி. Interview-க்கு போகணும். ஆட்டோ பிடித்தேன்.</p>
-<p>"எங்க போணும்?" என்று கேட்டார் ஆட்டோக்காரர்.</p>
-<p>"அண்ணா நகர் போணும்" என்றேன்.</p>
-<p>"மீட்டர்ல போவோமா, பேரம் பேசுவோமா?" என்று கேட்டார்.</p>
-<p>"மீட்டர்ல போங்க" என்றேன்.</p>
-<p>கிளம்பினோம். 5 நிமிஷம் கழித்து, "நீங்க என்ன வேலை பார்க்கீங்க?" என்று கேட்டார்.</p>
-<p>"வேலை தேடுறேன், Interview போறேன்" என்றேன்.</p>
-<p>"என்ன படிச்சீங்க?"</p>
-<p>"MBA."</p>
-<p>அவர் ஒரு நிமிஷம் யோசித்தார். "நான் ஆட்டோ ஓட்டுறேன். மாசம் 40,000 வருது. MBA-க்கு என்ன வருது?"</p>
-<p>நான் பதில் சொல்ல முடியவில்லை.</p>
-<p>"Interview-ல கேக்கணும்னா கேளுங்க — Salary என்னன்னு. இல்லன்னா திரும்பி வாங்க. ஆட்டோ ஒட்ட கத்துக்கிடலாம்!" என்று சிரித்தார்.</p>
-<p>அன்று Interview-ல் Salary பேசி 60,000 வாங்கினேன். அந்த ஆட்டோக்காரர்தான் என் முதல் Business Mentor!</p>
-<div class="moral">💡 நீதி: ஞானம் படிப்பிலிருந்து மட்டும் வராது!</div>`
-  },
-  {
-    id:4, cat:'kids', badge:'new', emoji:'🧒',
-    bg:'linear-gradient(135deg,#0d47a1,#1976d2)',
-    catLabel:'குழந்தை', catColor:'#2196f3',
-    title:'சின்னஞ்சிறு யானை',
-    excerpt:'காட்டில் ஒரு சிறிய யானைக்குட்டி இருந்தது. அது எப்போதும் தனிமையாக உணர்ந்தது...',
-    readTime:'3 நிமிஷம்',
-    story:`<h3>🐘 சின்னஞ்சிறு யானை</h3>
-<p>காட்டில் ஒரு சிறிய யானைக்குட்டி இருந்தது. அதன் பெயர் கண்ணன். அது மற்ற யானைகளை விட சிறியதாக இருந்தது.</p>
-<p>"நீ சிறியவன்! நீ விளையாட்டில் வர வேண்டாம்" என்று மற்ற யானைகள் சொன்னன.</p>
-<p>கண்ணன் வருத்தப்பட்டான். ஒரு நாள் காட்டில் நெருப்பு பரவியது! எல்லா யானைகளும் ஓடின.</p>
-<p>ஆனால் ஒரு சிறு குழந்தை மான் மரத்தடியில் மாட்டிக்கொண்டது. பெரிய யானைகளால் உள்ளே செல்ல இயலவில்லை — இடம் சிறியதாக இருந்தது!</p>
-<p>கண்ணன் தைரியமாக உள்ளே சென்று, தன் துதிக்கையால் மான்குட்டியை எடுத்துக்கொண்டு வந்தான்!</p>
-<p>"கண்ணன்தான் ஹீரோ!" என்று எல்லோரும் கூறினர்.</p>
-<p>அன்று முதல் கண்ணனுக்கு நிறைய நண்பர்கள் கிடைத்தனர்.</p>
-<div class="moral">💡 நீதி: உயரம் முக்கியமில்லை — தைரியம் முக்கியம்!</div>`
-  },
-  {
-    id:5, cat:'devotion', badge:'classic', emoji:'🙏',
-    bg:'linear-gradient(135deg,#bf360c,#e64a19)',
-    catLabel:'தெய்வீகம்', catColor:'#ff6d00',
-    title:'முருகனின் அருள்',
-    excerpt:'அந்த ஏழை அம்மாவின் விசுவாசம் அற்புதத்தை நடக்கச்செய்தது...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>🙏 முருகனின் அருள்</h3>
-<p>வேலுத்தாய் ஒரு ஏழைப் பெண்மணி. கோவிலில் ஒவ்வொரு நாளும் முருகனுக்கு ஒரு பூ கொண்டு வருவாள்.</p>
-<p>ஒரு நாள் மிகவும் கஷ்டமான நேரம் வந்தது. மகன் நோய்வாய்ப்பட்டான். மருத்துவமனை பணம் இல்லை.</p>
-<p>அவள் கோவிலுக்கு சென்று, "ஆண்டவா, என்னிடம் கொடுக்க பணம் இல்லை. ஆனால் என் மகனை காப்பாற்று" என்று அழுதாள்.</p>
-<p>திரும்பி வரும்போது சாலையில் ஒரு பணப்பை கிடந்தது. அதை எடுக்காமல் அருகில் உள்ள காவல் நிலையத்தில் கொடுத்தாள்.</p>
-<p>காவல்காரர் ஆச்சரியப்பட்டார். "உங்களுக்கு பணம் தேவையில்லையா?" என்று கேட்டார்.</p>
-<p>"தேவை இருக்கு. ஆனால் கடவுள் கொடுக்கணும், திருடி வாங்கக்கூடாது" என்று சொன்னாள்.</p>
-<p>பணப்பை உரிமையாளர் நேரில் வந்தார். அவர் ஒரு பெரிய மருத்துவர். வேலுத்தாயின் கதை கேட்டு, மகனுக்கு இலவசமாக சிகிச்சை செய்தார்.</p>
-<div class="moral">💡 நீதி: நேர்மை எப்போதும் வெல்லும்!</div>`
-  },
-  {
-    id:6, cat:'moral', badge:'classic', emoji:'💡',
-    bg:'linear-gradient(135deg,#4a148c,#7b1fa2)',
-    catLabel:'நீதி', catColor:'#9c27b0',
-    title:'இரண்டு நண்பர்கள்',
-    excerpt:'காட்டில் இரண்டு நண்பர்கள் பயணம் செய்தனர். ஆபத்தில் உண்மையான நட்பு தெரியும்...',
-    readTime:'4 நிமிஷம்',
-    story:`<h3>💡 இரண்டு நண்பர்கள்</h3>
-<p>ராமனும் கிருஷ்ணனும் நெருங்கிய நண்பர்கள். ஒரு நாள் காட்டு வழியாக பயணம் செய்தனர்.</p>
-<p>திடீரென்று ஒரு கரடி வந்தது! கிருஷ்ணன் உடனே மரம் ஏறிவிட்டான். ராமனுக்கு மரம் ஏற தெரியாது.</p>
-<p>ராமன் கரடியிடம் கேட்டிருந்த ஒரு விஷயம் நினைவுக்கு வந்தது — "கரடி இறந்தவரை தொடாது."</p>
-<p>அவன் தரையில் படுத்துக்கொண்டான். மூச்சை அடக்கிக்கொண்டான்.</p>
-<p>கரடி வந்து, முகத்தை முகர்ந்து சென்றது.</p>
-<p>மரத்திலிருந்து இறங்கி வந்த கிருஷ்ணன், "கரடி உன் காதில் என்ன சொன்னது?" என்று சிரித்துக்கேட்டான்.</p>
-<p>"ஆபத்தில் விட்டுவிட்டு போகும் நண்பனை நம்பாதே என்று சொன்னது" என்றான் ராமன்.</p>
-<p>கிருஷ்ணன் வெட்கத்தில் தலை குனிந்தான்.</p>
-<div class="moral">💡 நீதி: உண்மையான நண்பன் ஆபத்தில் விட்டுவிட மாட்டான்!</div>`
-  },
-  {
-    id:7, cat:'village', badge:'new', emoji:'🌾',
-    bg:'linear-gradient(135deg,#1b5e20,#388e3c)',
-    catLabel:'கிராமம்', catColor:'#4caf50',
-    title:'மண்ணின் மகன்',
-    excerpt:'ஆர்வமுடன் நகரம் சென்ற இளைஞன், திரும்பி வந்தபோது கிராமம் வேறாக இருந்தது...',
-    readTime:'8 நிமிஷம்',
-    story:`<h3>🌾 மண்ணின் மகன்</h3>
-<p>முருகேசன் ஒரு சிறிய கிராமத்தில் பிறந்தான். படிக்க நகரம் சென்றான். பட்டம் பெற்றான். வேலை கிடைத்தது.</p>
-<p>ஆண்டுகள் கடந்தன. ஒரு நாள் அப்பா அழைத்தார்: "மகனே, வீட்டுக்கு வா."</p>
-<p>திரும்பி வந்தான். கிராமம் மாறியிருந்தது. பச்சை வயல்கள் இல்லை. ஆறு வற்றியிருந்தது.</p>
-<p>"என்ன ஆச்சு?" என்று கேட்டான்.</p>
-<p>"நீரில்லை மகனே. விவசாயம் போச்சு. பசி வருது" என்றார் அப்பா.</p>
-<p>முருகேசன் யோசித்தான். தன் சம்பளத்தை சேமித்ததை எடுத்தான். கிராமத்தில் நீர் சேமிப்பு கட்டமைப்பு அமைத்தான். மரம் நட்டான். இளைஞர்களுக்கு விவசாயம் கற்றான்.</p>
-<p>இரண்டு ஆண்டுகளில் கிராமம் பசுமையானது. அவன் வேலையை விட்டு கிராமத்திலேயே தங்கினான்.</p>
-<p>"இங்கே இருக்கும் திருப்தி எந்த நகரத்திலும் கிடைக்காது" என்றான்.</p>
-<div class="moral">💡 நீதி: வேர்களை மறவாதே!</div>`
-  },
-  {
-    id:8, cat:'thriller', badge:'hot', emoji:'🔥',
-    bg:'linear-gradient(135deg,#b71c1c,#c62828)',
-    catLabel:'த்ரில்லர்', catColor:'#f44336',
-    title:'தொலைந்த கடிகாரம்',
-    excerpt:'அந்த பழைய கடிகாரம் 50 ஆண்டுகளாக நின்றுவிட்டிருந்தது — ஆனால் இன்று திடீரென்று ஓட ஆரம்பித்தது...',
-    readTime:'9 நிமிஷம்',
-    story:`<h3>🔥 தொலைந்த கடிகாரம்</h3>
-<p>அந்த பழைய மாளிகையில் ஒரு கடிகாரம் இருந்தது. 50 ஆண்டுகளாக அது நின்றுவிட்டிருந்தது.</p>
-<p>யாரும் அதை தொட மாட்டார்கள். "அந்த கடிகாரம் ஓடும் நாள் — ஒரு இரகசியம் வெளியாகும்" என்று கிழவர்கள் சொல்வார்கள்.</p>
-<p>ஒரு நாள் இரவு — டிக்.. டிக்.. டிக்..</p>
-<p>கடிகாரம் ஓட ஆரம்பித்தது!</p>
-<p>வீட்டில் இருந்த அனைவரும் கூடினர். கடிகாரத்தின் பின்னால் ஒரு மறைவிடம் இருந்தது. அதில் ஒரு கடிதம்.</p>
-<p>"என் சொத்தை என் உண்மையான வாரிசுக்கு கொடுங்கள். அவன் யார் என்று தெரிய — கடிகாரம் ஓடும் நாளில் அந்த வீட்டில் இருப்பவன்."</p>
-<p>50 ஆண்டுகளாக சொத்துக்காக சண்டையிட்டவர்கள் அன்று அமைதியானார்கள்.</p>
-<p>கடிகாரம் திடீரென்று மீண்டும் நின்றது.</p>
-<div class="moral">💡 சில இரகசியங்கள் சரியான நேரத்தில் வெளியாகும்!</div>`
-  },
-  {
-    id:9, cat:'love', badge:'new', emoji:'💖',
-    bg:'linear-gradient(135deg,#880e4f,#ad1457)',
-    catLabel:'காதல்', catColor:'#e91e63',
-    title:'கடைசி கடிதம்',
-    excerpt:'அவள் போன பின்னர் கண்டுபிடிக்கப்பட்ட கடிதம் அவனை நொறுக்கியது...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>💖 கடைசி கடிதம்</h3>
-<p>அர்ஜுன் அவளை நேசித்தான். ஆனால் சொல்ல தைரியமில்லை. வருடங்கள் கடந்தன.</p>
-<p>ஒரு நாள் கவிதா வேறு நகரம் சென்றாள். திருமணமும் நடந்தது.</p>
-<p>பத்து ஆண்டுகளுக்கு பின் அர்ஜுனுக்கு ஒரு கடிதம் வந்தது. கவிதாவின் கையெழுத்தில்.</p>
-<p>"அர்ஜுன், இது படிக்கும்போது நான் இல்லாமல் போயிருப்பேன். நான் நோயில் இருக்கிறேன்."</p>
-<p>"நீ என்னை நேசித்தாய் என்று தெரியும். நானும் நேசித்தேன். இருவரும் சொல்லவில்லை."</p>
-<p>"உன் வாழ்க்கையில் அடுத்த முறை யாரையாவது நேசித்தால் — சொல்லு. காத்திரு."</p>
-<p>அர்ஜுன் அழுதான். அன்று முதல் அவன் பிறரிடம் "நேசிக்கிறேன்" என்று சொல்ல கற்றுக்கொண்டான்.</p>
-<div class="moral">💡 நீதி: உணர்வுகளை சொல்லாமல் வைக்காதே!</div>`
-  },
-  {
-    id:10, cat:'history', badge:'classic', emoji:'🏛️',
-    bg:'linear-gradient(135deg,#37474f,#546e7a)',
-    catLabel:'வரலாறு', catColor:'#78909c',
-    title:'வீரத் தமிழன்',
-    excerpt:'பாண்டிய மன்னன் காலத்தில் நடந்த ஒரு தியாக வீரனின் கதை...',
-    readTime:'10 நிமிஷம்',
-    story:`<h3>🏛️ வீரத் தமிழன்</h3>
-<p>பாண்டிய நாட்டில் வீரன் என்ற இளைஞன் வாழ்ந்தான். வறிய குடும்பம். ஆனால் மனத்தில் மன்னர் நேர்மை.</p>
-<p>நாட்டில் பஞ்சம் வந்தது. மன்னர் வரி கொடுக்க ஆணையிட்டார். ஏழை மக்கள் கஷ்டப்பட்டனர்.</p>
-<p>வீரன் மன்னரிடம் சென்றான். "மன்னரே, மக்கள் பசியில் இருக்கிறார்கள். வரியை நிறுத்துங்கள்" என்று கேட்டான்.</p>
-<p>மன்னர் கோபமடைந்தார். "தண்டனை விதிக்கிறேன்!" என்றார்.</p>
-<p>"என்னை தண்டியுங்கள். ஆனால் மக்களை விடுங்கள்" என்று வீரன் நின்றான்.</p>
-<p>அரசவையில் அமைதி. அமைச்சர்கள் ஒருவர் கூட பேசவில்லை.</p>
-<p>மன்னர் தலை குனிந்தார். "இந்த நாட்டில் இப்படி ஒரு வீரன் இருக்கிறான். நான் வரி நிறுத்துகிறேன்" என்றார்.</p>
-<p>வீரன் இன்று வரலாற்றில் பதிந்துள்ளான்.</p>
-<div class="moral">💡 நீதி: உண்மைக்காக குரல் எழுப்பு!</div>`
-  },
-  {
-    id:11, cat:'comedy', badge:'hot', emoji:'🤣',
-    bg:'linear-gradient(135deg,#e65100,#f57c00)',
-    catLabel:'நகைச்சுவை', catColor:'#ff9800',
-    title:'அப்பாவின் WhatsApp',
-    excerpt:'அப்பா WhatsApp பயன்படுத்த கற்றுக்கொண்டபோது வீட்டே நடுங்கியது...',
-    readTime:'3 நிமிஷம்',
-    story:`<h3>🤣 அப்பாவின் WhatsApp</h3>
-<p>அப்பாவுக்கு smartphone வாங்கிக்கொடுத்தோம். தப்புடா என்று புரிந்தது 3 நாளிலேயே!</p>
-<p>முதல் நாள் — Family group-ல் "Good morning" பதிலாக "Goof morning" என்று அனுப்பினார். 40 emoji-யுடன்.</p>
-<p>இரண்டாம் நாள் — என் Boss-கு அனுப்பும் message-ஐ அப்பாவுக்கு, அப்பாவுக்கு அனுப்பும் message-ஐ Boss-கு அனுப்பிவிட்டேன்!</p>
-<p>அப்பா அனுப்பிய message Boss-கு: "ஐய்யா, கடன் வாங்கினேன். இந்த மாசம் திரும்ப கொடுக்க கஷ்டமா இருக்கு. கொஞ்சம் பொறுங்க."</p>
-<p>Boss reply: "வரோணும்னா சொல்லுங்க, நான் உதவுகிறேன்!" 😂</p>
-<p>மூன்றாம் நாள் — அப்பா Video call பண்ணினார். Camera கீழே போய் இருந்தது. கால் மட்டுமே தெரிந்தது.</p>
-<p>"அப்பா, உங்க முகம் தெரியலை!"</p>
-<p>"முகம் தெரியணுமா? அதுக்கு என்ன button அழுக்கணும்?"</p>
-<div class="moral">💡 Technology-யும் அப்பாவும் எப்போதும் funny combo! 😄</div>`
-  },
-  {
-    id:12, cat:'kids', badge:'new', emoji:'⭐',
-    bg:'linear-gradient(135deg,#006064,#00838f)',
-    catLabel:'குழந்தை', catColor:'#00bcd4',
-    title:'நட்சத்திர நண்பன்',
-    excerpt:'சிறுமி ஒவ்வொரு இரவும் ஒரு நட்சத்திரத்திடம் பேசுவாள்...',
-    readTime:'4 நிமிஷம்',
-    story:`<h3>⭐ நட்சத்திர நண்பன்</h3>
-<p>ஐந்து வயது மேகலா ஒவ்வொரு இரவும் வானை பார்த்து ஒரு நட்சத்திரத்திடம் பேசுவாள்.</p>
-<p>"நட்சத்திர தோழா, இன்று பள்ளியில் ஒரு பையன் என்னை தள்ளினான். நான் அழுதேன்."</p>
-<p>அம்மா கேட்டாள். "யாரிடம் பேசுகிறாய்?"</p>
-<p>"என் நட்சத்திர நண்பன். அவன் எப்போதும் கேட்கிறான். பதில் சொல்வதில்லை — ஆனால் ஒளிர்கிறான்!"</p>
-<p>அம்மா கண்கள் கலங்கின. "அந்த நட்சத்திரம் யாரென்று தெரியுமா?"</p>
-<p>"யார்?"</p>
-<p>"உன் தாத்தா. அவர் போனபோது சொன்னார் — நான் நட்சத்திரமாக வந்து உன்னை பார்ப்பேன் என்று."</p>
-<p>மேகலா வானை பார்த்தாள். நட்சத்திரம் கொஞ்சம் அதிகமாக ஒளிர்ந்தது போல் தோன்றியது.</p>
-<p>"தாத்தா! நான் உன்னை நேசிக்கிறேன்!" என்று கத்தினாள்.</p>
-<div class="moral">💡 நேசிப்பவர்கள் எங்கும் நம்மருகிலேயே இருக்கிறார்கள்!</div>`
-  },
-  {
-    id:13, cat:'love', badge:'new', emoji:'🌹',
-    bg:'linear-gradient(135deg,#ad1457,#c2185b)',
-    catLabel:'காதல்', catColor:'#e91e63',
-    title:'புத்தக காதல்',
-    excerpt:'நூலகத்தில் ஒரே புத்தகத்தை எடுக்க முயன்ற இரு கைகள் சந்தித்தன...',
-    readTime:'5 நிமிஷம்',
-    story:`<h3>🌹 புத்தக காதல்</h3>
-<p>கோவை நூலகம். ஞாயிற்றுக்கிழமை மாலை. அர்ஜுன் தன் விருப்பமான கவிஞர் சுப்பிரமணிய பாரதியின் கவிதை நூலை எடுக்க கை நீட்டினான்.</p>
-<p>அதே நேரத்தில் இன்னொரு கை அதே புத்தகத்தை நோக்கி வந்தது. இரு கைகளும் ஒரே நேரத்தில் புத்தகத்தை தொட்டன.</p>
-<p>திரும்பிப் பார்த்தான். குறும்பான கண்களுடன் ஒரு பெண். "இது என் favourite book" என்று இருவரும் சேர்ந்து சொன்னோம்.</p>
-<p>சிரிப்பு வந்தது. "நீங்கள் படிங்க, நான் அடுத்த வாரம் வருகிறேன்" என்று அவள் சொன்னாள்.</p>
-<p>அடுத்த ஞாயிற்றுக்கிழமை அவள் வந்தாள் — புத்தகத்துடன். "படித்தாயிற்று. ஆனால் ஒரு வரி புரியவில்லை" என்று சொல்லி விளக்கம் கேட்டாள்.</p>
-<p>அந்த ஒரு வரி விளக்கம் மூன்று மணி நேரம் உரையாடலானது. உரையாடல் காதலானது.</p>
-<p>திருமணத்தன்று அந்த புத்தகத்தை இருவரும் சேர்ந்து மேடையில் வைத்தனர். "இதுதான் நமக்கு ஜோடி சேர்த்தது" என்று சொன்னார்கள்.</p>
-<div class="moral">💡 நீதி: நல்ல புத்தகங்கள் நல்ல மனிதர்களை சந்திக்க வைக்கும்!</div>`
-  },
-  {
-    id:14, cat:'horror', badge:'hot', emoji:'🕯️',
-    bg:'linear-gradient(135deg,#212121,#4a148c)',
-    catLabel:'பயம்', catColor:'#7c4dff',
-    title:'கண்ணாடியில் நிழல்',
-    excerpt:'அந்த வீட்டில் இருந்த பழைய கண்ணாடியில் தன் நிழல் மட்டும் தெரியவில்லை...',
-    readTime:'8 நிமிஷம்',
-    story:`<h3>🕯️ கண்ணாடியில் நிழல்</h3>
-<p>விடுதியில் புதிய அறை கிடைத்தது சந்தோஷத்திற்கு. ஆனால் அறையில் ஒரு பெரிய பழைய கண்ணாடி இருந்தது.</p>
-<p>முதல் இரவு முகம் கழுவிவிட்டு கண்ணாடியில் பார்த்தேன். என் முகம் தெரிந்தது. ஆனால் பின்னால் இருந்த ஜன்னல் தெரியவில்லை!</p>
-<p>கண்ணை தேய்த்துக்கொண்டு மீண்டும் பார்த்தேன். இப்போது ஜன்னல் தெரிந்தது. நான் அதிகமாக யோசிக்கிறேன் என்று நினைத்தேன்.</p>
-<p>ஒரு வாரம் கழித்து தோழன் வீட்டிற்கு வந்தான். "டா, இந்த கண்ணாடியில் உன் பின்னால் ஒரு நிழல் தெரிகிறது" என்று சொன்னான்.</p>
-<p>திரும்பி பார்த்தேன். யாரும் இல்லை. மீண்டும் கண்ணாடியில் பார்த்தோம் — இரு நிழல்கள்.</p>
-<p>அடுத்த நாள் விடுதி வார்டன் வந்தார். "அந்த கண்ணாடியை யார் திறந்து வைத்தார்கள்?" என்று கோபமாக கேட்டார்.</p>
-<p>"திறக்கவில்லையே" என்று சொன்னேன்.</p>
-<p>"கண்ணாடி திறக்கும் — பின்னால் ஒரு பழைய படிக்கட்டு இருக்கு. அதில் யாரோ வருகிறார்கள். இந்த கண்ணாடியை lock பண்ணி வைக்கணும்!"</p>
-<p>அன்று இரவு கண்ணாடியில் ஒரு குறிப்பு தெரிந்தது — "போகாதே".</p>
-<div class="moral">💡 சில கண்ணாடிகள் காட்டுவதை மட்டும் நம்பாதே!</div>`
-  },
-  {
-    id:15, cat:'moral', badge:'classic', emoji:'🌱',
-    bg:'linear-gradient(135deg,#1b5e20,#33691e)',
-    catLabel:'நீதி', catColor:'#8bc34a',
-    title:'விதை விதைத்தவன்',
-    excerpt:'ஒரு முதியவர் 80 வயதில் மரங்கள் நட்டார். "நீங்கள் பயன் அனுபவிக்க மாட்டீர்களே" என்று கேட்டார்கள்...',
-    readTime:'4 நிமிஷம்',
-    story:`<h3>🌱 விதை விதைத்தவன்</h3>
-<p>80 வயதான கோவிந்தன் ஒவ்வொரு காலையும் சாலையோரம் மரக்கன்றுகள் நடுவார்.</p>
-<p>ஒரு நாள் ஒரு இளைஞன் கேட்டான். "தாத்தா, உங்களுக்கு 80 வயது. இந்த மரங்கள் வளர்வதை நீங்கள் பார்க்க மாட்டீர்கள். பின் ஏன் நடுகிறீர்கள்?"</p>
-<p>தாத்தா சிரித்தார். "நான் சிறுவனாக இருந்தபோது மாவிளம்பழம் சாப்பிட்டேன். அந்த மரத்தை நட்டவர் பழம் சாப்பிட்டாரா என்று தெரியாது. ஆனால் அவர் நட்டதால் நான் சாப்பிட்டேன்."</p>
-<p>"அது போல — நான் நட்பேன். எனக்கு பிறகு வரும் குழந்தைகள் நிழலில் உட்காருவார்கள். பழம் சாப்பிடுவார்கள்."</p>
-<p>இளைஞன் யோசித்தான். மறுநாள் முதல் அவனும் மரக்கன்றுகள் தூக்கி வந்தான்.</p>
-<p>இரு பேரும் நட்டனர். அந்த தெருவில் இன்று 200 மரங்கள் இருக்கின்றன.</p>
-<div class="moral">💡 நீதி: எதிர்காலத்திற்காக வாழு — உன்னாலேயே அல்ல, மற்றவர்களாலும்!</div>`
-  },
-  {
-    id:16, cat:'comedy', badge:'hot', emoji:'🤦',
-    bg:'linear-gradient(135deg,#e65100,#bf360c)',
-    catLabel:'நகைச்சுவை', catColor:'#ff9800',
-    title:'Google Maps நம்பகம்',
-    excerpt:'Google Maps நம்பி கல்யாணத்திற்கு சென்றவர் திரும்பும்வழி...',
-    readTime:'3 நிமிஷம்',
-    story:`<h3>🤦 Google Maps நம்பகம்</h3>
-<p>என் மாமாவின் கல்யாணம். சென்னையிலிருந்து கோவை. Google Maps போட்டேன்.</p>
-<p>"Take the fastest route" — 4 மணி நேரம்.</p>
-<p>கிளம்பினோம். 2 மணி நேரத்தில் Maps திடீரென்று சொன்னது: "Turn right."</p>
-<p>திரும்பினோம். கிராம சாலை. "Turn left." திரும்பினோம். மண் சாலை.</p>
-<p>"You have arrived at your destination."</p>
-<p>நாங்கள் நின்றது — ஒரு வயல்வெளியின் நடுவே!</p>
-<p>அப்பா கோபமாக, "Google-ல கல்யாண மண்டபம் எங்கே?" என்று கேட்டார்.</p>
-<p>நான் மீண்டும் search செய்தேன். "Kalyana Mandapam, Coimbatore" என்று போட்டிருந்தேன். ஆனால் Coimbatore-க்கு பதில் Cuddalore select ஆகியிருந்தது!</p>
-<p>கல்யாணம் முடிந்த பிறகு சென்றோம். மாமா கேட்டார்: "நீங்களும் வந்தீங்களா? எங்கே போனீங்க?"</p>
-<p>"Cuddalore" என்று சொன்னோம்.</p>
-<p>கல்யாண விருந்தை விட அந்த பயண கதையே அனைவரையும் சிரிக்க வைத்தது!</p>
-<div class="moral">💡 நீதி: Maps நம்புவதற்கு முன் destination verify பண்ணுங்க! 😂</div>`
-  },
-  {
-    id:17, cat:'village', badge:'new', emoji:'🌻',
-    bg:'linear-gradient(135deg,#f57f17,#f9a825)',
-    catLabel:'கிராமம்', catColor:'#ffca28',
-    title:'கிணற்றடி கதைகள்',
-    excerpt:'கிராமத்து கிணற்றடியில் பாட்டி சொல்லும் கதைகள் ஒரு தலைமுறையை உருவாக்கின...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>🌻 கிணற்றடி கதைகள்</h3>
-<p>சுந்தரம்பட்டி கிராமம். ஒவ்வொரு மாலையும் பிள்ளைகள் பாட்டி சேகரம்மாவை சுற்றி கூடுவார்கள்.</p>
-<p>கிணற்றடியில் உட்கார்ந்து, நட்சத்திரங்களை பார்த்தவாறு பாட்டி கதை சொல்வார்.</p>
-<p>ஒரு நாள் ஒரு குழந்தை கேட்டது: "பாட்டி, நீங்கள் படிக்கவில்லை, ஆனால் இத்தனை கதைகள் எப்படி தெரியும்?"</p>
-<p>பாட்டி சிரித்தார். "நான் படிக்கவில்லை. ஆனால் என் பாட்டி என்னிடம் சொன்னார். அவர் பாட்டி சொன்னார். இது தலைமுறையிலிருந்து தலைமுறை பயணிக்கும் கல்வி."</p>
-<p>"புத்தகத்தில் இல்லாத ஞானம் மண்ணிலிருந்து வரும். வாழ்க்கையிலிருந்து வரும். இதைதான் அனுபவம் என்று சொல்வார்கள்."</p>
-<p>அந்த குழந்தைகளில் ஒருவன் இன்று ஒரு பெரிய எழுத்தாளர். அவனுடைய முதல் புத்தகத்தின் அர்ப்பணிப்பு: "கிணற்றடியில் கதை சொன்ன சேகரம்மா பாட்டிக்கு."</p>
-<div class="moral">💡 நீதி: வாய்மொழி கலாச்சாரம் ஒரு பெரிய பல்கலைக்கழகம்!</div>`
-  },
-  {
-    id:18, cat:'thriller', badge:'hot', emoji:'🗝️',
-    bg:'linear-gradient(135deg,#37474f,#263238)',
-    catLabel:'த்ரில்லர்', catColor:'#78909c',
-    title:'மூடிய அறை',
-    excerpt:'20 ஆண்டுகளாக மூடப்பட்டிருந்த அந்த அறையை திறந்தபோது உண்மை வெளிவந்தது...',
-    readTime:'10 நிமிஷம்',
-    story:`<h3>🗝️ மூடிய அறை</h3>
-<p>பழைய தாத்தா வீட்டை சுத்தம் செய்யும்போது ஒரு அறை lock ஆகியிருந்தது. 20 ஆண்டுகளாக யாரும் திறக்கவில்லை.</p>
-<p>"இதை திறக்கவே கூடாது" என்று தாத்தா சொல்லியிருந்தார். ஆனால் தாத்தா இப்போது இல்லை.</p>
-<p>திறவுகோல் தேடினோம். படுக்கையறை drawer-ல் கிடைத்தது — "அறை 4" என்று எழுதிய envelope-ல்.</p>
-<p>உள்ளே சென்றோம். ஒரு எழுது மேசை, பழைய கடிதங்கள், புகைப்படங்கள்.</p>
-<p>புகைப்படங்களில் தாத்தாவும், யாரோ ஒரு பெண்மணியும் இருந்தனர். பாட்டி அல்ல.</p>
-<p>கடிதங்கள் படித்தோம். தாத்தாவுக்கு 20 வயதில் ஒரு காதல் இருந்தது. அவள் வேற்று ஜாதி. திருமணம் நடக்கவில்லை.</p>
-<p>கடைசி கடிதத்தில்: "நான் உன்னை மறக்க மாட்டேன். ஆனால் இந்த நினைவுகளை யாரும் பார்க்கக்கூடாது. என் மரணத்திற்கு பின் மட்டும் திற."</p>
-<p>அந்த பெண்மணி — வேறு யாரோடோ திருமணம் செய்துகொண்டார்கள். ஆனால் தாத்தா வாழ்நாள் முழுவதும் அந்த நினைவுகளை பூட்டி வைத்திருந்தார்.</p>
-<p>அந்த அறையை மீண்டும் மூடினோம். சில நினைவுகள் பூட்டிலேயே இருக்கட்டும்.</p>
-<div class="moral">💡 ஒவ்வொரு மனிதனிடமும் ஒரு மூடிய அறை இருக்கும்!</div>`
-  },
-  {
-    id:19, cat:'devotion', badge:'classic', emoji:'🪔',
-    bg:'linear-gradient(135deg,#e65100,#ff8f00)',
-    catLabel:'தெய்வீகம்', catColor:'#ffab40',
-    title:'விளக்கு அணையவில்லை',
-    excerpt:'வெள்ளத்திலும் காற்றிலும் அந்த ஒரு விளக்கு மட்டும் அணையவில்லை...',
-    readTime:'5 நிமிஷம்',
-    story:`<h3>🪔 விளக்கு அணையவில்லை</h3>
-<p>திருவாரூர் ஒரு சிறிய கிராமம். ஒவ்வொரு நாளும் காலை ஆறு மணிக்கு பார்வதி கோவிலில் விளக்கு ஏற்றுவாள்.</p>
-<p>ஒரு ஆண்டு பெரும் வெள்ளம் வந்தது. கிராமம் முழுவதும் தண்ணீர் நிரம்பியது. கரண்ட் போனது.</p>
-<p>எல்லோரும் மேட்டு பகுதிக்கு ஓடினார்கள். பார்வதி கோவிலுக்கு சென்று விளக்கு ஏற்றிவிட்டு வந்தாள்.</p>
-<p>"இந்த வெள்ளத்திலா விளக்கு ஏற்றுவாய்?" என்று அண்டை வீட்டார் கேட்டனர்.</p>
-<p>"இந்த வெள்ளத்திலும் காப்பவர் அவரே. அவருக்கு வெளிச்சம் காட்டாமல் ஓடி வருவேனா?" என்று சொன்னாள்.</p>
-<p>அன்று இரவு மழையும் காற்றும் மிகவும் கடுமையாக இருந்தது. கோவிலில் ஏற்றிய விளக்கு — அணையவே இல்லை!</p>
-<p>அடுத்த நாள் வெள்ளம் வடிந்தது. கிராமத்தில் பெரிய சேதம் இல்லை. எல்லோரும் கோவிலுக்கு வந்தனர். அந்த விளக்கு இன்னும் எரிந்தது.</p>
-<div class="moral">💡 நீதி: நம்பிக்கை — இருளிலும் வெளிச்சம் கொடுக்கும்!</div>`
-  },
-  {
-    id:20, cat:'history', badge:'classic', emoji:'⚔️',
-    bg:'linear-gradient(135deg,#4e342e,#6d4c41)',
-    catLabel:'வரலாறு', catColor:'#a1887f',
-    title:'கவிஞனின் வாள்',
-    excerpt:'சங்க காலத்தில் ஒரு கவிஞன் தன் வார்த்தைகளால் போரை தடுத்தான்...',
-    readTime:'7 நிமிஷம்',
-    story:`<h3>⚔️ கவிஞனின் வாள்</h3>
-<p>சங்க காலம். இரு சிற்றரசர்களுக்கிடையே போர் மூள இருந்தது. ஆயிரக்கணக்கான வீரர்கள் தயாரானார்கள்.</p>
-<p>கபிலர் என்ற கவிஞன் முதல் மன்னரிடம் சென்றான். "மன்னரே, போர் வேண்டாம். கவிதை சொல்கிறேன், கேளுங்கள்."</p>
-<p>மன்னர் கோபத்தில் இருந்தார். "கவிஞனுக்கு போர் விஷயம் தெரியாது."</p>
-<p>"தெரியும் மன்னரே. போரில் வெற்றி கிடைத்தாலும் என்ன கிடைக்கும்? சில நிலம். ஆனால் மரிக்கும் வீரர்களின் தாய்மார்கள், மனைவியர், குழந்தைகள் என்னாவார்கள்?"</p>
-<p>கபிலர் ஒரு பாடல் பாடினார். யுத்தத்தில் இறந்த வீரனின் தாய் மகனை தேடுவதை பற்றிய பாடல்.</p>
-<p>மன்னரின் கண்களில் நீர். "நிறுத்து."</p>
-<p>இரு மன்னர்களும் பேசினார்கள். போர் நடக்கவில்லை. நூற்றுக்கணக்கான உயிர்கள் பிழைத்தன.</p>
-<p>கபிலரின் வாள் — வார்த்தைகள்!</p>
-<div class="moral">💡 நீதி: ஒரு நல்ல வார்த்தை ஆயிரம் வாட்களை விட வலிமையானது!</div>`
-  },
-  {
-    id:21, cat:'kids', badge:'new', emoji:'🦋',
-    bg:'linear-gradient(135deg,#00695c,#00897b)',
-    catLabel:'குழந்தை', catColor:'#26a69a',
-    title:'வண்ண வண்ண தோழி',
-    excerpt:'வித்தியாசமாக இருக்கும் ஒரு பூச்சி கண்டுபிடித்த உண்மை...',
-    readTime:'3 நிமிஷம்',
-    story:`<h3>🦋 வண்ண வண்ண தோழி</h3>
-<p>பூஞ்சோலையில் நிறைய வண்ணத்துப்பூச்சிகள் இருந்தன. அனைத்தும் சிவப்பு அல்லது மஞ்சள் நிறம்.</p>
-<p>ஒரே ஒரு பூச்சி வெள்ளை நிறத்தில் இருந்தது. "நீ ஏன் இப்படி இருக்கிறாய்? வித்தியாசமாக இருக்கிறாய்!" என்று மற்ற பூச்சிகள் கேட்டன.</p>
-<p>வெள்ளைப் பூச்சி வருந்தியது. ஒரு நாள் மழை வந்தது. எல்லா வண்ணப் பூக்களும் நனைந்தன. வண்ணத்துப்பூச்சிகளும் மறைந்தன.</p>
-<p>ஒரே ஒரு வெள்ளை மலர் மழையிலும் தனித்து நின்றது. வெள்ளைப் பூச்சி அதன்மேல் அமர்ந்தது. அழகாக தெரிந்தது!</p>
-<p>மழை நின்றது. மற்ற பூச்சிகள் கேட்டன: "நீ எப்படி இருந்தாய்?"</p>
-<p>"என் நிறம் வித்தியாசம் — அதனால் என்னால் வித்தியாசமான இடங்களில் அமர முடியும்!" என்று சொன்னது வெள்ளைப் பூச்சி.</p>
-<div class="moral">💡 நீதி: வித்தியாசம் என்பது குறை அல்ல — அது உன் சிறப்பு!</div>`
-  },
-  {
-    id:22, cat:'moral', badge:'new', emoji:'🪞',
-    bg:'linear-gradient(135deg,#4527a0,#6a1b9a)',
-    catLabel:'நீதி', catColor:'#ab47bc',
-    title:'கண்ணாடி பாடம்',
-    excerpt:'ஒரு கோபக்காரனுக்கு ஒரு முதியவர் கொடுத்த பாடம் வாழ்நாளில் மறக்க முடியாதது...',
-    readTime:'4 நிமிஷம்',
-    story:`<h3>🪞 கண்ணாடி பாடம்</h3>
-<p>சுரேஷ் மிகவும் கோபக்காரன். சிறிய விஷயத்திற்கும் கத்துவான். அலுவலகத்தில் எல்லோரும் அவனிடம் பயந்தனர்.</p>
-<p>ஒரு நாள் ஒரு வயதான ஆசிரியர் அவனிடம் வந்தார். "ஒரு கண்ணாடி வாங்கி வா" என்றார்.</p>
-<p>சுரேஷ் வாங்கி வந்தான். ஆசிரியர் கேட்டார்: "கண்ணாடியில் பார்க்கும்போது என்ன தெரிகிறது?"</p>
-<p>"என் முகம்" என்றான்.</p>
-<p>"கோபமாக இருக்கும்போது இந்த கண்ணாடியில் பார்." ஆசிரியர் சொன்னார்.</p>
-<p>அன்று மாலை boss தவறான email அனுப்பினார். சுரேஷ் கோபமடைந்தான். பதில் எழுத போனான்.</p>
-<p>திடீரென்று ஆசிரியர் வார்த்தைகள் நினைவு வந்தது. கண்ணாடியில் பார்த்தான். ஒரு சிவந்த முகம், ஊதிய தாடை நரம்புகள்.</p>
-<p>"இதுதானா நான்?" என்று யோசித்தான். மூன்று மணி நேரம் காத்து, அமைதியான மனதுடன் பதில் எழுதினான்.</p>
-<p>அன்று முதல் கண்ணாடி அவன் மேஜையில் இருக்கிறது.</p>
-<div class="moral">💡 நீதி: கோபத்தில் பேசுவதற்கு முன் கண்ணாடியில் பார்!</div>`
-  },
-  {
-    id:23, cat:'love', badge:'new', emoji:'🌙',
-    bg:'linear-gradient(135deg,#6a1b9a,#ab47bc)',
-    catLabel:'காதல்', catColor:'#e91e63',
-    title:'இரவு ரயில்',
-    excerpt:'சென்னையிலிருந்து கோவைக்கு போகும் ரயிலில் தொடங்கிய உரையாடல் வாழ்நாள் முழுவதும் நீடித்தது...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>🌙 இரவு ரயில்</h3>
-<p>இரவு 11 மணி ரயில். சென்னை மைலாப்பூரிலிருந்து கோவைக்கு. பிரகாஷ் window seat-ல் உட்கார்ந்திருந்தான். அடுத்த seat காலியாக இருந்தது.</p>
-<p>ரயில் புறப்படுவதற்கு ஐந்து நிமிடம் முன்பு ஒரு பெண் ஓடி வந்தாள். பையை overhead-ல் வைக்க முயன்றாள். எட்டவில்லை.</p>
-<p>பிரகாஷ் எழுந்து உதவினான். "நன்றி" என்று சொல்லி உட்கார்ந்தாள்.</p>
-<p>ரயில் கிளம்பியது. இருட்டில் வெளியே தெரிந்த விளக்குகள் பார்த்தனர். யாரும் பேசவில்லை.</p>
-<p>அரை மணி நேரம் கழித்து அவள் புத்தகம் எடுத்தாள். அதே புத்தகம் — பிரகாஷும் படிக்கும் "அலை ஓசை".</p>
-<p>"இந்த புத்தகம் படிக்கிறீர்களா?" என்று கேட்டான்.</p>
-<p>அவள் ஆச்சரியத்துடன் பார்த்தாள். "முடித்துவிட்டீர்களா?"</p>
-<p>அந்த இரவு முழுவதும் இரு பேரும் பேசினார்கள். கோவை வந்தது தெரியவேயில்லை.</p>
-<p>இறங்கும்போது பெயர் கூட கேட்கவில்லை. Platform-ல் நின்று திரும்பிப் பார்த்தான் — அவளும் திரும்பிப் பார்த்தாள். இருவரும் சிரித்தனர்.</p>
-<p>மறுநாள் அதே புத்தக கடையில் சந்தித்தனர்.</p>
-<div class="moral">💡 நீதி: நல்ல சந்திப்புகளுக்கு திட்டம் தேவையில்லை!</div>`
-  },
-  {
-    id:24, cat:'horror', badge:'hot', emoji:'🌫️',
-    bg:'linear-gradient(135deg,#0d0d0d,#311b92)',
-    catLabel:'பயம்', catColor:'#7c4dff',
-    title:'பழைய புகைப்படம்',
-    excerpt:'தாத்தா வீட்டை சுத்தம் செய்யும்போது கண்டுபிடிக்கப்பட்ட ஒரு புகைப்படம் எல்லாரையும் நடுங்கவைத்தது...',
-    readTime:'7 நிமிஷம்',
-    story:`<h3>🌫️ பழைய புகைப்படம்</h3>
-<p>தாத்தா வீட்டை விற்க முடிவு செய்தோம். பழைய பெட்டிகளை எடுக்கும்போது ஒரு கருப்பு வெள்ளை புகைப்படம் கிடைத்தது.</p>
-<p>1962-ம் ஆண்டு குடும்ப புகைப்படம். தாத்தா, பாட்டி, அப்பா சிறுவனாக. ஆனால் புகைப்படத்தின் மூலையில் யாரோ ஒருவர் நிற்கிறார்.</p>
-<p>யாரவது என்று கேட்டோம். தாத்தா கண்கள் விரிந்தன. "அந்த நேரம் வீட்டில் யாரும் இல்லை. நாங்கள் மூன்று பேர்தான்."</p>
-<p>புகைப்படத்தை zoom செய்தோம். அந்த நபர் — நம்மை பார்த்து சிரிக்கிறான். ஆனால் முகம் மங்கலாக இருக்கிறது.</p>
-<p>அம்மா புகைப்படத்தை எடுத்து பார்த்தாள். திடீரென்று கீழே விட்டாள். "இது நேற்று இறந்த என் அண்ணன்!"</p>
-<p>1962-ல் எடுத்த புகைப்படத்தில் — 2024-ல் இறந்தவர்.</p>
-<p>அன்று இரவு யாரும் தூங்கவில்லை. புகைப்படம் காணவில்லை.</p>
-<div class="moral">💡 சில விஷயங்களுக்கு விளக்கம் இல்லை!</div>`
-  },
-  {
-    id:25, cat:'comedy', badge:'hot', emoji:'🛵',
-    bg:'linear-gradient(135deg,#bf360c,#e64a19)',
-    catLabel:'நகைச்சுவை', catColor:'#ff9800',
-    title:'Uber Eats தர்மசங்கடம்',
-    excerpt:'தவறான வீட்டிற்கு delivery போன அந்த நாள் மறக்கவே முடியாது...',
-    readTime:'4 நிமிஷம்',
-    story:`<h3>🛵 Uber Eats தர்மசங்கடம்</h3>
-<p>பசி தாங்கவில்லை. Biryani order பண்ணினேன். Delivery boy வந்தான்.</p>
-<p>"சார், Door number 4B-ல் கொடுக்கணும்னு சொன்னீங்க" என்றான்.</p>
-<p>"ஆமா" என்றேன்.</p>
-<p>"சார் நீங்க 4B-ல தானே இருக்கீங்க?"</p>
-<p>"ஆமா!"</p>
-<p>"அப்ப இந்த பையன் யாரு?" என்று கேட்டான். பின்னால் நின்ற பையனை காட்டினான்.</p>
-<p>திரும்பிப் பார்த்தேன். என் வீட்டு neighbor தன் கையில் biryani பாக்கெட்டுடன் நிற்கிறான். "Delivery boy வந்தான், உங்களுக்கு என்று சொன்னான், நான் வாங்கிட்டேன். நன்றி!" என்று சொல்லி போகிறான்.</p>
-<p>Delivery boy: "சார், இது இரண்டாவது order. முதல் order அவரு வாங்கிட்டாரு!"</p>
-<p>இரண்டு biryani pay பண்ணினேன். ஒன்று neighbor சாப்பிட்டான். ஒன்று நான் சாப்பிட்டேன்.</p>
-<p>அடுத்த நாள் neighbor: "நேத்து biryani நல்லா இருந்துச்சு, thanks!"</p>
-<div class="moral">💡 நீதி: Delivery address சரியா போடுங்க! 😂</div>`
-  },
-  {
-    id:26, cat:'kids', badge:'new', emoji:'🐢',
-    bg:'linear-gradient(135deg,#1565c0,#1976d2)',
-    catLabel:'குழந்தை', catColor:'#42a5f5',
-    title:'ஆமையின் ஞானம்',
-    excerpt:'ஓட்டப்பந்தயத்தில் தோற்ற ஆமை கண்டுபிடித்த உண்மை...',
-    readTime:'3 நிமிஷம்',
-    story:`<h3>🐢 ஆமையின் ஞானம்</h3>
-<p>முயலும் ஆமையும் மீண்டும் ஓட்டப்பந்தயம். இம்முறை முயல் தூங்கவில்லை. வேகமாக ஓடியது.</p>
-<p>ஆமை தோற்றது. அழுதது.</p>
-<p>"ஏன் அழுகிறாய்?" என்று காட்டிலுள்ள ஒரு வயதான யானை கேட்டது.</p>
-<p>"ஓட்டத்தில் தோற்றேன்" என்றது ஆமை.</p>
-<p>"ஆமையாய் பிறந்து முயலோடு ஓட்டம் போட்டது யார் தப்பு?" என்று கேட்டது யானை.</p>
-<p>ஆமை யோசித்தது.</p>
-<p>"நீ யாரோடு போட்டியிட்டாலும் — உன்னோடே போட்டியிடு. நேற்றை விட இன்று கொஞ்சம் வேகமாக ஓடு. அதுதான் வெற்றி."</p>
-<p>அடுத்த நாள் ஆமை தனியாக ஓடியது. கடந்த நாளை விட வேகமாக.</p>
-<p>அதுவே வெற்றி.</p>
-<div class="moral">💡 நீதி: உன்னை நீயே beat பண்ணு — அதுதான் உண்மையான வெற்றி!</div>`
-  },
-  {
-    id:27, cat:'devotion', badge:'classic', emoji:'🌺',
-    bg:'linear-gradient(135deg,#b71c1c,#e53935)',
-    catLabel:'தெய்வீகம்', catColor:'#ff5252',
-    title:'அம்மனின் சோதனை',
-    excerpt:'கோவிலில் கடைசி பூஜையின்போது நடந்த அற்புதம் அந்த கிராமத்தை மாற்றிவிட்டது...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>🌺 அம்மனின் சோதனை</h3>
-<p>பெரியகுளம் கிராம அம்மன் கோவில். நூறு ஆண்டுகள் பழமையானது. ஒவ்வொரு வருடமும் திருவிழா மிகவும் சிறப்பாக நடக்கும்.</p>
-<p>ஒரு வருடம் கடும் வறட்சி. கிணறுகள் வற்றின. மக்கள் வெளியூர் சென்றனர். திருவிழாவிற்கு பணம் இல்லை.</p>
-<p>கோவில் அர்ச்சகர் சொன்னார்: "பணம் இல்லாவிட்டாலும் பூஜை நடக்கும். ஒவ்வொருவரும் ஒரு பூ கொண்டு வாருங்கள்."</p>
-<p>திருவிழா நாள். எல்லோரும் ஒரு பூவுடன் வந்தனர். ஒரு ஏழை பெண் — வீட்டில் பூவில்லை. வழியில் இருந்த ஒரு புல்லை கொண்டு வந்தாள்.</p>
-<p>"புல் கொண்டு வந்தாய்?" என்று கேலி செய்தனர்.</p>
-<p>"இதுவே என்னிடம் இருப்பது" என்று சொல்லி வைத்தாள்.</p>
-<p>பூஜை முடிந்தது. அன்றிரவு மழை பெய்தது. மூன்று நாள் மழை. கிணறுகள் நிரம்பின.</p>
-<p>அர்ச்சகர் சொன்னார்: "அம்மா ஏற்றுக்கொண்டது உண்மையான பக்தியை — பொருளை அல்ல."</p>
-<div class="moral">💡 நீதி: தூய்மையான மனசு போதும் — விலையுயர்ந்த பொருள் தேவையில்லை!</div>`
-  },
-  {
-    id:28, cat:'moral', badge:'new', emoji:'🕊️',
-    bg:'linear-gradient(135deg,#1a237e,#283593)',
-    catLabel:'நீதி', catColor:'#7986cb',
-    title:'மன்னிப்பின் வலிமை',
-    excerpt:'20 ஆண்டுகளாக பேசாமல் இருந்த இரு சகோதரர்கள் ஒரு நிமிடத்தில் மனம் மாறியது எப்படி?',
-    readTime:'5 நிமிஷம்',
-    story:`<h3>🕊️ மன்னிப்பின் வலிமை</h3>
-<p>ரமேஷும் சுரேஷும் சகோதரர்கள். 20 ஆண்டுகளுக்கு முன் சொத்து பிரிவினையில் சண்டை. அன்று முதல் பேச்சு இல்லை.</p>
-<p>ரமேஷுக்கு heart attack. மருத்துவமனையில் இருக்கிறான். மகள் சுரேஷை அழைத்தாள்.</p>
-<p>சுரேஷ் வந்தான். கதவு திறந்தான். படுக்கையில் இருந்த ரமேஷ் பார்த்தான். கண்கள் கலங்கின.</p>
-<p>யாரும் பேசவில்லை. சுரேஷ் நாற்காலி இழுத்து உட்கார்ந்தான். ரமேஷின் கை பிடித்தான்.</p>
-<p>"20 வருஷம்..." என்று ரமேஷ் சொல்ல முயன்றான்.</p>
-<p>"வேண்டாம்" என்றான் சுரேஷ். "அது முடிந்தது."</p>
-<p>அன்று இரவு இரு பேரும் பழைய நினைவுகள் பேசினர். சிரித்தனர். அழுதனர்.</p>
-<p>ரமேஷ் குணமடைந்தான். சுரேஷ் ஒவ்வொரு நாளும் வருகிறான்.</p>
-<p>"20 ஆண்டுகள் வீணாயிற்று" என்று ரமேஷ் சொன்னான்.</p>
-<p>"இனி வரும் 20 ஆண்டுகள் வீணாகாது" என்றான் சுரேஷ்.</p>
-<div class="moral">💡 நீதி: மன்னிப்பு கொடுப்பவனை விட வாங்குபவன் அதிகம் பயனடைகிறான்!</div>`
-  },
-  {
-    id:29, cat:'village', badge:'new', emoji:'🌊',
-    bg:'linear-gradient(135deg,#004d40,#00695c)',
-    catLabel:'கிராமம்', catColor:'#26a69a',
-    title:'கடலோர கதை',
-    excerpt:'கடல் கோபித்தாலும் மீனவர்கள் கைவிடாத நம்பிக்கை...',
-    readTime:'7 நிமிஷம்',
-    story:`<h3>🌊 கடலோர கதை</h3>
-<p>நாகப்பட்டினம் அருகில் ஒரு சிறிய மீனவ கிராமம். 200 குடும்பங்கள். கடலே வாழ்வாதாரம்.</p>
-<p>ஒரு வருடம் கடல் கோபித்தது. புயல். படகுகள் சேதம். மீன் இல்லை. கடனும் வட்டியும் கூடின.</p>
-<p>இளைஞர்கள் நகரம் செல்ல முடிவு செய்தனர். வயதான மீனவர் செல்வம் கேட்டான்: "எங்கே போகிறீர்கள்?"</p>
-<p>"நகரம் போய் வேலை பார்ப்போம்."</p>
-<p>"கடல் உங்களுக்கு கோபித்திருக்கிறது. நாளை ஒரு நாள் கடலிடம் மன்னிப்பு கேளுங்கள்."</p>
-<p>இளைஞர்கள் சிரித்தனர். ஆனால் மறுநாள் காலை — வயோதிகர் கடலில் நின்று கைகளை விரித்தான்.</p>
-<p>மாலையில் ஒரு பெரிய மீன் கூட்டம் வந்தது. 10 ஆண்டுகளில் இல்லாத அளவு மீன்.</p>
-<p>இளைஞர்கள் யாரும் நகரம் போகவில்லை.</p>
-<p>"கடலிடம் மன்னிப்பு கேட்டதால் மீன் வந்ததா?" என்று கேட்டனர்.</p>
-<p>"இல்லை. மன்னிப்பு கேட்டதால் நீங்கள் கடலை விட்டு போகவில்லை. நீங்கள் இருந்தால் மீன் வரும்" என்றான் செல்வம்.</p>
-<div class="moral">💡 நீதி: வேரை விட்டுவிடாதே — சூழல் மாறும்!</div>`
-  },
-  {
-    id:30, cat:'thriller', badge:'hot', emoji:'📱',
-    bg:'linear-gradient(135deg,#212121,#37474f)',
-    catLabel:'த்ரில்லர்', catColor:'#90a4ae',
-    title:'தெரியாத number',
-    excerpt:'ஒவ்வொரு இரவும் ஒரே number-லிருந்து missed call. திரும்ப call பண்ணும்போது...',
-    readTime:'8 நிமிஷம்',
-    story:`<h3>📱 தெரியாத number</h3>
-<p>கடந்த ஒரு வாரமாக ஒவ்வொரு இரவும் சரியாக 11:11-க்கு ஒரு missed call. Unknown number.</p>
-<p>முதல் நாள் ignore பண்ணினேன். இரண்டாவது நாளும். மூன்றாவது நாள் திரும்ப call செய்தேன்.</p>
-<p>யாரும் எடுக்கவில்லை. நான்காவது நாள் வேறொரு phone-ல் call செய்தேன். ஒரு பெண் குரல்.</p>
-<p>"யார் பேசுகிறீர்கள்?" என்று கேட்டேன்.</p>
-<p>அழுகை குரல். "உதவி வேண்டும்" என்றது.</p>
-<p>Address கேட்டேன். சொன்னாள். அந்த இடத்திற்கு போனேன். ஒரு வயதான வீடு.</p>
-<p>கதவு தட்டினேன். ஒரு முதியவர் திறந்தார். "என் மகள் ஒரு வாரமாக காணவில்லை" என்று அழுதார்.</p>
-<p>காவல்நிலையத்தில் புகார் கொடுத்தோம். மகளை கண்டுபிடித்தனர் — அவள் phone திருடர்களிடம் இருந்தது.</p>
-<p>phone திருடியவன் தினமும் random numbers-க்கு call செய்தான் — செம்மையாக என் number-க்கு போனது.</p>
-<div class="moral">💡 சில தற்செயல்கள் தெய்வீகம்!</div>`
-  },
-  {
-    id:31, cat:'history', badge:'classic', emoji:'🏺',
-    bg:'linear-gradient(135deg,#3e2723,#4e342e)',
-    catLabel:'வரலாறு', catColor:'#bcaaa4',
-    title:'சங்க கவிஞை',
-    excerpt:'ஆண்கள் மட்டுமே கவிதை எழுதும் காலத்தில் ஒரு பெண் தன் குரலை நிலைநாட்டினாள்...',
-    readTime:'8 நிமிஷம்',
-    story:`<h3>🏺 சங்க கவிஞை</h3>
-<p>சங்க காலம். அவ்வையார் இளம் பெண்ணாக இருந்தார். கவிதை எழுத விரும்பினார். ஆனால் அக்கால அவையில் பெண்களுக்கு இடம் இல்லை.</p>
-<p>ஒரு நாள் மன்னர் அவையில் கவிஞர்கள் போட்டி. அவ்வையார் நுழைந்தார்.</p>
-<p>"பெண்களுக்கு இங்கே இடம் இல்லை" என்று அவையினர் சொன்னனர்.</p>
-<p>"கவிதை ஆணுக்கும் பெண்ணுக்கும் சொந்தமானது. உள்ளத்திற்கு சொந்தமானது" என்று சொன்னார்.</p>
-<p>மன்னர் சவால் விட்டார்: "சரி, ஒரு கவிதை சொல்."</p>
-<p>அவ்வையார் தயங்காமல் பாடினார். மன்னரின் வீரத்தையும் குறைகளையும் இரண்டையும் சொன்னார்.</p>
-<p>அவை அமைதியானது. மன்னர் சிரித்தார். "உண்மை சொல்லும் கவிஞரே சிறந்த கவிஞர்" என்று சொல்லி தங்க மாலை போட்டார்.</p>
-<p>அன்று முதல் தமிழ் கவிதை வரலாற்றில் அவ்வையார் பெயர் என்றும் நிலைத்தது.</p>
-<div class="moral">💡 நீதி: திறமைக்கு பாலின வேற்றுமை இல்லை!</div>`
-  },
-  {
-    id:32, cat:'love', badge:'new', emoji:'🎸',
-    bg:'linear-gradient(135deg,#4a148c,#7b1fa2)',
-    catLabel:'காதல்', catColor:'#e91e63',
-    title:'கடைசி பாடல்',
-    excerpt:'அவன் guitar வாசிக்கும்போது மட்டும் அவள் கண்களில் கண்ணீர் வரும் — ஏன் என்று அவனுக்கு தெரியாது...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>🎸 கடைசி பாடல்</h3>
-<p>கார்த்திக் ஒரு சாதாரண guitar player. கல்லூரி canteen-ல் மாலை நேரம் வாசிப்பான்.</p>
-<p>ஒரு நாள் கவனித்தான் — ஒரே ஒரு பெண் எப்போதும் கேட்டுக்கொண்டிருக்கிறாள். அவள் பெயர் தீபா.</p>
-<p>வாசிக்கும்போது அவள் கண்களில் கண்ணீர் வரும். வாசிப்பு முடிந்ததும் சிரிப்பாள். போய்விடுவாள்.</p>
-<p>ஒரு நாள் கேட்டான்: "என் வாசிப்பு ஏன் உங்களை அழவைக்கிறது?"</p>
-<p>அவள் சற்று யோசித்தாள். "என் அப்பா guitar வாசிப்பார். அவர் இல்லை. உங்கள் வாசிப்பில் அவர் குரல் கேட்கிறது."</p>
-<p>கார்த்திக் அன்று அவளுக்காக ஒரு பாடல் மட்டும் வாசித்தான் — அவள் அப்பா விரும்பிய பாடல் என்று அவள் சொன்னது.</p>
-<p>அன்று முதல் தினமும் வந்தாள். கண்ணீரும் வந்தது. சிரிப்பும் வந்தது.</p>
-<p>காதலும் வந்தது.</p>
-<div class="moral">💡 நீதி: இசை இல்லாத இடத்தில் இதயம் சேர முடியாது!</div>`
-  },
-  {
-    id:33, cat:'horror', badge:'new', emoji:'🌳',
-    bg:'linear-gradient(135deg,#1b0000,#4a0000)',
-    catLabel:'பயம்', catColor:'#ef5350',
-    title:'ஆல மரத்தடி',
-    excerpt:'கிராமத்தில் யாரும் இரவில் செல்லாத ஆல மரத்தடியில் நடந்தது உண்மையா? கனவா?',
-    readTime:'8 நிமிஷம்',
-    story:`<h3>🌳 ஆல மரத்தடி</h3>
-<p>எங்கள் கிராமத்தில் ஒரு பழைய ஆல மரம். "இரவில் அங்கே யாரும் போகாதீர்கள்" என்று பெரியோர்கள் சொல்வார்கள்.</p>
-<p>நான் நம்பவில்லை. ஒரு இரவு தோழர்களுக்கு கட்டைப்பஞ்சை நிரூபிக்க அங்கே சென்றேன்.</p>
-<p>இரவு 12 மணி. மரத்தடியில் நின்றேன். ஒன்றும் இல்லை. சிரிப்பாக இருந்தது.</p>
-<p>திரும்பும்போது ஒரு பெண் குரல்: "இங்கே ஏன் வந்தாய்?"</p>
-<p>திரும்பிப் பார்த்தேன். ஒரு வயதான பாட்டி. "பயம் இல்லை என்று காட்ட வந்தேன்" என்றேன்.</p>
-<p>"பயம் இல்லாதவர்களே இங்கே வருவார்கள். பயம் இல்லாதவர்களுக்கே ஆபத்து வரும்" என்றார்.</p>
-<p>"ஏன்?"</p>
-<p>"இந்த மரத்தடி பழைய கிணறு. இரவில் பார்க்க முடியாது. விழுந்துவிடுவார்கள்."</p>
-<p>கால்களை பார்த்தேன். இன்னொரு அடி வைத்திருந்தால் கிணற்றில் விழுந்திருப்பேன்.</p>
-<p>திரும்பிப் பார்த்தேன் — பாட்டி இல்லை.</p>
-<div class="moral">💡 நீதி: முன்னோர் வார்த்தைகளில் காரணம் இருக்கும்!</div>`
-  },
-  {
-    id:34, cat:'kids', badge:'new', emoji:'🌈',
-    bg:'linear-gradient(135deg,#00695c,#26a69a)',
-    catLabel:'குழந்தை', catColor:'#80cbc4',
-    title:'வானவில் தேடி',
-    excerpt:'மழை நின்றதும் வானவிலை தொட போன குழந்தை கண்டுபிடித்த அற்புதம்...',
-    readTime:'3 நிமிஷம்',
-    story:`<h3>🌈 வானவில் தேடி</h3>
-<p>ஏழு வயது அருண் மழை நின்றதும் ஓடி வந்தான். "அம்மா, வானவிலை தொட போறேன்!"</p>
-<p>"வானவில் தொட முடியாது" என்றாள் அம்மா.</p>
-<p>"ஏன்?"</p>
-<p>"அது தூரத்தில் இருக்கும்."</p>
-<p>"நான் தூரம் போவேன்!" என்று கிளம்பினான்.</p>
-<p>அம்மா அவனோடு வந்தாள். நடந்தனர். வானவில் எப்போதும் முன்னால் இருந்தது.</p>
-<p>ஒரு மணி நேரம் நடந்தனர். வானவில் மறைந்தது.</p>
-<p>அருண் சோர்வாக உட்கார்ந்தான். "கிடைக்கவில்லை."</p>
-<p>அம்மா சுற்றும் முற்றும் பார்த்தாள். பச்சை வயல்கள், மலர்கள், சிறு நதி.</p>
-<p>"அருண், வானவிலை தேடி வந்தோம். ஆனால் இந்த அழகையெல்லாம் பார்த்தோமே — அதுதான் உண்மையான வானவில்."</p>
-<p>அருண் சிரித்தான். வழியில் கண்ட அனைத்தும் வண்ணமயமாக தெரிந்தது.</p>
-<div class="moral">💡 நீதி: லட்சியத்தை நோக்கும் பயணமே வாழ்க்கை!</div>`
-  },
-  {
-    id:35, cat:'comedy', badge:'new', emoji:'🎂',
-    bg:'linear-gradient(135deg,#880e4f,#ad1457)',
-    catLabel:'நகைச்சுவை', catColor:'#f06292',
-    title:'பிறந்தநாள் surprise',
-    excerpt:'மனைவிக்கு surprise பண்ண முயன்றவர் தானே surprise ஆனார்...',
-    readTime:'4 நிமிஷம்',
-    story:`<h3>🎂 பிறந்தநாள் surprise</h3>
-<p>மனைவிக்கு 30வது பிறந்தநாள். Secret-ஆ surprise plan பண்ணினேன். அவள் தெரியாம cake வாங்கினேன். வீட்டை decorate பண்ணினேன். நண்பர்களை அழைத்தேன்.</p>
-<p>அவள் வர 6 மணி ஆகும் என்று சொன்னாள். 5:30-க்கே எல்லாரும் ready-ஆ நின்றோம்.</p>
-<p>5:45-க்கு கதவு திறந்தது. Lights off. எல்லோரும் "SURPRISE!" என்று கத்தினோம்.</p>
-<p>Light போட்டோம். அவள் அல்ல — அவள் அம்மா!</p>
-<p>அம்மா: "என்னாச்சு?"</p>
-<p>நான்: "ஆ... Happy Birthday அம்மா!"</p>
-<p>அம்மா: "என் பிறந்தநாள் March-ல. இது December."</p>
-<p>அப்போது மனைவி வந்தாள். எல்லாவற்றையும் பார்த்தாள். அவளுக்கு சிரிப்பை அடக்க முடியவில்லை.</p>
-<p>"Surprise-ஆ?" என்று கேட்டாள்.</p>
-<p>"இது என்னை surprise பண்ணிட்டது" என்று தலையை கீழே போட்டேன்.</p>
-<div class="moral">💡 நீதி: Surprise plan-ல் யாராவது arrive time-ஐ confirm பண்ணுங்க! 😂</div>`
-  },
-  {
-    id:36, cat:'moral', badge:'new', emoji:'⚖️',
-    bg:'linear-gradient(135deg,#263238,#37474f)',
-    catLabel:'நீதி', catColor:'#b0bec5',
-    title:'நீதிபதியின் தீர்ப்பு',
-    excerpt:'ஒரு ஏழை பெண்ணுக்கு நீதி கிடைத்த விதம் அந்த நகரத்தை மாற்றியது...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>⚖️ நீதிபதியின் தீர்ப்பு</h3>
-<p>நகரத்தில் ஒரு பிரபலமான வழக்கறிஞர். பணக்காரர்களுக்கு மட்டும் வழக்கு நடத்துவார். ஒரு நாள் ஒரு ஏழை பெண் வந்தாள்.</p>
-<p>"என் கணவன் தொழிற்சாலையில் விபத்தில் இறந்தார். நஷ்டஈடு தர மறுக்கிறார்கள்" என்று அழுதாள்.</p>
-<p>வழக்கறிஞர் கேட்டார்: "உங்களிடம் பணம் இல்லை. நான் ஏன் வழக்கு நடத்தணும்?"</p>
-<p>அவள் சொன்னாள்: "என்னிடம் பணம் இல்லை. ஆனால் நீதி கேட்கிறேன். நீதிக்கு பணம் தேவையா?"</p>
-<p>வழக்கறிஞர் நிறுத்தினார். அந்த வார்த்தை மனதில் தைத்தது.</p>
-<p>வழக்கை இலவசமாக நடத்தினார். வென்றார். தொழிற்சாலைக்கு பெரிய அபராதம். பெண்ணுக்கு நஷ்டஈடு.</p>
-<p>அன்று முதல் அந்த வழக்கறிஞர் ஒவ்வொரு மாதமும் ஒரு ஏழை வழக்கை இலவசமாக நடத்துகிறார்.</p>
-<div class="moral">💡 நீதி: நீதிக்கு பணம் தேவையில்லை — தைரியம் தேவை!</div>`
-  },
-  {
-    id:37, cat:'village', badge:'new', emoji:'🌾',
-    bg:'linear-gradient(135deg,#33691e,#558b2f)',
-    catLabel:'கிராமம்', catColor:'#9ccc65',
-    title:'மாட்டுப்பொங்கல்',
-    excerpt:'கிராமத்தில் ஒவ்வொரு பொங்கலும் ஒரு கதை — இந்த பொங்கல் எல்லாரையும் அழவைத்தது...',
-    readTime:'6 நிமிஷம்',
-    story:`<h3>🌾 மாட்டுப்பொங்கல்</h3>
-<p>எங்கள் கிராமத்தில் மாட்டுப்பொங்கல் மிகவும் சிறப்பானது. ஒவ்வொரு வீட்டிலும் மாடுகளை அலங்கரித்து பூஜை செய்வார்கள்.</p>
-<p>வெள்ளையன் — எங்கள் முதுமையான காளை. 15 ஆண்டுகள். ஒவ்வொரு பொங்கலும் முதலில் பூஜை வெள்ளையனுக்கே.</p>
-<p>இந்த ஆண்டு பொங்கலுக்கு முன் வெள்ளையன் உடல்நலம் சரியில்லை. கால் தளர்ந்தது.</p>
-<p>அப்பா கண்களில் நீர். "இந்த பொங்கலில் வெள்ளையன் இல்லாம பூஜை பண்ண மனசில்லை" என்றார்.</p>
-<p>பொங்கல் நாள். வெள்ளையன் எழுந்து நின்றது. மெதுவாக நடந்து வந்தது. பூஜை இடத்தில் நின்றது.</p>
-<p>பூஜை முடிந்தது. அரிசி கொடுத்தோம். சாப்பிட்டது. மீண்டும் படுத்தது.</p>
-<p>மாலையில் தூங்கியது. மறுநாள் எழவில்லை.</p>
-<p>கிராமம் முழுவதும் அழுதது. "பொங்கல் பார்த்துட்டு போனது" என்று சொன்னனர்.</p>
-<div class="moral">💡 நீதி: விலங்குகளிடம் உள்ள அன்பும் புரிதலும் நம்மை விட அதிகம்!</div>`
-  },
-  {
-    id:38, cat:'devotion', badge:'new', emoji:'🛕',
-    bg:'linear-gradient(135deg,#f57f17,#f9a825)',
-    catLabel:'தெய்வீகம்', catColor:'#ffd54f',
-    title:'100வது நாள்',
-    excerpt:'100 நாள் கோவிலுக்கு நடந்து செல்வதாக நேர்த்திக்கடன் வாங்கியவர் கடைசி நாள் நடந்தது...',
-    readTime:'5 நிமிஷம்',
-    story:`<h3>🛕 100வது நாள்</h3>
-<p>சுப்பிரமணியம் மகனுக்காக நேர்த்திக்கடன். "என் மகன் குணமானால் 100 நாள் தினமும் கோவிலுக்கு நடந்து வருவேன்."</p>
-<p>மகன் குணமானான். 100 நாள் நடக்க ஆரம்பித்தார். 5 கிலோமீட்டர். காலை 5 மணிக்கு.</p>
-<p>1 முதல் 50 நாள் — கஷ்டமாக இருந்தது. 51 முதல் 80 — பழகிவிட்டது. 81 முதல் 99 — ஆனந்தமாக இருந்தது.</p>
-<p>100வது நாள். கோவிலுக்கு போனார். பூஜை செய்தார். திரும்பும்போது கால் வழுக்கி விழுந்தார்.</p>
-<p>எழுந்திருக்க முடியவில்லை. மக்கள் உதவி மருத்துவமனை அழைத்தனர்.</p>
-<p>கால் எலும்பு முறிந்தது. மருத்துவர் சொன்னார்: "6 மாதம் நடக்கவே முடியாது."</p>
-<p>சுப்பிரமணியம் சிரித்தார். "100 நாளும் தினமும் காப்பாற்றினான். 100வது நாள் கோவிலுக்கு அழைத்து சென்று கால்லயே மாட்டிட்டான்!"</p>
-<p>மகன் கேட்டான்: "அப்பா கோபமாக இல்லையா?"</p>
-<p>"இல்லை மகனே. அவன் வழியில் என்னையே காப்பாற்றியது தெரியல. விழுந்த இடம் 10 அடி முன்னாடி போயிருந்தா ஆழமான குழி."</p>
-<div class="moral">💡 நீதி: நம்பிக்கை வழிகாட்டும் — எப்போதும்!</div>`
-  },
-  {
-    id:39, cat:'thriller', badge:'new', emoji:'🔍',
-    bg:'linear-gradient(135deg,#1a237e,#283593)',
-    catLabel:'த்ரில்லர்', catColor:'#7986cb',
-    title:'அந்த கடிதம்',
-    excerpt:'20 ஆண்டுகளுக்கு பிறகு கிடைத்த கடிதம் ஒரு மர்மத்தை திறந்தது...',
-    readTime:'9 நிமிஷம்',
-    story:`<h3>🔍 அந்த கடிதம்</h3>
-<p>அஞ்சல் office-ல் வேலை பார்க்கிறேன். ஒரு நாள் 1998-ல் post செய்யப்பட்ட ஒரு கடிதம் கிடைத்தது.</p>
-<p>20 ஆண்டுகள் delay. எப்படி என்று தெரியவில்லை. Address இருந்தது. Deliver செய்ய போனேன்.</p>
-<p>அந்த வீட்டு கதவு தட்டினேன். ஒரு முதியவர் திறந்தார்.</p>
-<p>"1998-ல் அனுப்பப்பட்ட கடிதம்" என்று கொடுத்தேன். வாங்கி பார்த்தார். கண்கள் கலங்கின.</p>
-<p>"என் மனைவி எழுதியது. அவள் 1999-ல் போய்விட்டாள்" என்றார்.</p>
-<p>கடிதம் படித்தார். "கடைசியாக என்னை பிரிந்துவிட்டதாக நினைத்துக்கொண்டிருந்தேன். அவள் ஒரே வார்த்தை எழுதியிருக்கிறாள் — 'உன்னை நேசிக்கிறேன்'."</p>
-<p>20 ஆண்டுகளுக்கு பிறகு கிடைத்த அந்த வார்த்தை அவரை முழுமையாக்கியது.</p>
-<p>"இப்போது கிடைத்தது நல்லதே ஆயிற்று. இது வேண்டும் என்று கட்டியிருந்தேன்."</p>
-<div class="moral">💡 நீதி: காதலின் வார்த்தைகள் எக்காலத்திலும் சக்தி வாய்ந்தவை!</div>`
-  },
-  {
-    id:40, cat:'history', badge:'new', emoji:'🌟',
-    bg:'linear-gradient(135deg,#4a148c,#6a1b9a)',
-    catLabel:'வரலாறு', catColor:'#ce93d8',
-    title:'தமிழகத்தின் முதல் மருத்துவர்',
-    excerpt:'நோயாளிகளுக்காக தன் உயிரையே பணயம் வைத்த ஒரு மருத்துவரின் கதை...',
-    readTime:'7 நிமிஷம்',
-    story:`<h3>🌟 தமிழகத்தின் முதல் மருத்துவர்</h3>
-<p>19ஆம் நூற்றாண்டு. மதுரையில் கொள்ளை நோய் பரவியது. மக்கள் இறந்தனர். மருத்துவர்கள் ஓடினார்கள்.</p>
-<p>அப்போது ஒரு இளைஞன் — நகர கோட்டை என்பவன் — மருத்துவக் கலை கற்றவன். நோயாளிகளிடம் போனான்.</p>
-<p>"உனக்கும் நோய் வரும்" என்று சொன்னார்கள்.</p>
-<p>"வந்தால் வரட்டும். இவர்களை யார் காப்பாற்றுவார்கள்?" என்றான்.</p>
-<p>தினமும் நோயாளிகளிடம் சென்றான். மூலிகை மருந்து கொடுத்தான். நோய் குறைந்தது.</p>
-<p>சில மாதங்கள் கழித்து அவனுக்கும் நோய் வந்தது. ஆனால் அவன் குணமடைந்த நோயாளிகளே அவனை கவனித்தனர்.</p>
-<p>"நீ எங்களை காப்பாற்றினாய். நாங்கள் உன்னை காப்பாற்றுவோம்" என்றனர்.</p>
-<p>நகர கோட்டை குணமடைந்தான். மக்கள் அவனை "மருத்துவ கடவுள்" என்று அழைத்தனர்.</p>
-<div class="moral">💡 நீதி: பிறருக்காக உயிரை பணயம் வைப்பவர்களே உண்மையான வீரர்கள்!</div>`
-  },
-  {
-    id:42, cat:'comedy', badge:'new', emoji:'🧑‍💻',
-    bg:'linear-gradient(135deg,#006064,#00838f)',
-    catLabel:'நகைச்சுவை', catColor:'#26c6da',
-    title:'Work From Home',
-    excerpt:'WFH-ல் Video call-ல் நடந்த சங்கடம் office-ல் பல மாதம் பேசப்பட்டது...',
-    readTime:'3 நிமிஷம்',
-    story:`<h3>🧑‍💻 Work From Home</h3>
-<p>Work from Home-ல் முக்கியமான client meeting. 20 பேர் join ஆனார்கள்.</p>
-<p>Presentation ஆரம்பித்தேன். 10 நிமிடம் பேசினேன். எல்லாரும் கேட்கிறார்கள்.</p>
-<p>திடீரென்று மகன் (5 வயது) camera-ல் வந்து "அப்பா சாப்பிட வா!" என்று கத்தினான்.</p>
-<p>"போடா" என்று சைகை காட்டினேன்.</p>
-<p>"வருவியா? வருவியா? VAAAA!" என்று கத்தினான். Camera-ல் மகனின் முகம் மட்டும்.</p>
-<p>Client சிரித்தார்: "Who is this little manager?"</p>
-<p>மகன்: "I'm Arjun! Appa, lunch ready!"</p>
-<p>Client: "Arjun, we need your dad for 10 more minutes, okay?"</p>
-<p>மகன் யோசித்தான். "Okay. But fast!" என்று சொல்லி போனான்.</p>
-<p>Meeting-ல் இருந்த எல்லோரும் சிரித்தனர். "Best meeting of the year!" என்று client சொன்னார்.</p>
-<div class="moral">💡 நீதி: குழந்தைகள் எந்த meeting-ஐயும் brighten பண்ணலாம்! 😂</div>`
-  }
+// ── GAME DATA ──
+const GAMES = [
+  {id:0,name:"Neon Strike Arena",cat:"Action",emoji:"🚀",bg:"g1",badge:"b-fire",badgeText:"Hot",rating:"4.9",plays:"1.4M",desc:"A fast-paced sci-fi shooter set in a neon-lit future. Blast enemies across 30 levels.",url:"https://www.crazygames.com/game/neon-one",tags:["Action","Shooter","SciFi"],featured:true},
+  {id:1,name:"Turbo Drift X",cat:"Racing",emoji:"🏎",bg:"g3",badge:"b-top",badgeText:"Top",rating:"4.7",plays:"980K",desc:"Drift through 20 epic tracks. Upgrade your car and beat world records.",url:"https://www.crazygames.com/game/madalin-stunt-cars-2",tags:["Racing","Cars","Drift"],featured:true},
+  {id:2,name:"Shadow Realm",cat:"Adventure",emoji:"⚔️",bg:"g6",badge:"b-new",badgeText:"New",rating:"4.6",plays:"670K",desc:"Explore a dark fantasy world, slay monsters and uncover ancient secrets.",url:"https://www.crazygames.com/game/brutally",tags:["RPG","Adventure","Fantasy"],featured:true},
+  {id:3,name:"Mind Maze Pro",cat:"Puzzle",emoji:"🧩",bg:"g4",badge:"",badgeText:"",rating:"4.5",plays:"1.2M",desc:"80 challenging levels of logic and spatial puzzles. Train your brain!",url:"https://www.crazygames.com/game/block-puzzle-jewel",tags:["Puzzle","Logic","Brain"],featured:false},
+  {id:4,name:"Soccer Stars",cat:"Sports",emoji:"⚽",bg:"g2",badge:"b-hot",badgeText:"Hot",rating:"4.8",plays:"2.1M",desc:"Multiplayer soccer action. Score goals and climb the global leaderboard.",url:"https://www.crazygames.com/game/soccer-random",tags:["Sports","Soccer","Multiplayer"],featured:false},
+  {id:5,name:"Sniper Elite",cat:"Shooting",emoji:"🎯",bg:"g7",badge:"",badgeText:"",rating:"4.4",plays:"540K",desc:"Long-range precision shooting missions. 25 levels across the globe.",url:"https://www.crazygames.com/game/strike-force-heroes",tags:["Shooting","Sniper","Action"],featured:false},
+  {id:6,name:"Arena Battle.io",cat:"IO",emoji:"🏆",bg:"g10",badge:"b-fire",badgeText:"Hot",rating:"4.7",plays:"3.2M",desc:"Battle hundreds of real players. Grow bigger, fight smarter, dominate the arena.",url:"https://www.crazygames.com/game/brutal-io",tags:["IO","Multiplayer","Battle"],featured:false},
+  {id:7,name:"Sky Rider",cat:"Arcade",emoji:"✈️",bg:"g9",badge:"b-new",badgeText:"New",rating:"4.3",plays:"320K",desc:"Dodge obstacles and collect power-ups in this endless flying adventure.",url:"https://www.crazygames.com/game/jetpack-jump",tags:["Arcade","Endless","Flying"],featured:false},
+  {id:8,name:"Kingdom Defense",cat:"Strategy",emoji:"🏰",bg:"g5",badge:"b-top",badgeText:"Top",rating:"4.6",plays:"780K",desc:"Place towers, summon heroes, and defend your kingdom from 100 waves of enemies.",url:"https://www.crazygames.com/game/tower-defense-king",tags:["Strategy","Tower Defense","Fantasy"],featured:false},
+  {id:9,name:"Pixel Rush",cat:"Arcade",emoji:"👾",bg:"g11",badge:"",badgeText:"",rating:"4.2",plays:"210K",desc:"Retro arcade action with modern twists. Collect pixels, avoid glitches!",url:"https://www.crazygames.com/game/vex-6",tags:["Arcade","Retro","Pixel"],featured:false},
+  {id:10,name:"Ocean Wars",cat:"Strategy",emoji:"🌊",bg:"g12",badge:"b-upd",badgeText:"Updated",rating:"4.5",plays:"430K",desc:"Naval strategy — build your fleet, raid enemy ports, control the seas.",url:"https://www.crazygames.com/game/battleship",tags:["Strategy","Navy","War"],featured:false},
+  {id:11,name:"Basketball Pro",cat:"Sports",emoji:"🏀",bg:"g3",badge:"b-top",badgeText:"Top",rating:"4.7",plays:"1.8M",desc:"Real-physics basketball. Challenge friends or beat AI opponents worldwide.",url:"https://www.crazygames.com/game/basketball-stars",tags:["Sports","Basketball","Multiplayer"],featured:false},
+  {id:12,name:"Farm Empire",cat:"Idle",emoji:"🌾",bg:"g2",badge:"b-new",badgeText:"New",rating:"4.4",plays:"560K",desc:"Build the biggest farm empire. Plant, harvest, automate and earn millions.",url:"https://www.crazygames.com/game/idle-farming-business",tags:["Idle","Farming","Clicker"],featured:false},
+  {id:13,name:"Zombie Horde",cat:"Action",emoji:"🧟",bg:"g8",badge:"b-fire",badgeText:"Hot",rating:"4.6",plays:"2.4M",desc:"Survive endless zombie waves. Craft weapons, build barricades, stay alive.",url:"https://www.crazygames.com/game/dead-zed",tags:["Action","Zombie","Survival"],featured:false},
+  {id:14,name:"Formula One GP",cat:"Racing",emoji:"🏁",bg:"g5",badge:"b-top",badgeText:"Top",rating:"4.8",plays:"1.1M",desc:"Ultra-realistic F1 racing sim. Choose your team and race 20 circuits.",url:"https://www.crazygames.com/game/formula-rush",tags:["Racing","Formula1","Simulation"],featured:false},
+  {id:15,name:"Cube Master",cat:"Puzzle",emoji:"🎲",bg:"g9",badge:"",badgeText:"",rating:"4.3",plays:"390K",desc:"3D cube rotation puzzles that will test your spatial thinking skills.",url:"https://www.crazygames.com/game/block-puzzle-3d",tags:["Puzzle","3D","Logic"],featured:false},
 ];
 
-let currentPage = 1;
-const perPage = 6;
-let filtered = [...storiesDB];
-let fontSize = 16;
+let currentCat = 'All';
+let pendingGameId = null;
+let countdownTimer = null;
 
-function renderStories() {
-  const grid = document.getElementById('storiesGrid');
-  const start = (currentPage - 1) * perPage;
-  const page = filtered.slice(start, start + perPage);
+// ── INIT ──
+window.addEventListener('load', () => {
+  setTimeout(() => {
+    document.getElementById('loader').classList.add('done');
+    setTimeout(()=>document.getElementById('loader').style.display='none', 600);
+  }, 1400);
+  document.getElementById('sGames').textContent = GAMES.length + '+';
+  renderHot();
+  renderFeatured();
+  renderAll('All');
+});
 
-  if (!page.length) {
-    grid.innerHTML = `<div style="grid-column:1/-1;text-align:center;padding:40px;color:rgba(255,255,255,0.4);font-family:'Tiro Tamil',serif;font-size:16px">கதை கிடைக்கவில்லை 😔</div>`;
-    return;
-  }
+// ── RENDER HOT (first 10) ──
+function renderHot() {
+  const hot = [...GAMES].sort((a,b) => parseFloat(b.rating)-parseFloat(a.rating)).slice(0,10);
+  document.getElementById('hotGrid').innerHTML = hot.map(g => gameCardHTML(g)).join('');
+}
 
-  grid.innerHTML = page.map(s => `
-    <div class="story-card" onclick="openStory(${s.id})">
-      <div class="story-thumb" style="background:${s.bg}">
-        <span>${s.emoji}</span>
-        ${s.badge ? `<div class="story-badge badge-${s.badge}">${s.badge.toUpperCase()}</div>` : ''}
+// ── RENDER FEATURED ──
+function renderFeatured() {
+  const feat = GAMES.filter(g=>g.featured);
+  document.getElementById('featGrid').innerHTML = feat.map(g=>`
+    <div class="feat-card ${g.bg}" onclick="openGame(${g.id})">
+      <div class="feat-art">${g.emoji}</div>
+      ${g.badgeText ? `<div class="feat-badge"><span class="badge ${g.badge}">${g.badgeText}</span></div>` : ''}
+      <div class="feat-info">
+        <div class="feat-name">${g.name}</div>
+        <div class="feat-sub">${g.cat} · ${g.plays} plays · ★ ${g.rating}</div>
       </div>
-      <div class="story-body">
-        <div class="story-cat" style="background:${s.catColor}22;color:${s.catColor}">${s.catLabel}</div>
-        <div class="story-title">${s.title}</div>
-        <div class="story-excerpt">${s.excerpt}</div>
-        <div class="story-meta">
-          <span>📖 கதை</span>
-          <span class="read-time">⏱ ${s.readTime}</span>
-        </div>
-      </div>
-      <button class="read-btn">📖 படிக்க — Read Now</button>
+    </div>`).join('');
+}
+
+// ── RENDER ALL ──
+function renderAll(cat) {
+  const filtered = cat==='All' ? GAMES : GAMES.filter(g=>g.cat===cat||g.tags.includes(cat));
+  document.getElementById('allTitle').textContent = cat==='All' ? '🎮 All Games' : `🎮 ${cat} Games`;
+  document.getElementById('gameCount').textContent = `${filtered.length} games`;
+  document.getElementById('allGrid').innerHTML = filtered.map(g => gameCardHTML(g)).join('');
+}
+
+function gameCardHTML(g) {
+  return `<div class="game-card" onclick="openGame(${g.id})">
+    <div class="thumb ${g.bg}">
+      ${g.badgeText ? `<div class="thumb-badge"><span class="badge ${g.badge}">${g.badgeText}</span></div>` : ''}
+      ${g.emoji}
+      <div class="thumb-rating">★ ${g.rating}</div>
+      <div class="thumb-plays">${g.plays}</div>
     </div>
-  `).join('');
-
-  renderPagination();
+    <div class="game-body">
+      <div class="game-name">${g.name}</div>
+      <div class="game-cat">${g.cat}</div>
+    </div>
+  </div>`;
 }
 
-function renderPagination() {
-  const total = Math.ceil(filtered.length / perPage);
-  const pg = document.getElementById('pagination');
-  if (total <= 1) { pg.innerHTML = ''; return; }
-  let html = '';
-  if (currentPage > 1) html += `<button class="page-btn" onclick="goPage(${currentPage-1})">← முந்தைய</button>`;
-  for (let i = 1; i <= total; i++) {
-    html += `<button class="page-btn ${i===currentPage?'active':''}" onclick="goPage(${i})">${i}</button>`;
-  }
-  if (currentPage < total) html += `<button class="page-btn" onclick="goPage(${currentPage+1})">அடுத்தது →</button>`;
-  pg.innerHTML = html;
+// ── FILTER ──
+function filterCat(cat) {
+  currentCat = cat;
+  document.querySelectorAll('.cat').forEach(c => c.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(c => c.classList.remove('active'));
+  event && event.target && event.target.classList.add('active');
+  renderAll(cat);
+  document.getElementById('allSection').scrollIntoView({behavior:'smooth',block:'start'});
 }
 
-function goPage(p) {
-  currentPage = p;
-  renderStories();
+// ── SEARCH ──
+function doSearch(q) {
+  const box = document.getElementById('searchResults');
+  if(!q.trim()){box.classList.remove('open');return;}
+  const results = GAMES.filter(g=>g.name.toLowerCase().includes(q.toLowerCase())||g.cat.toLowerCase().includes(q.toLowerCase()));
+  if(!results.length){box.innerHTML='<div style="padding:14px 16px;color:var(--muted);font-size:13px">No games found</div>';box.classList.add('open');return;}
+  box.innerHTML = results.map(g=>`
+    <div class="search-result" onclick="openGame(${g.id})">
+      <div class="sr-thumb ${g.bg}">${g.emoji}</div>
+      <div><div class="sr-name">${g.name}</div><div class="sr-cat">${g.cat} · ★ ${g.rating}</div></div>
+    </div>`).join('');
+  box.classList.add('open');
+}
+function closeSearch(){document.getElementById('searchResults').classList.remove('open')}
+
+// ── OPEN GAME (with interstitial) ──
+function openGame(id) {
+  pendingGameId = id;
+  showInterAd();
+}
+
+function showInterAd() {
+  document.getElementById('interAd').classList.add('open');
+  let count = 5;
+  document.getElementById('countNum').textContent = count;
+  document.getElementById('interBtn').style.display = 'none';
+  document.getElementById('interCountdown').style.display = 'block';
+  clearInterval(countdownTimer);
+  countdownTimer = setInterval(()=>{
+    count--;
+    document.getElementById('countNum').textContent = count;
+    if(count<=0){
+      clearInterval(countdownTimer);
+      document.getElementById('interBtn').style.display = 'inline-block';
+      document.getElementById('interCountdown').style.display = 'none';
+    }
+  }, 1000);
+}
+
+function skipAd() {
+  clearInterval(countdownTimer);
+  document.getElementById('interAd').classList.remove('open');
+  loadGame(pendingGameId);
+}
+
+// ── LOAD GAME ──
+function loadGame(id) {
+  const g = GAMES[id];
+  document.getElementById('playPage').classList.add('open');
+  document.getElementById('playGameTitle').textContent = g.name;
+  document.getElementById('playInfoTitle').textContent = g.name;
+  document.getElementById('playInfoDesc').textContent = g.desc;
+  document.getElementById('playTags').innerHTML = g.tags.map(t=>`<span style="background:var(--surface2);border-radius:4px;padding:3px 9px;font-size:11px;color:var(--muted)">${t}</span>`).join('');
+  document.getElementById('gameFrame').src = g.url;
+  // Related games
+  const related = GAMES.filter(r=>r.id!==id&&(r.cat===g.cat||r.tags.some(t=>g.tags.includes(t)))).slice(0,6);
+  document.getElementById('relatedGames').innerHTML = related.map(r=>`
+    <div class="related-card" onclick="openGame(${r.id})">
+      <div class="rel-thumb ${r.bg}">${r.emoji}</div>
+      <div><div class="rel-name">${r.name}</div><div class="rel-cat">${r.cat} · ★ ${r.rating}</div></div>
+    </div>`).join('');
+  // Show reward toast after 8s
+  setTimeout(showRewardToast, 8000);
+}
+
+function closePlay() {
+  document.getElementById('playPage').classList.remove('open');
+  document.getElementById('gameFrame').src = '';
+  document.getElementById('rewardToast').classList.remove('open');
+}
+
+function showHome() {
+  closePlay();
   window.scrollTo({top:0,behavior:'smooth'});
 }
 
-function filterCat(cat, el) {
-  document.querySelectorAll('.cat-tab').forEach(t => t.classList.remove('active'));
-  el.classList.add('active');
-  filtered = cat === 'all' ? [...storiesDB] : storiesDB.filter(s => s.cat === cat);
-  currentPage = 1;
-  renderStories();
+// ── FULLSCREEN ──
+function toggleFullscreen() {
+  const el = document.getElementById('playPage');
+  if(!document.fullscreenElement) el.requestFullscreen && el.requestFullscreen();
+  else document.exitFullscreen && document.exitFullscreen();
 }
 
-function searchStories() {
-  const q = document.getElementById('searchInput').value.trim().toLowerCase();
-  filtered = q ? storiesDB.filter(s =>
-    s.title.toLowerCase().includes(q) ||
-    s.excerpt.toLowerCase().includes(q) ||
-    s.catLabel.includes(q)
-  ) : [...storiesDB];
-  currentPage = 1;
-  renderStories();
+// ── REWARD TOAST ──
+function showRewardToast() {
+  document.getElementById('rewardToast').classList.add('open');
+  setTimeout(()=>document.getElementById('rewardToast').classList.remove('open'), 8000);
 }
 
-function openStory(id) {
-  const s = storiesDB.find(s => s.id === id);
-  if (!s) return;
-  stopReading();
-  document.getElementById('modalCat').textContent = s.catLabel + ' கதை';
-  document.getElementById('modalStory').innerHTML = s.story;
-  document.getElementById('modalStory').style.fontSize = fontSize + 'px';
-  document.getElementById('storyModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  resetVoiceUI();
+function watchReward() {
+  document.getElementById('rewardToast').classList.remove('open');
+  alert('🎁 You earned 50 coins!\n\n(In production: show a Google Rewarded Ad here using the H5 Games Ads API, then grant the reward after completion)');
 }
-
-function closeStory() {
-  stopReading();
-  document.getElementById('storyModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-
-function changeFont(d) {
-  fontSize = Math.min(22, Math.max(13, fontSize + d));
-  document.getElementById('modalStory').style.fontSize = fontSize + 'px';
-}
-
-// ═══════════════════════════════════════
-// VOICE READER — Browser TTS
-// ═══════════════════════════════════════
-let ttsUtterances = [];
-let ttsIndex = 0;
-let ttsPlaying = false;
-let ttsPaused = false;
-
-function getStoryText() {
-  const el = document.getElementById('modalStory');
-  const paras = el.querySelectorAll('p, h3, .moral');
-  return Array.from(paras).map(p => p.innerText.trim()).filter(t => t.length > 0);
-}
-
-function resetVoiceUI() {
-  ttsUtterances = [];
-  ttsIndex = 0;
-  ttsPlaying = false;
-  ttsPaused = false;
-  document.getElementById('playPauseBtn').textContent = '▶ Play';
-  document.getElementById('progressFill').style.width = '0%';
-  document.getElementById('progressTime').textContent = '0% படிக்கப்பட்டது';
-  document.querySelectorAll('.reading-highlight').forEach(el => el.classList.remove('reading-highlight'));
-}
-
-function highlightPara(index) {
-  const el = document.getElementById('modalStory');
-  const paras = el.querySelectorAll('p, h3, .moral');
-  paras.forEach(p => p.classList.remove('reading-highlight'));
-  if (paras[index]) {
-    paras[index].classList.add('reading-highlight');
-    paras[index].scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-function updateProgress(index, total) {
-  const pct = total > 0 ? Math.round((index / total) * 100) : 0;
-  document.getElementById('progressFill').style.width = pct + '%';
-  document.getElementById('progressTime').textContent = pct + '% படிக்கப்பட்டது';
-}
-
-function speakFrom(index) {
-  const texts = getStoryText();
-  if (index >= texts.length) {
-    ttsPlaying = false;
-    ttsPaused = false;
-    document.getElementById('playPauseBtn').textContent = '▶ Play';
-    updateProgress(texts.length, texts.length);
-    document.querySelectorAll('.reading-highlight').forEach(el => el.classList.remove('reading-highlight'));
-    return;
-  }
-  ttsIndex = index;
-  const speed = parseFloat(document.getElementById('speedSelect').value);
-  const utter = new SpeechSynthesisUtterance(texts[index]);
-  utter.lang = 'ta-IN';
-  utter.rate = speed;
-
-  // Try to find a Tamil voice
-  const voices = window.speechSynthesis.getVoices();
-  const tamilVoice = voices.find(v => v.lang === 'ta-IN' || v.lang === 'ta');
-  if (tamilVoice) utter.voice = tamilVoice;
-
-  utter.onstart = () => {
-    highlightPara(index);
-    updateProgress(index, texts.length);
-  };
-  utter.onend = () => {
-    if (ttsPlaying && !ttsPaused) {
-      speakFrom(index + 1);
-    }
-  };
-  utter.onerror = () => {
-    if (ttsPlaying && !ttsPaused) speakFrom(index + 1);
-  };
-
-  window.speechSynthesis.speak(utter);
-}
-
-function togglePlay() {
-  if (!ttsPlaying && !ttsPaused) {
-    // Fresh start
-    ttsPlaying = true;
-    ttsPaused = false;
-    document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-    window.speechSynthesis.cancel();
-    speakFrom(0);
-  } else if (ttsPlaying && !ttsPaused) {
-    // Pause
-    ttsPaused = true;
-    ttsPlaying = false;
-    window.speechSynthesis.pause();
-    document.getElementById('playPauseBtn').textContent = '▶ Resume';
-  } else if (ttsPaused) {
-    // Resume
-    ttsPaused = false;
-    ttsPlaying = true;
-    window.speechSynthesis.resume();
-    document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-    // If resume doesn't work (some browsers), restart from current index
-    setTimeout(() => {
-      if (!window.speechSynthesis.speaking) {
-        speakFrom(ttsIndex);
-      }
-    }, 300);
-  }
-}
-
-function stopReading() {
-  ttsPlaying = false;
-  ttsPaused = false;
-  window.speechSynthesis.cancel();
-  document.getElementById('playPauseBtn') && (document.getElementById('playPauseBtn').textContent = '▶ Play');
-  document.getElementById('progressFill') && (document.getElementById('progressFill').style.width = '0%');
-  document.getElementById('progressTime') && (document.getElementById('progressTime').textContent = '0% படிக்கப்பட்டது');
-  document.querySelectorAll('.reading-highlight').forEach(el => el.classList.remove('reading-highlight'));
-  ttsIndex = 0;
-}
-
-function changeSpeed() {
-  if (ttsPlaying) {
-    window.speechSynthesis.cancel();
-    speakFrom(ttsIndex);
-  }
-}
-
-function seekProgress(e) {
-  const bar = e.currentTarget;
-  const rect = bar.getBoundingClientRect();
-  const pct = (e.clientX - rect.left) / rect.width;
-  const texts = getStoryText();
-  const newIndex = Math.floor(pct * texts.length);
-  window.speechSynthesis.cancel();
-  if (ttsPlaying || ttsPaused) {
-    ttsPlaying = true;
-    ttsPaused = false;
-    document.getElementById('playPauseBtn').textContent = '⏸ Pause';
-    speakFrom(newIndex);
-  } else {
-    updateProgress(newIndex, texts.length);
-    ttsIndex = newIndex;
-  }
-}
-
-// Ensure voices are loaded
-window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
-
-// ═══════════════════════════════════════
-// GAMES
-// ═══════════════════════════════════════
-
-function openGamesModal() {
-  document.getElementById('gamesModal').classList.add('open');
-  document.body.style.overflow = 'hidden';
-  startWordGuess();
-}
-function closeGamesModal() {
-  document.getElementById('gamesModal').classList.remove('open');
-  document.body.style.overflow = '';
-}
-function switchGame(id, el) {
-  document.querySelectorAll('.game-tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.game-panel').forEach(p => p.classList.remove('active'));
-  el.classList.add('active');
-  document.getElementById('game-' + id).classList.add('active');
-  if (id === 'quiz') startQuiz();
-}
-
-// ─── GAME 1: Tamil Word Guess ───
-// Tamil grapheme splitter — splits by syllable (akshara) correctly
-function splitTamil(word) {
-  // Use Intl.Segmenter if available, else regex fallback
-  if (typeof Intl !== 'undefined' && Intl.Segmenter) {
-    const seg = new Intl.Segmenter('ta', { granularity: 'grapheme' });
-    return Array.from(seg.segment(word), s => s.segment);
-  }
-  // Fallback: Tamil Unicode grapheme cluster regex
-  const re = /[\u0B80-\u0BFF][\u0BBE-\u0BC8\u0BCA-\u0BCD\u0BD7]*/gu;
-  return word.match(re) || [];
-}
-
-const wordGuessDB = [
-  { letters: splitTamil('காதல்'), hint: '💕 இரு இதயங்களை இணைக்கும் உணர்வு என்ன?' },
-  { letters: splitTamil('நட்பு'),  hint: '🤝 ஆபத்தில் கைவிடாத உறவு என்ன?' },
-  { letters: splitTamil('தாய்'),   hint: '👩 உலகின் முதல் ஆசிரியர் யார்?' },
-  { letters: splitTamil('மழை'),   hint: '🌧️ விவசாயிகள் காத்திருக்கும் இயற்கை என்ன?' },
-  { letters: splitTamil('கனவு'),  hint: '😴 தூக்கத்தில் வரும் காட்சிகள் என்ன?' },
-  { letters: splitTamil('வீரம்'), hint: '⚔️ தைரியத்தின் மற்றொரு பெயர் என்ன?' },
-  { letters: splitTamil('புகழ்'), hint: '🏆 நல்ல செயல்களால் கிடைப்பது என்ன?' },
-  { letters: splitTamil('இரவு'),  hint: '🌙 நட்சத்திரங்கள் ஒளிரும் நேரம் எது?' },
-];
-
-// Key list with safe index-based IDs
-const wgKeys = ['அ','ஆ','இ','உ','எ','க','ச','த','ந','ப','ம','ய','ர','ல','வ','ழ','ள','ண','ன','ற','கா','தா','மா','நா','வா','கி','தி','மி','நி','வி','கு','து','மு','நு','வு'];
-
-let wgWords = [], wgCurrent = 0, wgScore = 0, wgLives = 5, wgGuessed = [], wgGameOver = false;
-
-function startWordGuess() {
-  wgWords = [...wordGuessDB].sort(() => Math.random() - 0.5).slice(0, 5);
-  wgCurrent = 0; wgScore = 0;
-  document.getElementById('wg-restart-btn').style.display = 'none';
-  loadWordGuessRound();
-}
-
-function loadWordGuessRound() {
-  if (wgCurrent >= wgWords.length) { endWordGuess(); return; }
-  wgLives = 5; wgGuessed = []; wgGameOver = false;
-  const entry = wgWords[wgCurrent];
-  document.getElementById('wg-hint').textContent = entry.hint;
-  document.getElementById('wg-msg').textContent = '';
-  document.getElementById('wg-next-btn').style.display = 'none';
-  document.getElementById('wg-score').textContent = wgScore;
-  document.getElementById('wg-round').textContent = (wgCurrent + 1);
-  renderWordDisplay(entry.letters, []);
-  renderKeyboard();
-  updateLives();
-}
-
-function renderWordDisplay(letters, guessed) {
-  document.getElementById('wg-word-display').innerHTML = letters.map(l => {
-    const found = guessed.includes(l);
-    return `<div class="letter-box ${found ? 'correct' : ''}">${found ? l : ''}</div>`;
-  }).join('');
-}
-
-function renderKeyboard() {
-  document.getElementById('wg-keyboard').innerHTML = wgKeys.map((k, i) =>
-    `<button class="key-btn" id="wgkey${i}" onclick="guessLetter(${i})">${k}</button>`
-  ).join('');
-}
-
-function guessLetter(keyIndex) {
-  if (wgGameOver) return;
-  const letter = wgKeys[keyIndex];
-  const entry = wgWords[wgCurrent];
-  const letters = entry.letters;
-  if (wgGuessed.includes(letter)) return;
-  wgGuessed.push(letter);
-
-  const btn = document.getElementById('wgkey' + keyIndex);
-  if (letters.includes(letter)) {
-    if (btn) { btn.classList.add('used-correct'); btn.disabled = true; }
-    renderWordDisplay(letters, wgGuessed);
-    const allFound = letters.every(l => wgGuessed.includes(l));
-    if (allFound) {
-      wgScore += wgLives * 10;
-      document.getElementById('wg-score').textContent = wgScore;
-      document.getElementById('wg-msg').textContent = '🎉 சரியாக சொன்னீர்கள்!';
-      document.getElementById('wg-msg').style.color = '#00e676';
-      wgGameOver = true;
-      document.getElementById('wg-next-btn').style.display = 'inline-block';
-    }
-  } else {
-    if (btn) { btn.classList.add('used-wrong'); btn.disabled = true; }
-    wgLives--;
-    updateLives();
-    if (wgLives <= 0) {
-      // reveal all letters
-      renderWordDisplay(letters, letters);
-      document.getElementById('wg-msg').textContent = '😔 தோற்றுவிட்டீர்கள்! சொல்: ' + letters.join('');
-      document.getElementById('wg-msg').style.color = '#ff6b6b';
-      wgGameOver = true;
-      document.getElementById('wg-next-btn').style.display = 'inline-block';
-    }
-  }
-}
-
-function updateLives() {
-  document.getElementById('wg-lives').textContent = '❤️'.repeat(wgLives) + '🖤'.repeat(5 - wgLives);
-}
-
-function nextWordGuess() {
-  wgCurrent++;
-  loadWordGuessRound();
-}
-
-function endWordGuess() {
-  document.getElementById('wg-word-display').innerHTML = '';
-  document.getElementById('wg-keyboard').innerHTML = '';
-  document.getElementById('wg-next-btn').style.display = 'none';
-  document.getElementById('wg-hint').textContent = '🏁 விளையாட்டு முடிந்தது!';
-  document.getElementById('wg-msg').textContent = '🏆 மொத்த மதிப்பெண்: ' + wgScore + ' / 250';
-  document.getElementById('wg-msg').style.color = '#f9a825';
-  document.getElementById('wg-restart-btn').style.display = 'inline-block';
-}
-
-// ─── GAME 2: Story Quiz ───
-const quizDB = [
-  { q:'மழை நினைவுகள் கதையில் ஆண் கதாபாத்திரம் யாரிடம் பொய் சொன்னான்?', opts:['மீனாட்சி','கவிதா','அர்ஜுன்','ராமன்'], ans:0 },
-  { q:'இரவு 3 மணி கதையில் மேல்தட்டில் யாரின் காலடி தடங்கள் கிடைத்தன?', opts:['வீட்டு உரிமையாளரின்','ஒரு சிறுமியின்','ஒரு பூனையின்','ஒரு திருடனின்'], ans:1 },
-  { q:'ஆட்டோ ஆரம்பித்தது கதையில் ஆட்டோக்காரர் மாதம் எவ்வளவு சம்பாதித்தார்?', opts:['20,000','30,000','40,000','50,000'], ans:2 },
-  { q:'முருகனின் அருள் கதையில் வேலுத்தாய் கோவிலுக்கு என்ன கொண்டு வருவாள்?', opts:['பழம்','பூ','பால்','அரிசி'], ans:1 },
-  { q:'மண்ணின் மகன் கதையில் முருகேசன் கிராமத்தில் என்ன செய்தான்?', opts:['பள்ளி கட்டினான்','நீர் சேமிப்பு அமைத்தான்','மருத்துவமனை திறந்தான்','சாலை போட்டான்'], ans:1 },
-  { q:'தொலைந்த கடிகாரம் எத்தனை ஆண்டுகளாக நின்றிருந்தது?', opts:['10','25','50','100'], ans:2 },
-  { q:'கடைசி கடிதம் கதையில் கவிதா எதை மறைத்தாள்?', opts:['தன் திருமணம்','தன் காதல்','தன் நோய்','தன் பயணம்'], ans:1 },
-  { q:'வீரத் தமிழன் கதையில் வீரன் மன்னரிடம் என்ன கேட்டான்?', opts:['நிலம் வேண்டும்','வரி நிறுத்த வேண்டும்','போர் நிறுத்த வேண்டும்','பணம் வேண்டும்'], ans:1 },
-];
-
-let quizList = [], quizIndex = 0, quizScore = 0, quizAnswered = false;
-
-function startQuiz() {
-  // Restore quiz-area HTML if result screen replaced it
-  const area = document.getElementById('quiz-area');
-  if (!document.getElementById('quiz-question')) {
-    area.innerHTML = `
-      <div class="quiz-progress">
-        <span id="quiz-q-num">கேள்வி 1/8</span>
-        <span id="quiz-score-display">மதிப்பெண்: 0</span>
-      </div>
-      <div class="quiz-progress-bar">
-        <div class="quiz-progress-fill" id="quiz-prog-fill" style="width:0%"></div>
-      </div>
-      <div class="quiz-question" id="quiz-question">ஏற்றுகிறது...</div>
-      <div class="quiz-options" id="quiz-options"></div>
-      <div class="game-msg" id="quiz-msg"></div>`;
-  }
-  quizList = [...quizDB].sort(() => Math.random() - 0.5);
-  quizIndex = 0; quizScore = 0;
-  document.getElementById('quiz-score-display').textContent = 'மதிப்பெண்: 0';
-  loadQuizQuestion();
-}
-
-function loadQuizQuestion() {
-  if (quizIndex >= quizList.length) { showQuizResult(); return; }
-  quizAnswered = false;
-  const q = quizList[quizIndex];
-  const total = quizList.length;
-  document.getElementById('quiz-q-num').textContent = `கேள்வி ${quizIndex + 1}/${total}`;
-  document.getElementById('quiz-prog-fill').style.width = ((quizIndex / total) * 100) + '%';
-  document.getElementById('quiz-question').textContent = q.q;
-  document.getElementById('quiz-msg').textContent = '';
-  document.getElementById('quiz-options').innerHTML = q.opts.map((opt, i) =>
-    `<button class="quiz-opt" onclick="answerQuiz(${i})">${opt}</button>`
-  ).join('');
-}
-
-function answerQuiz(idx) {
-  if (quizAnswered) return;
-  quizAnswered = true;
-  const q = quizList[quizIndex];
-  const opts = document.getElementById('quiz-options').querySelectorAll('.quiz-opt');
-  opts.forEach(o => o.disabled = true);
-  opts[q.ans].classList.add('correct');
-  if (idx === q.ans) {
-    quizScore++;
-    document.getElementById('quiz-msg').textContent = '✅ சரியான பதில்!';
-    document.getElementById('quiz-msg').style.color = '#00e676';
-  } else {
-    opts[idx].classList.add('wrong');
-    document.getElementById('quiz-msg').textContent = '❌ தவறான பதில்!';
-    document.getElementById('quiz-msg').style.color = '#ff6b6b';
-  }
-  document.getElementById('quiz-score-display').textContent = 'மதிப்பெண்: ' + quizScore;
-  setTimeout(() => { quizIndex++; loadQuizQuestion(); }, 1400);
-}
-
-function showQuizResult() {
-  const total = quizList.length;
-  const pct = Math.round((quizScore / total) * 100);
-  let msg = pct >= 80 ? '🏆 அருமை! கதை வல்லுனர்!' : pct >= 50 ? '👍 நல்ல முயற்சி!' : '📖 மீண்டும் கதைகளை படியுங்கள்!';
-  document.getElementById('quiz-area').innerHTML = `
-    <div class="quiz-result">
-      <div class="big-score">${quizScore}/${total}</div>
-      <p>${pct}% சரியான பதில்கள்</p>
-      <p style="font-size:18px;margin:10px 0;">${msg}</p>
-      <button class="game-action-btn" onclick="startQuiz()" style="margin-top:16px">மீண்டும் விளையாடு 🔄</button>
-    </div>`;
-}
-
-// ═══════════════════════════════════════
-// Init
-renderStories();
 </script>
 </body>
 </html>
