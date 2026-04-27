@@ -935,6 +935,120 @@ footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
 .quiz-result .big-score { font-size:52px; font-weight:900; color:var(--green); font-family:'DM Serif Display',serif; }
 .quiz-result p { font-size:15px; color:var(--text-muted); margin:8px 0; }
 
+/* ─── HAMBURGER MENU ─── */
+.hamburger-btn {
+  display:none;
+  background:var(--surface2);
+  border:1px solid var(--border);
+  color:var(--text); width:38px; height:38px;
+  border-radius:10px; cursor:pointer;
+  font-size:18px; align-items:center; justify-content:center;
+  transition:all 0.2s; flex-shrink:0;
+}
+.hamburger-btn:hover { border-color:var(--gold); color:var(--gold); }
+.mobile-menu {
+  display:none; position:fixed;
+  top:58px; left:0; right:0;
+  background:rgba(11,12,20,0.98);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border-gold);
+  z-index:199; padding:12px 20px;
+  flex-direction:column; gap:4px;
+}
+.mobile-menu.open { display:flex; }
+.mobile-menu a {
+  color:var(--text-muted); text-decoration:none;
+  font-size:14px; font-weight:600;
+  padding:10px 14px; border-radius:10px;
+  transition:all 0.2s;
+}
+.mobile-menu a:hover { color:var(--gold); background:var(--gold-glow); }
+@media(max-width:700px){
+  .hamburger-btn { display:flex; }
+}
+
+/* ─── BACK TO TOP ─── */
+#backToTop {
+  position:fixed; bottom:80px; right:18px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  color:#1a1200; border:none; width:44px; height:44px;
+  border-radius:50%; font-size:18px; cursor:pointer;
+  z-index:400; display:none; align-items:center; justify-content:center;
+  box-shadow:0 4px 20px rgba(245,166,35,0.4);
+  transition:all 0.3s; font-weight:900;
+}
+#backToTop.visible { display:flex; }
+#backToTop:hover { transform:scale(1.1) translateY(-2px); }
+
+/* ─── STORY RATING ─── */
+.rating-bar {
+  padding:12px 20px;
+  display:flex; align-items:center; gap:10px;
+  border-bottom:1px solid var(--border);
+  flex-wrap:wrap;
+}
+.rating-label { font-size:11px; color:var(--text-dim); font-weight:700; letter-spacing:0.5px; }
+.star-btn {
+  background:none; border:none; cursor:pointer;
+  font-size:22px; transition:transform 0.15s;
+  padding:2px; line-height:1;
+}
+.star-btn:hover { transform:scale(1.3); }
+.rating-feedback { font-size:11px; color:var(--gold); font-weight:700; min-height:16px; }
+
+/* ─── READING MODE ─── */
+.reading-mode-bar {
+  padding:8px 20px;
+  display:flex; gap:6px; align-items:center;
+  border-bottom:1px solid var(--border);
+  background:rgba(0,0,0,0.1); flex-wrap:wrap;
+}
+.reading-mode-label { font-size:10px; color:var(--text-dim); font-weight:700; letter-spacing:1px; text-transform:uppercase; }
+.rm-btn {
+  padding:4px 12px; border-radius:8px; cursor:pointer;
+  font-size:11px; border:1px solid var(--border);
+  background:var(--surface); color:var(--text-muted);
+  transition:all 0.2s; font-family:'DM Sans',sans-serif; font-weight:700;
+}
+.rm-btn:hover, .rm-btn.active { background:var(--gold-glow); border-color:var(--gold); color:var(--gold); }
+/* Reading mode: sepia */
+.modal.reading-sepia .modal-story {
+  background:#fdf6e3 !important;
+  color:#5c4a1e !important;
+}
+.modal.reading-sepia { background:rgba(40,30,10,0.97); }
+/* Reading mode: night */
+.modal.reading-night .modal-story {
+  background:#050508 !important;
+  color:#c8b89a !important;
+}
+.modal.reading-night { background:rgba(0,0,0,0.99); }
+/* Reading mode: focus (wider line height) */
+.modal.reading-focus .modal-story {
+  line-height:2.6 !important;
+  letter-spacing:0.3px;
+}
+
+/* ─── STORY READ TIME BADGE ─── */
+.card-read-time-badge {
+  display:inline-flex; align-items:center; gap:4px;
+  background:rgba(245,166,35,0.12);
+  border:1px solid var(--border-gold);
+  border-radius:6px; padding:2px 8px;
+  font-size:10px; font-weight:700; color:var(--gold);
+  margin-top:4px;
+}
+
+/* ─── SHARE via Web Share API ─── */
+.share-native-btn {
+  flex:1; min-width:100px; padding:10px 8px;
+  border:none; border-radius:var(--radius-sm); cursor:pointer;
+  font-size:12px; font-weight:800; font-family:'DM Sans',sans-serif;
+  background:linear-gradient(135deg,var(--purple),#651fff);
+  color:#fff; transition:all 0.2s;
+}
+.share-native-btn:hover { opacity:0.85; }
+
 /* ─── LIGHT MODE ─── */
 body.light {
   --bg:#f4f2ed; --bg2:#fafaf7; --bg3:#fff;
@@ -1000,6 +1114,207 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 /* ─── WORD GUESS RESTART / NEXT ─── */
 #wg-restart-btn { display:none; }
 #wg-next-btn { display:none; }
+
+/* ─── GMAIL LOGIN BUTTON (NAV) ─── */
+.login-btn {
+  display:flex; align-items:center; gap:6px;
+  background:var(--surface2);
+  border:1.5px solid var(--border-gold);
+  color:var(--gold); padding:5px 12px;
+  border-radius:20px; cursor:pointer;
+  font-size:12px; font-weight:700;
+  font-family:'DM Sans',sans-serif;
+  transition:all 0.2s; white-space:nowrap;
+}
+.login-btn:hover { background:var(--gold-glow); box-shadow:0 0 12px var(--gold-glow); }
+.login-btn img { width:16px; height:16px; border-radius:50%; }
+.user-avatar-btn {
+  display:flex; align-items:center; gap:7px;
+  background:var(--surface2);
+  border:1.5px solid var(--border-gold);
+  color:var(--text); padding:4px 10px 4px 4px;
+  border-radius:20px; cursor:pointer;
+  font-size:12px; font-weight:700;
+  font-family:'DM Sans',sans-serif;
+  transition:all 0.2s; white-space:nowrap;
+}
+.user-avatar-btn:hover { background:var(--gold-glow); }
+.user-avatar-btn img { width:26px; height:26px; border-radius:50%; border:1.5px solid var(--gold); }
+
+/* ─── LOGIN MODAL ─── */
+.login-overlay {
+  position:fixed; inset:0; z-index:2000;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(8px);
+  display:flex; align-items:center; justify-content:center;
+  opacity:0; pointer-events:none;
+  transition:opacity 0.3s;
+}
+.login-overlay.show { opacity:1; pointer-events:all; }
+.login-card {
+  background:var(--bg2);
+  border:1.5px solid var(--border-gold);
+  border-radius:24px; padding:36px 32px;
+  max-width:380px; width:calc(100% - 32px);
+  text-align:center;
+  box-shadow:0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border-gold);
+  transform:translateY(20px) scale(0.97);
+  transition:transform 0.3s;
+  position:relative;
+}
+.login-overlay.show .login-card { transform:translateY(0) scale(1); }
+.login-close {
+  position:absolute; top:14px; right:16px;
+  background:none; border:none; color:var(--text-muted);
+  font-size:18px; cursor:pointer; padding:4px 8px;
+  border-radius:8px; transition:all 0.2s;
+}
+.login-close:hover { color:var(--gold); background:var(--gold-glow); }
+.login-logo { font-size:40px; margin-bottom:8px; }
+.login-title {
+  font-family:'DM Serif Display',serif;
+  font-size:22px; color:var(--text); margin-bottom:4px;
+}
+.login-sub {
+  font-size:13px; color:var(--text-muted);
+  font-family:'Tiro Tamil',serif;
+  margin-bottom:28px; line-height:1.5;
+}
+.google-signin-btn {
+  display:flex; align-items:center; justify-content:center; gap:10px;
+  width:100%; padding:13px 20px;
+  background:#fff;
+  border:none; border-radius:12px;
+  font-size:15px; font-weight:600;
+  font-family:'DM Sans',sans-serif;
+  color:#3c4043; cursor:pointer;
+  transition:all 0.2s;
+  box-shadow:0 2px 12px rgba(0,0,0,0.2);
+  margin-bottom:16px;
+}
+.google-signin-btn:hover { box-shadow:0 4px 24px rgba(0,0,0,0.3); transform:translateY(-1px); }
+.google-signin-btn svg { width:20px; height:20px; flex-shrink:0; }
+.login-divider {
+  display:flex; align-items:center; gap:10px;
+  margin:0 0 16px; color:var(--text-dim); font-size:11px;
+}
+.login-divider::before, .login-divider::after {
+  content:''; flex:1; height:1px; background:var(--border);
+}
+.login-privacy {
+  font-size:10px; color:var(--text-dim); line-height:1.6;
+  margin-top:16px;
+}
+.login-privacy a { color:var(--gold); text-decoration:none; }
+
+/* ─── PNLMA (PANEL) ─── */
+.pnlma-overlay {
+  position:fixed; inset:0; z-index:1900;
+  background:rgba(0,0,0,0.6);
+  backdrop-filter:blur(6px);
+  opacity:0; pointer-events:none;
+  transition:opacity 0.3s;
+}
+.pnlma-overlay.show { opacity:1; pointer-events:all; }
+.pnlma-panel {
+  position:fixed; top:0; right:0; bottom:0;
+  width:min(380px, 100vw);
+  background:var(--bg2);
+  border-left:1.5px solid var(--border-gold);
+  z-index:1950; overflow-y:auto;
+  transform:translateX(100%);
+  transition:transform 0.35s cubic-bezier(.4,0,.2,1);
+  padding-bottom:40px;
+}
+.pnlma-overlay.show .pnlma-panel { transform:translateX(0); }
+.pnlma-header {
+  background:linear-gradient(135deg,rgba(245,166,35,0.15),rgba(245,166,35,0.05));
+  padding:28px 24px 20px;
+  border-bottom:1px solid var(--border-gold);
+  position:relative;
+}
+.pnlma-close {
+  position:absolute; top:14px; right:14px;
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--text-muted); font-size:16px;
+  border-radius:10px; cursor:pointer; padding:5px 9px;
+  transition:all 0.2s;
+}
+.pnlma-close:hover { color:var(--gold); border-color:var(--gold); }
+.pnlma-profile { display:flex; align-items:center; gap:14px; margin-bottom:16px; }
+.pnlma-avatar {
+  width:56px; height:56px; border-radius:50%;
+  border:2.5px solid var(--gold);
+  object-fit:cover; flex-shrink:0;
+}
+.pnlma-name {
+  font-family:'DM Serif Display',serif;
+  font-size:18px; color:var(--text); margin-bottom:2px;
+}
+.pnlma-email { font-size:11px; color:var(--text-muted); }
+.pnlma-badges { display:flex; gap:6px; flex-wrap:wrap; margin-top:10px; }
+.pnlma-badge {
+  font-size:10px; font-weight:700;
+  padding:3px 10px; border-radius:20px;
+  background:var(--gold-glow); border:1px solid var(--border-gold); color:var(--gold);
+  letter-spacing:0.5px;
+}
+.pnlma-stats {
+  display:grid; grid-template-columns:repeat(3,1fr);
+  gap:10px; padding:16px 24px;
+  border-bottom:1px solid var(--border);
+}
+.pnlma-stat-box {
+  background:var(--surface);
+  border:1px solid var(--border); border-radius:12px;
+  padding:12px 8px; text-align:center;
+}
+.pnlma-stat-num {
+  font-family:'DM Serif Display',serif;
+  font-size:20px; color:var(--gold); display:block;
+}
+.pnlma-stat-lbl { font-size:9px; color:var(--text-dim); font-weight:700; letter-spacing:0.5px; margin-top:2px; }
+.pnlma-section-title {
+  font-size:11px; font-weight:800; letter-spacing:1.5px;
+  color:var(--text-dim); text-transform:uppercase;
+  padding:16px 24px 8px; margin:0;
+}
+.pnlma-menu-item {
+  display:flex; align-items:center; gap:12px;
+  padding:12px 24px; cursor:pointer;
+  transition:background 0.15s;
+  border-bottom:1px solid var(--border);
+  color:var(--text);
+}
+.pnlma-menu-item:hover { background:var(--surface2); color:var(--gold); }
+.pnlma-menu-icon { font-size:18px; width:24px; text-align:center; }
+.pnlma-menu-label { font-size:13px; font-weight:600; flex:1; }
+.pnlma-menu-arrow { font-size:11px; color:var(--text-dim); }
+.pnlma-logout-btn {
+  display:flex; align-items:center; gap:10px; justify-content:center;
+  width:calc(100% - 48px); margin:20px 24px 0;
+  padding:12px; background:rgba(255,82,82,0.08);
+  border:1.5px solid rgba(255,82,82,0.3);
+  color:#ff5252; border-radius:12px; cursor:pointer;
+  font-size:13px; font-weight:700;
+  font-family:'DM Sans',sans-serif;
+  transition:all 0.2s;
+}
+.pnlma-logout-btn:hover { background:rgba(255,82,82,0.15); border-color:#ff5252; }
+
+/* ─── LOADING SPINNER (for Google auth simulation) ─── */
+.gauth-loading {
+  display:none; flex-direction:column; align-items:center;
+  gap:14px; padding:20px 0 4px;
+}
+.gauth-loading.show { display:flex; }
+.gauth-spinner {
+  width:36px; height:36px;
+  border:3px solid var(--border); border-top-color:var(--gold);
+  border-radius:50%; animation:spin 0.8s linear infinite;
+}
+@keyframes spin { to { transform:rotate(360deg); } }
+.gauth-loading-text { font-size:13px; color:var(--text-muted); }
 </style>
 </head>
 <body>
@@ -1020,6 +1335,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 <!-- NAV -->
 <nav>
   <div class="logo">📖 Tamil<span>கதைகள்</span></div>
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
   <div class="nav-links">
     <a href="#">🏠 Home</a>
     <a href="#">💕 காதல்</a>
@@ -1030,7 +1346,148 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <a href="#">kathais.xyz</a>
   </div>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Light</button>
+  <button class="login-btn" id="navLoginBtn" onclick="openLoginModal()">
+    <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"/><path fill="#34A853" d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.723-4.823l-4.04 3.067A11.965 11.965 0 0 0 12 24c2.933 0 5.735-1.043 7.834-3l-3.793-2.987z"/><path fill="#4A90D9" d="M19.834 21c2.195-2.048 3.62-5.096 3.62-9 0-.71-.109-1.473-.272-2.182H12v4.637h6.436c-.317 1.559-1.17 2.766-2.395 3.558L19.834 21z"/><path fill="#FBBC05" d="M5.277 14.268A7.12 7.12 0 0 1 4.909 12c0-.782.125-1.533.357-2.235L1.24 6.65A11.934 11.934 0 0 0 0 12c0 1.92.445 3.73 1.237 5.335l4.04-3.067z"/></svg>
+    Gmail Login
+  </button>
+  <div class="user-avatar-btn" id="navUserBtn" style="display:none" onclick="openPnlma()">
+    <img id="navUserAvatar" src="" alt="">
+    <span id="navUserName"></span>
+  </div>
 </nav>
+
+<!-- ═══ GMAIL LOGIN MODAL ═══ -->
+<div class="login-overlay" id="loginOverlay" onclick="handleLoginOverlayClick(event)">
+  <div class="login-card">
+    <button class="login-close" onclick="closeLoginModal()">✕</button>
+    <div class="login-logo">📖</div>
+    <div class="login-title">Tamilகதைகள் — Login</div>
+    <div class="login-sub">உங்கள் Google account-ஐ பயன்படுத்தி sign in செய்யுங்கள்.<br>Free forever — No spam!</div>
+
+    <!-- Google Sign-In Button -->
+    <button class="google-signin-btn" id="googleSignInBtn" onclick="doGoogleSignIn()">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
+        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+      </svg>
+      Google உடன் Sign In
+    </button>
+
+    <!-- Loading state -->
+    <div class="gauth-loading" id="gauthLoading">
+      <div class="gauth-spinner"></div>
+      <div class="gauth-loading-text">Google account verify பண்றோம்...</div>
+    </div>
+
+    <div class="login-divider">OR</div>
+
+    <!-- Email step (manual fallback shown after Google) -->
+    <div id="emailLoginStep" style="display:none">
+      <input type="email" id="loginEmailInput" placeholder="உங்கள் Gmail address"
+        style="width:100%;padding:12px 16px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:10px;transition:border-color 0.2s"
+        onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"
+        onkeydown="if(event.key==='Enter')doEmailLogin()">
+      <button onclick="doEmailLogin()"
+        style="width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:10px;color:#1a1200;font-size:14px;font-weight:800;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s"
+        onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1">
+        📧 Email-ஐ Enter செய்க
+      </button>
+    </div>
+
+    <div class="login-privacy">
+      உங்கள் தரவு பாதுகாப்பானது. நாங்கள் எந்த தகவலும் விற்கோம்.<br>
+      <a href="#">Privacy Policy</a> · <a href="#">Terms</a>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PNLMA — USER PANEL ═══ -->
+<div class="pnlma-overlay" id="pnlmaOverlay" onclick="handlePnlmaOverlayClick(event)">
+  <div class="pnlma-panel" id="pnlmaPanel">
+    <div class="pnlma-header">
+      <button class="pnlma-close" onclick="closePnlma()">✕</button>
+      <div class="pnlma-profile">
+        <img class="pnlma-avatar" id="pnlmaAvatar" src="" alt="">
+        <div>
+          <div class="pnlma-name" id="pnlmaName">—</div>
+          <div class="pnlma-email" id="pnlmaEmail">—</div>
+        </div>
+      </div>
+      <div class="pnlma-badges" id="pnlmaBadges">
+        <span class="pnlma-badge">🔥 READER</span>
+        <span class="pnlma-badge">⭐ FREE MEMBER</span>
+      </div>
+    </div>
+
+    <!-- Stats row -->
+    <div class="pnlma-stats">
+      <div class="pnlma-stat-box">
+        <span class="pnlma-stat-num" id="pnlmaStatRead">0</span>
+        <div class="pnlma-stat-lbl">படித்தவை</div>
+      </div>
+      <div class="pnlma-stat-box">
+        <span class="pnlma-stat-num" id="pnlmaStatBookmarks">0</span>
+        <div class="pnlma-stat-lbl">Saved</div>
+      </div>
+      <div class="pnlma-stat-box">
+        <span class="pnlma-stat-num" id="pnlmaStatStreak">🔥1</span>
+        <div class="pnlma-stat-lbl">Streak</div>
+      </div>
+    </div>
+
+    <!-- Menu -->
+    <p class="pnlma-section-title">என் கதைகள்</p>
+    <div class="pnlma-menu-item" onclick="closePnlma();showTab('bookmarks',document.querySelectorAll('.bn-item')[1])">
+      <span class="pnlma-menu-icon">🔖</span>
+      <span class="pnlma-menu-label">Saved Stories</span>
+      <span class="pnlma-menu-arrow" id="pnlmaBookmarkCount">0 கதைகள்</span>
+    </div>
+    <div class="pnlma-menu-item" onclick="closePnlma()">
+      <span class="pnlma-menu-icon">📜</span>
+      <span class="pnlma-menu-label">Reading History</span>
+      <span class="pnlma-menu-arrow" id="pnlmaHistoryCount">0 கதைகள்</span>
+    </div>
+    <div class="pnlma-menu-item" onclick="closePnlma()">
+      <span class="pnlma-menu-icon">❤️</span>
+      <span class="pnlma-menu-label">Liked Stories</span>
+      <span class="pnlma-menu-arrow" id="pnlmaLikeCount">0 ❤️</span>
+    </div>
+
+    <p class="pnlma-section-title">அமைப்புகள்</p>
+    <div class="pnlma-menu-item" onclick="toggleTheme();closePnlma()">
+      <span class="pnlma-menu-icon">🎨</span>
+      <span class="pnlma-menu-label">Theme மாற்று</span>
+      <span class="pnlma-menu-arrow">→</span>
+    </div>
+    <div class="pnlma-menu-item" onclick="closePnlma()">
+      <span class="pnlma-menu-icon">🔔</span>
+      <span class="pnlma-menu-label">Notifications</span>
+      <span class="pnlma-menu-arrow">→</span>
+    </div>
+    <div class="pnlma-menu-item" onclick="installPWA();closePnlma()">
+      <span class="pnlma-menu-icon">📱</span>
+      <span class="pnlma-menu-label">App Install</span>
+      <span class="pnlma-menu-arrow">→</span>
+    </div>
+
+    <p class="pnlma-section-title">Account</p>
+    <div class="pnlma-menu-item" onclick="copyProfileLink()">
+      <span class="pnlma-menu-icon">🔗</span>
+      <span class="pnlma-menu-label">Share Profile</span>
+      <span class="pnlma-menu-arrow">→</span>
+    </div>
+
+    <button class="pnlma-logout-btn" onclick="doLogout()">
+      <span>🚪</span> Sign Out
+    </button>
+
+    <div style="text-align:center;padding:20px 24px 0;font-size:10px;color:var(--text-dim)">
+      Tamilகதைகள் · Free Forever · kathais.xyz
+    </div>
+  </div>
+</div>
 
 <!-- HERO -->
 <div class="hero">
@@ -1051,6 +1508,21 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     </div>
   </div>
 </div>
+
+
+<!-- MOBILE MENU DROPDOWN -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="#" onclick="filterCat('all',document.querySelector('.cat-tab'));closeMobileMenu()">📚 எல்லாம்</a>
+  <a href="#" onclick="filterCat('love',document.querySelectorAll('.cat-tab')[1]);closeMobileMenu()">💕 காதல்</a>
+  <a href="#" onclick="filterCat('horror',document.querySelectorAll('.cat-tab')[2]);closeMobileMenu()">👻 பயம்</a>
+  <a href="#" onclick="filterCat('comedy',document.querySelectorAll('.cat-tab')[3]);closeMobileMenu()">😂 நகைச்சுவை</a>
+  <a href="#" onclick="filterCat('kids',document.querySelectorAll('.cat-tab')[4]);closeMobileMenu()">🧒 குழந்தை</a>
+  <a href="#" onclick="filterCat('moral',document.querySelectorAll('.cat-tab')[6]);closeMobileMenu()">💡 நீதி</a>
+  <a href="#" onclick="openGamesModal();closeMobileMenu()">🎮 Games</a>
+</div>
+
+<!-- BACK TO TOP -->
+<button id="backToTop" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Top-க்கு போ">↑</button>
 
 <!-- SEARCH -->
 <div class="search-wrap" id="searchWrap">
@@ -1322,6 +1794,14 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
       <button class="font-opt active" onclick="setFont('tiro',this)">Tiro Tamil</button>
       <button class="font-opt" onclick="setFont('noto',this)">Noto Serif</button>
       <button class="font-opt" onclick="setFont('catamaran',this)">Catamaran</button>
+    </div>
+    <!-- Reading Mode Bar -->
+    <div class="reading-mode-bar">
+      <span class="reading-mode-label">MODE:</span>
+      <button class="rm-btn active" onclick="setReadingMode('default',this)">🌙 Default</button>
+      <button class="rm-btn" onclick="setReadingMode('sepia',this)">📜 Sepia</button>
+      <button class="rm-btn" onclick="setReadingMode('night',this)">🖤 Night</button>
+      <button class="rm-btn" onclick="setReadingMode('focus',this)">🎯 Focus</button>
     </div>
     <!-- TTS Bar -->
     <div class="tts-bar">
@@ -3786,6 +4266,152 @@ switchGame = function(id, el) {
 // ═══════════════════════════════════════
 // Init
 applyTheme(state.theme);
+
+// ── GMAIL LOGIN & PNLMA ──────────────────────────────────────────────────────
+// Persistent user state
+let currentUser = null;
+try { currentUser = JSON.parse(localStorage.getItem('tk_user') || 'null'); } catch(e) {}
+
+// Sample Google profile pictures (for demo randomization)
+const DEMO_AVATARS = [
+  'https://lh3.googleusercontent.com/a/default-user=s96-c',
+  'https://api.dicebear.com/7.x/avataaars/svg?seed=Tamil1',
+  'https://api.dicebear.com/7.x/avataaars/svg?seed=Tamil2',
+];
+
+function openLoginModal() {
+  document.getElementById('loginOverlay').classList.add('show');
+  document.getElementById('gauthLoading').classList.remove('show');
+  document.getElementById('googleSignInBtn').style.display = '';
+  document.getElementById('emailLoginStep').style.display = 'none';
+  document.getElementById('loginEmailInput') && (document.getElementById('loginEmailInput').value = '');
+}
+function closeLoginModal() {
+  document.getElementById('loginOverlay').classList.remove('show');
+}
+function handleLoginOverlayClick(e) {
+  if (e.target === document.getElementById('loginOverlay')) closeLoginModal();
+}
+
+// Simulate Google OAuth popup flow
+function doGoogleSignIn() {
+  const btn = document.getElementById('googleSignInBtn');
+  const loading = document.getElementById('gauthLoading');
+  btn.style.display = 'none';
+  loading.classList.add('show');
+
+  // After a brief "loading" simulation, show email input as if Google returned email
+  setTimeout(() => {
+    loading.classList.remove('show');
+    btn.style.display = '';
+    // Show email step to let user type/confirm their Gmail
+    document.getElementById('emailLoginStep').style.display = 'block';
+    document.getElementById('loginEmailInput').focus();
+    loading.querySelector('.gauth-loading-text').textContent = 'Google account verify பண்றோம்...';
+  }, 1800);
+}
+
+function doEmailLogin() {
+  const emailInput = document.getElementById('loginEmailInput');
+  const email = emailInput.value.trim();
+  if (!email || !email.includes('@')) {
+    emailInput.style.borderColor = '#ff5252';
+    emailInput.placeholder = '⚠ சரியான Gmail address போடுங்கள்';
+    setTimeout(() => { emailInput.style.borderColor = 'var(--border)'; emailInput.placeholder = 'உங்கள் Gmail address'; }, 2000);
+    return;
+  }
+  const name = email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g, c => c.toUpperCase());
+  const seed = encodeURIComponent(email);
+  const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${seed}&backgroundColor=f5a623&textColor=1a1200&fontSize=40`;
+  signInUser({ email, name, avatar, provider:'google', joinedAt: new Date().toISOString() });
+}
+
+function signInUser(user) {
+  currentUser = user;
+  localStorage.setItem('tk_user', JSON.stringify(user));
+  closeLoginModal();
+  updateNavForUser(user);
+  showToast(`🎉 வணக்கம், ${user.name}!`);
+}
+
+function updateNavForUser(user) {
+  const loginBtn = document.getElementById('navLoginBtn');
+  const userBtn = document.getElementById('navUserBtn');
+  if (user) {
+    loginBtn.style.display = 'none';
+    userBtn.style.display = 'flex';
+    document.getElementById('navUserAvatar').src = user.avatar;
+    document.getElementById('navUserName').textContent = user.name.split(' ')[0];
+  } else {
+    loginBtn.style.display = '';
+    userBtn.style.display = 'none';
+  }
+}
+
+function doLogout() {
+  currentUser = null;
+  localStorage.removeItem('tk_user');
+  closePnlma();
+  updateNavForUser(null);
+  showToast('👋 Signed out! Bye!');
+}
+
+// ── PNLMA Panel ──
+function openPnlma() {
+  if (!currentUser) { openLoginModal(); return; }
+  // Populate stats
+  document.getElementById('pnlmaAvatar').src = currentUser.avatar;
+  document.getElementById('pnlmaName').textContent = currentUser.name;
+  document.getElementById('pnlmaEmail').textContent = currentUser.email;
+  const readCount = state.history.length;
+  const bmCount = state.bookmarks.length;
+  const likeCount = Object.keys(state.likes).length;
+  const streak = document.getElementById('heroStreak')?.textContent?.replace('🔥','').trim() || '1';
+  document.getElementById('pnlmaStatRead').textContent = readCount;
+  document.getElementById('pnlmaStatBookmarks').textContent = bmCount;
+  document.getElementById('pnlmaStatStreak').textContent = '🔥' + streak;
+  document.getElementById('pnlmaBookmarkCount').textContent = bmCount + ' கதைகள்';
+  document.getElementById('pnlmaHistoryCount').textContent = readCount + ' கதைகள்';
+  document.getElementById('pnlmaLikeCount').textContent = likeCount + ' ❤️';
+  // Badges
+  const badges = ['🔥 READER'];
+  if (bmCount >= 5) badges.push('🔖 COLLECTOR');
+  if (likeCount >= 10) badges.push('❤️ LOVER');
+  if (readCount >= 20) badges.push('📚 BOOKWORM');
+  badges.push('⭐ FREE MEMBER');
+  document.getElementById('pnlmaBadges').innerHTML = badges.map(b => `<span class="pnlma-badge">${b}</span>`).join('');
+  document.getElementById('pnlmaOverlay').classList.add('show');
+}
+function closePnlma() {
+  document.getElementById('pnlmaOverlay').classList.remove('show');
+}
+function handlePnlmaOverlayClick(e) {
+  if (e.target === document.getElementById('pnlmaOverlay')) closePnlma();
+}
+function copyProfileLink() {
+  navigator.clipboard?.writeText('https://kathais.xyz').then(() => showToast('🔗 Link copied!'));
+  closePnlma();
+}
+
+// ── Toast helper (reuse or create) ──
+function showToast(msg) {
+  let t = document.getElementById('gToast');
+  if (!t) {
+    t = document.createElement('div');
+    t.id = 'gToast';
+    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1.5px solid var(--border-gold);color:var(--text);padding:10px 20px;border-radius:20px;font-size:13px;font-family:"DM Sans",sans-serif;z-index:3000;opacity:0;transition:all 0.3s;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,0.4)';
+    document.body.appendChild(t);
+  }
+  t.textContent = msg;
+  t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)';
+  clearTimeout(t._timer);
+  t._timer = setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, 2800);
+}
+
+// Initialize nav state on load
+if (currentUser) updateNavForUser(currentUser);
+
+// ═══════════════════════════════════════
 initSOTD();
 renderHistory();
 renderStories();
