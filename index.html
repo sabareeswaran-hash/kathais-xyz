@@ -26,8 +26,22 @@
 <meta name="apple-mobile-web-app-title" content="Tamilகதைகள்">
 
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Serif+Tamil:wght@400;700&family=Catamaran:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"
+  onerror="window._firebaseLoadFailed=true;console.error('firebase-app failed to load')"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"
+  onerror="window._firebaseLoadFailed=true;console.error('firebase-auth failed to load')"></script>
+<script>
+// Fallback: if Firebase blocked (ad-blocker/network), show user a helpful message
+window.addEventListener('load', function() {
+  if (window._firebaseLoadFailed || typeof firebase === 'undefined') {
+    var btn = document.getElementById('splashSendOtpBtn');
+    if (btn) { btn.disabled = true; btn.textContent = 'Login unavailable'; }
+    var luxBtn = document.getElementById('luxOtpBtn');
+    if (luxBtn) { luxBtn.disabled = true; luxBtn.textContent = 'Login unavailable'; }
+    if (window.showToast) showToast('⚠️ Login service blocked. Disable ad-blocker or use a different network.', 8000);
+  }
+});
+</script>
 <style>
 :root {
   --gold: #f5a623;
@@ -867,6 +881,285 @@ body.light .upload-input, body.light .upload-textarea { background:#fff; border-
 
 /* ─── BOOKMARKS PANEL ─── */
 #bookmarksPanel { display:none; }
+
+/* ═══ LUXURY GAMES PAGE ═══ */
+#gamesPanel {
+  min-height: 100vh;
+  background: var(--bg);
+}
+
+/* ── Games Hero Banner ── */
+.gp-hero {
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(245,166,35,0.18) 0%, transparent 65%),
+              linear-gradient(160deg, #0d0e1a 0%, #111320 50%, #0b0c14 100%);
+  padding: 36px 20px 28px;
+  text-align: center;
+  border-bottom: 1px solid var(--border-gold);
+}
+.gp-hero::before {
+  content: '';
+  position: absolute; inset: 0;
+  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5a623' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  pointer-events: none;
+}
+.gp-hero::after {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+}
+.gp-hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: rgba(245,166,35,0.12);
+  border: 1px solid rgba(245,166,35,0.3);
+  border-radius: 20px; padding: 4px 14px;
+  font-size: 10px; font-weight: 800; color: var(--gold);
+  letter-spacing: 2px; text-transform: uppercase;
+  margin-bottom: 14px;
+}
+.gp-hero-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(28px, 7vw, 42px);
+  font-weight: 400; color: #fff;
+  line-height: 1.1; margin-bottom: 6px;
+  letter-spacing: -0.5px;
+}
+.gp-hero-title span { color: var(--gold); }
+.gp-hero-sub {
+  font-family: 'Tiro Tamil', serif;
+  font-size: 13px; color: rgba(232,230,240,0.5);
+  margin-bottom: 20px;
+}
+.gp-hero-stats {
+  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
+}
+.gp-stat {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 12px; padding: 10px 16px;
+  text-align: center;
+}
+.gp-stat .n { font-family:'DM Serif Display',serif; font-size:20px; color:var(--gold); display:block; }
+.gp-stat .l { font-size:9px; color:rgba(232,230,240,0.35); font-weight:700; letter-spacing:0.5px; margin-top:1px; }
+
+/* ── Category Filter Tabs ── */
+.gp-cats {
+  display: flex; gap: 8px;
+  padding: 16px 16px 0;
+  overflow-x: auto; scrollbar-width: none;
+}
+.gp-cats::-webkit-scrollbar { display: none; }
+.gp-cat-btn {
+  flex-shrink: 0;
+  background: rgba(255,255,255,0.04);
+  border: 1.5px solid rgba(255,255,255,0.08);
+  border-radius: 20px; padding: 6px 14px;
+  color: rgba(232,230,240,0.45);
+  font-size: 11px; font-weight: 700;
+  cursor: pointer; transition: all 0.2s;
+  font-family: 'DM Sans', sans-serif;
+  white-space: nowrap;
+}
+.gp-cat-btn:hover, .gp-cat-btn.active {
+  background: rgba(245,166,35,0.12);
+  border-color: rgba(245,166,35,0.4);
+  color: var(--gold);
+}
+
+/* ── Featured Game Banner ── */
+.gp-featured {
+  margin: 18px 16px 0;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  cursor: pointer;
+  border: 1.5px solid rgba(245,166,35,0.25);
+}
+.gp-featured-inner {
+  background: linear-gradient(135deg, #1a0a2e 0%, #2d1155 50%, #1a0a2e 100%);
+  padding: 24px 20px;
+  display: flex; align-items: center; gap: 16px;
+  position: relative; overflow: hidden;
+}
+.gp-featured-inner::before {
+  content: '';
+  position: absolute; top: -40px; right: -40px;
+  width: 160px; height: 160px;
+  background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.gp-featured-inner::after {
+  content: '';
+  position: absolute; bottom: -20px; left: 30%;
+  width: 100px; height: 100px;
+  background: radial-gradient(circle, rgba(124,77,255,0.12) 0%, transparent 70%);
+  border-radius: 50%;
+}
+.gp-featured-emoji { font-size: 60px; flex-shrink: 0; position: relative; z-index: 1; }
+.gp-featured-info { flex: 1; position: relative; z-index: 1; }
+.gp-featured-tag {
+  display: inline-block;
+  background: var(--gold);
+  color: #1a0d00;
+  font-size: 9px; font-weight: 900;
+  letter-spacing: 1.5px; text-transform: uppercase;
+  padding: 3px 10px; border-radius: 20px;
+  margin-bottom: 8px;
+}
+.gp-featured-name {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px; color: #fff;
+  line-height: 1.1; margin-bottom: 4px;
+}
+.gp-featured-desc {
+  font-family: 'Tiro Tamil', serif;
+  font-size: 12px; color: rgba(255,255,255,0.55);
+  margin-bottom: 12px;
+}
+.gp-featured-play {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: linear-gradient(135deg, var(--gold), var(--gold2));
+  color: #1a0d00; font-size: 12px; font-weight: 800;
+  padding: 8px 18px; border-radius: 20px;
+  border: none; cursor: pointer; transition: all 0.2s;
+}
+.gp-featured-play:hover { transform: scale(1.04); box-shadow: 0 4px 20px rgba(245,166,35,0.4); }
+
+/* ── Section Label ── */
+.gp-section-label {
+  display: flex; align-items: center; gap: 10px;
+  padding: 20px 16px 10px;
+}
+.gp-section-label span {
+  font-size: 12px; font-weight: 800;
+  color: rgba(232,230,240,0.35);
+  letter-spacing: 1.5px; text-transform: uppercase;
+}
+.gp-section-label::after {
+  content: ''; flex: 1; height: 1px;
+  background: linear-gradient(90deg, rgba(255,255,255,0.07), transparent);
+}
+
+/* ── Luxury Games Grid ── */
+.gp-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 0 16px 100px;
+}
+@media(min-width:480px){ .gp-grid { grid-template-columns: repeat(3,1fr); } }
+
+.gp-card {
+  position: relative;
+  border-radius: 18px;
+  overflow: hidden;
+  cursor: pointer;
+  border: 1.5px solid rgba(255,255,255,0.07);
+  background: var(--surface);
+  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  display: flex; flex-direction: column;
+  min-height: 150px;
+}
+.gp-card:hover, .gp-card:active {
+  transform: translateY(-5px) scale(1.02);
+  border-color: rgba(245,166,35,0.4);
+  box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,166,35,0.1);
+}
+.gp-card-bg {
+  position: absolute; inset: 0;
+  opacity: 0.12;
+  background-size: cover;
+  background-position: center;
+}
+.gp-card-shine {
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+}
+.gp-card-body {
+  position: relative; z-index: 1;
+  padding: 16px 14px 14px;
+  flex: 1; display: flex; flex-direction: column;
+}
+.gp-card-icon-wrap {
+  width: 52px; height: 52px;
+  border-radius: 14px;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 28px;
+  margin-bottom: 10px;
+  position: relative;
+}
+.gp-card-icon-wrap::after {
+  content: '';
+  position: absolute; inset: 0; border-radius: 14px;
+  border: 1px solid rgba(255,255,255,0.1);
+}
+.gp-card-name {
+  font-size: 13px; font-weight: 800;
+  color: #fff; line-height: 1.2;
+  margin-bottom: 4px;
+  font-family: 'DM Sans', sans-serif;
+}
+.gp-card-tamil {
+  font-family: 'Tiro Tamil', serif;
+  font-size: 11px; color: rgba(232,230,240,0.45);
+  margin-bottom: auto;
+}
+.gp-card-footer {
+  display: flex; align-items: center; justify-content: space-between;
+  margin-top: 12px;
+}
+.gp-card-badge {
+  font-size: 9px; font-weight: 800;
+  letter-spacing: 1px; text-transform: uppercase;
+  padding: 3px 9px; border-radius: 20px;
+}
+.gp-card-arrow {
+  width: 26px; height: 26px; border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 12px; color: rgba(255,255,255,0.4);
+  transition: all 0.2s;
+}
+.gp-card:hover .gp-card-arrow {
+  background: var(--gold);
+  color: #1a0d00;
+}
+
+/* Card color themes */
+.gp-card.theme-orange .gp-card-bg { background: radial-gradient(circle at 70% 30%, #f5a623 0%, transparent 70%); }
+.gp-card.theme-orange .gp-card-icon-wrap { background: rgba(245,166,35,0.15); }
+.gp-card.theme-orange .gp-card-badge { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+
+.gp-card.theme-purple .gp-card-bg { background: radial-gradient(circle at 70% 30%, #7c4dff 0%, transparent 70%); }
+.gp-card.theme-purple .gp-card-icon-wrap { background: rgba(124,77,255,0.15); }
+.gp-card.theme-purple .gp-card-badge { background: rgba(124,77,255,0.15); color: #b39ddb; border: 1px solid rgba(124,77,255,0.3); }
+
+.gp-card.theme-green .gp-card-bg { background: radial-gradient(circle at 70% 30%, #00e676 0%, transparent 70%); }
+.gp-card.theme-green .gp-card-icon-wrap { background: rgba(0,230,118,0.15); }
+.gp-card.theme-green .gp-card-badge { background: rgba(0,230,118,0.15); color: #00e676; border: 1px solid rgba(0,230,118,0.3); }
+
+.gp-card.theme-red .gp-card-bg { background: radial-gradient(circle at 70% 30%, #ff5252 0%, transparent 70%); }
+.gp-card.theme-red .gp-card-icon-wrap { background: rgba(255,82,82,0.15); }
+.gp-card.theme-red .gp-card-badge { background: rgba(255,82,82,0.15); color: #ff8a80; border: 1px solid rgba(255,82,82,0.3); }
+
+.gp-card.theme-blue .gp-card-bg { background: radial-gradient(circle at 70% 30%, #40c4ff 0%, transparent 70%); }
+.gp-card.theme-blue .gp-card-icon-wrap { background: rgba(64,196,255,0.15); }
+.gp-card.theme-blue .gp-card-badge { background: rgba(64,196,255,0.15); color: #80d8ff; border: 1px solid rgba(64,196,255,0.3); }
+
+.gp-card.theme-pink .gp-card-bg { background: radial-gradient(circle at 70% 30%, #f06292 0%, transparent 70%); }
+.gp-card.theme-pink .gp-card-icon-wrap { background: rgba(240,98,146,0.15); }
+.gp-card.theme-pink .gp-card-badge { background: rgba(240,98,146,0.15); color: #f48fb1; border: 1px solid rgba(240,98,146,0.3); }
+
+.gp-card.theme-teal .gp-card-bg { background: radial-gradient(circle at 70% 30%, #1de9b6 0%, transparent 70%); }
+.gp-card.theme-teal .gp-card-icon-wrap { background: rgba(29,233,182,0.15); }
+.gp-card.theme-teal .gp-card-badge { background: rgba(29,233,182,0.15); color: #1de9b6; border: 1px solid rgba(29,233,182,0.3); }
+
+.gp-card.theme-yellow .gp-card-bg { background: radial-gradient(circle at 70% 30%, #ffd740 0%, transparent 70%); }
+.gp-card.theme-yellow .gp-card-icon-wrap { background: rgba(255,215,64,0.15); }
+.gp-card.theme-yellow .gp-card-badge { background: rgba(255,215,64,0.15); color: #ffd740; border: 1px solid rgba(255,215,64,0.3); }
+
+.bn-games .bn-icon { filter: drop-shadow(0 0 6px rgba(245,166,35,0.5)); }
 #bookmarksPanel.active { display:block; }
 #mainContent.hidden { display:none; }
 
@@ -1062,6 +1355,7 @@ body.light .upload-input, body.light .upload-textarea { background:#fff; border-
   border-radius:10px; cursor:pointer;
   font-size:18px; align-items:center; justify-content:center;
   transition:all 0.2s; flex-shrink:0;
+  margin-left:auto;
 }
 .hamburger-btn:hover { border-color:var(--gold); color:var(--gold); }
 .mobile-menu {
@@ -1098,14 +1392,16 @@ body.light .upload-input, body.light .upload-textarea { background:#fff; border-
 /* Small tablet / large mobile */
 @media(max-width:780px){
   .nav-links { display:none; }
-  .hamburger-btn { display:flex; }
+  .hamburger-btn { display:flex; margin-left:auto; }
+  .theme-toggle { display:none; }
   nav { padding:0 14px; gap:8px; }
   .stories-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
 }
 
 /* Mobile */
 @media(max-width:600px){
-  .hamburger-btn { display:flex; }
+  .hamburger-btn { display:flex; margin-left:auto; }
+  .theme-toggle { display:none; }
   .hero { padding:36px 16px 30px; }
   .hero h1 { font-size:clamp(28px,8vw,44px); }
   .hero-stats { gap:8px; }
@@ -1989,7 +2285,6 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 <!-- NAV -->
 <nav>
   <div class="logo">📖 Tamil<span>கதைகள்</span></div>
-  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
   <div class="nav-links">
     <a href="#" onclick="filterCat('love',document.querySelectorAll('.cat-tab')[1])">💕 காதல்</a>
     <a href="#" onclick="filterCat('horror',document.querySelectorAll('.cat-tab')[2])">👻 பயம்</a>
@@ -1999,6 +2294,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <a href="#" onclick="filterCat('moral',document.querySelectorAll('.cat-tab')[6])">💡 நீதி</a>
   </div>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Light</button>
+  <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
 </nav>
 
 <!-- ═══ LUXURY LOGIN MODAL ═══ -->
@@ -2330,6 +2626,277 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   </div>
 </div>
 
+<!-- GAMES PANEL — LUXURY -->
+<div id="gamesPanel" style="display:none">
+
+  <!-- Hero Banner -->
+  <div class="gp-hero">
+    <div class="gp-hero-eyebrow">🎮 GAME ZONE</div>
+    <div class="gp-hero-title">Fun <span>Games</span></div>
+    <div class="gp-hero-sub">விளையாட்டு நேரம் — 16 Games உள்ளன!</div>
+    <div class="gp-hero-stats">
+      <div class="gp-stat"><span class="n">16</span><span class="l">GAMES</span></div>
+      <div class="gp-stat"><span class="n">∞</span><span class="l">FREE</span></div>
+      <div class="gp-stat"><span class="n">🏆</span><span class="l">SCORES</span></div>
+    </div>
+  </div>
+
+  <!-- Category Filter -->
+  <div class="gp-cats">
+    <button class="gp-cat-btn active" onclick="gpFilter('all',this)">🎮 அனைத்தும்</button>
+    <button class="gp-cat-btn" onclick="gpFilter('brain',this)">🧠 Brain</button>
+    <button class="gp-cat-btn" onclick="gpFilter('action',this)">⚡ Action</button>
+    <button class="gp-cat-btn" onclick="gpFilter('puzzle',this)">🧩 Puzzle</button>
+    <button class="gp-cat-btn" onclick="gpFilter('tamil',this)">🔤 Tamil</button>
+    <button class="gp-cat-btn" onclick="gpFilter('classic',this)">♟️ Classic</button>
+  </div>
+
+  <!-- Featured Game -->
+  <div class="gp-featured" onclick="openGame('flappy')">
+    <div class="gp-featured-inner">
+      <div class="gp-featured-emoji">🐤</div>
+      <div class="gp-featured-info">
+        <div class="gp-featured-tag">⭐ FEATURED</div>
+        <div class="gp-featured-name">Flappy Bird</div>
+        <div class="gp-featured-desc">Tap செய்து பறக்கவிடு! Beat your high score!</div>
+        <button class="gp-featured-play">▶ இப்போதே விளையாடு</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- All Games Label -->
+  <div class="gp-section-label"><span>ALL GAMES</span></div>
+
+  <!-- Luxury Game Grid -->
+  <div class="gp-grid" id="gpGrid">
+
+    <div class="gp-card theme-orange" data-cat="tamil" onclick="openGame('wordguess')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🔤</div>
+        <div class="gp-card-name">சொல் யூகம்</div>
+        <div class="gp-card-tamil">Tamil Word Guess</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">HOT 🔥</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-purple" data-cat="brain" onclick="openGame('quiz')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🧠</div>
+        <div class="gp-card-name">கதை Quiz</div>
+        <div class="gp-card-tamil">Story Knowledge</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">NEW ✨</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-green" data-cat="action" onclick="openGame('snake')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🐍</div>
+        <div class="gp-card-name">Snake</div>
+        <div class="gp-card-tamil">பாம்பு விளையாட்டு</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">CLASSIC</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-orange" data-cat="action" onclick="openGame('racing')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🏎️</div>
+        <div class="gp-card-name">Car Racing</div>
+        <div class="gp-card-tamil">வேக ஓட்டம்</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">SPEED 💨</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-teal" data-cat="classic" onclick="openGame('chess')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">♟️</div>
+        <div class="gp-card-name">Chess</div>
+        <div class="gp-card-tamil">சதுரங்கம்</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">VS AI 🤖</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-red" data-cat="action" onclick="openGame('birds')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🐦</div>
+        <div class="gp-card-name">Angry Birds</div>
+        <div class="gp-card-tamil">பறவை விளையாட்டு</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">FUN 😄</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-purple" data-cat="classic" onclick="openGame('tictactoe')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">⭕</div>
+        <div class="gp-card-name">Tic Tac Toe</div>
+        <div class="gp-card-tamil">புள்ளி விளையாட்டு</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">VS AI 🤖</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-pink" data-cat="brain" onclick="openGame('memory')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🃏</div>
+        <div class="gp-card-name">Memory Match</div>
+        <div class="gp-card-tamil">நினைவு சோதனை</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">BRAIN 🧩</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-blue" data-cat="tamil" onclick="openGame('typing')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">⌨️</div>
+        <div class="gp-card-name">Typing Speed</div>
+        <div class="gp-card-tamil">தட்டச்சு வேகம்</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">WPM ⚡</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-green" data-cat="brain" onclick="openGame('math')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">➕</div>
+        <div class="gp-card-name">Math Blitz</div>
+        <div class="gp-card-tamil">கணித சவால்</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">FAST 🔥</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-orange" data-cat="brain" onclick="openGame('color')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🎨</div>
+        <div class="gp-card-name">Color Match</div>
+        <div class="gp-card-tamil">வண்ண சோதனை</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">EYE 👁</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-red" data-cat="action" onclick="openGame('reaction')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">⚡</div>
+        <div class="gp-card-name">Reaction Time</div>
+        <div class="gp-card-tamil">எதிர்வினை வேகம்</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">REFLEX ⚡</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-teal" data-cat="tamil" onclick="openGame('hangman')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🪢</div>
+        <div class="gp-card-name">Hangman</div>
+        <div class="gp-card-tamil">தமிழ் சொல் புதிர்</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">GUESS 🤔</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-blue" data-cat="brain" onclick="openGame('simon')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🔵</div>
+        <div class="gp-card-name">Simon Says</div>
+        <div class="gp-card-tamil">நினைவு ஆட்டம்</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">MEMORY 🧩</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-yellow" data-cat="puzzle" onclick="openGame('2048')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🔢</div>
+        <div class="gp-card-name">2048</div>
+        <div class="gp-card-tamil">எண் விளையாட்டு</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">LOGIC 💡</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="gp-card theme-blue" data-cat="action" onclick="openGame('flappy')">
+      <div class="gp-card-bg"></div>
+      <div class="gp-card-shine"></div>
+      <div class="gp-card-body">
+        <div class="gp-card-icon-wrap">🐤</div>
+        <div class="gp-card-name">Flappy Bird</div>
+        <div class="gp-card-tamil">பறக்கும் பறவை</div>
+        <div class="gp-card-footer">
+          <div class="gp-card-badge">⭐ TOP</div>
+          <div class="gp-card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
 <!-- PAGINATION -->
 <div class="pagination" id="pagination"></div>
 
@@ -2359,6 +2926,9 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   </button>
   <button class="bn-item" id="bn-bookmarks" onclick="showTab('bookmarks',this)">
     <span class="bn-icon">🔖</span>Saved
+  </button>
+  <button class="bn-item bn-games" id="bn-games" onclick="openGamesModal(); document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active')); this.classList.add('active');">
+    <span class="bn-icon">🎮</span>Games
   </button>
   <button class="bn-item" id="bn-profile" onclick="openPnlma()">
     <span class="bn-icon">👤</span>Profile
@@ -2456,6 +3026,16 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
       <button class="game-tab-btn" onclick="switchGame('chess',this)">♟️ Chess</button>
       <button class="game-tab-btn" onclick="switchGame('birds',this)">🐦 Birds</button>
       <button class="game-tab-btn" onclick="switchGame('leaderboard',this)">🏆 Board</button>
+      <button class="game-tab-btn" onclick="switchGame('tictactoe',this)">⭕ TicTacToe</button>
+      <button class="game-tab-btn" onclick="switchGame('memory',this)">🃏 Memory</button>
+      <button class="game-tab-btn" onclick="switchGame('typing',this)">⌨️ Typing</button>
+      <button class="game-tab-btn" onclick="switchGame('math',this)">➕ Math</button>
+      <button class="game-tab-btn" onclick="switchGame('color',this)">🎨 Color</button>
+      <button class="game-tab-btn" onclick="switchGame('reaction',this)">⚡ React</button>
+      <button class="game-tab-btn" onclick="switchGame('hangman',this)">🪢 Hangman</button>
+      <button class="game-tab-btn" onclick="switchGame('simon',this)">🔵 Simon</button>
+      <button class="game-tab-btn" onclick="switchGame('2048',this)">🔢 2048</button>
+      <button class="game-tab-btn" onclick="switchGame('flappy',this)">🐤 Flappy</button>
     </div>
 
     <!-- GAME 1: Tamil Word Guess -->
@@ -2544,6 +3124,158 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
         <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4)">Click & drag on bird to aim and shoot!</div>
         <div class="game-msg" id="birds-msg" style="margin-top:6px"></div>
         <button class="game-action-btn" onclick="resetBirds()" style="margin-top:8px">🐦 New Round</button>
+      </div>
+    </div>
+
+    <!-- GAME 7: Tic Tac Toe -->
+    <div class="game-panel" id="game-tictactoe">
+      <div style="text-align:center">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">நீங்கள்: <span id="ttt-you">0</span></div>
+          <div class="score-chip">AI: <span id="ttt-ai">0</span></div>
+          <div class="score-chip">Draw: <span id="ttt-draw">0</span></div>
+        </div>
+        <div id="ttt-board" style="display:inline-grid;grid-template-columns:repeat(3,80px);gap:6px;margin:0 auto 12px"></div>
+        <div class="game-msg" id="ttt-msg" style="margin:8px 0;font-family:'Tiro Tamil',serif"></div>
+        <button class="game-action-btn" onclick="resetTTT()">🔄 புதிய ஆட்டம்</button>
+      </div>
+    </div>
+
+    <!-- GAME 8: Memory Card Match -->
+    <div class="game-panel" id="game-memory">
+      <div style="text-align:center">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">Moves: <span id="mem-moves">0</span></div>
+          <div class="score-chip">Pairs: <span id="mem-pairs">0</span>/8</div>
+          <div class="score-chip">Best: <span id="mem-best">-</span></div>
+        </div>
+        <div id="mem-board" style="display:inline-grid;grid-template-columns:repeat(4,62px);gap:6px;margin:0 auto"></div>
+        <div class="game-msg" id="mem-msg" style="margin-top:10px"></div>
+        <button class="game-action-btn" onclick="startMemory()" style="margin-top:10px">🔄 புதிய ஆட்டம்</button>
+      </div>
+    </div>
+
+    <!-- GAME 9: Tamil Typing Speed -->
+    <div class="game-panel" id="game-typing">
+      <div style="text-align:center;padding:8px">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">WPM: <span id="typ-wpm">0</span></div>
+          <div class="score-chip">Accuracy: <span id="typ-acc">100</span>%</div>
+          <div class="score-chip">Time: <span id="typ-time">30</span>s</div>
+        </div>
+        <div id="typ-text" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-family:'Tiro Tamil',serif;font-size:15px;line-height:1.8;margin-bottom:10px;text-align:left;min-height:60px"></div>
+        <input id="typ-input" placeholder="இங்கே தட்டச்சு செய்யுங்கள்..." style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(245,166,35,0.4);border-radius:10px;color:#fff;font-size:14px;font-family:'Tiro Tamil',serif;outline:none" oninput="checkTyping()" disabled>
+        <div class="game-msg" id="typ-msg" style="margin-top:8px"></div>
+        <button class="game-action-btn" onclick="startTyping()" style="margin-top:10px" id="typ-btn">▶ ஆரம்பி</button>
+      </div>
+    </div>
+
+    <!-- GAME 10: Math Challenge -->
+    <div class="game-panel" id="game-math">
+      <div style="text-align:center;padding:8px">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">Score: <span id="math-score">0</span></div>
+          <div class="score-chip">Time: <span id="math-time">30</span>s</div>
+          <div class="score-chip">Best: <span id="math-best">0</span></div>
+        </div>
+        <div id="math-question" style="font-size:38px;font-weight:900;color:var(--gold);margin:16px 0;letter-spacing:2px">? + ? = ?</div>
+        <div id="math-options" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:280px;margin:0 auto"></div>
+        <div class="game-msg" id="math-msg" style="margin-top:10px;font-family:'Tiro Tamil',serif"></div>
+        <button class="game-action-btn" onclick="startMath()" id="math-btn" style="margin-top:12px">▶ ஆரம்பி</button>
+      </div>
+    </div>
+
+    <!-- GAME 11: Color Match -->
+    <div class="game-panel" id="game-color">
+      <div style="text-align:center;padding:8px">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">Score: <span id="col-score">0</span></div>
+          <div class="score-chip">Time: <span id="col-time">20</span>s</div>
+          <div class="score-chip">Best: <span id="col-best">0</span></div>
+        </div>
+        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">இந்த வண்ணத்தை தேர்வு செய்யுங்கள்:</div>
+        <div id="col-target" style="width:100px;height:100px;border-radius:50%;margin:0 auto 16px;border:3px solid rgba(255,255,255,0.2);box-shadow:0 4px 20px rgba(0,0,0,0.4)"></div>
+        <div id="col-options" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:260px;margin:0 auto"></div>
+        <div class="game-msg" id="col-msg" style="margin-top:10px"></div>
+        <button class="game-action-btn" onclick="startColor()" id="col-btn" style="margin-top:12px">▶ ஆரம்பி</button>
+      </div>
+    </div>
+
+    <!-- GAME 12: Reaction Time -->
+    <div class="game-panel" id="game-reaction">
+      <div style="text-align:center;padding:8px">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">Best: <span id="rct-best">-</span>ms</div>
+          <div class="score-chip">Last: <span id="rct-last">-</span>ms</div>
+          <div class="score-chip">Avg: <span id="rct-avg">-</span>ms</div>
+        </div>
+        <div id="rct-box" onclick="handleReaction()" style="width:220px;height:220px;border-radius:20px;background:#1a1a2e;border:2px solid rgba(255,255,255,0.1);margin:0 auto;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;color:rgba(255,255,255,0.4);transition:all 0.2s;user-select:none">
+          தயாராக இருங்கள்...
+        </div>
+        <div class="game-msg" id="rct-msg" style="margin-top:10px;font-family:'Tiro Tamil',serif"></div>
+        <button class="game-action-btn" onclick="startReaction()" id="rct-btn" style="margin-top:12px">▶ ஆரம்பி</button>
+      </div>
+    </div>
+
+    <!-- GAME 13: Hangman (Tamil words) -->
+    <div class="game-panel" id="game-hangman">
+      <div style="text-align:center;padding:8px">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">Score: <span id="hm-score">0</span></div>
+          <div class="score-chip">தவறுகள்: <span id="hm-wrong">0</span>/6</div>
+        </div>
+        <div id="hm-drawing" style="font-size:52px;margin:8px 0;line-height:1">🙂</div>
+        <div id="hm-hint" style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;font-family:'Tiro Tamil',serif"></div>
+        <div id="hm-word" style="font-size:22px;letter-spacing:10px;margin:10px 0;font-family:'Tiro Tamil',serif;color:var(--gold)"></div>
+        <div id="hm-letters" style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:300px;margin:0 auto"></div>
+        <div class="game-msg" id="hm-msg" style="margin-top:8px;font-family:'Tiro Tamil',serif"></div>
+        <button class="game-action-btn" onclick="startHangman()" style="margin-top:10px">🔄 புதிய சொல்</button>
+      </div>
+    </div>
+
+    <!-- GAME 14: Simon Says -->
+    <div class="game-panel" id="game-simon">
+      <div style="text-align:center;padding:8px">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">Round: <span id="sim-round">0</span></div>
+          <div class="score-chip">Best: <span id="sim-best">0</span></div>
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:220px;margin:0 auto 12px">
+          <div id="sim-0" onclick="simonPress(0)" style="height:90px;border-radius:14px 3px 3px 3px;background:#c0392b;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
+          <div id="sim-1" onclick="simonPress(1)" style="height:90px;border-radius:3px 14px 3px 3px;background:#27ae60;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
+          <div id="sim-2" onclick="simonPress(2)" style="height:90px;border-radius:3px 3px 3px 14px;background:#2980b9;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
+          <div id="sim-3" onclick="simonPress(3)" style="height:90px;border-radius:3px 3px 14px 3px;background:#f39c12;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
+        </div>
+        <div class="game-msg" id="sim-msg" style="font-family:'Tiro Tamil',serif;margin-bottom:8px"></div>
+        <button class="game-action-btn" onclick="startSimon()" id="sim-btn">▶ ஆரம்பி</button>
+      </div>
+    </div>
+
+    <!-- GAME 15: 2048 -->
+    <div class="game-panel" id="game-2048">
+      <div style="text-align:center;padding:4px">
+        <div class="game-score" style="margin-bottom:8px">
+          <div class="score-chip">Score: <span id="g2048-score">0</span></div>
+          <div class="score-chip">Best: <span id="g2048-best">0</span></div>
+        </div>
+        <div id="g2048-board" style="display:inline-grid;grid-template-columns:repeat(4,62px);gap:6px;background:rgba(255,255,255,0.05);padding:8px;border-radius:12px;touch-action:none"></div>
+        <div class="game-msg" id="g2048-msg" style="margin:8px 0;font-family:'Tiro Tamil',serif"></div>
+        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px">Arrow keys / Swipe to move</div>
+        <button class="game-action-btn" onclick="start2048()">🔄 புதிய ஆட்டம்</button>
+      </div>
+    </div>
+
+    <!-- GAME 16: Flappy Bird -->
+    <div class="game-panel" id="game-flappy">
+      <div style="text-align:center">
+        <div class="game-score" style="margin-bottom:10px">
+          <div class="score-chip">Score: <span id="flp-score">0</span></div>
+          <div class="score-chip">Best: <span id="flp-best">0</span></div>
+        </div>
+        <canvas id="flappyCanvas" width="300" height="350" style="border:2px solid rgba(100,200,255,0.4);border-radius:10px;background:linear-gradient(180deg,#1a1a3e 0%,#2a2a5e 100%);display:block;margin:0 auto;cursor:pointer"></canvas>
+        <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4)">Tap / Space / Click to flap!</div>
+        <div class="game-msg" id="flp-msg" style="margin-top:6px"></div>
+        <button class="game-action-btn" onclick="startFlappy()" style="margin-top:8px" id="flp-btn">▶ ஆரம்பி</button>
       </div>
     </div>
 
@@ -3842,19 +4574,62 @@ function showTab(tab, el) {
   el.classList.add('active');
   const main = document.getElementById('mainContent');
   const bkmarks = document.getElementById('bookmarksPanel');
+  const games = document.getElementById('gamesPanel');
   const search = document.getElementById('searchWrap');
+  // hide all panels first
+  main.style.display = 'none';
+  bkmarks.style.display = 'none';
+  if (games) games.style.display = 'none';
+  if (search) search.style.display = 'none';
   if (tab === 'home') {
-    main.style.display = ''; bkmarks.style.display = 'none';
+    main.style.display = '';
     if (search) search.style.display = '';
   } else if (tab === 'bookmarks') {
-    main.style.display = 'none'; bkmarks.style.display = '';
-    if (search) search.style.display = 'none';
+    bkmarks.style.display = '';
     renderBookmarks();
   } else if (tab === 'search') {
-    main.style.display = ''; bkmarks.style.display = 'none';
+    main.style.display = '';
     if (search) search.style.display = '';
     setTimeout(() => document.getElementById('searchInput').focus(), 100);
+  } else if (tab === 'games') {
+    if (games) games.style.display = 'block';
   }
+}
+
+function gpFilter(cat, btn) {
+  document.querySelectorAll('.gp-cat-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.querySelectorAll('#gpGrid .gp-card').forEach(card => {
+    if (cat === 'all' || card.dataset.cat === cat) {
+      card.style.display = '';
+    } else {
+      card.style.display = 'none';
+    }
+  });
+}
+
+function openGame(type) {
+  // Map game card types to modal tab ids
+  const tabMap = {
+    wordguess: 'wordguess',
+    quiz: 'quiz',
+    emoji: 'quiz',
+    riddle: 'quiz',
+    spin: 'wordguess',
+    speed: 'snake',
+    snake: 'snake',
+    racing: 'racing',
+    chess: 'chess',
+    birds: 'birds'
+  };
+  const targetTab = tabMap[type] || 'wordguess';
+
+  // Open the modal
+  openGamesModal();
+
+  // Switch to the correct tab
+  const tabBtn = document.querySelector('.game-tab-btn[onclick*="' + targetTab + '"]');
+  if (tabBtn) switchGame(targetTab, tabBtn);
 }
 
 function renderBookmarks() {
@@ -3998,6 +4773,16 @@ function switchGame(id, el) {
   el.classList.add('active');
   document.getElementById('game-' + id).classList.add('active');
   if (id === 'quiz') startQuiz();
+  else if (id === 'tictactoe') resetTTT();
+  else if (id === 'memory') startMemory();
+  else if (id === 'math') { document.getElementById('math-btn').textContent='▶ ஆரம்பி'; mathActive=false; }
+  else if (id === 'simon') { simSeq=[]; simRound=0; document.getElementById('sim-btn').textContent='▶ ஆரம்பி'; }
+  else if (id === '2048') start2048();
+  else if (id === 'hangman') startHangman();
+  else if (id === 'reaction') { rctState='idle'; document.getElementById('rct-btn').textContent='▶ ஆரம்பி'; }
+  else if (id === 'flappy') { flpRunning=false; cancelAnimationFrame(flpFrame); document.getElementById('flp-btn').textContent='▶ ஆரம்பி'; }
+  else if (id === 'typing') { document.getElementById('typ-btn').textContent='▶ ஆரம்பி'; }
+  else if (id === 'color') { document.getElementById('col-btn').textContent='▶ ஆரம்பி'; }
 }
 
 // ─── GAME 1: Tamil Word Guess ───
@@ -4199,6 +4984,394 @@ function showQuizResult() {
       <p style="font-size:18px;margin:10px 0;">${msg}</p>
       <button class="game-action-btn" onclick="startQuiz()" style="margin-top:16px">மீண்டும் விளையாடு 🔄</button>
     </div>`;
+}
+
+
+// ═══════════════════════════════════════════════
+// GAME 7: TIC TAC TOE vs AI
+// ═══════════════════════════════════════════════
+let tttBoard = [], tttYou = 0, tttAI = 0, tttDraw = 0, tttActive = false;
+function resetTTT() {
+  tttBoard = Array(9).fill('');
+  tttActive = true;
+  document.getElementById('ttt-msg').textContent = 'உங்கள் முறை! (✕)';
+  const cells = document.getElementById('ttt-board');
+  cells.innerHTML = '';
+  for (let i = 0; i < 9; i++) {
+    const c = document.createElement('div');
+    c.style.cssText = 'width:80px;height:80px;background:rgba(255,255,255,0.06);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:32px;cursor:pointer;transition:all 0.2s';
+    c.onclick = () => tttMove(i, c);
+    cells.appendChild(c);
+  }
+}
+function tttMove(i, c) {
+  if (!tttActive || tttBoard[i]) return;
+  tttBoard[i] = 'X'; c.textContent = '✕'; c.style.color = '#f5a623';
+  if (tttCheck('X')) { tttYou++; document.getElementById('ttt-you').textContent = tttYou; document.getElementById('ttt-msg').textContent = '🎉 நீங்கள் வெற்றி!'; tttActive = false; return; }
+  if (tttBoard.every(x=>x)) { tttDraw++; document.getElementById('ttt-draw').textContent = tttDraw; document.getElementById('ttt-msg').textContent = '🤝 Draw!'; tttActive = false; return; }
+  setTimeout(tttAIMove, 400);
+}
+function tttAIMove() {
+  const wins = [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]];
+  let move = -1;
+  for (const [a,b,c] of wins) { if (tttBoard[a]==='O'&&tttBoard[b]==='O'&&!tttBoard[c]) {move=c;break;} if (tttBoard[a]==='O'&&!tttBoard[b]&&tttBoard[c]==='O') {move=b;break;} if (!tttBoard[a]&&tttBoard[b]==='O'&&tttBoard[c]==='O') {move=a;break;} }
+  if (move<0) for (const [a,b,c] of wins) { if (tttBoard[a]==='X'&&tttBoard[b]==='X'&&!tttBoard[c]) {move=c;break;} if (tttBoard[a]==='X'&&!tttBoard[b]&&tttBoard[c]==='X') {move=b;break;} if (!tttBoard[a]&&tttBoard[b]==='X'&&tttBoard[c]==='X') {move=a;break;} }
+  if (move<0&&!tttBoard[4]) move=4;
+  if (move<0) { const empty=tttBoard.map((v,i)=>v?-1:i).filter(i=>i>=0); move=empty[Math.floor(Math.random()*empty.length)]; }
+  tttBoard[move]='O';
+  const cells = document.getElementById('ttt-board').children;
+  cells[move].textContent='◯'; cells[move].style.color='#00e676';
+  if (tttCheck('O')) { tttAI++; document.getElementById('ttt-ai').textContent=tttAI; document.getElementById('ttt-msg').textContent='🤖 AI வெற்றி!'; tttActive=false; return; }
+  if (tttBoard.every(x=>x)) { tttDraw++; document.getElementById('ttt-draw').textContent=tttDraw; document.getElementById('ttt-msg').textContent='🤝 Draw!'; tttActive=false; return; }
+  document.getElementById('ttt-msg').textContent='உங்கள் முறை! (✕)';
+}
+function tttCheck(p) { return [[0,1,2],[3,4,5],[6,7,8],[0,3,6],[1,4,7],[2,5,8],[0,4,8],[2,4,6]].some(([a,b,c])=>tttBoard[a]===p&&tttBoard[b]===p&&tttBoard[c]===p); }
+
+// ═══════════════════════════════════════════════
+// GAME 8: MEMORY CARD MATCH
+// ═══════════════════════════════════════════════
+let memCards=[], memFlipped=[], memMatched=0, memMoves=0, memLocked=false;
+function startMemory() {
+  const emojis = ['🌸','🦋','🌙','⭐','🎵','🦁','🌈','🍀'];
+  const deck = [...emojis,...emojis].sort(()=>Math.random()-0.5);
+  memCards = deck; memFlipped = []; memMatched = 0; memMoves = 0; memLocked = false;
+  document.getElementById('mem-moves').textContent = 0;
+  document.getElementById('mem-pairs').textContent = '0';
+  document.getElementById('mem-msg').textContent = '';
+  const board = document.getElementById('mem-board');
+  board.innerHTML = '';
+  deck.forEach((em, i) => {
+    const c = document.createElement('div');
+    c.style.cssText = 'width:62px;height:62px;background:rgba(245,166,35,0.15);border:1.5px solid rgba(245,166,35,0.3);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:26px;cursor:pointer;transition:all 0.3s';
+    c.dataset.idx = i; c.dataset.val = em; c.dataset.revealed = '0';
+    c.onclick = () => memFlip(c);
+    board.appendChild(c);
+  });
+}
+function memFlip(c) {
+  if (memLocked || c.dataset.revealed==='1' || memFlipped.length===2) return;
+  c.textContent = c.dataset.val; c.dataset.revealed='1';
+  c.style.background='rgba(245,166,35,0.25)'; c.style.borderColor='var(--gold)';
+  memFlipped.push(c);
+  if (memFlipped.length===2) {
+    memMoves++; document.getElementById('mem-moves').textContent=memMoves;
+    memLocked=true;
+    if (memFlipped[0].dataset.val===memFlipped[1].dataset.val) {
+      memFlipped[0].style.background='rgba(0,230,118,0.2)'; memFlipped[1].style.background='rgba(0,230,118,0.2)';
+      memFlipped[0].style.borderColor='#00e676'; memFlipped[1].style.borderColor='#00e676';
+      memMatched++; document.getElementById('mem-pairs').textContent=memMatched;
+      memFlipped=[]; memLocked=false;
+      if (memMatched===8) { const best=parseInt(localStorage.getItem('mem_best')||'999'); if(memMoves<best){localStorage.setItem('mem_best',memMoves);document.getElementById('mem-best').textContent=memMoves;} document.getElementById('mem-msg').textContent='🎉 வெற்றி! '+memMoves+' moves'; }
+    } else {
+      setTimeout(()=>{ memFlipped.forEach(x=>{x.textContent='';x.dataset.revealed='0';x.style.background='rgba(245,166,35,0.15)';x.style.borderColor='rgba(245,166,35,0.3)';}); memFlipped=[]; memLocked=false; }, 900);
+    }
+  }
+}
+
+// ═══════════════════════════════════════════════
+// GAME 9: TYPING SPEED
+// ═══════════════════════════════════════════════
+const typSentences = ['அன்பே சிவம், அறமே வாழ்க்கை','தமிழ் மொழி எங்கள் தாய் மொழி','கல்வியே கண்ணொளி என்று பெரியோர் கூறினர்','நேர்மையான வாழ்க்கை சிறந்த வாழ்க்கை','அறிவு என்பது ஒளி, அஞ்ஞானம் என்பது இருள்'];
+let typTimer, typStart, typActive=false, typTotalChars=0, typWrongChars=0;
+function startTyping() {
+  const sentence = typSentences[Math.floor(Math.random()*typSentences.length)];
+  const textEl = document.getElementById('typ-text');
+  textEl.innerHTML = sentence.split('').map(c=>`<span>${c}</span>`).join('');
+  document.getElementById('typ-input').value=''; document.getElementById('typ-input').disabled=false;
+  document.getElementById('typ-input').focus();
+  document.getElementById('typ-wpm').textContent='0'; document.getElementById('typ-acc').textContent='100';
+  document.getElementById('typ-msg').textContent=''; document.getElementById('typ-btn').textContent='🔄 மீண்டும்';
+  typTotalChars=0; typWrongChars=0; typActive=true; let t=30;
+  document.getElementById('typ-time').textContent=t;
+  clearInterval(typTimer);
+  typTimer=setInterval(()=>{ t--; document.getElementById('typ-time').textContent=t; if(t<=0){clearInterval(typTimer);endTyping();} },1000);
+  typStart=Date.now();
+}
+function checkTyping() {
+  if (!typActive) return;
+  const input = document.getElementById('typ-input').value;
+  const spans = document.getElementById('typ-text').querySelectorAll('span');
+  spans.forEach((s,i)=>{ s.style.color=i<input.length?(input[i]===s.textContent?'#00e676':'#ff5252'):'rgba(255,255,255,0.6)'; });
+  const elapsed=(Date.now()-typStart)/60000;
+  const wpm=Math.round((input.length/5)/elapsed)||0;
+  document.getElementById('typ-wpm').textContent=wpm;
+  let wrong=0; for(let i=0;i<input.length;i++) if(input[i]!==spans[i]?.textContent) wrong++;
+  const acc=input.length?Math.round(((input.length-wrong)/input.length)*100):100;
+  document.getElementById('typ-acc').textContent=acc;
+}
+function endTyping() {
+  typActive=false; document.getElementById('typ-input').disabled=true;
+  const wpm=document.getElementById('typ-wpm').textContent;
+  document.getElementById('typ-msg').textContent='⏱ சமயம் முடிந்தது! WPM: '+wpm;
+}
+
+// ═══════════════════════════════════════════════
+// GAME 10: MATH CHALLENGE
+// ═══════════════════════════════════════════════
+let mathScore=0, mathTimer, mathActive=false;
+function startMath() {
+  mathScore=0; mathActive=true; let t=30;
+  document.getElementById('math-score').textContent=0; document.getElementById('math-time').textContent=t;
+  document.getElementById('math-msg').textContent=''; document.getElementById('math-btn').textContent='🔄 மீண்டும்';
+  clearInterval(mathTimer);
+  mathTimer=setInterval(()=>{ t--; document.getElementById('math-time').textContent=t; if(t<=0){clearInterval(mathTimer);mathActive=false;const best=parseInt(localStorage.getItem('math_best')||'0');if(mathScore>best)localStorage.setItem('math_best',mathScore);document.getElementById('math-best').textContent=Math.max(mathScore,best);document.getElementById('math-msg').textContent='⏱ முடிந்தது! Score: '+mathScore;} },1000);
+  nextMath();
+}
+function nextMath() {
+  if (!mathActive) return;
+  const ops=['+','-','×']; const op=ops[Math.floor(Math.random()*ops.length)];
+  let a,b,ans;
+  if(op==='+'){a=Math.floor(Math.random()*50)+1;b=Math.floor(Math.random()*50)+1;ans=a+b;}
+  else if(op==='-'){a=Math.floor(Math.random()*50)+20;b=Math.floor(Math.random()*20)+1;ans=a-b;}
+  else{a=Math.floor(Math.random()*12)+1;b=Math.floor(Math.random()*12)+1;ans=a*b;}
+  document.getElementById('math-question').textContent=`${a} ${op} ${b} = ?`;
+  const wrongs=new Set([ans]);
+  while(wrongs.size<4) wrongs.add(ans+Math.floor(Math.random()*20)-10);
+  const opts=[...wrongs].sort(()=>Math.random()-0.5);
+  document.getElementById('math-options').innerHTML=opts.map(o=>`<button onclick="checkMath(${o},${ans})" style="padding:14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(255,255,255,0.12);border-radius:10px;color:#fff;font-size:18px;font-weight:700;cursor:pointer;transition:all 0.2s" onmouseover="this.style.borderColor='var(--gold)'" onmouseout="this.style.borderColor='rgba(255,255,255,0.12)'">${o}</button>`).join('');
+}
+function checkMath(chosen, ans) {
+  if (!mathActive) return;
+  if (chosen===ans) { mathScore++; document.getElementById('math-score').textContent=mathScore; document.getElementById('math-msg').textContent='✅ சரி!'; }
+  else { document.getElementById('math-msg').textContent='❌ தவறு! சரியான விடை: '+ans; }
+  setTimeout(nextMath, 600);
+}
+
+// ═══════════════════════════════════════════════
+// GAME 11: COLOR MATCH
+// ═══════════════════════════════════════════════
+let colScore=0, colTimer, colActive=false;
+const colColors=[['#e74c3c','சிவப்பு'],['#3498db','நீலம்'],['#2ecc71','பச்சை'],['#f39c12','மஞ்சள்'],['#9b59b6','ஊதா'],['#e67e22','ஆரஞ்சு'],['#1abc9c','கடல்நீர்'],['#e91e63','இளஞ்சிவப்பு']];
+function startColor() {
+  colScore=0; colActive=true; let t=20;
+  document.getElementById('col-score').textContent=0; document.getElementById('col-time').textContent=t;
+  document.getElementById('col-msg').textContent=''; document.getElementById('col-btn').textContent='🔄 மீண்டும்';
+  clearInterval(colTimer);
+  colTimer=setInterval(()=>{ t--; document.getElementById('col-time').textContent=t; if(t<=0){clearInterval(colTimer);colActive=false;const best=parseInt(localStorage.getItem('col_best')||'0');if(colScore>best)localStorage.setItem('col_best',colScore);document.getElementById('col-best').textContent=Math.max(colScore,best);document.getElementById('col-msg').textContent='⏱ முடிந்தது! Score: '+colScore;} },1000);
+  nextColor();
+}
+function nextColor() {
+  if (!colActive) return;
+  const target = colColors[Math.floor(Math.random()*colColors.length)];
+  document.getElementById('col-target').style.background = target[0];
+  const opts = [target,...colColors.filter(c=>c[0]!==target[0]).sort(()=>Math.random()-0.5).slice(0,5)].sort(()=>Math.random()-0.5);
+  document.getElementById('col-options').innerHTML = opts.map(c=>`<div onclick="checkColor('${c[0]}','${target[0]}')" style="height:50px;border-radius:10px;background:${c[0]};cursor:pointer;border:2px solid transparent;transition:all 0.2s;display:flex;align-items:center;justify-content:center;font-size:10px;font-weight:700;color:rgba(255,255,255,0.8)" onmouseover="this.style.borderColor='#fff'" onmouseout="this.style.borderColor='transparent'">${c[1]}</div>`).join('');
+}
+function checkColor(chosen, target) {
+  if (!colActive) return;
+  if (chosen===target) { colScore++; document.getElementById('col-score').textContent=colScore; document.getElementById('col-msg').textContent='✅ சரி!'; }
+  else { document.getElementById('col-msg').textContent='❌ தவறு!'; }
+  setTimeout(nextColor, 500);
+}
+
+// ═══════════════════════════════════════════════
+// GAME 12: REACTION TIME
+// ═══════════════════════════════════════════════
+let rctState='idle', rctTimer, rctStart, rctTimes=[];
+function startReaction() {
+  rctState='waiting'; document.getElementById('rct-btn').textContent='⏳ காத்திருங்கள்...';
+  const box=document.getElementById('rct-box');
+  box.style.background='#1a1a2e'; box.style.borderColor='rgba(255,255,255,0.1)';
+  box.textContent='தயாராக இருங்கள்...'; box.style.color='rgba(255,255,255,0.4)';
+  document.getElementById('rct-msg').textContent='';
+  const delay = 1500 + Math.random()*3000;
+  clearTimeout(rctTimer);
+  rctTimer=setTimeout(()=>{ rctState='go'; rctStart=Date.now(); box.style.background='#00c853'; box.style.borderColor='#00e676'; box.textContent='இப்போது! தட்டுங்கள்!'; box.style.color='#fff'; }, delay);
+}
+function handleReaction() {
+  if (rctState==='go') {
+    const ms=Date.now()-rctStart; rctTimes.push(ms); rctState='idle';
+    const box=document.getElementById('rct-box');
+    box.style.background='#1a1a2e'; box.style.borderColor='rgba(245,166,35,0.4)';
+    box.textContent='⚡ '+ms+'ms'; box.style.color='var(--gold)';
+    document.getElementById('rct-last').textContent=ms;
+    const best=Math.min(...rctTimes); const avg=Math.round(rctTimes.reduce((a,b)=>a+b,0)/rctTimes.length);
+    document.getElementById('rct-best').textContent=best; document.getElementById('rct-avg').textContent=avg;
+    document.getElementById('rct-btn').textContent='🔄 மீண்டும்';
+    document.getElementById('rct-msg').textContent=ms<200?'⚡ அசாதாரண வேகம்!':ms<300?'🔥 மிகவும் சிறந்தது!':ms<500?'👍 நல்லது!':'💪 மேலும் பயிற்சி செய்யுங்கள்!';
+  } else if (rctState==='waiting') {
+    clearTimeout(rctTimer); rctState='idle';
+    const box=document.getElementById('rct-box');
+    box.style.background='#c0392b'; box.textContent='முன்னதாக தட்டினீர்கள்! 😅'; box.style.color='#fff';
+    document.getElementById('rct-btn').textContent='🔄 மீண்டும்';
+  }
+}
+
+// ═══════════════════════════════════════════════
+// GAME 13: HANGMAN
+// ═══════════════════════════════════════════════
+const hmWords=[{w:'அன்பு',h:'உணர்வு வகை'},{w:'வானம்',h:'மேலே தெரிவது'},{w:'மழை',h:'நீர் பொழிவு'},{w:'பூமி',h:'நாம் வாழும் இடம்'},{w:'கடல்',h:'நீர் நிறைந்த பரப்பு'},{w:'மலை',h:'உயரமான இடம்'},{w:'காடு',h:'மரங்கள் நிறைந்த இடம்'},{w:'நதி',h:'ஓடும் நீர்'},{w:'பறவை',h:'வானில் பறப்பது'},{w:'மீன்',h:'நீரில் வாழ்வது'}];
+const hmFaces=['😃','🙂','😐','😟','😰','😨','💀'];
+let hmWord='',hmGuessed=[],hmWrong=0,hmScore_=0;
+function startHangman() {
+  const pick=hmWords[Math.floor(Math.random()*hmWords.length)];
+  hmWord=pick.w; hmGuessed=[]; hmWrong=0;
+  document.getElementById('hm-hint').textContent='குறிப்பு: '+pick.h;
+  document.getElementById('hm-drawing').textContent=hmFaces[0];
+  document.getElementById('hm-msg').textContent='';
+  renderHMWord(); renderHMLetters();
+}
+function renderHMWord() {
+  const chars=[...hmWord];
+  document.getElementById('hm-word').textContent=chars.map(c=>hmGuessed.includes(c)?c:'_').join(' ');
+}
+function renderHMLetters() {
+  const tamilLetters=['அ','ஆ','இ','ஈ','உ','ஊ','எ','ஏ','ஐ','ஒ','ஓ','ஔ','க','ச','ட','த','ந','ப','ம','ய','ர','ல','வ','ழ','ள','ற','ன'];
+  document.getElementById('hm-letters').innerHTML=tamilLetters.map(l=>`<button onclick="hmGuess('${l}')" id="hm-l-${l.charCodeAt(0)}" style="padding:6px 10px;background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.15);border-radius:8px;color:#fff;font-size:14px;cursor:pointer;font-family:'Tiro Tamil',serif;transition:all 0.2s">${l}</button>`).join('');
+}
+function hmGuess(l) {
+  if (hmGuessed.includes(l)) return;
+  hmGuessed.push(l);
+  const btn=document.getElementById('hm-l-'+l.charCodeAt(0));
+  if ([...hmWord].includes(l)) { if(btn){btn.style.background='rgba(0,230,118,0.2)';btn.style.borderColor='#00e676';btn.style.color='#00e676';} }
+  else { hmWrong++; if(btn){btn.style.background='rgba(255,82,82,0.2)';btn.style.borderColor='#ff5252';btn.style.color='#ff5252';} }
+  document.getElementById('hm-drawing').textContent=hmFaces[Math.min(hmWrong,6)];
+  document.getElementById('hm-wrong').textContent=hmWrong;
+  renderHMWord();
+  const allGuessed=[...hmWord].every(c=>hmGuessed.includes(c));
+  if (allGuessed) { hmScore_++; document.getElementById('hm-score').textContent=hmScore_; document.getElementById('hm-msg').textContent='🎉 சரியாக கண்டுபிடித்தீர்கள்!'; }
+  else if (hmWrong>=6) { document.getElementById('hm-msg').textContent='💀 தோல்வி! சொல்: '+hmWord; }
+}
+
+// ═══════════════════════════════════════════════
+// GAME 14: SIMON SAYS
+// ═══════════════════════════════════════════════
+let simSeq=[], simPlayerSeq=[], simRound=0, simBest=0, simPlaying=false;
+function startSimon() {
+  simSeq=[]; simRound=0; simPlaying=false;
+  document.getElementById('sim-btn').textContent='⏳ பாருங்கள்...';
+  document.getElementById('sim-msg').textContent='';
+  simNextRound();
+}
+function simNextRound() {
+  simSeq.push(Math.floor(Math.random()*4));
+  simRound++; simPlayerSeq=[];
+  document.getElementById('sim-round').textContent=simRound;
+  document.getElementById('sim-msg').textContent='பாருங்கள்...';
+  simPlaySeq(0);
+}
+function simPlaySeq(i) {
+  if (i>=simSeq.length) { simPlaying=true; document.getElementById('sim-msg').textContent='இப்போது நீங்கள் தட்டுங்கள்!'; return; }
+  setTimeout(()=>{ simFlash(simSeq[i]); setTimeout(()=>simPlaySeq(i+1),600); },400);
+}
+function simFlash(id) {
+  const el=document.getElementById('sim-'+id);
+  el.style.opacity='1'; el.style.transform='scale(1.05)';
+  setTimeout(()=>{ el.style.opacity='0.5'; el.style.transform='scale(1)'; },300);
+}
+function simonPress(id) {
+  if (!simPlaying) return;
+  simFlash(id); simPlayerSeq.push(id);
+  const i=simPlayerSeq.length-1;
+  if (simPlayerSeq[i]!==simSeq[i]) { simPlaying=false; if(simRound>simBest){simBest=simRound;document.getElementById('sim-best').textContent=simBest;} document.getElementById('sim-msg').textContent='❌ தவறு! Round: '+simRound; document.getElementById('sim-btn').textContent='🔄 மீண்டும்'; return; }
+  if (simPlayerSeq.length===simSeq.length) { simPlaying=false; setTimeout(simNextRound,800); }
+}
+
+// ═══════════════════════════════════════════════
+// GAME 15: 2048
+// ═══════════════════════════════════════════════
+let g2048Board=[], g2048Score=0, g2048Best=0;
+function start2048() {
+  g2048Board=Array(4).fill(null).map(()=>Array(4).fill(0));
+  g2048Score=0; document.getElementById('g2048-score').textContent=0; document.getElementById('g2048-msg').textContent='';
+  add2048Tile(); add2048Tile(); render2048();
+}
+function add2048Tile() {
+  const empty=[];
+  for(let r=0;r<4;r++) for(let c=0;c<4;c++) if(!g2048Board[r][c]) empty.push([r,c]);
+  if(!empty.length) return;
+  const [r,c]=empty[Math.floor(Math.random()*empty.length)];
+  g2048Board[r][c]=Math.random()<0.9?2:4;
+}
+const tileColors={0:'rgba(255,255,255,0.04)',2:'#776e65',4:'#f9f6f2',8:'#f2b179',16:'#f59563',32:'#f67c5f',64:'#f65e3b',128:'#edcf72',256:'#edcc61',512:'#edc850',1024:'#edc53f',2048:'#edc22e'};
+function render2048() {
+  const board=document.getElementById('g2048-board');
+  board.innerHTML=g2048Board.flat().map(v=>`<div style="width:62px;height:62px;border-radius:8px;background:${tileColors[v]||'#3c3a32'};display:flex;align-items:center;justify-content:center;font-size:${v>99?v>999?14:16:20}px;font-weight:900;color:${v<=4?'#776e65':'#f9f6f2'};transition:all 0.1s">${v||''}</div>`).join('');
+}
+function move2048(dir) {
+  let moved=false;
+  const b=g2048Board;
+  function slideRow(row) {
+    let r=row.filter(x=>x); let merged=[];
+    for(let i=0;i<r.length-1;i++) { if(r[i]===r[i+1]&&!merged.includes(i)){r[i]*=2;g2048Score+=r[i];r.splice(i+1,1);merged.push(i);} }
+    while(r.length<4) r.push(0); return r;
+  }
+  if(dir==='left'||dir==='right') {
+    for(let r=0;r<4;r++){ const old=[...b[r]]; let row=dir==='right'?b[r].reverse():b[r]; row=slideRow(row); if(dir==='right')row.reverse(); if(old.join()!==row.join())moved=true; b[r]=row; }
+  } else {
+    for(let c=0;c<4;c++){ let col=b.map(r=>r[c]); const old=[...col]; if(dir==='up')col=slideRow(col); else{col.reverse();col=slideRow(col);col.reverse();} if(old.join()!==col.join())moved=true; col.forEach((v,r)=>b[r][c]=v); }
+  }
+  if(moved){add2048Tile();document.getElementById('g2048-score').textContent=g2048Score;if(g2048Score>g2048Best){g2048Best=g2048Score;document.getElementById('g2048-best').textContent=g2048Best;}render2048();}
+  if(b.flat().includes(2048)) document.getElementById('g2048-msg').textContent='🎉 2048 அடைந்தீர்கள்!';
+}
+document.addEventListener('keydown',e=>{
+  if(!document.getElementById('game-2048').classList.contains('active'))return;
+  if(e.key==='ArrowLeft')move2048('left');
+  else if(e.key==='ArrowRight')move2048('right');
+  else if(e.key==='ArrowUp')move2048('up');
+  else if(e.key==='ArrowDown')move2048('down');
+});
+let g2048Touch={};
+document.getElementById && setTimeout(()=>{
+  const el=document.getElementById('g2048-board');
+  if(el){ el.addEventListener('touchstart',e=>{g2048Touch={x:e.touches[0].clientX,y:e.touches[0].clientY}},{passive:true});
+  el.addEventListener('touchend',e=>{ const dx=e.changedTouches[0].clientX-g2048Touch.x, dy=e.changedTouches[0].clientY-g2048Touch.y;
+    if(Math.abs(dx)>Math.abs(dy)){move2048(dx>0?'right':'left');}else{move2048(dy>0?'down':'up');} },{passive:true}); }
+},1000);
+
+// ═══════════════════════════════════════════════
+// GAME 16: FLAPPY BIRD
+// ═══════════════════════════════════════════════
+let flpCanvas, flpCtx, flpBird, flpPipes, flpScore_=0, flpBest_=0, flpFrame, flpRunning=false, flpStarted=false;
+function startFlappy() {
+  flpCanvas=document.getElementById('flappyCanvas');
+  flpCtx=flpCanvas.getContext('2d');
+  flpBird={y:175,vy:0,x:60,r:14};
+  flpPipes=[]; flpScore_=0; flpRunning=true; flpStarted=false;
+  document.getElementById('flp-score').textContent=0;
+  document.getElementById('flp-msg').textContent='Tap to flap!';
+  document.getElementById('flp-btn').textContent='🔄 Restart';
+  cancelAnimationFrame(flpFrame);
+  flpCanvas.onclick=flpFlap;
+  flpLoop();
+}
+function flpFlap(){if(!flpStarted)flpStarted=true; flpBird.vy=-7;}
+function flpLoop(){
+  if(!flpRunning){flpDraw();return;}
+  flpFrame=requestAnimationFrame(flpLoop);
+  if(!flpStarted){flpDraw();return;}
+  flpBird.vy+=0.4; flpBird.y+=flpBird.vy;
+  if(flpFrame%90===0)flpPipes.push({x:300,gap:Math.floor(Math.random()*140)+70});
+  flpPipes.forEach(p=>p.x-=2);
+  flpPipes=flpPipes.filter(p=>p.x>-40);
+  for(const p of flpPipes){
+    if(!p.passed&&p.x<flpBird.x){p.passed=true;flpScore_++;document.getElementById('flp-score').textContent=flpScore_;}
+    if(flpBird.x+flpBird.r>p.x&&flpBird.x-flpBird.r<p.x+40&&(flpBird.y-flpBird.r<p.gap||flpBird.y+flpBird.r>p.gap+110)){flpGameOver();return;}
+  }
+  if(flpBird.y+flpBird.r>350||flpBird.y-flpBird.r<0){flpGameOver();return;}
+  flpDraw();
+}
+function flpDraw(){
+  const ctx=flpCtx, W=300, H=350;
+  ctx.clearRect(0,0,W,H);
+  // pipes
+  ctx.fillStyle='#27ae60';
+  flpPipes.forEach(p=>{ctx.fillRect(p.x,0,40,p.gap);ctx.fillRect(p.x,p.gap+110,40,H-p.gap-110);ctx.fillStyle='#2ecc71';ctx.fillRect(p.x-3,p.gap-15,46,15);ctx.fillRect(p.x-3,p.gap+110,46,15);ctx.fillStyle='#27ae60';});
+  // bird
+  ctx.save(); ctx.translate(flpBird.x,flpBird.y); ctx.rotate(Math.min(Math.max(flpBird.vy*0.08,-0.5),0.5));
+  ctx.fillStyle='#f1c40f'; ctx.beginPath(); ctx.arc(0,0,flpBird.r,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#e67e22'; ctx.beginPath(); ctx.ellipse(10,2,7,4,0.3,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#2c3e50'; ctx.beginPath(); ctx.arc(5,-4,3,0,Math.PI*2); ctx.fill();
+  ctx.fillStyle='#fff'; ctx.beginPath(); ctx.arc(6,-5,1.5,0,Math.PI*2); ctx.fill();
+  ctx.restore();
+  // score
+  ctx.fillStyle='rgba(255,255,255,0.8)'; ctx.font='bold 20px DM Sans'; ctx.textAlign='center';
+  ctx.fillText(flpScore_,150,30);
+}
+function flpGameOver(){
+  flpRunning=false; cancelAnimationFrame(flpFrame);
+  if(flpScore_>flpBest_){flpBest_=flpScore_;document.getElementById('flp-best').textContent=flpBest_;}
+  document.getElementById('flp-msg').textContent='💥 Game Over! Score: '+flpScore_;
 }
 
 // ─── LEADERBOARD ───
@@ -5068,28 +6241,42 @@ switchGame = function(id, el) {
   let splashPhone = '', splashTimer = null, splashSecs = 30;
   let splashRecaptcha = null, splashConfirmResult = null;
 
+  // ── Firebase init helper — safe on-demand initialisation ──
+  const FB_CONFIG = {
+    apiKey: "AIzaSyDXsFk6LbxRS76Efl3bNxckjo_i2JyTQPQ",
+    authDomain: "tamilkathaigal-4e5f9.firebaseapp.com",
+    projectId: "tamilkathaigal-4e5f9",
+    storageBucket: "tamilkathaigal-4e5f9.firebasestorage.app",
+    messagingSenderId: "686419126311",
+    appId: "1:686419126311:web:63bed331b9e8c6a2968602"
+  };
+
+  function getFirebaseAuth() {
+    if (window._tkAuth) return window._tkAuth;
+    if (typeof firebase === 'undefined') return null;
+    if (!window._tkFirebase) {
+      window._tkFirebase = firebase.apps.length
+        ? firebase.apps[0]
+        : firebase.initializeApp(FB_CONFIG);
+      window._tkAuth = window._tkFirebase.auth();
+      window._tkAuth.languageCode = 'ta';
+    }
+    return window._tkAuth;
+  }
+
   // ── reCAPTCHA setup for splash ──
   function splashSetupRecaptcha() {
     try {
-      if (splashRecaptcha) { splashRecaptcha.clear(); splashRecaptcha = null; }
+      if (splashRecaptcha) { try { splashRecaptcha.clear(); } catch(e){} splashRecaptcha = null; }
       const container = document.getElementById('splash-recaptcha-container');
       if (container) container.innerHTML = '';
-      if (!window.firebase) return;
-      // Init Firebase only if not already initialized
-      if (!firebase.apps.length) {
-        firebase.initializeApp({
-          apiKey: "AIzaSyDXsFk6LbxRS76Efl3bNxckjo_i2JyTQPQ",
-          authDomain: "tamilkathaigal-4e5f9.firebaseapp.com",
-          projectId: "tamilkathaigal-4e5f9",
-          storageBucket: "tamilkathaigal-4e5f9.firebasestorage.app",
-          messagingSenderId: "686419126311",
-          appId: "1:686419126311:web:63bed331b9e8c6a2968602"
-        });
-      }
+      const auth = getFirebaseAuth();
+      if (!auth) return;          // Firebase SDK not loaded yet
       splashRecaptcha = new firebase.auth.RecaptchaVerifier('splash-recaptcha-container', {
         size: 'invisible',
         callback: () => {}
       });
+      splashRecaptcha.render().catch(() => {});
     } catch(e) { console.log('splash recaptcha:', e); }
   }
 
@@ -5113,12 +6300,15 @@ switchGame = function(id, el) {
     const btn = document.getElementById('splashSendOtpBtn');
     btn.disabled = true;
     btn.innerHTML = '<span class="lux-spinner"></span> Sending...';
+    document.getElementById('splashOtpErr') && (document.getElementById('splashOtpErr').textContent = '');
 
     try {
-      // Ensure recaptcha ready
-      if (!splashRecaptcha) splashSetupRecaptcha();
-      const auth = firebase.auth();
-      auth.languageCode = 'ta';
+      const auth = getFirebaseAuth();
+      if (!auth) throw new Error('Firebase SDK வரவில்லை. Page reload செய்யுங்கள்.');
+      // Always recreate verifier so it is fresh for this attempt
+      splashSetupRecaptcha();
+      if (!splashRecaptcha) throw new Error('reCAPTCHA init failed. Reload and try again.');
+      await splashRecaptcha.render();
       splashConfirmResult = await auth.signInWithPhoneNumber('+91' + phone, splashRecaptcha);
       document.getElementById('splashOtpPhone').textContent = phone;
       splashClearOtpBoxes();
@@ -5127,13 +6317,17 @@ switchGame = function(id, el) {
       document.getElementById('sotp0').focus();
     } catch(err) {
       console.error('OTP send error:', err);
-      // Reset recaptcha on error
-      try { splashRecaptcha.clear(); splashRecaptcha = null; splashSetupRecaptcha(); } catch(e2) {}
+      // Destroy used/broken verifier so next attempt gets a clean one
+      try { if(splashRecaptcha){ splashRecaptcha.clear(); splashRecaptcha = null; } } catch(e2) {}
+      const container = document.getElementById('splash-recaptcha-container');
+      if (container) container.innerHTML = '';
       const errMsg = err.code === 'auth/too-many-requests'
-        ? '⚠️ Too many attempts. Try later.'
+        ? '⚠️ Too many attempts. Please wait a few minutes.'
         : err.code === 'auth/invalid-phone-number'
-        ? '⚠️ Invalid phone number.'
-        : '⚠️ OTP அனுப்பல் தவறு. மீண்டும் முயற்சி செய்யுங்கள்.';
+        ? '⚠️ Invalid phone number. Check and try again.'
+        : err.code === 'auth/captcha-check-failed'
+        ? '⚠️ reCAPTCHA failed. Refresh the page and try again.'
+        : '⚠️ OTP அனுப்பல் தவறு: ' + (err.message || 'Try again.');
       if (window.showToast) showToast(errMsg);
     } finally {
       btn.disabled = false;
@@ -5206,18 +6400,23 @@ switchGame = function(id, el) {
     const btn = document.getElementById('splashResendBtn');
     btn.disabled = true;
     try {
-      try { splashRecaptcha.clear(); splashRecaptcha = null; } catch(e) {}
+      // Destroy old verifier, render a fresh one, then send
+      try { if(splashRecaptcha){ splashRecaptcha.clear(); splashRecaptcha = null; } } catch(e) {}
+      const container = document.getElementById('splash-recaptcha-container');
+      if (container) container.innerHTML = '';
       splashSetupRecaptcha();
-      const auth = firebase.auth();
-      auth.languageCode = 'ta';
+      // Give render() time to finish before signInWithPhoneNumber fires
+      await splashRecaptcha.render();
+      const auth = getFirebaseAuth();
+      if (!auth) throw new Error('Firebase SDK வரவில்லை. Page reload செய்யுங்கள்.');
       splashConfirmResult = await auth.signInWithPhoneNumber('+91' + splashPhone, splashRecaptcha);
       splashStartTimer();
       document.getElementById('sotp0').focus();
       if (window.showToast) showToast('📱 New OTP sent!');
     } catch(err) {
       console.error('Resend error:', err);
-      try { splashRecaptcha.clear(); splashRecaptcha = null; splashSetupRecaptcha(); } catch(e2) {}
-      if (window.showToast) showToast('⚠️ Resend failed. Try again.');
+      try { if(splashRecaptcha){ splashRecaptcha.clear(); splashRecaptcha = null; } } catch(e2) {}
+      if (window.showToast) showToast('⚠️ Resend failed: ' + (err.message || 'Try again.'));
       btn.disabled = false;
     }
   }
@@ -5272,9 +6471,8 @@ switchGame = function(id, el) {
   window.splashVerify = splashVerify;
 
   function splashGoogleLogin() {
-    // Use Firebase Google popup for splash too
-    if (!firebase.apps.length) splashSetupRecaptcha();
-    const auth = firebase.auth();
+    const auth = getFirebaseAuth();
+    if (!auth) { if(window.showToast) showToast('⚠️ Firebase not loaded. Reload page.'); return; }
     const provider = new firebase.auth.GoogleAuthProvider();
     auth.signInWithPopup(provider).then(result => {
       const fbUser = result.user;
@@ -5336,13 +6534,20 @@ let fbApp, fbAuth, fbRecaptcha;
 
 function initFirebase() {
   if (fbApp) return;
-  if (firebase.apps.length) {
+  if (typeof firebase === 'undefined') { console.error('Firebase SDK not loaded'); return; }
+  // Reuse the singleton created by splash login if available
+  if (window._tkFirebase) {
+    fbApp = window._tkFirebase;
+  } else if (firebase.apps.length) {
     fbApp = firebase.apps[0];
+    window._tkFirebase = fbApp;
   } else {
     fbApp = firebase.initializeApp(fbConfig);
+    window._tkFirebase = fbApp;
   }
-  fbAuth = firebase.auth();
+  fbAuth = fbApp.auth();
   fbAuth.languageCode = 'ta';
+  window._tkAuth = fbAuth;
   fbAuth.onAuthStateChanged(fbUser => {
     if (fbUser) {
       const user = {
@@ -5414,15 +6619,16 @@ document.addEventListener('click', e => {
 
 // reCAPTCHA setup
 function setupRecaptcha() {
-  if (!fbAuth) return;
+  if (!fbAuth || typeof firebase === 'undefined') return;
   try {
-    if (fbRecaptcha) { fbRecaptcha.clear(); fbRecaptcha = null; }
+    if (fbRecaptcha) { try { fbRecaptcha.clear(); } catch(e){} fbRecaptcha = null; }
     const container = document.getElementById('recaptcha-container');
     if (container) container.innerHTML = '';
     fbRecaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
       size: 'invisible',
       callback: () => {}
     });
+    fbRecaptcha.render().catch(() => {});
   } catch(e) { console.log('recaptcha:', e); }
 }
 
@@ -5443,7 +6649,11 @@ async function luxSendOTP() {
   btn.disabled = true; btn.innerHTML = '<span class="lux-spinner"></span>';
   luxShowLoad();
   try {
-    if (!fbRecaptcha) setupRecaptcha();
+    if (typeof firebase === 'undefined' || !fbAuth) throw new Error('Firebase SDK வரவில்லை. Page reload செய்யுங்கள்.');
+    // Always recreate verifier for a clean state on every send attempt
+    setupRecaptcha();
+    if (!fbRecaptcha) throw new Error('reCAPTCHA init failed. Reload and try again.');
+    await fbRecaptcha.render();
     fbConfirmResult = await fbAuth.signInWithPhoneNumber(fullPhone, fbRecaptcha);
     luxHideLoad(); btn.disabled = false; btn.textContent = 'Send OTP';
     document.getElementById('luxOtpPhone').textContent = fullPhone;
@@ -5452,11 +6662,19 @@ async function luxSendOTP() {
     showToast('📱 OTP அனுப்பப்பட்டது!', 4000);
   } catch(err) {
     luxHideLoad(); btn.disabled = false; btn.textContent = 'Send OTP';
-    hint.textContent = '❌ ' + (err.message || 'OTP அனுப்ப முடியவில்லை');
+    const luxErrMsg = err.code === 'auth/too-many-requests'
+      ? '⚠️ Too many attempts. Wait a few minutes.'
+      : err.code === 'auth/invalid-phone-number'
+      ? '⚠️ Invalid phone number.'
+      : err.code === 'auth/captcha-check-failed'
+      ? '⚠️ reCAPTCHA failed. Refresh and try again.'
+      : '❌ ' + (err.message || 'OTP அனுப்ப முடியவில்லை');
+    hint.textContent = luxErrMsg;
     hint.classList.add('err');
-    showToast('❌ ' + err.message, 5000);
+    showToast(luxErrMsg, 5000);
     if (fbRecaptcha) { try { fbRecaptcha.clear(); } catch(e){} fbRecaptcha = null; }
-    setupRecaptcha();
+    const container = document.getElementById('recaptcha-container');
+    if (container) container.innerHTML = '';
   }
 }
 
@@ -5509,7 +6727,10 @@ function luxStartTimer() {
 }
 async function luxResendOTP() {
   luxClearOTP();
-  setupRecaptcha();
+  // Destroy old verifier first, then let luxSendOTP recreate it
+  if (fbRecaptcha) { try { fbRecaptcha.clear(); } catch(e){} fbRecaptcha = null; }
+  const container = document.getElementById('recaptcha-container');
+  if (container) container.innerHTML = '';
   await luxSendOTP();
 }
 
@@ -5529,7 +6750,12 @@ async function luxVerifyOTP() {
     showToast('✅ Phone login success!', 4000);
   } catch(err) {
     luxHideLoad(); btn.disabled = false; btn.textContent = 'Verify & Sign In';
-    hint.textContent = '✕ தவறான OTP. மீண்டும் try பண்ணுங்கள்.'; hint.classList.add('err');
+    const verifyMsg = err.code === 'auth/invalid-verification-code'
+      ? '✕ தவறான OTP. Check the digits and try again.'
+      : err.code === 'auth/code-expired'
+      ? '✕ OTP காலாவதியானது. Resend பண்ணுங்கள்.'
+      : '✕ Verification failed: ' + (err.message || err.code);
+    hint.textContent = verifyMsg; hint.classList.add('err');
     for(let i=0;i<6;i++){const b=document.getElementById('lotp'+i);b.style.borderColor='#e05a5a';setTimeout(()=>b.style.borderColor='',600);}
   }
 }
