@@ -26,21 +26,55 @@
 <meta name="apple-mobile-web-app-title" content="Tamilகதைகள்">
 
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Serif+Tamil:wght@400;700&family=Catamaran:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"
-  onerror="window._firebaseLoadFailed=true;console.error('firebase-app failed to load')"></script>
-<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"
-  onerror="window._firebaseLoadFailed=true;console.error('firebase-auth failed to load')"></script>
+<!-- Firebase: jsDelivr primary, unpkg fallback (avoids gstatic ad-blocker blocks) -->
 <script>
-// Fallback: if Firebase blocked (ad-blocker/network), show user a helpful message
-window.addEventListener('load', function() {
-  if (window._firebaseLoadFailed || typeof firebase === 'undefined') {
-    var btn = document.getElementById('splashSendOtpBtn');
-    if (btn) { btn.disabled = true; btn.textContent = 'Login unavailable'; }
-    var luxBtn = document.getElementById('luxOtpBtn');
-    if (luxBtn) { luxBtn.disabled = true; luxBtn.textContent = 'Login unavailable'; }
-    if (window.showToast) showToast('⚠️ Login service blocked. Disable ad-blocker or use a different network.', 8000);
+(function() {
+  var FB_VER = '9.23.0';
+  var pending = 2;
+  var anyFailed = false;
+
+  function onLoad() {
+    pending--;
   }
-});
+
+  function firebaseUnavailable() {
+    window._firebaseLoadFailed = true;
+    window.addEventListener('load', function() {
+      var btn = document.getElementById('splashSendOtpBtn');
+      if (btn) { btn.disabled = true; btn.textContent = 'Login unavailable'; }
+      var luxBtn = document.getElementById('luxOtpBtn');
+      if (luxBtn) { luxBtn.disabled = true; luxBtn.textContent = 'Login unavailable'; }
+      if (window.showToast) showToast('⚠️ Login unavailable. Check your internet connection and reload.', 8000);
+    });
+  }
+
+  function loadScript(src, onload, onerror) {
+    var s = document.createElement('script');
+    s.src = src;
+    s.onload = onload;
+    s.onerror = onerror;
+    document.head.appendChild(s);
+  }
+
+  function loadWithFallback(primary, fallback) {
+    loadScript(primary, onLoad, function() {
+      console.warn('jsDelivr blocked, trying unpkg for: ' + primary);
+      loadScript(fallback, onLoad, function() {
+        console.error('All CDNs failed for Firebase script: ' + fallback);
+        firebaseUnavailable();
+      });
+    });
+  }
+
+  loadWithFallback(
+    'https://cdn.jsdelivr.net/npm/firebase@' + FB_VER + '/firebase-app-compat.min.js',
+    'https://unpkg.com/firebase@' + FB_VER + '/firebase-app-compat.js'
+  );
+  loadWithFallback(
+    'https://cdn.jsdelivr.net/npm/firebase@' + FB_VER + '/firebase-auth-compat.min.js',
+    'https://unpkg.com/firebase@' + FB_VER + '/firebase-auth-compat.js'
+  );
+})();
 </script>
 <style>
 :root {
@@ -4682,10 +4716,6 @@ function gpFilter(cat, btn) {
       card.style.display = 'none';
     }
   });
-} else {
-      card.style.display = 'none';
-    }
-  });
 }
 
 function openGame(type) {
@@ -6580,19 +6610,27 @@ switchGame = function(id, el) {
   function splashDismiss() {
     const el = document.getElementById('splashLogin');
     el.classList.add('hide');
-    setTimeout(() => {
-      el.style.display = 'none';
-      try {
-        const user = JSON.parse(localStorage.getItem('tk_user') || 'null');
-        if (user && window.updateNavForUser) updateNavForUser(user);
-        if (user && window.showToast) showToast('🎉 வணக்கம், ' + user.name + '!');
-      } catch(e) {}
-    }, 500);
+    try {
+      const user = JSON.parse(localStorage.getItem('tk_user') || 'null');
+      if (user) {
+        currentUser = user;
+        if (window.updateNavForUser) updateNavForUser(user);
+        if (window.showToast) showToast('🎉 வணக்கம், ' + user.name + '!');
+      }
+    } catch(e) {}
+    setTimeout(() => { el.style.display = 'none'; }, 500);
   }
   window.splashDismiss = splashDismiss;
 
-  // Setup recaptcha on load for splash
-  window.addEventListener('load', () => { setTimeout(splashSetupRecaptcha, 500); });
+  // Setup recaptcha once Firebase SDK is ready (SDK loaded dynamically)
+  window.addEventListener('load', () => {
+    var attempts = 0;
+    var interval = setInterval(function() {
+      attempts++;
+      if (typeof firebase !== 'undefined') { clearInterval(interval); splashSetupRecaptcha(); }
+      else if (attempts > 30) { clearInterval(interval); } // give up after ~6s
+    }, 200);
+  });
 })();
 
 // ═══════════════════════════════════════
@@ -6612,9 +6650,21 @@ const fbConfig = {
 
 let fbApp, fbAuth, fbRecaptcha;
 
+// Wait for dynamically-loaded Firebase SDK, then run callback
+function waitForFirebase(callback, retries) {
+  retries = (retries === undefined) ? 20 : retries;
+  if (typeof firebase !== 'undefined') { callback(); return; }
+  if (retries <= 0) { console.error('Firebase SDK never loaded'); return; }
+  setTimeout(function() { waitForFirebase(callback, retries - 1); }, 200);
+}
+
 function initFirebase() {
   if (fbApp) return;
-  if (typeof firebase === 'undefined') { console.error('Firebase SDK not loaded'); return; }
+  if (typeof firebase === 'undefined') {
+    console.warn('Firebase SDK not yet ready, retrying...');
+    waitForFirebase(function() { initFirebase(); });
+    return;
+  }
   // Reuse the singleton created by splash login if available
   if (window._tkFirebase) {
     fbApp = window._tkFirebase;
@@ -6729,7 +6779,10 @@ async function luxSendOTP() {
   btn.disabled = true; btn.innerHTML = '<span class="lux-spinner"></span>';
   luxShowLoad();
   try {
-    if (typeof firebase === 'undefined' || !fbAuth) throw new Error('Firebase SDK வரவில்லை. Page reload செய்யுங்கள்.');
+    if (typeof firebase === 'undefined') throw new Error('Firebase SDK வரவில்லை. Page reload செய்யுங்கள்.');
+    // Ensure Firebase is initialised before using fbAuth
+    if (!fbAuth) initFirebase();
+    if (!fbAuth) throw new Error('Firebase init failed. Page reload செய்யுங்கள்.');
     // Always recreate verifier for a clean state on every send attempt
     setupRecaptcha();
     if (!fbRecaptcha) throw new Error('reCAPTCHA init failed. Reload and try again.');
@@ -6823,9 +6876,23 @@ async function luxVerifyOTP() {
   const hint = document.getElementById('luxOtpHint');
   btn.disabled = true; btn.innerHTML = '<span class="lux-spinner"></span>'; luxShowLoad();
   try {
-    await fbConfirmResult.confirm(entered);
+    const result = await fbConfirmResult.confirm(entered);
     luxHideLoad();
     if (luxOtpTimer){ clearInterval(luxOtpTimer); luxOtpTimer = null; }
+    // Save user immediately — don't rely solely on onAuthStateChanged race
+    if (result && result.user) {
+      const fbUser = result.user;
+      const user = {
+        name: fbUser.displayName || fbUser.phoneNumber || 'Tamil Reader',
+        email: fbUser.email || '',
+        phone: fbUser.phoneNumber || '',
+        avatar: fbUser.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fbUser.phoneNumber||'U')}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`,
+        provider: (fbUser.providerData[0] && fbUser.providerData[0].providerId) || 'phone',
+        uid: fbUser.uid,
+        joinedAt: new Date().toISOString()
+      };
+      signInUser(user);
+    }
     closeLoginModal();
     showToast('✅ Phone login success!', 4000);
   } catch(err) {
@@ -6845,7 +6912,20 @@ async function openLuxGooglePopup() {
   initFirebase();
   try {
     const provider = new firebase.auth.GoogleAuthProvider();
-    await fbAuth.signInWithPopup(provider);
+    const result = await fbAuth.signInWithPopup(provider);
+    if (result && result.user) {
+      const fbUser = result.user;
+      const user = {
+        name: fbUser.displayName || fbUser.email || 'User',
+        email: fbUser.email || '',
+        phone: fbUser.phoneNumber || '',
+        avatar: fbUser.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fbUser.displayName||'U')}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`,
+        provider: 'google.com',
+        uid: fbUser.uid,
+        joinedAt: new Date().toISOString()
+      };
+      signInUser(user);
+    }
     closeLoginModal();
     try { const s=document.getElementById('splashLogin'); if(s) s.style.display='none'; } catch(e){}
   } catch(err) {
