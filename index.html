@@ -299,8 +299,9 @@ nav {
 /* ─── STORY CARDS ─── */
 .stories-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fill,minmax(285px,1fr));
+  grid-template-columns:repeat(auto-fill,minmax(260px,1fr));
   gap:14px;
+  align-items:start;
 }
 
 @keyframes cardIn {
@@ -315,6 +316,7 @@ nav {
   transition:transform 0.25s cubic-bezier(.34,1.56,.64,1), border-color 0.2s, box-shadow 0.2s;
   animation:cardIn 0.4s ease both;
   position:relative;
+  display:flex; flex-direction:column;
 }
 .story-card:nth-child(1){animation-delay:0.04s}
 .story-card:nth-child(2){animation-delay:0.08s}
@@ -350,7 +352,7 @@ nav {
 .badge-love { background:#e91e63; color:#fff; }
 .badge-classic { background:var(--gold); color:#1a1200; }
 
-.story-body { padding:14px 16px 10px; }
+.story-body { padding:14px 16px 10px; flex:1; }
 .story-cat {
   font-size:9px; font-weight:800;
   padding:3px 9px; border-radius:20px;
@@ -1075,27 +1077,71 @@ body.light .upload-input, body.light .upload-textarea { background:#fff; border-
 .mobile-menu a:hover { color:var(--gold); background:var(--gold-glow); }
 
 /* ─── RESPONSIVE BREAKPOINTS ─── */
+
+/* Desktop: 3 columns */
+@media(min-width:900px){
+  .stories-grid { grid-template-columns:repeat(3,1fr); gap:16px; }
+}
+
+/* Tablet: 2 columns */
 @media(max-width:900px){
   .nav-links a { font-size:10.5px; padding:5px 6px; }
+  .stories-grid { grid-template-columns:repeat(2,1fr); gap:14px; }
 }
+
+/* Small tablet / large mobile */
 @media(max-width:780px){
   .nav-links { display:none; }
   .hamburger-btn { display:flex; }
   nav { padding:0 14px; gap:8px; }
+  .stories-grid { grid-template-columns:repeat(2,1fr); gap:12px; }
 }
-@media(max-width:700px){
+
+/* Mobile */
+@media(max-width:600px){
   .hamburger-btn { display:flex; }
   .hero { padding:36px 16px 30px; }
   .hero h1 { font-size:clamp(28px,8vw,44px); }
   .hero-stats { gap:8px; }
   .stat { padding:10px 12px; }
   .stat .num { font-size:18px; }
-  .search-wrap { padding:16px 16px; }
-  .section { padding:14px 16px; }
-  .stories-grid { grid-template-columns:1fr; gap:12px; }
-  .sotd-section { margin:0 16px 14px; }
-  .ad-banner { margin:0 16px 14px; }
-  .mood-strip { padding:0 16px 14px; }
+  .search-wrap { padding:14px 12px; }
+  .section { padding:12px 12px; }
+  .stories-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; }
+  .sotd-section { margin:0 12px 12px; }
+  .ad-banner { margin:0 12px 12px; }
+  .mood-strip { padding:0 12px 12px; gap:5px; }
+  .story-card { border-radius:14px; }
+  .story-thumb { height:90px; font-size:38px; }
+  .story-title { font-size:13px; }
+  .story-excerpt { font-size:11px; }
+  .story-body { padding:10px 12px 8px; }
+  .card-actions { padding:6px 10px 8px; gap:4px; }
+  .card-action-btn { font-size:9px; padding:5px 3px; }
+  .read-btn { font-size:12px; padding:9px; }
+  .history-section { padding:0 12px 12px; }
+  .leaderboard-section { padding:0 12px 12px; }
+  .sotd-card { flex-direction:column; text-align:center; gap:10px; }
+  .sotd-emoji { font-size:44px; }
+  .sotd-read-btn { width:100%; }
+  .cat-tabs { gap:5px; padding-bottom:6px; }
+  .cat-tab { padding:5px 12px; font-size:11px; }
+  .toolbar { gap:7px; }
+  .pagination { padding:14px 12px; gap:5px; }
+  .page-btn { padding:7px 12px; font-size:11px; }
+  .modal-story { padding:20px 18px; font-size:15px; line-height:2; }
+  .next-story-row { padding:12px 16px; }
+  .reactions-bar { padding:10px 16px; gap:6px; }
+  .comments-section { padding:14px 16px 18px; }
+}
+
+/* Small phones (≤400px): single column */
+@media(max-width:400px){
+  .stories-grid { grid-template-columns:1fr; gap:10px; }
+  .hero-stats { flex-wrap:nowrap; gap:6px; }
+  .stat { padding:8px 10px; flex:1; min-width:0; }
+  .stat .num { font-size:16px; }
+  .stat .lbl { font-size:9px; }
 }
 
 /* ─── BACK TO TOP ─── */
@@ -1881,6 +1927,8 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
       </div>
       <div class="splash-hint">We'll send a 6-digit OTP to verify</div>
       <button class="splash-otp-btn" id="splashSendOtpBtn" onclick="splashSendOtp()" disabled>Send OTP</button>
+
+      <div id="splash-recaptcha-container"></div>
 
       <div class="splash-terms">
         By continuing, you accept our <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>
@@ -5002,7 +5050,7 @@ switchGame = function(id, el) {
 };
 
 // ═══════════════════════════════════════
-// SPLASH LOGIN PAGE
+// SPLASH LOGIN PAGE — REAL FIREBASE AUTH
 // ═══════════════════════════════════════
 (function() {
   // If user already logged in, hide splash immediately
@@ -5011,7 +5059,33 @@ switchGame = function(id, el) {
     if (saved) { document.getElementById('splashLogin').style.display = 'none'; return; }
   } catch(e) {}
 
-  let splashOTP = '', splashPhone = '', splashTimer = null, splashSecs = 30;
+  let splashPhone = '', splashTimer = null, splashSecs = 30;
+  let splashRecaptcha = null, splashConfirmResult = null;
+
+  // ── reCAPTCHA setup for splash ──
+  function splashSetupRecaptcha() {
+    try {
+      if (splashRecaptcha) { splashRecaptcha.clear(); splashRecaptcha = null; }
+      const container = document.getElementById('splash-recaptcha-container');
+      if (container) container.innerHTML = '';
+      if (!window.firebase) return;
+      // Init Firebase only if not already initialized
+      if (!firebase.apps.length) {
+        firebase.initializeApp({
+          apiKey: "AIzaSyDXsFk6LbxRS76Efl3bNxckjo_i2JyTQPQ",
+          authDomain: "tamilkathaigal-4e5f9.firebaseapp.com",
+          projectId: "tamilkathaigal-4e5f9",
+          storageBucket: "tamilkathaigal-4e5f9.firebasestorage.app",
+          messagingSenderId: "686419126311",
+          appId: "1:686419126311:web:63bed331b9e8c6a2968602"
+        });
+      }
+      splashRecaptcha = new firebase.auth.RecaptchaVerifier('splash-recaptcha-container', {
+        size: 'invisible',
+        callback: () => {}
+      });
+    } catch(e) { console.log('splash recaptcha:', e); }
+  }
 
   function splashGoTo(id) {
     document.querySelectorAll('.splash-step').forEach(s => s.classList.remove('active'));
@@ -5026,19 +5100,39 @@ switchGame = function(id, el) {
   }
   window.splashPhoneChanged = splashPhoneChanged;
 
-  function splashSendOtp() {
+  async function splashSendOtp() {
     const phone = document.getElementById('splashPhoneInput').value.replace(/\D/g,'');
     if (phone.length < 10) return;
     splashPhone = phone;
-    splashOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    document.getElementById('splashOtpPhone').textContent = phone;
-    splashClearOtpBoxes();
-    splashGoTo('splashStep2');
-    splashStartTimer();
-    document.getElementById('sotp0').focus();
-    // Show demo OTP in toast (remove in production)
-    if (window.showToast) showToast('Demo OTP: ' + splashOTP);
-    else console.log('Demo OTP:', splashOTP);
+    const btn = document.getElementById('splashSendOtpBtn');
+    btn.disabled = true;
+    btn.innerHTML = '<span class="lux-spinner"></span> Sending...';
+
+    try {
+      // Ensure recaptcha ready
+      if (!splashRecaptcha) splashSetupRecaptcha();
+      const auth = firebase.auth();
+      auth.languageCode = 'ta';
+      splashConfirmResult = await auth.signInWithPhoneNumber('+91' + phone, splashRecaptcha);
+      document.getElementById('splashOtpPhone').textContent = phone;
+      splashClearOtpBoxes();
+      splashGoTo('splashStep2');
+      splashStartTimer();
+      document.getElementById('sotp0').focus();
+    } catch(err) {
+      console.error('OTP send error:', err);
+      // Reset recaptcha on error
+      try { splashRecaptcha.clear(); splashRecaptcha = null; splashSetupRecaptcha(); } catch(e2) {}
+      const errMsg = err.code === 'auth/too-many-requests'
+        ? '⚠️ Too many attempts. Try later.'
+        : err.code === 'auth/invalid-phone-number'
+        ? '⚠️ Invalid phone number.'
+        : '⚠️ OTP அனுப்பல் தவறு. மீண்டும் முயற்சி செய்யுங்கள்.';
+      if (window.showToast) showToast(errMsg);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = 'Send OTP';
+    }
   }
   window.splashSendOtp = splashSendOtp;
 
@@ -5055,7 +5149,6 @@ switchGame = function(id, el) {
     const box = document.getElementById('sotp' + i);
     const val = box.value.replace(/\D/g,'');
     if (val.length > 1) {
-      // Paste full OTP
       const d = val.slice(0,6);
       for (let j = 0; j < 6; j++) {
         const b = document.getElementById('sotp' + j);
@@ -5101,52 +5194,108 @@ switchGame = function(id, el) {
     }, 1000);
   }
 
-  function splashResend() {
-    splashOTP = Math.floor(100000 + Math.random() * 900000).toString();
-    splashClearOtpBoxes(); splashStartTimer();
-    document.getElementById('sotp0').focus();
-    if (window.showToast) showToast('New OTP: ' + splashOTP);
+  async function splashResend() {
+    if (splashTimer) { clearInterval(splashTimer); splashTimer = null; }
+    splashClearOtpBoxes();
+    const btn = document.getElementById('splashResendBtn');
+    btn.disabled = true;
+    try {
+      try { splashRecaptcha.clear(); splashRecaptcha = null; } catch(e) {}
+      splashSetupRecaptcha();
+      const auth = firebase.auth();
+      auth.languageCode = 'ta';
+      splashConfirmResult = await auth.signInWithPhoneNumber('+91' + splashPhone, splashRecaptcha);
+      splashStartTimer();
+      document.getElementById('sotp0').focus();
+      if (window.showToast) showToast('📱 New OTP sent!');
+    } catch(err) {
+      console.error('Resend error:', err);
+      try { splashRecaptcha.clear(); splashRecaptcha = null; splashSetupRecaptcha(); } catch(e2) {}
+      if (window.showToast) showToast('⚠️ Resend failed. Try again.');
+      btn.disabled = false;
+    }
   }
   window.splashResend = splashResend;
 
-  function splashVerify() {
+  async function splashVerify() {
+    if (!splashConfirmResult) {
+      document.getElementById('splashOtpErr').textContent = '⚠️ முதலில் OTP அனுப்புங்கள்.';
+      return;
+    }
     let entered = '';
     for (let i = 0; i < 6; i++) entered += document.getElementById('sotp'+i).value;
     const btn = document.getElementById('splashVerifyBtn');
     btn.disabled = true; btn.innerHTML = '<span class="lux-spinner"></span>';
-    setTimeout(() => {
+    document.getElementById('splashOtpErr').textContent = '';
+
+    try {
+      const result = await splashConfirmResult.confirm(entered);
+      const fbUser = result.user;
+      const user = {
+        name: fbUser.displayName || ('Tamil Reader'),
+        phone: fbUser.phoneNumber || '+91' + splashPhone,
+        email: fbUser.email || '',
+        avatar: fbUser.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fbUser.phoneNumber||splashPhone)}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`,
+        provider: 'phone',
+        uid: fbUser.uid,
+        joinedAt: new Date().toISOString()
+      };
+      currentUser = user;
+      localStorage.setItem('tk_user', JSON.stringify(user));
+      if (splashTimer) { clearInterval(splashTimer); splashTimer = null; }
+      document.getElementById('splashSuccessTitle').textContent = 'வணக்கம்! 🎉';
+      document.getElementById('splashSuccessMsg').textContent = `Signed in with +91${splashPhone}. Welcome to your personalized reading experience!`;
+      splashGoTo('splashStep3');
+    } catch(err) {
+      console.error('Verify error:', err);
       btn.innerHTML = 'Verify & Sign In';
-      if (entered === splashOTP) {
-        const seed = encodeURIComponent(splashPhone);
-        const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${seed}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`;
-        const user = { name:'Tamil Reader', phone:'+91'+splashPhone, email:'', provider:'phone', avatar, joinedAt:new Date().toISOString() };
-        localStorage.setItem('tk_user', JSON.stringify(user));
-        document.getElementById('splashSuccessTitle').textContent = 'வணக்கம்! 🎉';
-        document.getElementById('splashSuccessMsg').textContent = `Signed in with +91${splashPhone}. Welcome to your personalized reading experience!`;
-        if (splashTimer) { clearInterval(splashTimer); splashTimer = null; }
-        splashGoTo('splashStep3');
-      } else {
-        document.getElementById('splashOtpErr').textContent = '✕ Incorrect OTP. Please try again.';
-        btn.disabled = false;
-        for (let i = 0; i < 6; i++) {
-          const b = document.getElementById('sotp'+i);
-          b.style.borderColor = '#e05a5a';
-          setTimeout(() => b.style.borderColor = '', 700);
-        }
+      btn.disabled = false;
+      const msg = err.code === 'auth/invalid-verification-code'
+        ? '✕ தவறான OTP. மீண்டும் முயற்சி செய்யுங்கள்.'
+        : err.code === 'auth/code-expired'
+        ? '✕ OTP காலாவதியானது. Resend பண்ணுங்கள்.'
+        : '✕ Verification failed. Try again.';
+      document.getElementById('splashOtpErr').textContent = msg;
+      for (let i = 0; i < 6; i++) {
+        const b = document.getElementById('sotp'+i);
+        b.style.borderColor = '#e05a5a';
+        setTimeout(() => b.style.borderColor = '', 700);
       }
-    }, 1400);
+    }
   }
   window.splashVerify = splashVerify;
 
   function splashGoogleLogin() {
-    openLuxGooglePopup();
+    // Use Firebase Google popup for splash too
+    if (!firebase.apps.length) splashSetupRecaptcha();
+    const auth = firebase.auth();
+    const provider = new firebase.auth.GoogleAuthProvider();
+    auth.signInWithPopup(provider).then(result => {
+      const fbUser = result.user;
+      const user = {
+        name: fbUser.displayName || fbUser.email || 'User',
+        email: fbUser.email || '',
+        phone: fbUser.phoneNumber || '',
+        avatar: fbUser.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fbUser.displayName||'U')}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`,
+        provider: 'google.com',
+        uid: fbUser.uid,
+        joinedAt: new Date().toISOString()
+      };
+      currentUser = user;
+      localStorage.setItem('tk_user', JSON.stringify(user));
+      document.getElementById('splashSuccessTitle').textContent = 'வணக்கம்! 🎉';
+      document.getElementById('splashSuccessMsg').textContent = `Signed in as ${fbUser.displayName || fbUser.email}. Welcome to your personalized reading experience!`;
+      splashGoTo('splashStep3');
+    }).catch(err => {
+      if (err.code !== 'auth/popup-closed-by-user')
+        if (window.showToast) showToast('⚠️ Google login தவறு. மீண்டும் முயற்சி செய்யுங்கள்.');
+    });
   }
   window.splashGoogleLogin = splashGoogleLogin;
 
   function splashDismiss() {
     const el = document.getElementById('splashLogin');
     el.classList.add('hide');
-    // After user is set, sync nav
     setTimeout(() => {
       el.style.display = 'none';
       try {
@@ -5157,6 +5306,9 @@ switchGame = function(id, el) {
     }, 500);
   }
   window.splashDismiss = splashDismiss;
+
+  // Setup recaptcha on load for splash
+  window.addEventListener('load', () => { setTimeout(splashSetupRecaptcha, 500); });
 })();
 
 // ═══════════════════════════════════════
@@ -5178,7 +5330,11 @@ let fbApp, fbAuth, fbRecaptcha;
 
 function initFirebase() {
   if (fbApp) return;
-  fbApp = firebase.initializeApp(fbConfig);
+  if (firebase.apps.length) {
+    fbApp = firebase.apps[0];
+  } else {
+    fbApp = firebase.initializeApp(fbConfig);
+  }
   fbAuth = firebase.auth();
   fbAuth.languageCode = 'ta';
   fbAuth.onAuthStateChanged(fbUser => {
@@ -5529,22 +5685,35 @@ function dbStoryToCard(s) {
   };
 }
 
-async function loadSupabaseStories() {
-  try {
-    const res = await fetch(`${SUPA_URL}/rest/v1/stories?order=created_at.desc&limit=100`, {
-      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
-    });
-    if (!res.ok) return;
-    const data = await res.json();
-    data.forEach(s => {
-      const card = dbStoryToCard(s);
-      if (!storiesDB.find(x => x.id === card.id)) {
-        storiesDB.unshift(card);
-        filtered.unshift(card);
+async function loadSupabaseStories(retries = 3) {
+  for (let attempt = 1; attempt <= retries; attempt++) {
+    try {
+      const controller = new AbortController();
+      const timeout = setTimeout(() => controller.abort(), 8000);
+      const res = await fetch(`${SUPA_URL}/rest/v1/stories?order=created_at.desc&limit=100`, {
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY },
+        signal: controller.signal
+      });
+      clearTimeout(timeout);
+      if (!res.ok) { console.warn('Supabase HTTP error:', res.status); return; }
+      const data = await res.json();
+      data.forEach(s => {
+        const card = dbStoryToCard(s);
+        if (!storiesDB.find(x => x.id === card.id)) {
+          storiesDB.unshift(card);
+          filtered.unshift(card);
+        }
+      });
+      renderStories();
+      return;
+    } catch(e) {
+      if (attempt === retries) {
+        console.warn('Supabase unavailable — showing local stories only.');
+      } else {
+        await new Promise(r => setTimeout(r, attempt * 1500));
       }
-    });
-    renderStories();
-  } catch(e) { console.error('Supabase load error:', e); }
+    }
+  }
 }
 
 async function submitStory() {
