@@ -882,284 +882,376 @@ body.light .upload-input, body.light .upload-textarea { background:#fff; border-
 /* ─── BOOKMARKS PANEL ─── */
 #bookmarksPanel { display:none; }
 
-/* ═══ LUXURY GAMES PAGE ═══ */
+/* ═══ REDESIGNED GAMES PAGE ═══ */
 #gamesPanel {
   min-height: 100vh;
   background: var(--bg);
 }
 
-/* ── Games Hero Banner ── */
+/* Animated grid overlay for games panel only */
+#gamesPanel::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; height: 380px;
+  background-image:
+    linear-gradient(rgba(0,245,160,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0,245,160,0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+  mask-image: radial-gradient(ellipse 80% 60% at 50% 0%, black 20%, transparent 80%);
+  pointer-events: none; z-index: 0;
+}
+
+/* ── Games Hero ── */
 .gp-hero {
-  position: relative;
-  overflow: hidden;
-  background: radial-gradient(ellipse 120% 80% at 50% -20%, rgba(245,166,35,0.18) 0%, transparent 65%),
-              linear-gradient(160deg, #0d0e1a 0%, #111320 50%, #0b0c14 100%);
-  padding: 36px 20px 28px;
+  position: relative; overflow: hidden;
+  padding: 44px 20px 32px;
   text-align: center;
-  border-bottom: 1px solid var(--border-gold);
+  border-bottom: 1px solid rgba(0,245,160,0.15);
 }
 .gp-hero::before {
   content: '';
-  position: absolute; inset: 0;
-  background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f5a623' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  position: absolute; top: -70px; left: 50%; transform: translateX(-50%);
+  width: 500px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,245,160,0.1) 0%, rgba(0,217,245,0.07) 40%, transparent 70%);
   pointer-events: none;
 }
 .gp-hero::after {
   content: '';
   position: absolute; bottom: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  background: linear-gradient(90deg, transparent, #00f5a0, transparent);
+  opacity: 0.4;
 }
+
 .gp-hero-eyebrow {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: rgba(245,166,35,0.12);
-  border: 1px solid rgba(245,166,35,0.3);
-  border-radius: 20px; padding: 4px 14px;
-  font-size: 10px; font-weight: 800; color: var(--gold);
-  letter-spacing: 2px; text-transform: uppercase;
-  margin-bottom: 14px;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: rgba(0,245,160,0.08);
+  border: 1px solid rgba(0,245,160,0.28);
+  border-radius: 100px; padding: 5px 16px;
+  font-size: 10px; font-weight: 800;
+  letter-spacing: 2.5px; text-transform: uppercase;
+  color: #00f5a0; margin-bottom: 16px;
+  animation: gpFadeDown 0.55s ease both;
 }
+
 .gp-hero-title {
   font-family: 'DM Serif Display', serif;
-  font-size: clamp(28px, 7vw, 42px);
-  font-weight: 400; color: #fff;
-  line-height: 1.1; margin-bottom: 6px;
-  letter-spacing: -0.5px;
+  font-size: clamp(32px, 8vw, 50px);
+  font-weight: 400; letter-spacing: -1px;
+  color: #fff; line-height: 1.08; margin-bottom: 8px;
+  animation: gpFadeDown 0.55s 0.07s ease both;
 }
-.gp-hero-title span { color: var(--gold); }
+.gp-hero-title span {
+  background: linear-gradient(120deg, #00f5a0, #00d9f5);
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+}
+
 .gp-hero-sub {
   font-family: 'Tiro Tamil', serif;
   font-size: 13px; color: rgba(232,230,240,0.5);
-  margin-bottom: 20px;
+  margin-bottom: 24px;
+  animation: gpFadeDown 0.55s 0.13s ease both;
 }
-.gp-hero-stats {
-  display: flex; justify-content: center; gap: 10px; flex-wrap: wrap;
-}
-.gp-stat {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.08);
-  border-radius: 12px; padding: 10px 16px;
-  text-align: center;
-}
-.gp-stat .n { font-family:'DM Serif Display',serif; font-size:20px; color:var(--gold); display:block; }
-.gp-stat .l { font-size:9px; color:rgba(232,230,240,0.35); font-weight:700; letter-spacing:0.5px; margin-top:1px; }
 
-/* ── Category Filter Tabs ── */
+.gp-hero-stats {
+  display: inline-flex; gap: 10px; flex-wrap: wrap; justify-content: center;
+  animation: gpFadeDown 0.55s 0.19s ease both;
+}
+.gp-stat-pill {
+  display: flex; align-items: center; gap: 8px;
+  background: rgba(255,255,255,0.04);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 100px; padding: 7px 16px;
+}
+.gp-stat-pill .sp-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 17px; color: #00f5a0;
+}
+.gp-stat-pill .sp-lbl {
+  font-size: 10px; color: rgba(232,230,240,0.3);
+  font-weight: 700; letter-spacing: 0.5px;
+}
+
+/* ── Category Filter ── */
 .gp-cats {
   display: flex; gap: 8px;
-  padding: 16px 16px 0;
+  padding: 18px 16px 0;
   overflow-x: auto; scrollbar-width: none;
+  width: max-content; max-width: 100%;
 }
 .gp-cats::-webkit-scrollbar { display: none; }
+
 .gp-cat-btn {
   flex-shrink: 0;
   background: rgba(255,255,255,0.04);
   border: 1.5px solid rgba(255,255,255,0.08);
-  border-radius: 20px; padding: 6px 14px;
+  border-radius: 100px; padding: 8px 18px;
   color: rgba(232,230,240,0.45);
   font-size: 11px; font-weight: 700;
-  cursor: pointer; transition: all 0.2s;
+  cursor: pointer; transition: all 0.22s ease;
   font-family: 'DM Sans', sans-serif;
   white-space: nowrap;
 }
-.gp-cat-btn:hover, .gp-cat-btn.active {
-  background: rgba(245,166,35,0.12);
-  border-color: rgba(245,166,35,0.4);
-  color: var(--gold);
+.gp-cat-btn:hover {
+  border-color: rgba(0,245,160,0.4);
+  color: #00f5a0; background: rgba(0,245,160,0.07);
+}
+.gp-cat-btn.active {
+  background: rgba(0,245,160,0.12);
+  border-color: #00f5a0; color: #00f5a0;
+  box-shadow: 0 0 18px rgba(0,245,160,0.15);
 }
 
-/* ── Featured Game Banner ── */
+/* ── Featured Banner ── */
 .gp-featured {
-  margin: 18px 16px 0;
-  border-radius: 20px;
-  overflow: hidden;
-  position: relative;
-  cursor: pointer;
-  border: 1.5px solid rgba(245,166,35,0.25);
+  margin: 20px 16px 0;
+  border-radius: 20px; overflow: hidden;
+  position: relative; cursor: pointer;
+  border: 1.5px solid rgba(167,139,250,0.3);
+  transition: all 0.3s ease;
+  animation: gpFadeUp 0.55s 0.22s ease both;
+}
+.gp-featured:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 24px 60px rgba(167,139,250,0.2);
+  border-color: #a78bfa;
 }
 .gp-featured-inner {
-  background: linear-gradient(135deg, #1a0a2e 0%, #2d1155 50%, #1a0a2e 100%);
-  padding: 24px 20px;
-  display: flex; align-items: center; gap: 16px;
+  background: linear-gradient(135deg, #1a0d2e 0%, #0f1028 50%, #1a0a2e 100%);
+  padding: 22px 20px;
+  display: flex; align-items: center; gap: 18px;
   position: relative; overflow: hidden;
 }
 .gp-featured-inner::before {
   content: '';
-  position: absolute; top: -40px; right: -40px;
-  width: 160px; height: 160px;
-  background: radial-gradient(circle, rgba(245,166,35,0.15) 0%, transparent 70%);
+  position: absolute; top: -50px; right: -30px;
+  width: 180px; height: 180px;
+  background: radial-gradient(circle, rgba(167,139,250,0.2) 0%, transparent 70%);
   border-radius: 50%;
 }
 .gp-featured-inner::after {
   content: '';
-  position: absolute; bottom: -20px; left: 30%;
-  width: 100px; height: 100px;
-  background: radial-gradient(circle, rgba(124,77,255,0.12) 0%, transparent 70%);
+  position: absolute; bottom: -30px; left: 25%;
+  width: 120px; height: 120px;
+  background: radial-gradient(circle, rgba(0,245,160,0.1) 0%, transparent 70%);
   border-radius: 50%;
 }
-.gp-featured-emoji { font-size: 60px; flex-shrink: 0; position: relative; z-index: 1; }
+.gp-featured-emoji {
+  font-size: 62px; flex-shrink: 0;
+  position: relative; z-index: 1;
+  filter: drop-shadow(0 0 18px rgba(167,139,250,0.5));
+  animation: gpFloat 3s ease-in-out infinite;
+}
+@keyframes gpFloat {
+  0%,100% { transform: translateY(0); }
+  50%     { transform: translateY(-7px); }
+}
 .gp-featured-info { flex: 1; position: relative; z-index: 1; }
 .gp-featured-tag {
   display: inline-block;
-  background: var(--gold);
-  color: #1a0d00;
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  color: #fff;
   font-size: 9px; font-weight: 900;
-  letter-spacing: 1.5px; text-transform: uppercase;
-  padding: 3px 10px; border-radius: 20px;
-  margin-bottom: 8px;
+  letter-spacing: 2px; text-transform: uppercase;
+  padding: 3px 12px; border-radius: 100px;
+  margin-bottom: 9px;
 }
 .gp-featured-name {
   font-family: 'DM Serif Display', serif;
-  font-size: 22px; color: #fff;
-  line-height: 1.1; margin-bottom: 4px;
+  font-size: 23px; color: #fff; margin-bottom: 5px;
 }
 .gp-featured-desc {
   font-family: 'Tiro Tamil', serif;
-  font-size: 12px; color: rgba(255,255,255,0.55);
-  margin-bottom: 12px;
+  font-size: 12px; color: rgba(255,255,255,0.5);
+  margin-bottom: 14px; line-height: 1.5;
 }
 .gp-featured-play {
-  display: inline-flex; align-items: center; gap: 6px;
-  background: linear-gradient(135deg, var(--gold), var(--gold2));
-  color: #1a0d00; font-size: 12px; font-weight: 800;
-  padding: 8px 18px; border-radius: 20px;
-  border: none; cursor: pointer; transition: all 0.2s;
+  display: inline-flex; align-items: center; gap: 7px;
+  background: linear-gradient(135deg, #a78bfa, #7c3aed);
+  color: #fff; font-size: 12px; font-weight: 800;
+  padding: 9px 20px; border-radius: 100px;
+  border: none; cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(124,58,237,0.4);
 }
-.gp-featured-play:hover { transform: scale(1.04); box-shadow: 0 4px 20px rgba(245,166,35,0.4); }
+.gp-featured-play:hover {
+  transform: scale(1.05);
+  box-shadow: 0 8px 28px rgba(124,58,237,0.55);
+}
 
 /* ── Section Label ── */
 .gp-section-label {
-  display: flex; align-items: center; gap: 10px;
-  padding: 20px 16px 10px;
+  display: flex; align-items: center; gap: 12px;
+  padding: 24px 16px 10px;
 }
 .gp-section-label span {
-  font-size: 12px; font-weight: 800;
-  color: rgba(232,230,240,0.35);
-  letter-spacing: 1.5px; text-transform: uppercase;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 10px; font-weight: 800;
+  color: rgba(232,230,240,0.3);
+  letter-spacing: 2.5px; text-transform: uppercase;
+  white-space: nowrap;
 }
 .gp-section-label::after {
   content: ''; flex: 1; height: 1px;
-  background: linear-gradient(90deg, rgba(255,255,255,0.07), transparent);
+  background: linear-gradient(90deg, rgba(255,255,255,0.08), transparent);
 }
 
-/* ── Luxury Games Grid ── */
+/* ── Games Grid ── */
 .gp-grid {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
-  padding: 0 16px 100px;
+  gap: 10px;
+  padding: 0 16px 110px;
 }
-@media(min-width:480px){ .gp-grid { grid-template-columns: repeat(3,1fr); } }
+@media(min-width:460px){ .gp-grid { grid-template-columns: repeat(3,1fr); } }
+@media(min-width:700px){ .gp-grid { grid-template-columns: repeat(4,1fr); } }
+
+/* Card entrance */
+@keyframes gpCardPop {
+  from { opacity: 0; transform: scale(0.88) translateY(14px); }
+  to   { opacity: 1; transform: scale(1) translateY(0); }
+}
 
 .gp-card {
   position: relative;
-  border-radius: 18px;
-  overflow: hidden;
+  border-radius: 18px; overflow: hidden;
   cursor: pointer;
   border: 1.5px solid rgba(255,255,255,0.07);
-  background: var(--surface);
-  transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+  background: #0f1018;
+  transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1),
+              border-color 0.25s, box-shadow 0.25s;
   display: flex; flex-direction: column;
-  min-height: 150px;
+  min-height: 148px;
+  animation: gpCardPop 0.45s ease both;
 }
-.gp-card:hover, .gp-card:active {
-  transform: translateY(-5px) scale(1.02);
-  border-color: rgba(245,166,35,0.4);
-  box-shadow: 0 16px 40px rgba(0,0,0,0.5), 0 0 0 1px rgba(245,166,35,0.1);
+.gp-card:nth-child(1){animation-delay:.04s}.gp-card:nth-child(2){animation-delay:.08s}
+.gp-card:nth-child(3){animation-delay:.12s}.gp-card:nth-child(4){animation-delay:.16s}
+.gp-card:nth-child(5){animation-delay:.20s}.gp-card:nth-child(6){animation-delay:.24s}
+.gp-card:nth-child(7){animation-delay:.28s}.gp-card:nth-child(8){animation-delay:.32s}
+.gp-card:nth-child(9){animation-delay:.36s}.gp-card:nth-child(10){animation-delay:.40s}
+.gp-card:nth-child(11){animation-delay:.44s}.gp-card:nth-child(12){animation-delay:.48s}
+.gp-card:nth-child(13){animation-delay:.52s}.gp-card:nth-child(14){animation-delay:.56s}
+.gp-card:nth-child(15){animation-delay:.60s}.gp-card:nth-child(16){animation-delay:.64s}
+
+.gp-card::after {
+  content: '';
+  position: absolute; top: 0; left: 0; right: 0; height: 1px;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,0.12),transparent);
+  opacity: 0.6;
 }
+.gp-card:hover {
+  transform: translateY(-6px) scale(1.03);
+  border-color: var(--gp-accent, #00f5a0);
+  box-shadow: 0 20px 50px rgba(0,0,0,0.55), 0 0 0 1px var(--gp-accent, #00f5a0);
+}
+
+/* Glow orb per card */
 .gp-card-bg {
-  position: absolute; inset: 0;
-  opacity: 0.12;
-  background-size: cover;
-  background-position: center;
+  position: absolute; top: -24px; right: -24px;
+  width: 110px; height: 110px; border-radius: 50%;
+  background: radial-gradient(circle, var(--gp-accent, #00f5a0) 0%, transparent 70%);
+  opacity: 0.09; transition: opacity 0.3s; pointer-events: none;
 }
+.gp-card:hover .gp-card-bg { opacity: 0.2; }
+
+/* Shine top line */
 .gp-card-shine {
   position: absolute; top: 0; left: 0; right: 0; height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.25), transparent);
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.18), transparent);
 }
+
 .gp-card-body {
   position: relative; z-index: 1;
   padding: 16px 14px 14px;
   flex: 1; display: flex; flex-direction: column;
 }
+
+/* Icon Box */
 .gp-card-icon-wrap {
-  width: 52px; height: 52px;
-  border-radius: 14px;
+  width: 48px; height: 48px; border-radius: 12px;
   display: flex; align-items: center; justify-content: center;
-  font-size: 28px;
-  margin-bottom: 10px;
-  position: relative;
+  font-size: 26px; margin-bottom: 11px;
+  background: rgba(255,255,255,0.06);
+  border: 1px solid rgba(255,255,255,0.09);
+  position: relative; overflow: hidden;
+  transition: transform 0.25s ease;
 }
+.gp-card:hover .gp-card-icon-wrap { transform: scale(1.12) rotate(-4deg); }
 .gp-card-icon-wrap::after {
   content: '';
-  position: absolute; inset: 0; border-radius: 14px;
-  border: 1px solid rgba(255,255,255,0.1);
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, rgba(255,255,255,0.08) 0%, transparent 55%);
 }
+
 .gp-card-name {
   font-size: 13px; font-weight: 800;
-  color: #fff; line-height: 1.2;
-  margin-bottom: 4px;
+  color: #fff; line-height: 1.25; margin-bottom: 3px;
   font-family: 'DM Sans', sans-serif;
 }
 .gp-card-tamil {
   font-family: 'Tiro Tamil', serif;
-  font-size: 11px; color: rgba(232,230,240,0.45);
-  margin-bottom: auto;
+  font-size: 10.5px; color: rgba(232,230,240,0.32);
+  margin-bottom: auto; line-height: 1.4;
 }
 .gp-card-footer {
   display: flex; align-items: center; justify-content: space-between;
-  margin-top: 12px;
+  margin-top: 11px;
 }
 .gp-card-badge {
   font-size: 9px; font-weight: 800;
   letter-spacing: 1px; text-transform: uppercase;
-  padding: 3px 9px; border-radius: 20px;
+  padding: 3px 9px; border-radius: 100px;
+  color: var(--gp-accent, #00f5a0);
+  background: rgba(0,0,0,0.25);
+  border: 1px solid rgba(255,255,255,0.09);
 }
 .gp-card-arrow {
-  width: 26px; height: 26px; border-radius: 50%;
-  background: rgba(255,255,255,0.08);
+  width: 28px; height: 28px; border-radius: 50%;
+  background: var(--gp-accent, #00f5a0);
   display: flex; align-items: center; justify-content: center;
-  font-size: 12px; color: rgba(255,255,255,0.4);
-  transition: all 0.2s;
+  font-size: 13px; color: #000;
+  transition: all 0.22s;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.35);
 }
 .gp-card:hover .gp-card-arrow {
-  background: var(--gold);
-  color: #1a0d00;
+  transform: scale(1.18);
+  box-shadow: 0 0 16px var(--gp-accent, #00f5a0);
 }
 
-/* Card color themes */
-.gp-card.theme-orange .gp-card-bg { background: radial-gradient(circle at 70% 30%, #f5a623 0%, transparent 70%); }
-.gp-card.theme-orange .gp-card-icon-wrap { background: rgba(245,166,35,0.15); }
-.gp-card.theme-orange .gp-card-badge { background: rgba(245,166,35,0.15); color: #f5a623; border: 1px solid rgba(245,166,35,0.3); }
+/* ── Per-card color accents ── */
+.theme-orange { --gp-accent: #fb923c; }
+.theme-purple { --gp-accent: #a78bfa; }
+.theme-green  { --gp-accent: #4ade80; }
+.theme-red    { --gp-accent: #f87171; }
+.theme-blue   { --gp-accent: #60a5fa; }
+.theme-pink   { --gp-accent: #f472b6; }
+.theme-teal   { --gp-accent: #2dd4bf; }
+.theme-yellow { --gp-accent: #fbbf24; }
 
-.gp-card.theme-purple .gp-card-bg { background: radial-gradient(circle at 70% 30%, #7c4dff 0%, transparent 70%); }
-.gp-card.theme-purple .gp-card-icon-wrap { background: rgba(124,77,255,0.15); }
-.gp-card.theme-purple .gp-card-badge { background: rgba(124,77,255,0.15); color: #b39ddb; border: 1px solid rgba(124,77,255,0.3); }
+/* Icon box color per theme */
+.theme-orange .gp-card-icon-wrap { background: rgba(251,146,60,0.12); border-color: rgba(251,146,60,0.22); }
+.theme-purple .gp-card-icon-wrap { background: rgba(167,139,250,0.12); border-color: rgba(167,139,250,0.22); }
+.theme-green  .gp-card-icon-wrap { background: rgba(74,222,128,0.12); border-color: rgba(74,222,128,0.22); }
+.theme-red    .gp-card-icon-wrap { background: rgba(248,113,113,0.12); border-color: rgba(248,113,113,0.22); }
+.theme-blue   .gp-card-icon-wrap { background: rgba(96,165,250,0.12); border-color: rgba(96,165,250,0.22); }
+.theme-pink   .gp-card-icon-wrap { background: rgba(244,114,182,0.12); border-color: rgba(244,114,182,0.22); }
+.theme-teal   .gp-card-icon-wrap { background: rgba(45,212,191,0.12); border-color: rgba(45,212,191,0.22); }
+.theme-yellow .gp-card-icon-wrap { background: rgba(251,191,36,0.12); border-color: rgba(251,191,36,0.22); }
 
-.gp-card.theme-green .gp-card-bg { background: radial-gradient(circle at 70% 30%, #00e676 0%, transparent 70%); }
-.gp-card.theme-green .gp-card-icon-wrap { background: rgba(0,230,118,0.15); }
-.gp-card.theme-green .gp-card-badge { background: rgba(0,230,118,0.15); color: #00e676; border: 1px solid rgba(0,230,118,0.3); }
+/* Hidden state for filter */
+.gp-card.hidden-card { display: none; }
 
-.gp-card.theme-red .gp-card-bg { background: radial-gradient(circle at 70% 30%, #ff5252 0%, transparent 70%); }
-.gp-card.theme-red .gp-card-icon-wrap { background: rgba(255,82,82,0.15); }
-.gp-card.theme-red .gp-card-badge { background: rgba(255,82,82,0.15); color: #ff8a80; border: 1px solid rgba(255,82,82,0.3); }
+/* Keyframes */
+@keyframes gpFadeDown {
+  from { opacity:0; transform:translateY(-12px); }
+  to   { opacity:1; transform:translateY(0); }
+}
+@keyframes gpFadeUp {
+  from { opacity:0; transform:translateY(16px); }
+  to   { opacity:1; transform:translateY(0); }
+}
 
-.gp-card.theme-blue .gp-card-bg { background: radial-gradient(circle at 70% 30%, #40c4ff 0%, transparent 70%); }
-.gp-card.theme-blue .gp-card-icon-wrap { background: rgba(64,196,255,0.15); }
-.gp-card.theme-blue .gp-card-badge { background: rgba(64,196,255,0.15); color: #80d8ff; border: 1px solid rgba(64,196,255,0.3); }
 
-.gp-card.theme-pink .gp-card-bg { background: radial-gradient(circle at 70% 30%, #f06292 0%, transparent 70%); }
-.gp-card.theme-pink .gp-card-icon-wrap { background: rgba(240,98,146,0.15); }
-.gp-card.theme-pink .gp-card-badge { background: rgba(240,98,146,0.15); color: #f48fb1; border: 1px solid rgba(240,98,146,0.3); }
-
-.gp-card.theme-teal .gp-card-bg { background: radial-gradient(circle at 70% 30%, #1de9b6 0%, transparent 70%); }
-.gp-card.theme-teal .gp-card-icon-wrap { background: rgba(29,233,182,0.15); }
-.gp-card.theme-teal .gp-card-badge { background: rgba(29,233,182,0.15); color: #1de9b6; border: 1px solid rgba(29,233,182,0.3); }
-
-.gp-card.theme-yellow .gp-card-bg { background: radial-gradient(circle at 70% 30%, #ffd740 0%, transparent 70%); }
-.gp-card.theme-yellow .gp-card-icon-wrap { background: rgba(255,215,64,0.15); }
-.gp-card.theme-yellow .gp-card-badge { background: rgba(255,215,64,0.15); color: #ffd740; border: 1px solid rgba(255,215,64,0.3); }
-
-.bn-games .bn-icon { filter: drop-shadow(0 0 6px rgba(245,166,35,0.5)); }
 #bookmarksPanel.active { display:block; }
 #mainContent.hidden { display:none; }
 
@@ -2626,7 +2718,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   </div>
 </div>
 
-<!-- GAMES PANEL — LUXURY -->
+<!-- GAMES PANEL — REDESIGNED -->
 <div id="gamesPanel" style="display:none">
 
   <!-- Hero Banner -->
@@ -2635,9 +2727,9 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <div class="gp-hero-title">Fun <span>Games</span></div>
     <div class="gp-hero-sub">விளையாட்டு நேரம் — 16 Games உள்ளன!</div>
     <div class="gp-hero-stats">
-      <div class="gp-stat"><span class="n">16</span><span class="l">GAMES</span></div>
-      <div class="gp-stat"><span class="n">∞</span><span class="l">FREE</span></div>
-      <div class="gp-stat"><span class="n">🏆</span><span class="l">SCORES</span></div>
+      <div class="gp-stat-pill"><span class="sp-num">16</span><span class="sp-lbl">GAMES</span></div>
+      <div class="gp-stat-pill"><span class="sp-num">∞</span><span class="sp-lbl">FREE</span></div>
+      <div class="gp-stat-pill"><span class="sp-num">🏆</span><span class="sp-lbl">SCORES</span></div>
     </div>
   </div>
 
@@ -2656,7 +2748,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <div class="gp-featured-inner">
       <div class="gp-featured-emoji">🐤</div>
       <div class="gp-featured-info">
-        <div class="gp-featured-tag">⭐ FEATURED</div>
+        <div class="gp-featured-tag">⭐ FEATURED GAME</div>
         <div class="gp-featured-name">Flappy Bird</div>
         <div class="gp-featured-desc">Tap செய்து பறக்கவிடு! Beat your high score!</div>
         <button class="gp-featured-play">▶ இப்போதே விளையாடு</button>
@@ -2664,237 +2756,221 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     </div>
   </div>
 
-  <!-- All Games Label -->
+  <!-- Section Label -->
   <div class="gp-section-label"><span>ALL GAMES</span></div>
 
-  <!-- Luxury Game Grid -->
+  <!-- Game Cards Grid -->
   <div class="gp-grid" id="gpGrid">
 
     <div class="gp-card theme-orange" data-cat="tamil" onclick="openGame('wordguess')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🔤</div>
         <div class="gp-card-name">சொல் யூகம்</div>
         <div class="gp-card-tamil">Tamil Word Guess</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">HOT 🔥</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-purple" data-cat="brain" onclick="openGame('quiz')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🧠</div>
         <div class="gp-card-name">கதை Quiz</div>
         <div class="gp-card-tamil">Story Knowledge</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">NEW ✨</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-green" data-cat="action" onclick="openGame('snake')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🐍</div>
         <div class="gp-card-name">Snake</div>
         <div class="gp-card-tamil">பாம்பு விளையாட்டு</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">CLASSIC</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-orange" data-cat="action" onclick="openGame('racing')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🏎️</div>
         <div class="gp-card-name">Car Racing</div>
         <div class="gp-card-tamil">வேக ஓட்டம்</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">SPEED 💨</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-teal" data-cat="classic" onclick="openGame('chess')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">♟️</div>
         <div class="gp-card-name">Chess</div>
         <div class="gp-card-tamil">சதுரங்கம்</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">VS AI 🤖</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-red" data-cat="action" onclick="openGame('birds')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🐦</div>
         <div class="gp-card-name">Angry Birds</div>
         <div class="gp-card-tamil">பறவை விளையாட்டு</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">FUN 😄</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-purple" data-cat="classic" onclick="openGame('tictactoe')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">⭕</div>
         <div class="gp-card-name">Tic Tac Toe</div>
         <div class="gp-card-tamil">புள்ளி விளையாட்டு</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">VS AI 🤖</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-pink" data-cat="brain" onclick="openGame('memory')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🃏</div>
         <div class="gp-card-name">Memory Match</div>
         <div class="gp-card-tamil">நினைவு சோதனை</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">BRAIN 🧩</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-blue" data-cat="tamil" onclick="openGame('typing')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">⌨️</div>
         <div class="gp-card-name">Typing Speed</div>
         <div class="gp-card-tamil">தட்டச்சு வேகம்</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">WPM ⚡</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-green" data-cat="brain" onclick="openGame('math')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">➕</div>
         <div class="gp-card-name">Math Blitz</div>
         <div class="gp-card-tamil">கணித சவால்</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">FAST 🔥</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-orange" data-cat="brain" onclick="openGame('color')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🎨</div>
         <div class="gp-card-name">Color Match</div>
         <div class="gp-card-tamil">வண்ண சோதனை</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">EYE 👁</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-red" data-cat="action" onclick="openGame('reaction')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">⚡</div>
         <div class="gp-card-name">Reaction Time</div>
         <div class="gp-card-tamil">எதிர்வினை வேகம்</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">REFLEX ⚡</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-teal" data-cat="tamil" onclick="openGame('hangman')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🪢</div>
         <div class="gp-card-name">Hangman</div>
         <div class="gp-card-tamil">தமிழ் சொல் புதிர்</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">GUESS 🤔</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-blue" data-cat="brain" onclick="openGame('simon')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🔵</div>
         <div class="gp-card-name">Simon Says</div>
         <div class="gp-card-tamil">நினைவு ஆட்டம்</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">MEMORY 🧩</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-yellow" data-cat="puzzle" onclick="openGame('2048')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🔢</div>
         <div class="gp-card-name">2048</div>
         <div class="gp-card-tamil">எண் விளையாட்டு</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">LOGIC 💡</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
     <div class="gp-card theme-blue" data-cat="action" onclick="openGame('flappy')">
-      <div class="gp-card-bg"></div>
-      <div class="gp-card-shine"></div>
+      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
       <div class="gp-card-body">
         <div class="gp-card-icon-wrap">🐤</div>
         <div class="gp-card-name">Flappy Bird</div>
         <div class="gp-card-tamil">பறக்கும் பறவை</div>
         <div class="gp-card-footer">
           <div class="gp-card-badge">⭐ TOP</div>
-          <div class="gp-card-arrow">›</div>
+          <div class="gp-card-arrow">▶</div>
         </div>
       </div>
     </div>
 
-  </div>
+  </div><!-- /gp-grid -->
 </div>
 
 <!-- PAGINATION -->
@@ -4603,6 +4679,10 @@ function gpFilter(cat, btn) {
     if (cat === 'all' || card.dataset.cat === cat) {
       card.style.display = '';
     } else {
+      card.style.display = 'none';
+    }
+  });
+} else {
       card.style.display = 'none';
     }
   });
