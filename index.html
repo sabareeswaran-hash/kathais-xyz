@@ -26,6 +26,8 @@
 <meta name="apple-mobile-web-app-title" content="Tamilகதைகள்">
 
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Serif+Tamil:wght@400;700&family=Catamaran:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 <style>
 :root {
   --gold: #f5a623;
@@ -55,6 +57,7 @@ body {
   background:var(--bg);
   color:var(--text);
   min-height:100vh;
+  padding-bottom:64px;
 }
 
 /* ─── NOISE TEXTURE OVERLAY ─── */
@@ -70,33 +73,32 @@ nav {
   background:rgba(11,12,20,0.85);
   backdrop-filter:blur(20px);
   -webkit-backdrop-filter:blur(20px);
-  padding:0 24px;
-  height:58px;
-  display:grid;
-  grid-template-columns:auto 1fr auto;
+  padding:0 18px;
+  height:60px;
+  display:flex;
   align-items:center;
+  gap:8px;
   border-bottom:1px solid var(--border-gold);
   position:sticky; top:0; z-index:200;
-  gap:12px;
 }
 .logo {
   font-family:'DM Serif Display',serif;
-  font-size:20px; font-weight:400;
+  font-size:19px; font-weight:400;
   color:var(--gold);
   letter-spacing:-0.3px;
   display:flex; align-items:center; gap:6px;
-  white-space:nowrap;
+  white-space:nowrap; flex-shrink:0;
 }
 .logo span { color:var(--text); font-family:'Tiro Tamil',serif; }
 .nav-links {
-  display:flex; gap:2px; flex-wrap:nowrap;
+  display:flex; gap:1px; flex-wrap:nowrap;
   justify-content:center; align-items:center;
-  overflow:hidden;
+  overflow:hidden; flex:1; min-width:0;
 }
 .nav-links a {
   color:var(--text-muted); text-decoration:none;
-  font-size:12px; font-weight:600;
-  padding:5px 9px; border-radius:8px;
+  font-size:11px; font-weight:600;
+  padding:5px 7px; border-radius:8px;
   transition:all 0.2s; white-space:nowrap;
 }
 .nav-links a:hover { color:var(--gold); background:var(--gold-glow); }
@@ -104,11 +106,11 @@ nav {
 .theme-toggle {
   background:var(--surface2);
   border:1px solid var(--border);
-  color:var(--text-muted); padding:6px 14px;
+  color:var(--text-muted); padding:6px 11px;
   border-radius:20px; cursor:pointer;
-  font-size:12px; font-weight:700;
+  font-size:11px; font-weight:700;
   font-family:'DM Sans',sans-serif;
-  transition:all 0.2s; white-space:nowrap;
+  transition:all 0.2s; white-space:nowrap; flex-shrink:0;
 }
 .theme-toggle:hover { border-color:var(--gold); color:var(--gold); }
 
@@ -406,7 +408,7 @@ nav {
 /* ─── SHARE POPUP ─── */
 .share-popup {
   display:none; position:fixed;
-  bottom:88px; left:50%; transform:translateX(-50%);
+  bottom:82px; left:50%; transform:translateX(-50%);
   background:var(--bg3);
   border:1.5px solid var(--border-gold);
   border-radius:var(--radius); padding:18px;
@@ -659,7 +661,7 @@ nav {
 footer {
   background:var(--bg);
   border-top:1px solid var(--border);
-  padding:32px 24px 96px; text-align:center; margin-top:20px;
+  padding:32px 24px 20px; text-align:center; margin-top:20px;
 }
 .footer-title {
   font-family:'DM Serif Display',serif;
@@ -724,28 +726,136 @@ footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
 
 /* ─── BOTTOM NAV (mobile) ─── */
 .bottom-nav {
-  display:none;
-  position:fixed; bottom:0; left:0; right:0;
-  background:rgba(11,12,20,0.95);
-  backdrop-filter:blur(20px);
-  border-top:1px solid var(--border);
-  z-index:500; padding:6px 0 env(safe-area-inset-bottom,6px);
+  display:flex !important;
+  position:fixed !important;
+  top:auto !important;
+  bottom:0 !important;
+  left:0 !important;
+  right:0 !important;
+  width:100% !important;
+  background:rgba(11,12,20,0.98);
+  backdrop-filter:blur(24px);
+  -webkit-backdrop-filter:blur(24px);
+  border-top:2px solid var(--border-gold);
+  border-bottom:none !important;
+  z-index:9990 !important;
+  padding:4px 0 env(safe-area-inset-bottom,6px);
   flex-direction:row;
+  box-shadow:0 -6px 30px rgba(0,0,0,0.5);
+  height:64px;
 }
 .bn-item {
   flex:1; display:flex; flex-direction:column; align-items:center;
-  justify-content:center; padding:6px 4px; cursor:pointer;
-  color:var(--text-dim); transition:color 0.2s;
+  justify-content:center; padding:6px 4px 4px; cursor:pointer;
+  color:var(--text-dim); transition:all 0.2s;
   font-size:10px; font-weight:700; gap:2px;
   background:none; border:none; font-family:'DM Sans',sans-serif;
+  letter-spacing:0.3px; position:relative;
 }
-.bn-item .bn-icon { font-size:20px; }
-.bn-item.active, .bn-item:hover { color:var(--gold); }
-@media(max-width:700px){
-  .bottom-nav { display:flex; }
-  nav .nav-links { display:none; }
-  nav { grid-template-columns:auto auto; justify-content:space-between; }
+.bn-item .bn-icon { font-size:24px; line-height:1; transition:transform 0.2s; }
+.bn-item:hover .bn-icon { transform:translateY(-2px); }
+.bn-item.active { color:var(--gold); }
+.bn-item.active .bn-icon { transform:translateY(-2px); }
+.bn-item.active::after {
+  content:'';
+  position:absolute; top:0; left:50%; transform:translateX(-50%);
+  width:32px; height:3px;
+  background:var(--gold); border-radius:0 0 3px 3px;
 }
+.bn-item:hover { color:var(--gold); }
+
+/* ─── UPLOAD MODAL ─── */
+.upload-overlay {
+  position:fixed; inset:0; z-index:5000;
+  background:rgba(0,0,0,0.75);
+  backdrop-filter:blur(6px);
+  display:none; align-items:flex-end; justify-content:center;
+}
+.upload-overlay.show { display:flex; }
+.upload-modal {
+  background:var(--bg2);
+  border:1.5px solid var(--border-gold);
+  border-radius:24px 24px 0 0;
+  width:100%; max-width:600px;
+  max-height:92vh; overflow-y:auto;
+  animation:slideUpModal 0.35s cubic-bezier(.4,0,.2,1);
+}
+@keyframes slideUpModal {
+  from{transform:translateY(100%);opacity:0}
+  to{transform:translateY(0);opacity:1}
+}
+.upload-header {
+  padding:20px 20px 14px;
+  border-bottom:1px solid var(--border);
+  position:sticky; top:0;
+  background:var(--bg2); z-index:2;
+}
+.upload-title {
+  font-family:'DM Serif Display',serif;
+  font-size:20px; color:var(--gold);
+}
+.upload-sub { font-size:11px; color:var(--text-muted); margin-top:3px; }
+.upload-close {
+  position:absolute; top:16px; right:16px;
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--text-muted); width:32px; height:32px;
+  border-radius:50%; cursor:pointer; font-size:14px;
+  display:flex; align-items:center; justify-content:center;
+}
+.upload-close:hover { border-color:var(--gold); color:var(--gold); }
+.upload-body { padding:16px 20px 32px; display:flex; flex-direction:column; gap:14px; }
+.upload-field { display:flex; flex-direction:column; gap:5px; }
+.upload-row { display:flex; gap:12px; }
+.upload-label {
+  font-size:12px; font-weight:700; color:var(--text-muted);
+  letter-spacing:0.3px;
+}
+.upload-label span { color:var(--gold); }
+.upload-input {
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); color:var(--text);
+  font-size:14px; font-family:'DM Sans',sans-serif;
+  padding:11px 14px; outline:none; transition:all 0.2s;
+  width:100%;
+}
+.upload-input:focus { border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-glow); }
+.upload-input::placeholder { color:var(--text-dim); }
+.upload-select { cursor:pointer; }
+.upload-select option { background:var(--bg3); color:var(--text); }
+.upload-textarea {
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:var(--radius-sm); color:var(--text);
+  font-size:14px; font-family:'Tiro Tamil',serif;
+  padding:12px 14px; outline:none; transition:all 0.2s;
+  width:100%; min-height:160px; resize:vertical; line-height:1.7;
+}
+.upload-textarea:focus { border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-glow); }
+.upload-textarea::placeholder { color:var(--text-dim); font-family:'DM Sans',sans-serif; }
+.upload-counter { font-size:10px; color:var(--text-dim); text-align:right; }
+.up-error {
+  background:rgba(224,90,90,0.12); border:1px solid rgba(224,90,90,0.4);
+  border-radius:var(--radius-sm); padding:10px 14px;
+  font-size:13px; color:#e05a5a;
+}
+.upload-submit-btn {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; padding:14px;
+  border-radius:var(--radius-sm); cursor:pointer;
+  font-size:15px; font-weight:800;
+  font-family:'DM Sans',sans-serif;
+  width:100%; transition:all 0.2s; margin-top:4px;
+}
+.upload-submit-btn:hover { transform:translateY(-1px); box-shadow:0 6px 24px var(--gold-glow); }
+.bn-upload .bn-icon { font-size:26px; }
+.user-story-badge {
+  display:inline-block; background:rgba(0,230,118,0.15);
+  border:1px solid rgba(0,230,118,0.3); border-radius:6px;
+  font-size:9px; color:var(--green); padding:1px 6px;
+  font-weight:700; letter-spacing:0.5px; vertical-align:middle; margin-left:4px;
+}
+body.light .upload-modal { background:#f4f2ed; }
+body.light .upload-header { background:#f4f2ed; }
+body.light .upload-input, body.light .upload-textarea { background:#fff; border-color:rgba(0,0,0,0.15); color:#1a1a2e; }
 
 /* ─── BOOKMARKS PANEL ─── */
 #bookmarksPanel { display:none; }
@@ -807,7 +917,7 @@ footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
 /* ─── PWA BANNER ─── */
 .pwa-banner {
   display:none; position:fixed;
-  bottom:74px; left:50%; transform:translateX(-50%);
+  bottom:82px; left:50%; transform:translateX(-50%);
   background:var(--bg3);
   border:1.5px solid var(--border-gold);
   border-radius:var(--radius); padding:14px 18px;
@@ -948,7 +1058,7 @@ footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
 .hamburger-btn:hover { border-color:var(--gold); color:var(--gold); }
 .mobile-menu {
   display:none; position:fixed;
-  top:58px; left:0; right:0;
+  top:60px; left:0; right:0;
   background:rgba(11,12,20,0.98);
   backdrop-filter:blur(20px);
   border-bottom:1px solid var(--border-gold);
@@ -963,13 +1073,34 @@ footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
   transition:all 0.2s;
 }
 .mobile-menu a:hover { color:var(--gold); background:var(--gold-glow); }
+
+/* ─── RESPONSIVE BREAKPOINTS ─── */
+@media(max-width:900px){
+  .nav-links a { font-size:10.5px; padding:5px 6px; }
+}
+@media(max-width:780px){
+  .nav-links { display:none; }
+  .hamburger-btn { display:flex; }
+  nav { padding:0 14px; gap:8px; }
+}
 @media(max-width:700px){
   .hamburger-btn { display:flex; }
+  .hero { padding:36px 16px 30px; }
+  .hero h1 { font-size:clamp(28px,8vw,44px); }
+  .hero-stats { gap:8px; }
+  .stat { padding:10px 12px; }
+  .stat .num { font-size:18px; }
+  .search-wrap { padding:16px 16px; }
+  .section { padding:14px 16px; }
+  .stories-grid { grid-template-columns:1fr; gap:12px; }
+  .sotd-section { margin:0 16px 14px; }
+  .ad-banner { margin:0 16px 14px; }
+  .mood-strip { padding:0 16px 14px; }
 }
 
 /* ─── BACK TO TOP ─── */
 #backToTop {
-  position:fixed; bottom:80px; right:18px;
+  position:fixed; bottom:86px; right:18px;
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   color:#1a1200; border:none; width:44px; height:44px;
   border-radius:50%; font-size:18px; cursor:pointer;
@@ -1082,7 +1213,7 @@ body.light .sotd-card { background:#fff; }
 body.light .history-item { background:rgba(0,0,0,0.04); }
 body.light .history-item .hi-title { color:#1a1a2e; }
 body.light .sort-select { background:#fff; border-color:rgba(0,0,0,0.15); color:#1a1a2e; }
-body.light .bottom-nav { background:rgba(244,242,237,0.95); border-top-color:rgba(0,0,0,0.1); }
+body.light .bottom-nav { background:rgba(244,242,237,0.97); border-top-color:rgba(200,120,0,0.3); box-shadow:0 -4px 24px rgba(0,0,0,0.1); }
 body.light .bn-item { color:rgba(26,26,46,0.4); }
 body.light .bn-item.active { color:var(--gold); }
 body.light .share-popup { background:#fff; }
@@ -1120,11 +1251,11 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   display:flex; align-items:center; gap:6px;
   background:var(--surface2);
   border:1.5px solid var(--border-gold);
-  color:var(--gold); padding:5px 12px;
+  color:var(--gold); padding:6px 12px;
   border-radius:20px; cursor:pointer;
-  font-size:12px; font-weight:700;
+  font-size:11px; font-weight:700;
   font-family:'DM Sans',sans-serif;
-  transition:all 0.2s; white-space:nowrap;
+  transition:all 0.2s; white-space:nowrap; flex-shrink:0;
 }
 .login-btn:hover { background:var(--gold-glow); box-shadow:0 0 12px var(--gold-glow); }
 .login-btn img { width:16px; height:16px; border-radius:50%; }
@@ -1136,76 +1267,311 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   border-radius:20px; cursor:pointer;
   font-size:12px; font-weight:700;
   font-family:'DM Sans',sans-serif;
-  transition:all 0.2s; white-space:nowrap;
+  transition:all 0.2s; white-space:nowrap; flex-shrink:0;
 }
 .user-avatar-btn:hover { background:var(--gold-glow); }
 .user-avatar-btn img { width:26px; height:26px; border-radius:50%; border:1.5px solid var(--gold); }
 
-/* ─── LOGIN MODAL ─── */
+/* ─── LUXURY LOGIN MODAL ─── */
 .login-overlay {
   position:fixed; inset:0; z-index:2000;
-  background:rgba(0,0,0,0.75);
-  backdrop-filter:blur(8px);
+  background:rgba(0,0,0,0.8);
+  backdrop-filter:blur(10px);
+  -webkit-backdrop-filter:blur(10px);
   display:flex; align-items:center; justify-content:center;
   opacity:0; pointer-events:none;
-  transition:opacity 0.3s;
+  transition:opacity 0.35s;
+  padding:16px;
 }
 .login-overlay.show { opacity:1; pointer-events:all; }
-.login-card {
-  background:var(--bg2);
-  border:1.5px solid var(--border-gold);
-  border-radius:24px; padding:36px 32px;
-  max-width:380px; width:calc(100% - 32px);
-  text-align:center;
-  box-shadow:0 32px 80px rgba(0,0,0,0.6), 0 0 0 1px var(--border-gold);
-  transform:translateY(20px) scale(0.97);
-  transition:transform 0.3s;
+
+.login-card-wrap {
+  width:min(420px,100%);
+  padding:2px;
+  border-radius:22px;
+  background:linear-gradient(135deg,rgba(201,147,58,0.4) 0%,rgba(201,147,58,0.06) 50%,rgba(201,147,58,0.25) 100%);
+  transform:translateY(28px) scale(0.96);
+  transition:transform 0.4s cubic-bezier(0.16,1,0.3,1);
   position:relative;
 }
-.login-overlay.show .login-card { transform:translateY(0) scale(1); }
-.login-close {
-  position:absolute; top:14px; right:16px;
-  background:none; border:none; color:var(--text-muted);
-  font-size:18px; cursor:pointer; padding:4px 8px;
-  border-radius:8px; transition:all 0.2s;
+.login-overlay.show .login-card-wrap { transform:translateY(0) scale(1); }
+
+.login-card {
+  background:#0f0f11;
+  border-radius:20px;
+  padding:36px 32px 32px;
+  position:relative;
+  overflow:hidden;
 }
-.login-close:hover { color:var(--gold); background:var(--gold-glow); }
-.login-logo { font-size:40px; margin-bottom:8px; }
-.login-title {
+.login-card::before {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(ellipse 80% 40% at 50% 0%,rgba(201,147,58,0.09) 0%,transparent 70%);
+  pointer-events:none;
+}
+.lux-corner { position:absolute; width:50px; height:50px; opacity:0.45; }
+.lux-corner.tl { top:10px; left:10px; border-top:1px solid var(--gold); border-left:1px solid var(--gold); border-radius:3px 0 0 0; }
+.lux-corner.br { bottom:10px; right:10px; border-bottom:1px solid var(--gold); border-right:1px solid var(--gold); border-radius:0 0 3px 0; }
+
+.login-close {
+  position:absolute; top:14px; right:14px;
+  background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1);
+  color:var(--text-muted); font-size:14px; cursor:pointer;
+  padding:5px 9px; border-radius:8px; transition:all 0.2s; z-index:5;
+}
+.login-close:hover { color:var(--gold); border-color:var(--border-gold); background:var(--gold-glow); }
+
+/* Brand */
+.lux-brand { text-align:center; margin-bottom:24px; }
+.lux-brand-icon {
+  width:52px; height:52px;
+  background:linear-gradient(135deg,#c9933a,#e8b96a);
+  border-radius:14px;
+  display:flex; align-items:center; justify-content:center;
+  margin:0 auto 12px;
+  font-size:22px;
+  box-shadow:0 8px 28px rgba(201,147,58,0.3),0 0 0 1px rgba(201,147,58,0.4);
+}
+.lux-brand-title {
+  font-family:'DM Serif Display',serif;
+  font-size:20px; color:#e8b96a; letter-spacing:-0.3px; margin-bottom:3px;
+}
+.lux-brand-title span { font-family:'Tiro Tamil',serif; color:var(--text); }
+.lux-brand-sub {
+  font-size:11px; color:rgba(240,236,228,0.3);
+  letter-spacing:2px; text-transform:uppercase; font-weight:500;
+}
+.lux-divider {
+  width:70px; height:1px;
+  background:linear-gradient(90deg,transparent,rgba(201,147,58,0.4),transparent);
+  margin:0 auto 20px;
+}
+
+/* Steps */
+.lux-step { display:none; }
+.lux-step.active { display:block; animation:lsIn 0.35s ease both; }
+@keyframes lsIn { from{opacity:0;transform:translateX(12px)} to{opacity:1;transform:translateX(0)} }
+
+.lux-heading {
   font-family:'DM Serif Display',serif;
   font-size:22px; color:var(--text); margin-bottom:4px;
 }
-.login-sub {
-  font-size:13px; color:var(--text-muted);
-  font-family:'Tiro Tamil',serif;
-  margin-bottom:28px; line-height:1.5;
-}
-.google-signin-btn {
-  display:flex; align-items:center; justify-content:center; gap:10px;
-  width:100%; padding:13px 20px;
-  background:#fff;
-  border:none; border-radius:12px;
-  font-size:15px; font-weight:600;
+.lux-sub { font-size:12px; color:rgba(240,236,228,0.45); margin-bottom:22px; line-height:1.6; }
+
+/* Google btn */
+.lux-btn-google {
+  width:100%; display:flex; align-items:center; gap:12px;
+  padding:13px 18px;
+  background:rgba(255,255,255,0.05);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:13px; color:var(--text);
+  font-size:13px; font-weight:500;
   font-family:'DM Sans',sans-serif;
-  color:#3c4043; cursor:pointer;
-  transition:all 0.2s;
-  box-shadow:0 2px 12px rgba(0,0,0,0.2);
-  margin-bottom:16px;
+  cursor:pointer; transition:all 0.2s; margin-bottom:10px; text-align:left;
 }
-.google-signin-btn:hover { box-shadow:0 4px 24px rgba(0,0,0,0.3); transform:translateY(-1px); }
-.google-signin-btn svg { width:20px; height:20px; flex-shrink:0; }
-.login-divider {
-  display:flex; align-items:center; gap:10px;
-  margin:0 0 16px; color:var(--text-dim); font-size:11px;
+.lux-btn-google:hover {
+  border-color:rgba(201,147,58,0.35);
+  background:rgba(255,255,255,0.07);
+  transform:translateY(-1px);
+  box-shadow:0 6px 20px rgba(0,0,0,0.3);
 }
-.login-divider::before, .login-divider::after {
-  content:''; flex:1; height:1px; background:var(--border);
+.lux-btn-google span { flex:1; }
+.lux-btn-google .arr { color:rgba(240,236,228,0.25); font-size:15px; transition:transform 0.2s; }
+.lux-btn-google:hover .arr { transform:translateX(3px); }
+
+/* OR */
+.lux-or { display:flex; align-items:center; gap:10px; margin:16px 0; }
+.lux-or-line { flex:1; height:1px; background:rgba(255,255,255,0.07); }
+.lux-or-text { font-size:10px; color:rgba(240,236,228,0.25); letter-spacing:2px; text-transform:uppercase; font-weight:600; }
+
+/* Inputs */
+.lux-label { font-size:10px; font-weight:700; color:rgba(240,236,228,0.45); letter-spacing:1.2px; text-transform:uppercase; margin-bottom:7px; }
+.lux-phone-row { display:flex; gap:7px; margin-bottom:5px; }
+.lux-country {
+  display:flex; align-items:center; gap:7px;
+  padding:0 12px; background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:11px; cursor:pointer; font-size:13px; color:var(--text);
+  white-space:nowrap; min-width:86px; transition:border-color 0.2s;
+  position:relative;
 }
-.login-privacy {
-  font-size:10px; color:var(--text-dim); line-height:1.6;
-  margin-top:16px;
+.lux-country:hover { border-color:rgba(201,147,58,0.3); }
+.lux-country-code { font-weight:700; font-size:12px; }
+.lux-phone-input {
+  flex:1; padding:13px 14px;
+  background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.08);
+  border-radius:11px; color:var(--text);
+  font-size:14px; font-family:'DM Sans',sans-serif;
+  outline:none; transition:all 0.2s; letter-spacing:0.5px;
 }
-.login-privacy a { color:var(--gold); text-decoration:none; }
+.lux-phone-input::placeholder { color:rgba(240,236,228,0.2); }
+.lux-phone-input:focus { border-color:#c9933a; background:rgba(255,255,255,0.05); box-shadow:0 0 0 3px rgba(201,147,58,0.1); }
+.lux-phone-input.error { border-color:#e05a5a; box-shadow:0 0 0 3px rgba(224,90,90,0.1); }
+.lux-hint { font-size:11px; color:rgba(240,236,228,0.25); margin-bottom:18px; }
+.lux-hint.err { color:#e05a5a; }
+
+/* Primary btn */
+.lux-btn-primary {
+  width:100%; padding:14px;
+  background:linear-gradient(135deg,#c9933a,#b8832e);
+  border:none; border-radius:13px;
+  color:#1a0d00; font-size:13px; font-weight:800;
+  font-family:'DM Sans',sans-serif;
+  cursor:pointer; letter-spacing:0.5px; transition:all 0.25s;
+}
+.lux-btn-primary:hover { transform:translateY(-2px); box-shadow:0 10px 28px rgba(201,147,58,0.3); }
+.lux-btn-primary:active { transform:translateY(0); }
+.lux-btn-primary:disabled { opacity:0.45; cursor:not-allowed; transform:none; box-shadow:none; }
+
+/* OTP */
+.lux-otp-info {
+  font-size:12px; color:rgba(240,236,228,0.45);
+  padding:9px 13px; background:rgba(255,255,255,0.04);
+  border:1px solid rgba(255,255,255,0.07); border-radius:9px;
+  display:flex; align-items:center; gap:8px; margin-bottom:18px;
+}
+.lux-otp-num { color:#e8b96a; font-weight:600; }
+.lux-otp-boxes { display:flex; gap:8px; justify-content:center; margin-bottom:7px; }
+.lux-otp-box {
+  width:44px; height:52px;
+  background:rgba(255,255,255,0.04);
+  border:1.5px solid rgba(255,255,255,0.08);
+  border-radius:11px; text-align:center;
+  font-size:20px; font-weight:700;
+  font-family:'DM Serif Display',serif;
+  color:var(--text); outline:none; transition:all 0.2s;
+  caret-color:#c9933a;
+}
+.lux-otp-box:focus { border-color:#c9933a; background:rgba(255,255,255,0.06); box-shadow:0 0 0 3px rgba(201,147,58,0.12); }
+.lux-otp-box.filled { border-color:rgba(201,147,58,0.35); color:#e8b96a; }
+.lux-resend-row { display:flex; align-items:center; justify-content:space-between; margin:12px 0 18px; font-size:11px; }
+.lux-timer { color:rgba(240,236,228,0.3); }
+.lux-timer b { color:rgba(240,236,228,0.5); }
+.lux-resend-btn {
+  background:none; border:none; color:#c9933a;
+  font-size:11px; font-family:'DM Sans',sans-serif;
+  cursor:pointer; opacity:0.35; transition:opacity 0.2s;
+}
+.lux-resend-btn:not(:disabled) { opacity:1; }
+.lux-resend-btn:not(:disabled):hover { text-decoration:underline; }
+
+/* Back btn */
+.lux-back {
+  display:flex; align-items:center; gap:5px;
+  background:none; border:none; color:rgba(240,236,228,0.4);
+  font-size:11px; font-family:'DM Sans',sans-serif;
+  cursor:pointer; margin-bottom:18px; padding:0; transition:color 0.2s;
+}
+.lux-back:hover { color:var(--text); }
+
+/* Success */
+.lux-success-icon {
+  width:58px; height:58px;
+  background:rgba(76,175,125,0.1);
+  border:1.5px solid rgba(76,175,125,0.3);
+  border-radius:50%;
+  display:flex; align-items:center; justify-content:center;
+  font-size:24px; margin:0 auto 16px;
+  animation:luxSuccPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both 0.1s;
+}
+@keyframes luxSuccPop { from{transform:scale(0.4);opacity:0} to{transform:scale(1);opacity:1} }
+.lux-success-name { font-family:'DM Serif Display',serif; font-size:22px; color:#e8b96a; margin-bottom:7px; }
+.lux-success-msg { font-size:12px; color:rgba(240,236,228,0.45); margin-bottom:24px; line-height:1.6; }
+
+/* Spinner */
+.lux-spinner {
+  width:16px; height:16px;
+  border:2px solid rgba(26,13,0,0.3);
+  border-top-color:#1a0d00;
+  border-radius:50%;
+  animation:spin 0.7s linear infinite;
+  display:inline-block; vertical-align:middle;
+}
+
+/* Loading overlay */
+.lux-loading {
+  position:absolute; inset:0;
+  background:rgba(8,8,9,0.65); backdrop-filter:blur(3px);
+  display:none; align-items:center; justify-content:center;
+  border-radius:20px; z-index:30;
+}
+.lux-loading.show { display:flex; }
+.lux-dot {
+  width:7px; height:7px; background:#c9933a; border-radius:50%;
+  animation:ldot 1.2s ease-in-out infinite; margin:0 3px;
+}
+.lux-dot:nth-child(2){animation-delay:0.2s}
+.lux-dot:nth-child(3){animation-delay:0.4s}
+@keyframes ldot { 0%,80%,100%{transform:scale(0.35);opacity:0.25} 40%{transform:scale(1);opacity:1} }
+
+/* Google account chooser popup */
+.lux-gpopup {
+  display:none; position:fixed; inset:0; z-index:10000;
+  background:rgba(0,0,0,0.75); backdrop-filter:blur(6px);
+  -webkit-backdrop-filter:blur(6px);
+  align-items:center; justify-content:center;
+}
+.lux-gpopup.show { display:flex; }
+.lux-gbox {
+  background:#fff; border-radius:18px; padding:26px;
+  width:min(370px,90vw);
+  animation:lsIn 0.3s cubic-bezier(0.16,1,0.3,1) both;
+}
+.lux-gbox-title { font-size:17px; font-weight:400; color:#202124; margin-bottom:4px; }
+.lux-gbox-sub { font-size:12px; color:#5f6368; margin-bottom:18px; }
+.lux-g-account {
+  display:flex; align-items:center; gap:11px;
+  padding:11px 13px; border:1px solid #dadce0;
+  border-radius:11px; cursor:pointer; transition:background 0.15s; margin-bottom:7px;
+}
+.lux-g-account:hover { background:#f8f9fa; }
+.lux-g-avatar {
+  width:38px; height:38px; border-radius:50%;
+  background:linear-gradient(135deg,#4285f4,#34a853);
+  display:flex; align-items:center; justify-content:center;
+  color:#fff; font-size:15px; font-weight:700; flex-shrink:0;
+}
+.lux-g-name { font-size:13px; color:#202124; font-weight:500; }
+.lux-g-email { font-size:11px; color:#5f6368; }
+.lux-g-add {
+  display:flex; align-items:center; gap:11px; padding:9px 13px;
+  cursor:pointer; transition:background 0.15s; border-radius:9px; margin-top:6px;
+}
+.lux-g-add:hover { background:#f8f9fa; }
+.lux-g-add-icon {
+  width:38px; height:38px; border-radius:50%;
+  border:1px solid #dadce0;
+  display:flex; align-items:center; justify-content:center; font-size:19px; color:#5f6368;
+}
+.lux-g-add-text { font-size:12px; color:#3c4043; }
+.lux-g-footer {
+  margin-top:16px; padding-top:12px; border-top:1px solid #f0f0f0;
+  font-size:11px; color:#5f6368; display:flex; gap:12px; justify-content:center;
+}
+.lux-g-footer a { color:#1a73e8; text-decoration:none; }
+
+/* Country dropdown */
+.lux-country-dd {
+  display:none; position:absolute;
+  top:calc(100% + 6px); left:0;
+  background:#161619; border:1px solid rgba(201,147,58,0.3);
+  border-radius:11px; overflow:hidden; z-index:100; min-width:190px;
+  box-shadow:0 16px 40px rgba(0,0,0,0.5);
+}
+.lux-country-dd.show { display:block; }
+.lux-dd-item {
+  display:flex; align-items:center; gap:9px; padding:10px 13px;
+  cursor:pointer; font-size:12px; transition:background 0.15s;
+}
+.lux-dd-item:hover { background:rgba(255,255,255,0.06); }
+.lux-dd-name { flex:1; color:var(--text); }
+.lux-dd-code { color:rgba(240,236,228,0.45); font-weight:700; }
+
+/* Privacy note */
+.lux-privacy { text-align:center; font-size:10px; color:rgba(240,236,228,0.22); margin-top:18px; line-height:1.7; }
+.lux-privacy a { color:rgba(201,147,58,0.6); text-decoration:none; }
+.lux-privacy a:hover { color:#c9933a; }
 
 /* ─── PNLMA (PANEL) ─── */
 .pnlma-overlay {
@@ -1302,22 +1668,256 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 }
 .pnlma-logout-btn:hover { background:rgba(255,82,82,0.15); border-color:#ff5252; }
 
-/* ─── LOADING SPINNER (for Google auth simulation) ─── */
-.gauth-loading {
-  display:none; flex-direction:column; align-items:center;
-  gap:14px; padding:20px 0 4px;
+/* gauth spinner handled by lux-spinner */
+
+/* ═══ SPLASH LOGIN PAGE ═══ */
+#splashLogin {
+  position:fixed; inset:0; z-index:9999;
+  background:var(--bg);
+  display:flex; flex-direction:column;
+  align-items:center; justify-content:center;
+  overflow-y:auto;
+  padding:20px 0;
+  transition:opacity 0.5s ease, transform 0.5s ease;
 }
-.gauth-loading.show { display:flex; }
-.gauth-spinner {
-  width:36px; height:36px;
-  border:3px solid var(--border); border-top-color:var(--gold);
-  border-radius:50%; animation:spin 0.8s linear infinite;
+#splashLogin.hide {
+  opacity:0; pointer-events:none; transform:scale(1.04);
 }
-@keyframes spin { to { transform:rotate(360deg); } }
-.gauth-loading-text { font-size:13px; color:var(--text-muted); }
+.splash-bg-glow {
+  position:fixed; inset:0; pointer-events:none;
+  background:
+    radial-gradient(ellipse 70% 50% at 50% -10%, rgba(245,166,35,0.18) 0%, transparent 70%),
+    radial-gradient(ellipse 40% 40% at 80% 90%, rgba(124,77,255,0.08) 0%, transparent 70%);
+}
+.splash-noise {
+  position:fixed; inset:0; pointer-events:none; opacity:0.3;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+}
+.splash-inner {
+  position:relative; z-index:2;
+  width:min(420px, 92vw);
+  background:rgba(17,19,32,0.97);
+  border:1.5px solid var(--border-gold);
+  border-radius:22px;
+  padding:36px 32px 32px;
+  box-shadow:0 32px 80px rgba(0,0,0,0.6), 0 0 60px rgba(245,166,35,0.06);
+  animation:splashIn 0.7s cubic-bezier(0.16,1,0.3,1) both;
+  margin:auto;
+}
+@keyframes splashIn {
+  from{opacity:0;transform:translateY(28px) scale(0.96)}
+  to{opacity:1;transform:translateY(0) scale(1)}
+}
+.splash-logo {
+  text-align:center; margin-bottom:4px;
+  font-family:'DM Serif Display',serif;
+  font-size:26px; color:var(--gold);
+  display:flex; align-items:center; justify-content:center; gap:8px;
+}
+.splash-logo span { color:var(--text); font-family:'Tiro Tamil',serif; }
+.splash-tag {
+  text-align:center; font-size:10px; font-weight:700;
+  letter-spacing:1.5px; color:var(--text-dim); text-transform:uppercase;
+  margin-bottom:24px;
+}
+.splash-title {
+  font-family:'DM Serif Display',serif;
+  font-size:21px; color:var(--text);
+  text-align:center; margin-bottom:4px; line-height:1.3;
+}
+.splash-sub {
+  text-align:center; font-size:13px; color:var(--text-muted);
+  margin-bottom:24px; font-family:'Tiro Tamil',serif;
+}
+/* Google btn */
+.splash-google-btn {
+  width:100%; display:flex; align-items:center; justify-content:center; gap:10px;
+  background:rgba(255,255,255,0.06);
+  border:1.5px solid var(--border-gold);
+  border-radius:12px; padding:13px 18px;
+  font-size:14px; font-weight:700; color:var(--text);
+  cursor:pointer; transition:all 0.2s;
+  font-family:'DM Sans',sans-serif; margin-bottom:14px;
+}
+.splash-google-btn:hover { background:rgba(255,255,255,0.1); border-color:var(--gold); transform:translateY(-1px); box-shadow:0 8px 24px rgba(0,0,0,0.3); }
+.splash-divider {
+  display:flex; align-items:center; gap:10px;
+  margin-bottom:14px; color:var(--text-dim); font-size:11px; font-weight:700;
+}
+.splash-divider::before, .splash-divider::after {
+  content:''; flex:1; height:1px; background:var(--border);
+}
+/* Phone row */
+.splash-phone-row {
+  display:flex; gap:8px; margin-bottom:10px;
+}
+.splash-country-box {
+  display:flex; align-items:center; gap:5px;
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:10px; padding:12px 10px;
+  font-size:13px; font-weight:700; color:var(--text);
+  white-space:nowrap; cursor:pointer; transition:border-color 0.2s;
+  font-family:'DM Sans',sans-serif; flex-shrink:0;
+}
+.splash-country-box:hover { border-color:var(--gold); }
+.splash-phone-input {
+  flex:1; min-width:0; padding:12px 14px;
+  background:var(--surface2); border:1.5px solid var(--border);
+  border-radius:10px; color:var(--text); font-size:14px;
+  font-family:'DM Sans',sans-serif; outline:none; transition:all 0.2s;
+}
+.splash-phone-input:focus { border-color:var(--gold); background:rgba(255,255,255,0.06); box-shadow:0 0 0 3px var(--gold-glow); }
+.splash-phone-input::placeholder { color:var(--text-dim); }
+.splash-hint {
+  font-size:11px; color:var(--text-dim); margin-bottom:14px;
+  font-family:'Tiro Tamil',serif;
+}
+.splash-otp-btn {
+  width:100%; padding:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; border-radius:12px;
+  font-size:14px; font-weight:800; cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:all 0.2s; margin-bottom:18px;
+}
+.splash-otp-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(245,166,35,0.35); }
+.splash-otp-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+.splash-terms {
+  text-align:center; font-size:11px; color:var(--text-dim);
+  line-height:1.7;
+}
+.splash-terms a { color:var(--text-muted); text-decoration:underline; }
+/* OTP step */
+.splash-step { display:none; }
+.splash-step.active { display:block; }
+/* OTP boxes */
+.splash-otp-boxes {
+  display:flex; gap:6px; justify-content:center; margin:18px 0 6px;
+}
+.splash-otp-box {
+  width:clamp(36px,11vw,46px); height:clamp(44px,13vw,54px);
+  background:rgba(255,255,255,0.04); border:1.5px solid rgba(255,255,255,0.08);
+  border-radius:12px; text-align:center;
+  font-size:clamp(16px,5vw,22px); font-weight:700; font-family:'DM Serif Display',serif;
+  color:var(--text); outline:none; transition:all 0.2s; caret-color:var(--gold);
+}
+.splash-otp-box:focus { border-color:var(--gold); background:rgba(255,255,255,0.07); box-shadow:0 0 0 3px var(--gold-glow); }
+.splash-otp-box.filled { border-color:rgba(245,166,35,0.4); color:var(--gold); }
+.splash-back-btn {
+  display:flex; align-items:center; gap:5px; background:none; border:none;
+  color:var(--text-muted); font-size:12px; font-family:'DM Sans',sans-serif;
+  cursor:pointer; margin-bottom:16px; padding:0; transition:color 0.2s;
+}
+.splash-back-btn:hover { color:var(--text); }
+.splash-verify-btn {
+  width:100%; padding:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; border-radius:12px;
+  font-size:14px; font-weight:800; cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:all 0.2s; margin-top:8px;
+}
+.splash-verify-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(245,166,35,0.35); }
+.splash-verify-btn:disabled { opacity:0.5; cursor:not-allowed; transform:none; }
+.splash-otp-err { font-size:12px; color:#ff6b6b; text-align:center; margin-top:6px; min-height:18px; }
+.splash-resend-row {
+  display:flex; align-items:center; justify-content:space-between;
+  margin:10px 0; font-size:11px; color:var(--text-dim);
+}
+.splash-resend-btn { background:none; border:none; color:var(--gold); font-size:11px; font-family:'DM Sans',sans-serif; cursor:pointer; opacity:0.35; }
+.splash-resend-btn:not(:disabled) { opacity:1; }
+/* Success */
+.splash-success-icon {
+  width:60px; height:60px; background:rgba(76,175,125,0.12); border:1.5px solid rgba(76,175,125,0.35);
+  border-radius:50%; display:flex; align-items:center; justify-content:center;
+  font-size:26px; margin:0 auto 16px;
+  animation:splashSuccPop 0.5s cubic-bezier(0.34,1.56,0.64,1) both 0.1s;
+}
+@keyframes splashSuccPop { from{transform:scale(0.4);opacity:0} to{transform:scale(1);opacity:1} }
+.splash-success-title { font-family:'DM Serif Display',serif; font-size:24px; color:var(--gold); text-align:center; margin-bottom:8px; }
+.splash-success-msg { text-align:center; font-size:13px; color:var(--text-muted); margin-bottom:24px; font-family:'Tiro Tamil',serif; line-height:1.6; }
+.splash-continue-btn {
+  width:100%; padding:14px;
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; border-radius:12px;
+  font-size:15px; font-weight:800; cursor:pointer;
+  font-family:'DM Sans',sans-serif; transition:all 0.2s;
+}
+.splash-continue-btn:hover { transform:translateY(-2px); box-shadow:0 8px 24px rgba(245,166,35,0.35); }
+
+/* Splash mobile adjustments */
+@media(max-width:480px){
+  .splash-inner { padding:28px 20px 24px; border-radius:18px; }
+  .splash-logo { font-size:22px; }
+  .splash-otp-boxes { gap:5px; }
+}
 </style>
 </head>
 <body>
+
+<!-- ═══ SPLASH LOGIN PAGE ═══ -->
+<div id="splashLogin">
+  <div class="splash-bg-glow"></div>
+  <div class="splash-noise"></div>
+  <div class="splash-inner">
+    <div class="splash-logo">📚 Tamil<span>கதைகள்</span></div>
+    <div class="splash-tag">Premium Reading Experience</div>
+
+    <!-- Step 1: Phone / Google -->
+    <div class="splash-step active" id="splashStep1">
+      <div class="splash-title">Welcome back</div>
+      <div class="splash-sub">Sign in to continue your reading journey</div>
+
+      <!-- Google -->
+      <button class="splash-google-btn" onclick="splashGoogleLogin()">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Continue with Google ›
+      </button>
+
+      <div class="splash-divider">or</div>
+
+      <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:8px">Mobile Number</div>
+      <div class="splash-phone-row">
+        <div class="splash-country-box">🇮🇳 +91</div>
+        <input class="splash-phone-input" id="splashPhoneInput" type="tel" maxlength="10" placeholder="Enter mobile number" oninput="splashPhoneChanged()">
+      </div>
+      <div class="splash-hint">We'll send a 6-digit OTP to verify</div>
+      <button class="splash-otp-btn" id="splashSendOtpBtn" onclick="splashSendOtp()" disabled>Send OTP</button>
+
+      <div class="splash-terms">
+        By continuing, you accept our <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>
+      </div>
+    </div>
+
+    <!-- Step 2: OTP -->
+    <div class="splash-step" id="splashStep2">
+      <button class="splash-back-btn" onclick="splashGoTo('splashStep1')">← Back</button>
+      <div class="splash-title" style="text-align:center">Enter OTP</div>
+      <div class="splash-sub" id="splashOtpSub">Sent to +91 <span id="splashOtpPhone"></span></div>
+      <div class="splash-otp-boxes" id="splashOtpBoxes">
+        <input class="splash-otp-box" id="sotp0" maxlength="6" type="tel" oninput="splashOtpIn(0)" onkeydown="splashOtpKey(event,0)">
+        <input class="splash-otp-box" id="sotp1" maxlength="1" type="tel" oninput="splashOtpIn(1)" onkeydown="splashOtpKey(event,1)">
+        <input class="splash-otp-box" id="sotp2" maxlength="1" type="tel" oninput="splashOtpIn(2)" onkeydown="splashOtpKey(event,2)">
+        <input class="splash-otp-box" id="sotp3" maxlength="1" type="tel" oninput="splashOtpIn(3)" onkeydown="splashOtpKey(event,3)">
+        <input class="splash-otp-box" id="sotp4" maxlength="1" type="tel" oninput="splashOtpIn(4)" onkeydown="splashOtpKey(event,4)">
+        <input class="splash-otp-box" id="sotp5" maxlength="1" type="tel" oninput="splashOtpIn(5)" onkeydown="splashOtpKey(event,5)">
+      </div>
+      <div class="splash-otp-err" id="splashOtpErr"></div>
+      <div class="splash-resend-row">
+        <span class="splash-timer" id="splashTimerWrap">Resend in <b id="splashTimerVal">30</b>s</span>
+        <button class="splash-resend-btn" id="splashResendBtn" disabled onclick="splashResend()">Resend OTP</button>
+      </div>
+      <button class="splash-verify-btn" id="splashVerifyBtn" onclick="splashVerify()" disabled>Verify & Sign In</button>
+    </div>
+
+    <!-- Step 3: Success -->
+    <div class="splash-step" id="splashStep3">
+      <div class="splash-success-icon">✓</div>
+      <div class="splash-success-title" id="splashSuccessTitle">வணக்கம்! 🎉</div>
+      <div class="splash-success-msg" id="splashSuccessMsg">You're signed in. Welcome to your personalized reading experience!</div>
+      <button class="splash-continue-btn" onclick="splashDismiss()">📚 Start Reading →</button>
+    </div>
+  </div>
+</div>
+
 <!-- Reading progress bar -->
 <div id="readingProgressBar"></div>
 <!-- Confetti -->
@@ -1337,69 +1937,135 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <div class="logo">📖 Tamil<span>கதைகள்</span></div>
   <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
   <div class="nav-links">
-    <a href="#">🏠 Home</a>
-    <a href="#">💕 காதல்</a>
-    <a href="#">👻 பயம்</a>
-    <a href="#">😂 நகைச்சுவை</a>
-    <a href="#">🧒 குழந்தை</a>
-    <a href="#">🙏 தெய்வீகம்</a>
-    <a href="#">kathais.xyz</a>
+    <a href="#" onclick="filterCat('love',document.querySelectorAll('.cat-tab')[1])">💕 காதல்</a>
+    <a href="#" onclick="filterCat('horror',document.querySelectorAll('.cat-tab')[2])">👻 பயம்</a>
+    <a href="#" onclick="filterCat('comedy',document.querySelectorAll('.cat-tab')[3])">😂 நகைச்சுவை</a>
+    <a href="#" onclick="filterCat('kids',document.querySelectorAll('.cat-tab')[4])">🧒 குழந்தை</a>
+    <a href="#" onclick="filterCat('devotion',document.querySelectorAll('.cat-tab')[5])">🙏 தெய்வீகம்</a>
+    <a href="#" onclick="filterCat('moral',document.querySelectorAll('.cat-tab')[6])">💡 நீதி</a>
   </div>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Light</button>
-  <button class="login-btn" id="navLoginBtn" onclick="openLoginModal()">
-    <svg width="16" height="16" viewBox="0 0 24 24"><path fill="#EA4335" d="M5.266 9.765A7.077 7.077 0 0 1 12 4.909c1.69 0 3.218.6 4.418 1.582L19.91 3C17.782 1.145 15.055 0 12 0 7.27 0 3.198 2.698 1.24 6.65l4.026 3.115z"/><path fill="#34A853" d="M16.04 18.013c-1.09.703-2.474 1.078-4.04 1.078a7.077 7.077 0 0 1-6.723-4.823l-4.04 3.067A11.965 11.965 0 0 0 12 24c2.933 0 5.735-1.043 7.834-3l-3.793-2.987z"/><path fill="#4A90D9" d="M19.834 21c2.195-2.048 3.62-5.096 3.62-9 0-.71-.109-1.473-.272-2.182H12v4.637h6.436c-.317 1.559-1.17 2.766-2.395 3.558L19.834 21z"/><path fill="#FBBC05" d="M5.277 14.268A7.12 7.12 0 0 1 4.909 12c0-.782.125-1.533.357-2.235L1.24 6.65A11.934 11.934 0 0 0 0 12c0 1.92.445 3.73 1.237 5.335l4.04-3.067z"/></svg>
-    Gmail Login
-  </button>
-  <div class="user-avatar-btn" id="navUserBtn" style="display:none" onclick="openPnlma()">
-    <img id="navUserAvatar" src="" alt="">
-    <span id="navUserName"></span>
-  </div>
 </nav>
 
-<!-- ═══ GMAIL LOGIN MODAL ═══ -->
+<!-- ═══ LUXURY LOGIN MODAL ═══ -->
+<div id="recaptcha-container"></div>
 <div class="login-overlay" id="loginOverlay" onclick="handleLoginOverlayClick(event)">
-  <div class="login-card">
-    <button class="login-close" onclick="closeLoginModal()">✕</button>
-    <div class="login-logo">📖</div>
-    <div class="login-title">Tamilகதைகள் — Login</div>
-    <div class="login-sub">உங்கள் Google account-ஐ பயன்படுத்தி sign in செய்யுங்கள்.<br>Free forever — No spam!</div>
+  <div class="login-card-wrap">
+    <div class="login-card">
+      <div class="lux-corner tl"></div>
+      <div class="lux-corner br"></div>
 
-    <!-- Google Sign-In Button -->
-    <button class="google-signin-btn" id="googleSignInBtn" onclick="doGoogleSignIn()">
-      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-        <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
-        <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
-        <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3.66-2.84z" fill="#FBBC05"/>
-        <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
-      </svg>
-      Google உடன் Sign In
-    </button>
+      <div class="lux-loading" id="luxLoading">
+        <div class="lux-dot"></div><div class="lux-dot"></div><div class="lux-dot"></div>
+      </div>
 
-    <!-- Loading state -->
-    <div class="gauth-loading" id="gauthLoading">
-      <div class="gauth-spinner"></div>
-      <div class="gauth-loading-text">Google account verify பண்றோம்...</div>
+      <button class="login-close" onclick="closeLoginModal()">✕</button>
+
+      <div class="lux-brand">
+        <div class="lux-brand-icon">📚</div>
+        <div class="lux-brand-title">Tamil<span>கதைகள்</span></div>
+        <div class="lux-brand-sub">Premium Reading Experience</div>
+      </div>
+      <div class="lux-divider"></div>
+
+      <!-- STEP 1: CHOOSE -->
+      <div class="lux-step active" id="luxStep1">
+        <div class="lux-heading">Welcome back</div>
+        <div class="lux-sub">Sign in to continue your reading journey</div>
+
+        <button class="lux-btn-google" onclick="openLuxGooglePopup()">
+          <svg width="20" height="20" viewBox="0 0 48 48">
+            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+          </svg>
+          <span>Continue with Google</span>
+          <span class="arr">›</span>
+        </button>
+
+        <div class="lux-or"><div class="lux-or-line"></div><span class="lux-or-text">or</span><div class="lux-or-line"></div></div>
+
+        <div class="lux-label">Mobile Number</div>
+        <div class="lux-phone-row">
+          <div class="lux-country" id="luxCountryBtn" onclick="luxToggleDD()">
+            <span id="luxSelFlag">🇮🇳</span>
+            <span class="lux-country-code" id="luxSelCode">+91</span>
+            <svg width="9" height="5" viewBox="0 0 10 6" fill="none" style="opacity:0.35"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+            <div class="lux-country-dd" id="luxCountryDD">
+              <div class="lux-dd-item" onclick="luxSelectCountry('🇮🇳','+91','IN');event.stopPropagation()"><span>🇮🇳</span><span class="lux-dd-name">India</span><span class="lux-dd-code">+91</span></div>
+              <div class="lux-dd-item" onclick="luxSelectCountry('🇺🇸','+1','US');event.stopPropagation()"><span>🇺🇸</span><span class="lux-dd-name">United States</span><span class="lux-dd-code">+1</span></div>
+              <div class="lux-dd-item" onclick="luxSelectCountry('🇬🇧','+44','GB');event.stopPropagation()"><span>🇬🇧</span><span class="lux-dd-name">United Kingdom</span><span class="lux-dd-code">+44</span></div>
+              <div class="lux-dd-item" onclick="luxSelectCountry('🇸🇬','+65','SG');event.stopPropagation()"><span>🇸🇬</span><span class="lux-dd-name">Singapore</span><span class="lux-dd-code">+65</span></div>
+              <div class="lux-dd-item" onclick="luxSelectCountry('🇦🇪','+971','AE');event.stopPropagation()"><span>🇦🇪</span><span class="lux-dd-name">UAE</span><span class="lux-dd-code">+971</span></div>
+              <div class="lux-dd-item" onclick="luxSelectCountry('🇲🇾','+60','MY');event.stopPropagation()"><span>🇲🇾</span><span class="lux-dd-name">Malaysia</span><span class="lux-dd-code">+60</span></div>
+            </div>
+          </div>
+          <input type="tel" class="lux-phone-input" id="luxPhoneInput" placeholder="Enter mobile number" maxlength="15" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')luxSendOTP()">
+        </div>
+        <div class="lux-hint" id="luxPhoneHint">We'll send a 6-digit OTP to verify</div>
+
+        <button class="lux-btn-primary" onclick="luxSendOTP()" id="luxOtpBtn">Send OTP</button>
+
+        <div class="lux-privacy">
+          By continuing, you accept our <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>
+        </div>
+      </div>
+
+      <!-- STEP 2: OTP -->
+      <div class="lux-step" id="luxStep2">
+        <button class="lux-back" onclick="luxGoBack('luxStep1')">← Back</button>
+        <div class="lux-heading">Verify your number</div>
+        <div class="lux-otp-info">📱 OTP sent to <span class="lux-otp-num" id="luxOtpPhone"></span></div>
+        <div class="lux-label">Enter 6-digit OTP</div>
+        <div class="lux-otp-boxes">
+          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp0" oninput="luxOtpInput(0)" onkeydown="luxOtpKey(event,0)">
+          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp1" oninput="luxOtpInput(1)" onkeydown="luxOtpKey(event,1)">
+          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp2" oninput="luxOtpInput(2)" onkeydown="luxOtpKey(event,2)">
+          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp3" oninput="luxOtpInput(3)" onkeydown="luxOtpKey(event,3)">
+          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp4" oninput="luxOtpInput(4)" onkeydown="luxOtpKey(event,4)">
+          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp5" oninput="luxOtpInput(5)" onkeydown="luxOtpKey(event,5)">
+        </div>
+        <div class="lux-resend-row">
+          <span class="lux-timer">Resend in <b id="luxTimerVal">30</b>s</span>
+          <button class="lux-resend-btn" id="luxResendBtn" disabled onclick="luxResendOTP()">Resend OTP</button>
+        </div>
+        <div class="lux-hint" id="luxOtpHint">Enter the code sent to your mobile</div>
+        <button class="lux-btn-primary" onclick="luxVerifyOTP()" id="luxVerifyBtn" disabled>Verify &amp; Sign In</button>
+      </div>
+
+      <!-- STEP 3: SUCCESS -->
+      <div class="lux-step" id="luxStep3">
+        <div style="text-align:center">
+          <div class="lux-success-icon">✓</div>
+          <div class="lux-success-name" id="luxSuccessName">வணக்கம்!</div>
+          <div class="lux-success-msg" id="luxSuccessMsg">You're signed in. Enjoy your personalized Tamil stories!</div>
+          <button class="lux-btn-primary" onclick="luxFinishLogin()" style="max-width:200px;margin:0 auto">Start Reading →</button>
+        </div>
+      </div>
+
     </div>
+  </div>
+</div>
 
-    <div class="login-divider">OR</div>
-
-    <!-- Email step (manual fallback shown after Google) -->
-    <div id="emailLoginStep" style="display:none">
-      <input type="email" id="loginEmailInput" placeholder="உங்கள் Gmail address"
-        style="width:100%;padding:12px 16px;background:var(--surface2);border:1.5px solid var(--border);border-radius:10px;color:var(--text);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;margin-bottom:10px;transition:border-color 0.2s"
-        onfocus="this.style.borderColor='var(--gold)'" onblur="this.style.borderColor='var(--border)'"
-        onkeydown="if(event.key==='Enter')doEmailLogin()">
-      <button onclick="doEmailLogin()"
-        style="width:100%;padding:12px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;border-radius:10px;color:#1a1200;font-size:14px;font-weight:800;font-family:'DM Sans',sans-serif;cursor:pointer;transition:all 0.2s"
-        onmouseover="this.style.opacity=0.9" onmouseout="this.style.opacity=1">
-        📧 Email-ஐ Enter செய்க
-      </button>
+<!-- GOOGLE ACCOUNT CHOOSER -->
+<div class="lux-gpopup" id="luxGPopup" onclick="if(event.target===this)closeLuxGooglePopup()">
+  <div class="lux-gbox">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+      <span style="font-size:14px;color:#5f6368;font-weight:300">Google</span>
     </div>
-
-    <div class="login-privacy">
-      உங்கள் தரவு பாதுகாப்பானது. நாங்கள் எந்த தகவலும் விற்கோம்.<br>
-      <a href="#">Privacy Policy</a> · <a href="#">Terms</a>
+    <div class="lux-gbox-title">Choose an account</div>
+    <div class="lux-gbox-sub">to continue to Tamilகதைகள்</div>
+    <div class="lux-g-account" onclick="luxSignInWithGoogle('Tamil Reader','tamilreader2024@gmail.com')">
+      <div class="lux-g-avatar" style="background:linear-gradient(135deg,#ea4335,#fbbc05)">T</div>
+      <div><div class="lux-g-name">Tamil Reader</div><div class="lux-g-email">tamilreader2024@gmail.com</div></div>
     </div>
+    <div class="lux-g-add" onclick="closeLuxGooglePopup();showToast('Real OAuth needs backend setup.')">
+      <div class="lux-g-add-icon">+</div>
+      <span class="lux-g-add-text">Use another account</span>
+    </div>
+    <div class="lux-g-footer"><a href="#">Privacy Policy</a><a href="#">Terms of Service</a></div>
   </div>
 </div>
 
@@ -1517,8 +2183,11 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <a href="#" onclick="filterCat('horror',document.querySelectorAll('.cat-tab')[2]);closeMobileMenu()">👻 பயம்</a>
   <a href="#" onclick="filterCat('comedy',document.querySelectorAll('.cat-tab')[3]);closeMobileMenu()">😂 நகைச்சுவை</a>
   <a href="#" onclick="filterCat('kids',document.querySelectorAll('.cat-tab')[4]);closeMobileMenu()">🧒 குழந்தை</a>
+  <a href="#" onclick="filterCat('devotion',document.querySelectorAll('.cat-tab')[5]);closeMobileMenu()">🙏 தெய்வீகம்</a>
   <a href="#" onclick="filterCat('moral',document.querySelectorAll('.cat-tab')[6]);closeMobileMenu()">💡 நீதி</a>
-  <a href="#" onclick="openGamesModal();closeMobileMenu()">🎮 Games</a>
+  <a href="#" onclick="filterCat('history',document.querySelectorAll('.cat-tab')[7]);closeMobileMenu()">🏛️ வரலாறு</a>
+  <a href="#" onclick="filterCat('village',document.querySelectorAll('.cat-tab')[8]);closeMobileMenu()">🌾 கிராமம்</a>
+  <a href="#" onclick="filterCat('thriller',document.querySelectorAll('.cat-tab')[9]);closeMobileMenu()">🔥 த்ரில்லர்</a>
 </div>
 
 <!-- BACK TO TOP -->
@@ -1631,11 +2300,14 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <button class="bn-item" id="bn-search" onclick="showTab('search',this)">
     <span class="bn-icon">🔍</span>தேடு
   </button>
+  <button class="bn-item bn-upload" id="bn-upload" onclick="openUploadModal()">
+    <span class="bn-icon">✍️</span>எழுது
+  </button>
   <button class="bn-item" id="bn-bookmarks" onclick="showTab('bookmarks',this)">
     <span class="bn-icon">🔖</span>Saved
   </button>
-  <button class="bn-item" id="bn-games" onclick="openGamesModal()">
-    <span class="bn-icon">🎮</span>Games
+  <button class="bn-item" id="bn-profile" onclick="openPnlma()">
+    <span class="bn-icon">👤</span>Profile
   </button>
 </nav>
 
@@ -1647,6 +2319,72 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <button class="share-btn share-copy" onclick="copyLink()">🔗 Copy Link</button>
   </div>
   <button class="share-close-btn" onclick="closeShare()">✕ Close</button>
+</div>
+
+<!-- UPLOAD STORY MODAL -->
+<div class="upload-overlay" id="uploadOverlay" onclick="if(event.target===this)closeUploadModal()">
+  <div class="upload-modal">
+    <div class="upload-header">
+      <div class="upload-title">✍️ உங்கள் கதை எழுதுங்கள்</div>
+      <div class="upload-sub">Your story will appear in the feed for everyone to read</div>
+      <button class="upload-close" onclick="closeUploadModal()">✕</button>
+    </div>
+
+    <div class="upload-body">
+      <!-- Title -->
+      <div class="upload-field">
+        <label class="upload-label">📌 கதை தலைப்பு <span>*</span></label>
+        <input type="text" id="upTitle" class="upload-input" placeholder="உங்கள் கதையின் தலைப்பு..." maxlength="80" oninput="upCount('upTitle','upTitleCount',80)">
+        <div class="upload-counter"><span id="upTitleCount">0</span>/80</div>
+      </div>
+
+      <!-- Category + Emoji row -->
+      <div class="upload-row">
+        <div class="upload-field" style="flex:1">
+          <label class="upload-label">🗂️ வகை <span>*</span></label>
+          <select id="upCat" class="upload-input upload-select">
+            <option value="">-- தேர்வு செய்யுங்கள் --</option>
+            <option value="love">💕 காதல்</option>
+            <option value="horror">👻 பயம்</option>
+            <option value="comedy">😂 நகைச்சுவை</option>
+            <option value="kids">🧒 குழந்தை</option>
+            <option value="devotion">🙏 தெய்வீகம்</option>
+            <option value="moral">💡 நீதி</option>
+          </select>
+        </div>
+        <div class="upload-field" style="flex:1">
+          <label class="upload-label">🎭 Emoji</label>
+          <input type="text" id="upEmoji" class="upload-input" placeholder="📖" maxlength="2" style="font-size:22px;text-align:center">
+        </div>
+      </div>
+
+      <!-- Excerpt -->
+      <div class="upload-field">
+        <label class="upload-label">📝 சுருக்கம் (One line) <span>*</span></label>
+        <input type="text" id="upExcerpt" class="upload-input" placeholder="கதையின் சுருக்கமான விவரம்..." maxlength="120" oninput="upCount('upExcerpt','upExcerptCount',120)">
+        <div class="upload-counter"><span id="upExcerptCount">0</span>/120</div>
+      </div>
+
+      <!-- Story content -->
+      <div class="upload-field">
+        <label class="upload-label">📖 கதை முழுவதும் <span>*</span></label>
+        <textarea id="upStory" class="upload-textarea" placeholder="உங்கள் கதையை இங்கே எழுதுங்கள்..." maxlength="5000" oninput="upCount('upStory','upStoryCount',5000)"></textarea>
+        <div class="upload-counter"><span id="upStoryCount">0</span>/5000</div>
+      </div>
+
+      <!-- Moral (optional) -->
+      <div class="upload-field">
+        <label class="upload-label">💡 நீதி / Moral <span style="color:var(--text-dim);font-weight:400">(optional)</span></label>
+        <input type="text" id="upMoral" class="upload-input" placeholder="கதையின் நீதி..." maxlength="150">
+      </div>
+
+      <div id="upError" class="up-error" style="display:none"></div>
+
+      <button class="upload-submit-btn" onclick="submitStory()">
+        🚀 கதை பதிவேற்று — Publish Story
+      </button>
+    </div>
+  </div>
 </div>
 
 <!-- GAMES MODAL -->
@@ -3087,7 +3825,7 @@ function buildCard(s) {
       </div>
       <div class="story-body">
         <div class="story-cat" style="background:${s.catColor}22;color:${s.catColor}">${s.catLabel}</div>
-        <div class="story-title">${s.title}</div>
+        <div class="story-title">${s.title}${s.userUploaded ? `<span class="user-story-badge">USER</span>` : ''}</div>
         <div class="story-excerpt">${s.excerpt}</div>
         <div class="story-meta">
           <span class="view-count">👁 ${views > 0 ? views : ''} படிக்கப்பட்டது</span>
@@ -4264,105 +5002,433 @@ switchGame = function(id, el) {
 };
 
 // ═══════════════════════════════════════
+// SPLASH LOGIN PAGE
+// ═══════════════════════════════════════
+(function() {
+  // If user already logged in, hide splash immediately
+  try {
+    const saved = JSON.parse(localStorage.getItem('tk_user') || 'null');
+    if (saved) { document.getElementById('splashLogin').style.display = 'none'; return; }
+  } catch(e) {}
+
+  let splashOTP = '', splashPhone = '', splashTimer = null, splashSecs = 30;
+
+  function splashGoTo(id) {
+    document.querySelectorAll('.splash-step').forEach(s => s.classList.remove('active'));
+    document.getElementById(id).classList.add('active');
+  }
+  window.splashGoTo = splashGoTo;
+
+  function splashPhoneChanged() {
+    const val = document.getElementById('splashPhoneInput').value.replace(/\D/g,'');
+    document.getElementById('splashPhoneInput').value = val;
+    document.getElementById('splashSendOtpBtn').disabled = val.length < 10;
+  }
+  window.splashPhoneChanged = splashPhoneChanged;
+
+  function splashSendOtp() {
+    const phone = document.getElementById('splashPhoneInput').value.replace(/\D/g,'');
+    if (phone.length < 10) return;
+    splashPhone = phone;
+    splashOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    document.getElementById('splashOtpPhone').textContent = phone;
+    splashClearOtpBoxes();
+    splashGoTo('splashStep2');
+    splashStartTimer();
+    document.getElementById('sotp0').focus();
+    // Show demo OTP in toast (remove in production)
+    if (window.showToast) showToast('Demo OTP: ' + splashOTP);
+    else console.log('Demo OTP:', splashOTP);
+  }
+  window.splashSendOtp = splashSendOtp;
+
+  function splashClearOtpBoxes() {
+    for (let i = 0; i < 6; i++) {
+      const b = document.getElementById('sotp' + i);
+      b.value = ''; b.classList.remove('filled');
+    }
+    document.getElementById('splashVerifyBtn').disabled = true;
+    document.getElementById('splashOtpErr').textContent = '';
+  }
+
+  function splashOtpIn(i) {
+    const box = document.getElementById('sotp' + i);
+    const val = box.value.replace(/\D/g,'');
+    if (val.length > 1) {
+      // Paste full OTP
+      const d = val.slice(0,6);
+      for (let j = 0; j < 6; j++) {
+        const b = document.getElementById('sotp' + j);
+        b.value = d[j] || ''; b.classList.toggle('filled', !!b.value);
+      }
+      document.getElementById('sotp5').focus();
+      splashCheckVerifyBtn(); return;
+    }
+    box.value = val ? val[val.length-1] : '';
+    box.classList.toggle('filled', !!box.value);
+    if (box.value && i < 5) document.getElementById('sotp' + (i+1)).focus();
+    splashCheckVerifyBtn();
+  }
+  window.splashOtpIn = splashOtpIn;
+
+  function splashOtpKey(e, i) {
+    if (e.key === 'Backspace' && !document.getElementById('sotp'+i).value && i > 0)
+      document.getElementById('sotp'+(i-1)).focus();
+    if (e.key === 'Enter') splashVerify();
+  }
+  window.splashOtpKey = splashOtpKey;
+
+  function splashCheckVerifyBtn() {
+    let full = true;
+    for (let i = 0; i < 6; i++) { if (!document.getElementById('sotp'+i).value) { full = false; break; } }
+    document.getElementById('splashVerifyBtn').disabled = !full;
+  }
+
+  function splashStartTimer() {
+    splashSecs = 30;
+    document.getElementById('splashTimerVal').textContent = splashSecs;
+    document.getElementById('splashResendBtn').disabled = true;
+    document.getElementById('splashTimerWrap').style.display = '';
+    if (splashTimer) clearInterval(splashTimer);
+    splashTimer = setInterval(() => {
+      splashSecs--;
+      document.getElementById('splashTimerVal').textContent = splashSecs;
+      if (splashSecs <= 0) {
+        clearInterval(splashTimer); splashTimer = null;
+        document.getElementById('splashResendBtn').disabled = false;
+        document.getElementById('splashTimerWrap').style.display = 'none';
+      }
+    }, 1000);
+  }
+
+  function splashResend() {
+    splashOTP = Math.floor(100000 + Math.random() * 900000).toString();
+    splashClearOtpBoxes(); splashStartTimer();
+    document.getElementById('sotp0').focus();
+    if (window.showToast) showToast('New OTP: ' + splashOTP);
+  }
+  window.splashResend = splashResend;
+
+  function splashVerify() {
+    let entered = '';
+    for (let i = 0; i < 6; i++) entered += document.getElementById('sotp'+i).value;
+    const btn = document.getElementById('splashVerifyBtn');
+    btn.disabled = true; btn.innerHTML = '<span class="lux-spinner"></span>';
+    setTimeout(() => {
+      btn.innerHTML = 'Verify & Sign In';
+      if (entered === splashOTP) {
+        const seed = encodeURIComponent(splashPhone);
+        const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${seed}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`;
+        const user = { name:'Tamil Reader', phone:'+91'+splashPhone, email:'', provider:'phone', avatar, joinedAt:new Date().toISOString() };
+        localStorage.setItem('tk_user', JSON.stringify(user));
+        document.getElementById('splashSuccessTitle').textContent = 'வணக்கம்! 🎉';
+        document.getElementById('splashSuccessMsg').textContent = `Signed in with +91${splashPhone}. Welcome to your personalized reading experience!`;
+        if (splashTimer) { clearInterval(splashTimer); splashTimer = null; }
+        splashGoTo('splashStep3');
+      } else {
+        document.getElementById('splashOtpErr').textContent = '✕ Incorrect OTP. Please try again.';
+        btn.disabled = false;
+        for (let i = 0; i < 6; i++) {
+          const b = document.getElementById('sotp'+i);
+          b.style.borderColor = '#e05a5a';
+          setTimeout(() => b.style.borderColor = '', 700);
+        }
+      }
+    }, 1400);
+  }
+  window.splashVerify = splashVerify;
+
+  function splashGoogleLogin() {
+    openLuxGooglePopup();
+  }
+  window.splashGoogleLogin = splashGoogleLogin;
+
+  function splashDismiss() {
+    const el = document.getElementById('splashLogin');
+    el.classList.add('hide');
+    // After user is set, sync nav
+    setTimeout(() => {
+      el.style.display = 'none';
+      try {
+        const user = JSON.parse(localStorage.getItem('tk_user') || 'null');
+        if (user && window.updateNavForUser) updateNavForUser(user);
+        if (user && window.showToast) showToast('🎉 வணக்கம், ' + user.name + '!');
+      } catch(e) {}
+    }, 500);
+  }
+  window.splashDismiss = splashDismiss;
+})();
+
+// ═══════════════════════════════════════
 // Init
 applyTheme(state.theme);
 
-// ── GMAIL LOGIN & PNLMA ──────────────────────────────────────────────────────
-// Persistent user state
+// ── LUXURY LOGIN SYSTEM ──────────────────────────────────────────────────────
+// ═══ FIREBASE CONFIG ═══
+const fbConfig = {
+  apiKey: "AIzaSyDXsFk6LbxRS76Efl3bNxckjo_i2JyTQPQ",
+  authDomain: "tamilkathaigal-4e5f9.firebaseapp.com",
+  projectId: "tamilkathaigal-4e5f9",
+  storageBucket: "tamilkathaigal-4e5f9.firebasestorage.app",
+  messagingSenderId: "686419126311",
+  appId: "1:686419126311:web:63bed331b9e8c6a2968602"
+};
+
+let fbApp, fbAuth, fbRecaptcha;
+
+function initFirebase() {
+  if (fbApp) return;
+  fbApp = firebase.initializeApp(fbConfig);
+  fbAuth = firebase.auth();
+  fbAuth.languageCode = 'ta';
+  fbAuth.onAuthStateChanged(fbUser => {
+    if (fbUser) {
+      const user = {
+        name: fbUser.displayName || fbUser.phoneNumber || fbUser.email || 'User',
+        email: fbUser.email || '',
+        phone: fbUser.phoneNumber || '',
+        avatar: fbUser.photoURL || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(fbUser.displayName||'U')}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`,
+        provider: fbUser.providerData[0]?.providerId || 'unknown',
+        uid: fbUser.uid
+      };
+      currentUser = user;
+      localStorage.setItem('tk_user', JSON.stringify(user));
+      updateNavForUser(user);
+    } else {
+      currentUser = null;
+      localStorage.removeItem('tk_user');
+      updateNavForUser(null);
+    }
+  });
+}
+
 let currentUser = null;
 try { currentUser = JSON.parse(localStorage.getItem('tk_user') || 'null'); } catch(e) {}
 
-// Sample Google profile pictures (for demo randomization)
-const DEMO_AVATARS = [
-  'https://lh3.googleusercontent.com/a/default-user=s96-c',
-  'https://api.dicebear.com/7.x/avataaars/svg?seed=Tamil1',
-  'https://api.dicebear.com/7.x/avataaars/svg?seed=Tamil2',
-];
+// State
+let luxCode = '+91', luxCountry = 'IN', luxOtpTimer = null, luxSecs = 30;
+let fbConfirmResult = null;
 
 function openLoginModal() {
+  initFirebase();
   document.getElementById('loginOverlay').classList.add('show');
-  document.getElementById('gauthLoading').classList.remove('show');
-  document.getElementById('googleSignInBtn').style.display = '';
-  document.getElementById('emailLoginStep').style.display = 'none';
-  document.getElementById('loginEmailInput') && (document.getElementById('loginEmailInput').value = '');
+  luxShowStep('luxStep1');
+  setTimeout(() => setupRecaptcha(), 300);
 }
 function closeLoginModal() {
   document.getElementById('loginOverlay').classList.remove('show');
+  if (luxOtpTimer) { clearInterval(luxOtpTimer); luxOtpTimer = null; }
 }
 function handleLoginOverlayClick(e) {
   if (e.target === document.getElementById('loginOverlay')) closeLoginModal();
 }
 
-// Simulate Google OAuth popup flow
-function doGoogleSignIn() {
-  const btn = document.getElementById('googleSignInBtn');
-  const loading = document.getElementById('gauthLoading');
-  btn.style.display = 'none';
-  loading.classList.add('show');
+// Loading
+function luxShowLoad() { document.getElementById('luxLoading').classList.add('show'); }
+function luxHideLoad() { document.getElementById('luxLoading').classList.remove('show'); }
 
-  // After a brief "loading" simulation, show email input as if Google returned email
-  setTimeout(() => {
-    loading.classList.remove('show');
-    btn.style.display = '';
-    // Show email step to let user type/confirm their Gmail
-    document.getElementById('emailLoginStep').style.display = 'block';
-    document.getElementById('loginEmailInput').focus();
-    loading.querySelector('.gauth-loading-text').textContent = 'Google account verify பண்றோம்...';
-  }, 1800);
+// Steps
+function luxShowStep(id) {
+  document.querySelectorAll('.lux-step').forEach(s => s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+function luxGoBack(to) {
+  if (luxOtpTimer) { clearInterval(luxOtpTimer); luxOtpTimer = null; }
+  luxShowStep(to);
 }
 
-function doEmailLogin() {
-  const emailInput = document.getElementById('loginEmailInput');
-  const email = emailInput.value.trim();
-  if (!email || !email.includes('@')) {
-    emailInput.style.borderColor = '#ff5252';
-    emailInput.placeholder = '⚠ சரியான Gmail address போடுங்கள்';
-    setTimeout(() => { emailInput.style.borderColor = 'var(--border)'; emailInput.placeholder = 'உங்கள் Gmail address'; }, 2000);
+// Country dropdown
+function luxToggleDD() { document.getElementById('luxCountryDD').classList.toggle('show'); }
+function luxSelectCountry(flag, code, country) {
+  luxCode = code; luxCountry = country;
+  document.getElementById('luxSelFlag').textContent = flag;
+  document.getElementById('luxSelCode').textContent = code;
+  document.getElementById('luxCountryDD').classList.remove('show');
+}
+document.addEventListener('click', e => {
+  if (!e.target.closest('#luxCountryBtn')) document.getElementById('luxCountryDD')?.classList.remove('show');
+  if (!e.target.closest('.search-wrap')) hideAutocomplete();
+});
+
+// reCAPTCHA setup
+function setupRecaptcha() {
+  if (!fbAuth) return;
+  try {
+    if (fbRecaptcha) { fbRecaptcha.clear(); fbRecaptcha = null; }
+    const container = document.getElementById('recaptcha-container');
+    if (container) container.innerHTML = '';
+    fbRecaptcha = new firebase.auth.RecaptchaVerifier('recaptcha-container', {
+      size: 'invisible',
+      callback: () => {}
+    });
+  } catch(e) { console.log('recaptcha:', e); }
+}
+
+// ── REAL Phone OTP ──
+async function luxSendOTP() {
+  const phone = document.getElementById('luxPhoneInput').value.trim();
+  const hint = document.getElementById('luxPhoneHint');
+  const input = document.getElementById('luxPhoneInput');
+  const minLen = {IN:10,US:10,GB:10,SG:8,AE:9,MY:9};
+  const min = minLen[luxCountry] || 8;
+  if (!phone || phone.length < min) {
+    input.classList.add('error'); hint.textContent = `Valid ${min}-digit number enter பண்ணுங்கள்`; hint.classList.add('err');
+    setTimeout(() => { input.classList.remove('error'); hint.classList.remove('err'); hint.textContent = "We'll send a 6-digit OTP to verify"; }, 2500);
     return;
   }
-  const name = email.split('@')[0].replace(/[._]/g,' ').replace(/\b\w/g, c => c.toUpperCase());
-  const seed = encodeURIComponent(email);
-  const avatar = `https://api.dicebear.com/7.x/initials/svg?seed=${seed}&backgroundColor=f5a623&textColor=1a1200&fontSize=40`;
-  signInUser({ email, name, avatar, provider:'google', joinedAt: new Date().toISOString() });
+  const fullPhone = luxCode + phone;
+  const btn = document.getElementById('luxOtpBtn');
+  btn.disabled = true; btn.innerHTML = '<span class="lux-spinner"></span>';
+  luxShowLoad();
+  try {
+    if (!fbRecaptcha) setupRecaptcha();
+    fbConfirmResult = await fbAuth.signInWithPhoneNumber(fullPhone, fbRecaptcha);
+    luxHideLoad(); btn.disabled = false; btn.textContent = 'Send OTP';
+    document.getElementById('luxOtpPhone').textContent = fullPhone;
+    luxClearOTP(); luxShowStep('luxStep2'); luxStartTimer();
+    document.getElementById('lotp0').focus();
+    showToast('📱 OTP அனுப்பப்பட்டது!', 4000);
+  } catch(err) {
+    luxHideLoad(); btn.disabled = false; btn.textContent = 'Send OTP';
+    hint.textContent = '❌ ' + (err.message || 'OTP அனுப்ப முடியவில்லை');
+    hint.classList.add('err');
+    showToast('❌ ' + err.message, 5000);
+    if (fbRecaptcha) { try { fbRecaptcha.clear(); } catch(e){} fbRecaptcha = null; }
+    setupRecaptcha();
+  }
 }
 
+// OTP boxes
+function luxClearOTP() {
+  for(let i=0;i<6;i++){const b=document.getElementById('lotp'+i);b.value='';b.classList.remove('filled');}
+  document.getElementById('luxVerifyBtn').disabled = true;
+  document.getElementById('luxOtpHint').textContent = 'Enter the code sent to your mobile';
+  document.getElementById('luxOtpHint').classList.remove('err');
+}
+function luxOtpInput(i) {
+  const box = document.getElementById('lotp'+i);
+  const val = box.value.replace(/\D/g,'');
+  box.value = val ? val[val.length-1] : '';
+  box.classList.toggle('filled', !!box.value);
+  if (val.length > 1) {
+    const d = val.slice(0,6);
+    for(let j=0;j<6;j++){const b=document.getElementById('lotp'+j);b.value=d[j]||'';b.classList.toggle('filled',!!b.value);}
+    document.getElementById('lotp5').focus(); luxCheckOTP(); return;
+  }
+  if (box.value && i<5) document.getElementById('lotp'+(i+1)).focus();
+  luxCheckOTP();
+}
+function luxOtpKey(e,i) {
+  if (e.key==='Backspace' && !document.getElementById('lotp'+i).value && i>0) document.getElementById('lotp'+(i-1)).focus();
+  if (e.key==='Enter') luxVerifyOTP();
+}
+function luxCheckOTP() {
+  let full=true;
+  for(let i=0;i<6;i++){if(!document.getElementById('lotp'+i).value){full=false;break;}}
+  document.getElementById('luxVerifyBtn').disabled = !full;
+}
+
+// Timer
+function luxStartTimer() {
+  luxSecs = 30;
+  document.getElementById('luxTimerVal').textContent = luxSecs;
+  document.getElementById('luxResendBtn').disabled = true;
+  document.getElementById('luxTimerVal').closest('.lux-timer').style.display = '';
+  if (luxOtpTimer) clearInterval(luxOtpTimer);
+  luxOtpTimer = setInterval(() => {
+    luxSecs--;
+    document.getElementById('luxTimerVal').textContent = luxSecs;
+    if (luxSecs <= 0) {
+      clearInterval(luxOtpTimer); luxOtpTimer = null;
+      document.getElementById('luxResendBtn').disabled = false;
+      document.getElementById('luxTimerVal').closest('.lux-timer').style.display = 'none';
+    }
+  }, 1000);
+}
+async function luxResendOTP() {
+  luxClearOTP();
+  setupRecaptcha();
+  await luxSendOTP();
+}
+
+// ── REAL OTP Verify ──
+async function luxVerifyOTP() {
+  if (!fbConfirmResult) { showToast('⚠️ முதலில் OTP அனுப்புங்கள்!'); return; }
+  let entered = '';
+  for(let i=0;i<6;i++) entered += document.getElementById('lotp'+i).value;
+  const btn = document.getElementById('luxVerifyBtn');
+  const hint = document.getElementById('luxOtpHint');
+  btn.disabled = true; btn.innerHTML = '<span class="lux-spinner"></span>'; luxShowLoad();
+  try {
+    await fbConfirmResult.confirm(entered);
+    luxHideLoad();
+    if (luxOtpTimer){ clearInterval(luxOtpTimer); luxOtpTimer = null; }
+    closeLoginModal();
+    showToast('✅ Phone login success!', 4000);
+  } catch(err) {
+    luxHideLoad(); btn.disabled = false; btn.textContent = 'Verify & Sign In';
+    hint.textContent = '✕ தவறான OTP. மீண்டும் try பண்ணுங்கள்.'; hint.classList.add('err');
+    for(let i=0;i<6;i++){const b=document.getElementById('lotp'+i);b.style.borderColor='#e05a5a';setTimeout(()=>b.style.borderColor='',600);}
+  }
+}
+
+// ── REAL Google Login ──
+async function openLuxGooglePopup() {
+  initFirebase();
+  try {
+    const provider = new firebase.auth.GoogleAuthProvider();
+    await fbAuth.signInWithPopup(provider);
+    closeLoginModal();
+    try { const s=document.getElementById('splashLogin'); if(s) s.style.display='none'; } catch(e){}
+  } catch(err) {
+    if (err.code !== 'auth/popup-closed-by-user') {
+      showToast('❌ Google login failed: ' + err.message, 5000);
+    }
+  }
+}
+
+function closeLuxGooglePopup() {}
+function luxSignInWithGoogle() { openLuxGooglePopup(); }
+function luxFinishLogin() { closeLoginModal(); }
+
+// Core signInUser & nav update
 function signInUser(user) {
   currentUser = user;
   localStorage.setItem('tk_user', JSON.stringify(user));
-  closeLoginModal();
   updateNavForUser(user);
   showToast(`🎉 வணக்கம், ${user.name}!`);
 }
 
+
 function updateNavForUser(user) {
-  const loginBtn = document.getElementById('navLoginBtn');
-  const userBtn = document.getElementById('navUserBtn');
+  const bnProfile = document.getElementById('bn-profile');
   if (user) {
-    loginBtn.style.display = 'none';
-    userBtn.style.display = 'flex';
-    document.getElementById('navUserAvatar').src = user.avatar;
-    document.getElementById('navUserName').textContent = user.name.split(' ')[0];
+    if (bnProfile) {
+      bnProfile.innerHTML = `<span class="bn-icon"><img src="${user.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(user.name)}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`}" style="width:26px;height:26px;border-radius:50%;border:2px solid var(--gold);object-fit:cover;display:block;"></span>${user.name.split(' ')[0]}`;
+    }
   } else {
-    loginBtn.style.display = '';
-    userBtn.style.display = 'none';
+    if (bnProfile) {
+      bnProfile.innerHTML = `<span class="bn-icon">👤</span>Profile`;
+    }
   }
 }
 
 function doLogout() {
+  if (fbAuth) fbAuth.signOut();
   currentUser = null;
   localStorage.removeItem('tk_user');
   closePnlma();
   updateNavForUser(null);
   showToast('👋 Signed out! Bye!');
+  setTimeout(() => { openLoginModal(); }, 600);
 }
 
 // ── PNLMA Panel ──
 function openPnlma() {
   if (!currentUser) { openLoginModal(); return; }
-  // Populate stats
-  document.getElementById('pnlmaAvatar').src = currentUser.avatar;
+  document.getElementById('pnlmaAvatar').src = currentUser.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(currentUser.name)}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`;
   document.getElementById('pnlmaName').textContent = currentUser.name;
-  document.getElementById('pnlmaEmail').textContent = currentUser.email;
+  document.getElementById('pnlmaEmail').textContent = currentUser.email || currentUser.phone || '';
   const readCount = state.history.length;
   const bmCount = state.bookmarks.length;
   const likeCount = Object.keys(state.likes).length;
@@ -4373,7 +5439,6 @@ function openPnlma() {
   document.getElementById('pnlmaBookmarkCount').textContent = bmCount + ' கதைகள்';
   document.getElementById('pnlmaHistoryCount').textContent = readCount + ' கதைகள்';
   document.getElementById('pnlmaLikeCount').textContent = likeCount + ' ❤️';
-  // Badges
   const badges = ['🔥 READER'];
   if (bmCount >= 5) badges.push('🔖 COLLECTOR');
   if (likeCount >= 10) badges.push('❤️ LOVER');
@@ -4382,34 +5447,163 @@ function openPnlma() {
   document.getElementById('pnlmaBadges').innerHTML = badges.map(b => `<span class="pnlma-badge">${b}</span>`).join('');
   document.getElementById('pnlmaOverlay').classList.add('show');
 }
-function closePnlma() {
-  document.getElementById('pnlmaOverlay').classList.remove('show');
-}
-function handlePnlmaOverlayClick(e) {
-  if (e.target === document.getElementById('pnlmaOverlay')) closePnlma();
-}
+function closePnlma() { document.getElementById('pnlmaOverlay').classList.remove('show'); }
+function handlePnlmaOverlayClick(e) { if (e.target === document.getElementById('pnlmaOverlay')) closePnlma(); }
 function copyProfileLink() {
   navigator.clipboard?.writeText('https://kathais.xyz').then(() => showToast('🔗 Link copied!'));
   closePnlma();
 }
 
-// ── Toast helper (reuse or create) ──
-function showToast(msg) {
+// ── Toast ──
+function showToast(msg, duration) {
+  duration = duration || 2800;
   let t = document.getElementById('gToast');
   if (!t) {
-    t = document.createElement('div');
-    t.id = 'gToast';
-    t.style.cssText = 'position:fixed;bottom:80px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1.5px solid var(--border-gold);color:var(--text);padding:10px 20px;border-radius:20px;font-size:13px;font-family:"DM Sans",sans-serif;z-index:3000;opacity:0;transition:all 0.3s;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,0.4)';
+    t = document.createElement('div'); t.id = 'gToast';
+    t.style.cssText = 'position:fixed;bottom:86px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--bg3);border:1.5px solid var(--border-gold);color:var(--text);padding:10px 20px;border-radius:20px;font-size:13px;font-family:"DM Sans",sans-serif;z-index:9999;opacity:0;transition:all 0.3s;white-space:nowrap;box-shadow:0 8px 30px rgba(0,0,0,0.4)';
     document.body.appendChild(t);
   }
-  t.textContent = msg;
-  t.style.opacity = '1'; t.style.transform = 'translateX(-50%) translateY(0)';
+  t.textContent = msg; t.style.opacity='1'; t.style.transform='translateX(-50%) translateY(0)';
   clearTimeout(t._timer);
-  t._timer = setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, 2800);
+  t._timer = setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, duration);
 }
 
 // Initialize nav state on load
 if (currentUser) updateNavForUser(currentUser);
+
+// ═══ UPLOAD STORY ═══
+function openUploadModal() {
+  if (!currentUser) {
+    showToast('⚠️ முதலில் Login செய்யுங்கள்!');
+    setTimeout(() => openLoginModal(), 600);
+    return;
+  }
+  document.getElementById('uploadOverlay').classList.add('show');
+  // reset form
+  ['upTitle','upExcerpt','upStory','upMoral','upEmoji'].forEach(id => document.getElementById(id).value = '');
+  document.getElementById('upCat').value = '';
+  ['upTitleCount','upExcerptCount','upStoryCount'].forEach(id => document.getElementById(id).textContent = '0');
+  document.getElementById('upError').style.display = 'none';
+}
+
+function closeUploadModal() {
+  document.getElementById('uploadOverlay').classList.remove('show');
+}
+
+function upCount(inputId, countId, max) {
+  const val = document.getElementById(inputId).value.length;
+  document.getElementById(countId).textContent = val;
+}
+
+// ═══ SUPABASE CONFIG ═══
+const SUPA_URL = 'https://mehzcrsvftyeosjzoimw.supabase.co';
+const SUPA_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1laHpjcnN2ZnR5ZW9zanpvaW13Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzczMjgxNzUsImV4cCI6MjA5MjkwNDE3NX0.8HhurSUrzAxAicwFS3xB7oC-Fvnzcr4xHBzNRuqbQ-Q';
+
+const catMeta = {
+  love:     { label:'காதல்',      color:'#e91e63', bg:'linear-gradient(135deg,#880e4f,#c2185b)' },
+  horror:   { label:'பயம்',       color:'#7c4dff', bg:'linear-gradient(135deg,#212121,#4a148c)' },
+  comedy:   { label:'நகைச்சுவை', color:'#ff9800', bg:'linear-gradient(135deg,#e65100,#f9a825)' },
+  kids:     { label:'குழந்தை',    color:'#00bcd4', bg:'linear-gradient(135deg,#006064,#0097a7)' },
+  devotion: { label:'தெய்வீகம்', color:'#ff7043', bg:'linear-gradient(135deg,#bf360c,#e64a19)' },
+  moral:    { label:'நீதி',       color:'#8bc34a', bg:'linear-gradient(135deg,#1b5e20,#33691e)' },
+};
+
+function dbStoryToCard(s) {
+  const storyHTML = (s.story || '').split('\n').filter(l=>l.trim()).map(p=>`<p>${p}</p>`).join('') +
+    (s.moral ? `<div class="moral">💡 நீதி: ${s.moral}</div>` : '');
+  const meta = catMeta[s.cat] || { label:s.cat, color:'#888', bg:'linear-gradient(135deg,#222,#444)' };
+  return {
+    id: 'sb_' + s.id,
+    cat: s.cat,
+    emoji: s.emoji || '📖',
+    bg: meta.bg,
+    catLabel: meta.label,
+    catColor: meta.color,
+    title: s.title,
+    excerpt: s.excerpt,
+    readTime: Math.max(1, Math.ceil((s.story||'').length / 300)) + ' நிமிஷம்',
+    story: `<h3>${s.emoji||'📖'} ${s.title}</h3>${storyHTML}`,
+    badge: 'new',
+    uploadedBy: s.uploaded_by,
+    userUploaded: true
+  };
+}
+
+async function loadSupabaseStories() {
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/stories?order=created_at.desc&limit=100`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    if (!res.ok) return;
+    const data = await res.json();
+    data.forEach(s => {
+      const card = dbStoryToCard(s);
+      if (!storiesDB.find(x => x.id === card.id)) {
+        storiesDB.unshift(card);
+        filtered.unshift(card);
+      }
+    });
+    renderStories();
+  } catch(e) { console.error('Supabase load error:', e); }
+}
+
+async function submitStory() {
+  const title   = document.getElementById('upTitle').value.trim();
+  const cat     = document.getElementById('upCat').value;
+  const excerpt = document.getElementById('upExcerpt').value.trim();
+  const story   = document.getElementById('upStory').value.trim();
+  const moral   = document.getElementById('upMoral').value.trim();
+  const emoji   = document.getElementById('upEmoji').value.trim() || '📖';
+  const errEl   = document.getElementById('upError');
+
+  if (!title)   { errEl.textContent = '⚠️ கதை தலைப்பு இல்லை!'; errEl.style.display=''; return; }
+  if (!cat)     { errEl.textContent = '⚠️ வகை தேர்வு செய்யுங்கள்!'; errEl.style.display=''; return; }
+  if (!excerpt) { errEl.textContent = '⚠️ சுருக்கம் எழுதுங்கள்!'; errEl.style.display=''; return; }
+  if (story.length < 50) { errEl.textContent = '⚠️ கதை குறைந்தது 50 எழுத்துகள் இருக்கணும்!'; errEl.style.display=''; return; }
+  errEl.style.display = 'none';
+
+  const btn = document.querySelector('.upload-submit-btn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Saving...';
+
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/stories`, {
+      method: 'POST',
+      headers: {
+        'apikey': SUPA_KEY,
+        'Authorization': 'Bearer ' + SUPA_KEY,
+        'Content-Type': 'application/json',
+        'Prefer': 'return=representation'
+      },
+      body: JSON.stringify({
+        title, cat, emoji, excerpt, story, moral,
+        uploaded_by: currentUser.name,
+        user_email: currentUser.email || ''
+      })
+    });
+
+    if (!res.ok) {
+      const err = await res.json();
+      throw new Error(err.message || 'Upload failed');
+    }
+
+    const [saved] = await res.json();
+    const card = dbStoryToCard(saved);
+    storiesDB.unshift(card);
+    filtered.unshift(card);
+
+    closeUploadModal();
+    showTab('home', document.getElementById('bn-home'));
+    renderStories();
+    showToast(`🎉 "${title}" — Database ல் save ஆச்சு!`, 5000);
+  } catch(e) {
+    errEl.textContent = '❌ Error: ' + e.message;
+    errEl.style.display = '';
+  } finally {
+    btn.disabled = false;
+    btn.textContent = '🚀 கதை பதிவேற்று — Publish Story';
+  }
+}
 
 // ═══════════════════════════════════════
 initSOTD();
@@ -4419,10 +5613,10 @@ renderBookmarks();
 initStreak();
 initPageProgress();
 initStoryProgress();
+loadSupabaseStories();
 // Close share popup on outside click
 document.addEventListener('click', e => {
   if (!e.target.closest('.share-popup') && !e.target.closest('.card-action-btn')) closeShare();
-  if (!e.target.closest('.search-wrap')) hideAutocomplete();
 });
 </script>
 </body>
