@@ -7179,6 +7179,1440 @@ loadSupabaseStories();
 document.addEventListener('click', e => {
   if (!e.target.closest('.share-popup') && !e.target.closest('.card-action-btn')) closeShare();
 });
+
+// ════════════════════════════════════════════════════════════════
+// 🆕 NEW FEATURES BLOCK — Tamilகதைகள் v2.0
+// ════════════════════════════════════════════════════════════════
+
+// ── 1. COMMENTS SYSTEM (Supabase) ──────────────────────────────
+async function loadComments(storyId) {
+  const wrap = document.getElementById('commentsWrap');
+  if (!wrap) return;
+  wrap.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:10px 0">⏳ Comments load ஆகுது...</div>';
+  try {
+    const res = await fetch(`${SUPA_URL}/rest/v1/comments?story_id=eq.${storyId}&order=created_at.desc&limit=50`, {
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+    });
+    const data = await res.json();
+    if (!data.length) {
+      wrap.innerHTML = '<div style="color:var(--text-muted);font-size:13px;padding:10px 0;text-align:center">💬 முதல் comment போடுங்க!</div>';
+      return;
+    }
+    wrap.innerHTML = data.map(c => `
+      <div style="display:flex;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)">
+        <img src="https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(c.user_name||'U')}&backgroundColor=c9933a&textColor=fff&fontSize=40" style="width:32px;height:32px;border-radius:50%;flex-shrink:0">
+        <div style="flex:1">
+          <div style="display:flex;align-items:center;gap:8px;margin-bottom:3px">
+            <span style="font-size:13px;font-weight:700;color:var(--gold)">${c.user_name||'Anonymous'}</span>
+            <span style="font-size:11px;color:var(--text-muted)">${new Date(c.created_at).toLocaleDateString('ta-IN')}</span>
+          </div>
+          <div style="font-size:13px;line-height:1.6;color:var(--text)">${c.content}</div>
+          <button onclick="likeComment('${c.id}',this)" style="background:none;border:none;color:var(--text-muted);font-size:12px;cursor:pointer;margin-top:4px;padding:0">❤️ ${c.likes||0}</button>
+        </div>
+      </div>`).join('');
+  } catch(e) {
+    wrap.innerHTML = '<div style="color:var(--text-muted);font-size:13px">Comments load ஆகல — retry பண்ணுங்க.</div>';
+  }
+}
+
+async function submitComment() {
+  const storyId = window._currentStoryId;
+  if (!storyId) return;
+  if (!currentUser) { showToast('⚠️ Comment போட Login வேணும்!'); openLoginModal(); return; }
+  const inp = document.getElementById('commentInput');
+  const content = inp.value.trim();
+  if (!content || content.length < 2) { showToast('⚠️ Comment எழுதுங்க!'); return; }
+  const btn = document.getElementById('commentSubmitBtn');
+  btn.disabled = true; btn.textContent = '⏳...';
+  try {
+    await fetch(`${SUPA_URL}/rest/v1/comments`, {
+      method: 'POST',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json', 'Prefer': 'return=minimal' },
+      body: JSON.stringify({ story_id: storyId, user_name: currentUser.name, user_email: currentUser.email||'', content })
+    });
+    inp.value = '';
+    showToast('✅ Comment சேர்க்கப்பட்டது!');
+    loadComments(storyId);
+  } catch(e) { showToast('❌ Comment save ஆகல!'); }
+  finally { btn.disabled = false; btn.textContent = '💬 Post'; }
+}
+
+async function likeComment(commentId, btn) {
+  try {
+    const cur = parseInt(btn.textContent.replace('❤️ ',''))||0;
+    await fetch(`${SUPA_URL}/rest/v1/comments?id=eq.${commentId}`, {
+      method: 'PATCH',
+      headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ likes: cur + 1 })
+    });
+    btn.textContent = '❤️ ' + (cur + 1);
+    btn.style.color = '#e91e63';
+  } catch(e) {}
+}
+
+// ── 2. STORY VIEWS COUNTER ─────────────────────────────────────
+async function incrementStoryView(storyId) {
+  if (!storyId || String(storyId).startsWith('sb_')) {
+    const realId = String(storyId).replace('sb_','');
+    try {
+      const cur = await fetch(`${SUPA_URL}/rest/v1/stories?id=eq.${realId}&select=views`, {
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY }
+      });
+      const d = await cur.json();
+      const views = (d[0]?.views || 0) + 1;
+      await fetch(`${SUPA_URL}/rest/v1/stories?id=eq.${realId}`, {
+        method: 'PATCH',
+        headers: { 'apikey': SUPA_KEY, 'Authorization': 'Bearer ' + SUPA_KEY, 'Content-Type': 'application/json' },
+        body: JSON.stringify({ views })
+      });
+    } catch(e) {}
+  }
+}
+
+// ── 3. AUTO SCROLL READER ──────────────────────────────────────
+let _autoScrollInterval = null;
+let _autoScrollActive = false;
+function toggleAutoScroll() {
+  const btn = document.getElementById('autoScrollBtn');
+  if (!btn) return;
+  _autoScrollActive = !_autoScrollActive;
+  if (_autoScrollActive) {
+    btn.textContent = '⏹ Stop Scroll';
+    btn.style.background = 'var(--gold)';
+    btn.style.color = '#000';
+    const speed = parseInt(document.getElementById('scrollSpeedSelect')?.value || 30);
+    _autoScrollInterval = setInterval(() => {
+      const modal = document.querySelector('.modal-inner');
+      if (modal) modal.scrollTop += 1;
+    }, speed);
+  } else {
+    clearInterval(_autoScrollInterval);
+    btn.textContent = '▶ Auto Scroll';
+    btn.style.background = '';
+    btn.style.color = '';
+  }
+}
+function stopAutoScroll() {
+  _autoScrollActive = false;
+  clearInterval(_autoScrollInterval);
+  const btn = document.getElementById('autoScrollBtn');
+  if (btn) { btn.textContent = '▶ Auto Scroll'; btn.style.background=''; btn.style.color=''; }
+}
+
+// ── 4. STORY COPY AS TEXT ──────────────────────────────────────
+function copyStoryText() {
+  const storyEl = document.getElementById('modalStory');
+  if (!storyEl) return;
+  const text = storyEl.innerText;
+  navigator.clipboard?.writeText(text).then(() => showToast('📋 Story copied!'));
+}
+
+// ── 5. WHATSAPP SHARE IMPROVEMENT ─────────────────────────────
+function shareWhatsAppImproved(storyId) {
+  const s = storiesDB.find(x => x.id == storyId || x.id === storyId);
+  if (!s) return;
+  const text = `📖 *${s.title}*\n\n${s.excerpt||''}\n\n🔗 முழு கதை படிக்க: https://kathais.xyz\n\n_Tamilகதைகள் — 1000+ Free Tamil Stories_`;
+  window.open('https://wa.me/?text=' + encodeURIComponent(text), '_blank');
+}
+
+// ── 6. SEARCH SUGGESTIONS / HISTORY ───────────────────────────
+const _searchHistory = JSON.parse(localStorage.getItem('tk_search_history')||'[]');
+function saveSearchTerm(term) {
+  if (!term || term.length < 2) return;
+  const idx = _searchHistory.indexOf(term);
+  if (idx > -1) _searchHistory.splice(idx, 1);
+  _searchHistory.unshift(term);
+  if (_searchHistory.length > 8) _searchHistory.pop();
+  localStorage.setItem('tk_search_history', JSON.stringify(_searchHistory));
+}
+function showSearchSuggestions(val) {
+  let box = document.getElementById('searchSuggBox');
+  if (!box) {
+    box = document.createElement('div');
+    box.id = 'searchSuggBox';
+    box.style.cssText = 'position:absolute;top:100%;left:0;right:0;background:var(--bg3);border:1px solid var(--border-gold);border-radius:12px;z-index:500;overflow:hidden;box-shadow:0 8px 24px rgba(0,0,0,0.4)';
+    const searchWrap = document.querySelector('.search-wrap') || document.querySelector('.search-bar')?.parentElement;
+    if (searchWrap) { searchWrap.style.position='relative'; searchWrap.appendChild(box); }
+  }
+  const filtered_hist = val ? _searchHistory.filter(h => h.includes(val)) : _searchHistory;
+  if (!filtered_hist.length) { box.style.display='none'; return; }
+  box.style.display = 'block';
+  box.innerHTML = filtered_hist.map(h => `
+    <div onclick="selectSearchSugg('${h}')" style="padding:10px 14px;cursor:pointer;font-size:13px;color:var(--text);border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px;transition:background 0.15s" onmouseover="this.style.background='var(--surface2)'" onmouseout="this.style.background=''">
+      <span style="color:var(--text-muted)">🕒</span> ${h}
+      <span onclick="event.stopPropagation();removeSearchHist('${h}',this.parentElement)" style="margin-left:auto;color:var(--text-dim);font-size:11px">✕</span>
+    </div>`).join('');
+}
+function selectSearchSugg(term) {
+  const inp = document.getElementById('searchInput') || document.querySelector('.search-input');
+  if (inp) { inp.value = term; inp.dispatchEvent(new Event('input')); }
+  const box = document.getElementById('searchSuggBox');
+  if (box) box.style.display = 'none';
+}
+function removeSearchHist(term, el) {
+  const i = _searchHistory.indexOf(term);
+  if (i > -1) _searchHistory.splice(i, 1);
+  localStorage.setItem('tk_search_history', JSON.stringify(_searchHistory));
+  if (el) el.remove();
+}
+document.addEventListener('click', e => {
+  const box = document.getElementById('searchSuggBox');
+  if (box && !e.target.closest('#searchSuggBox') && !e.target.closest('.search-input') && !e.target.closest('.search-bar')) {
+    box.style.display = 'none';
+  }
+});
+
+// ── 7. READING TIME FILTER ─────────────────────────────────────
+let _readTimeFilter = null;
+function setReadTimeFilter(val) {
+  _readTimeFilter = val;
+  document.querySelectorAll('.rt-filter-btn').forEach(b => b.classList.remove('active'));
+  event.target.classList.add('active');
+  applyReadTimeFilter();
+}
+function applyReadTimeFilter() {
+  if (!_readTimeFilter) { filtered = [...storiesDB]; }
+  else {
+    filtered = storiesDB.filter(s => {
+      const mins = parseInt(s.readTime) || 5;
+      if (_readTimeFilter === 'short') return mins <= 3;
+      if (_readTimeFilter === 'medium') return mins > 3 && mins <= 8;
+      if (_readTimeFilter === 'long') return mins > 8;
+      return true;
+    });
+  }
+  renderStories();
+}
+
+// ── 8. OFFLINE BOOKMARK CACHE ──────────────────────────────────
+function cacheBookmarkedStories() {
+  try {
+    const bookmarked = storiesDB.filter(s => state.bookmarks.includes(s.id));
+    localStorage.setItem('tk_offline_stories', JSON.stringify(bookmarked.slice(0, 20)));
+    showToast('📥 ' + bookmarked.length + ' stories offline-க்கு save ஆச்சு!');
+  } catch(e) { showToast('⚠️ Offline save ஆகல — storage full?'); }
+}
+
+// ── 9. STORY STATS ─────────────────────────────────────────────
+function getStoryStats() {
+  const total = storiesDB.length;
+  const totalLikes = Object.keys(state.likes||{}).length;
+  const totalRead = state.history.length;
+  const totalBookmarks = state.bookmarks.length;
+  return { total, totalLikes, totalRead, totalBookmarks };
+}
+
+// ── 10. KEYBOARD SHORTCUTS ─────────────────────────────────────
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') {
+    closeStory(); closePnlma();
+    const box = document.getElementById('searchSuggBox');
+    if (box) box.style.display = 'none';
+  }
+  const modal = document.getElementById('storyModal');
+  const isOpen = modal && modal.classList.contains('open');
+  if (!isOpen) return;
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+    const nextBtn = document.querySelector('.next-story-btn');
+    if (nextBtn) nextBtn.click();
+  }
+  if (e.key === ' ') { e.preventDefault(); toggleTTS && toggleTTS(); }
+});
+
+// ── 11. DARK/LIGHT FULL THEME TOGGLE ──────────────────────────
+let _isLightMode = localStorage.getItem('tk_light_mode') === '1';
+function applyThemeMode() {
+  if (_isLightMode) {
+    document.documentElement.style.setProperty('--bg','#f5f0e8');
+    document.documentElement.style.setProperty('--bg2','#ece6d8');
+    document.documentElement.style.setProperty('--bg3','#e0d8c8');
+    document.documentElement.style.setProperty('--text','#1a1208');
+    document.documentElement.style.setProperty('--text-muted','rgba(26,18,8,0.55)');
+    document.documentElement.style.setProperty('--border','rgba(26,18,8,0.12)');
+    document.documentElement.style.setProperty('--surface','rgba(0,0,0,0.04)');
+    document.documentElement.style.setProperty('--surface2','rgba(0,0,0,0.07)');
+  } else {
+    document.documentElement.style.setProperty('--bg','#0b0c14');
+    document.documentElement.style.setProperty('--bg2','#111320');
+    document.documentElement.style.setProperty('--bg3','#181a2a');
+    document.documentElement.style.setProperty('--text','#e8e6f0');
+    document.documentElement.style.setProperty('--text-muted','rgba(232,230,240,0.45)');
+    document.documentElement.style.setProperty('--border','rgba(255,255,255,0.09)');
+    document.documentElement.style.setProperty('--surface','rgba(255,255,255,0.04)');
+    document.documentElement.style.setProperty('--surface2','rgba(255,255,255,0.07)');
+  }
+}
+function toggleFullTheme() {
+  _isLightMode = !_isLightMode;
+  localStorage.setItem('tk_light_mode', _isLightMode ? '1' : '0');
+  applyThemeMode();
+  const btn = document.querySelector('.theme-toggle');
+  if (btn) btn.textContent = _isLightMode ? '🌙 Dark' : '☀️ Light';
+  showToast(_isLightMode ? '☀️ Light mode on!' : '🌙 Dark mode on!');
+}
+// Apply saved theme on load
+if (_isLightMode) { applyThemeMode(); const btn = document.querySelector('.theme-toggle'); if(btn) btn.textContent='🌙 Dark'; }
+// Wire theme-toggle button to new function
+document.querySelector('.theme-toggle')?.addEventListener('click', toggleFullTheme);
+
+// ── 12. RANDOM STORY SHORTCUT (LUCKY DIP) ─────────────────────
+function luckyDip() {
+  if (!storiesDB.length) return;
+  const r = storiesDB[Math.floor(Math.random() * storiesDB.length)];
+  openStory(r.id);
+  showToast('🎲 Random story: ' + r.title);
+}
+
+// ── 13. READING GOALS ─────────────────────────────────────────
+const _readingGoal = parseInt(localStorage.getItem('tk_reading_goal')||'5');
+function checkReadingGoal() {
+  const today = new Date().toDateString();
+  const todayKey = 'tk_today_reads_' + today;
+  const todayReads = parseInt(localStorage.getItem(todayKey)||'0') + 1;
+  localStorage.setItem(todayKey, todayReads);
+  if (todayReads === _readingGoal) {
+    showToast('🏆 Goal! இன்று ' + _readingGoal + ' கதை படிச்சுவிட்டீர்கள்! 🎉', 5000);
+    setTimeout(() => confettiBurst(), 500);
+  } else if (todayReads < _readingGoal) {
+    showToast('📖 ' + todayReads + '/' + _readingGoal + ' — Goal-க்கு ' + (_readingGoal - todayReads) + ' கதை மட்டும்!');
+  }
+}
+
+// ── 14. MINI CONFETTI ─────────────────────────────────────────
+function confettiBurst() {
+  const colors = ['#f5a623','#e91e63','#7c4dff','#00e676','#2196F3'];
+  for (let i = 0; i < 40; i++) {
+    const el = document.createElement('div');
+    el.style.cssText = `position:fixed;top:${Math.random()*40+20}%;left:${Math.random()*80+10}%;width:8px;height:8px;border-radius:2px;background:${colors[Math.floor(Math.random()*colors.length)]};z-index:9999;pointer-events:none;animation:confettiFall 1.2s ease forwards;transform:rotate(${Math.random()*360}deg)`;
+    document.body.appendChild(el);
+    setTimeout(() => el.remove(), 1400);
+  }
+}
+const _confStyle = document.createElement('style');
+_confStyle.textContent = '@keyframes confettiFall{0%{opacity:1;transform:translateY(0) rotate(0deg)}100%{opacity:0;transform:translateY(120px) rotate(360deg)}}';
+document.head.appendChild(_confStyle);
+
+// ── 15. STORY OF THE WEEK BANNER ──────────────────────────────
+function showWeeklyBanner() {
+  const weekKey = 'tk_weekly_banner_' + new Date().toISOString().slice(0,10);
+  if (localStorage.getItem(weekKey)) return;
+  const best = storiesDB.reduce((a,b) => (Object.keys(state.likes||{}).filter(k=>k==b.id).length > Object.keys(state.likes||{}).filter(k=>k==a.id).length ? b : a), storiesDB[0]);
+  if (!best) return;
+  const banner = document.createElement('div');
+  banner.style.cssText = 'position:fixed;bottom:70px;left:50%;transform:translateX(-50%);background:linear-gradient(135deg,var(--bg3),var(--bg2));border:1.5px solid var(--border-gold);border-radius:16px;padding:12px 18px;z-index:800;max-width:340px;width:90%;box-shadow:0 8px 32px rgba(245,166,35,0.2);display:flex;align-items:center;gap:12px;animation:slideUp 0.4s ease';
+  banner.innerHTML = `<span style="font-size:24px">🏆</span><div style="flex:1"><div style="font-size:11px;color:var(--gold);font-weight:700;letter-spacing:1px;margin-bottom:2px">STORY OF THE WEEK</div><div style="font-size:13px;font-weight:600;color:var(--text)">${best.title}</div></div><button onclick="openStory(${best.id||"'"+best.id+"'"});this.parentElement.remove()" style="background:var(--gold);color:#000;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">Read</button><button onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px;padding:4px">✕</button>`;
+  document.body.appendChild(banner);
+  localStorage.setItem(weekKey, '1');
+  setTimeout(() => banner.remove(), 10000);
+}
+
+// ── 16. CATEGORY STATS BAR ────────────────────────────────────
+function renderCategoryStats() {
+  const wrap = document.getElementById('catStatsBar');
+  if (!wrap) return;
+  const cats = ['love','horror','comedy','kids','devotion','moral'];
+  const labels = {love:'காதல்',horror:'பயம்',comedy:'நகைச்சுவை',kids:'குழந்தை',devotion:'தெய்வீகம்',moral:'நீதி'};
+  const colors = {love:'#e91e63',horror:'#7c4dff',comedy:'#ff9800',kids:'#00bcd4',devotion:'#ff7043',moral:'#8bc34a'};
+  const counts = {};
+  cats.forEach(c => counts[c] = storiesDB.filter(s => s.cat === c).length);
+  const max = Math.max(...Object.values(counts), 1);
+  wrap.innerHTML = cats.map(c => `
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px">
+      <span style="font-size:12px;color:var(--text-muted);width:80px;flex-shrink:0">${labels[c]}</span>
+      <div style="flex:1;background:var(--surface);border-radius:4px;height:6px;overflow:hidden">
+        <div style="width:${(counts[c]/max*100)}%;background:${colors[c]};height:100%;border-radius:4px;transition:width 0.6s ease"></div>
+      </div>
+      <span style="font-size:11px;color:${colors[c]};font-weight:700;width:24px;text-align:right">${counts[c]}</span>
+    </div>`).join('');
+}
+
+// ── 17. INJECT FEATURES INTO STORY MODAL ─────────────────────
+(function injectStoryModalFeatures() {
+  const modalInner = document.querySelector('.modal-inner');
+  if (!modalInner) return;
+
+  // Auto scroll bar
+  const autoScrollBar = document.createElement('div');
+  autoScrollBar.style.cssText = 'display:flex;align-items:center;gap:8px;padding:8px 16px;background:var(--surface);border-bottom:1px solid var(--border);flex-wrap:wrap';
+  autoScrollBar.innerHTML = `
+    <span style="font-size:11px;color:var(--text-muted);font-weight:700">AUTO SCROLL:</span>
+    <button id="autoScrollBtn" onclick="toggleAutoScroll()" style="background:var(--surface2);border:1px solid var(--border);color:var(--text);padding:4px 12px;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all 0.2s">▶ Auto Scroll</button>
+    <select id="scrollSpeedSelect" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);border-radius:8px;padding:4px 8px;font-size:11px;font-family:'DM Sans',sans-serif">
+      <option value="50">🐢 Slow</option>
+      <option value="30" selected>🚶 Normal</option>
+      <option value="15">🏃 Fast</option>
+    </select>
+    <span style="margin-left:auto">
+      <button onclick="copyStoryText()" style="background:none;border:1px solid var(--border);color:var(--text-muted);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif">📋 Copy</button>
+    </span>`;
+
+  // Comments section
+  const commentsSection = document.createElement('div');
+  commentsSection.id = 'commentsSection';
+  commentsSection.style.cssText = 'padding:16px;border-top:1px solid var(--border);margin-top:8px';
+  commentsSection.innerHTML = `
+    <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:12px;display:flex;align-items:center;gap:6px">💬 Comments <span id="commentCount" style="font-size:11px;color:var(--text-muted);font-weight:400"></span></div>
+    <div style="display:flex;gap:8px;margin-bottom:12px">
+      <input id="commentInput" placeholder="உங்கள் கருத்தை பகிருங்கள்..." maxlength="300"
+        style="flex:1;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:9px 12px;font-size:13px;font-family:'DM Sans',sans-serif;outline:none"
+        onkeydown="if(event.key==='Enter')submitComment()">
+      <button id="commentSubmitBtn" onclick="submitComment()" style="background:var(--gold);color:#000;border:none;border-radius:10px;padding:9px 16px;font-size:13px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap">💬 Post</button>
+    </div>
+    <div id="commentsWrap"></div>`;
+
+  // Insert auto scroll after TTS bar
+  const ttsBar = modalInner.querySelector('.tts-bar');
+  if (ttsBar) ttsBar.after(autoScrollBar);
+
+  // Insert comments at end
+  const modalStory = modalInner.querySelector('#modalStory');
+  if (modalStory) modalStory.after(commentsSection);
+})();
+
+// ── 18. INJECT EXTRA FEATURE BUTTONS INTO NAV ─────────────────
+(function injectNavExtras() {
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks) return;
+  const luckyBtn = document.createElement('a');
+  luckyBtn.href = '#';
+  luckyBtn.textContent = '🎲 Lucky';
+  luckyBtn.title = 'Random Story';
+  luckyBtn.onclick = (e) => { e.preventDefault(); luckyDip(); };
+  navLinks.appendChild(luckyBtn);
+})();
+
+// ── 19. INJECT READ TIME FILTER BAR ───────────────────────────
+(function injectReadTimeFilter() {
+  const filterBar = document.querySelector('.filter-bar') || document.querySelector('.cat-filter');
+  if (!filterBar) return;
+  const wrap = document.createElement('div');
+  wrap.style.cssText = 'display:flex;gap:6px;align-items:center;padding:4px 0;flex-wrap:wrap';
+  wrap.innerHTML = `
+    <span style="font-size:11px;color:var(--text-muted);font-weight:700;white-space:nowrap">⏱ TIME:</span>
+    <button class="rt-filter-btn active" onclick="setReadTimeFilter(null)" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all 0.2s">All</button>
+    <button class="rt-filter-btn" onclick="setReadTimeFilter('short')" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all 0.2s">⚡ &lt;3 min</button>
+    <button class="rt-filter-btn" onclick="setReadTimeFilter('medium')" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all 0.2s">📖 3-8 min</button>
+    <button class="rt-filter-btn" onclick="setReadTimeFilter('long')" style="background:var(--surface2);border:1px solid var(--border);color:var(--text-muted);padding:4px 10px;border-radius:8px;cursor:pointer;font-size:11px;font-family:'DM Sans',sans-serif;transition:all 0.2s">📚 8+ min</button>`;
+  filterBar.after(wrap);
+
+  // Active style for filter buttons
+  wrap.querySelectorAll('.rt-filter-btn').forEach(b => {
+    b.addEventListener('click', function() {
+      wrap.querySelectorAll('.rt-filter-btn').forEach(x => { x.style.background='var(--surface2)'; x.style.borderColor='var(--border)'; x.style.color='var(--text-muted)'; });
+      this.style.background = 'var(--gold-glow)';
+      this.style.borderColor = 'var(--border-gold)';
+      this.style.color = 'var(--gold)';
+    });
+  });
+})();
+
+// ── 20. HOOK openStory TO LOAD COMMENTS + VIEW COUNT ──────────
+const _prevOpen = openStory;
+openStory = function(id) {
+  _prevOpen(id);
+  window._currentStoryId = id;
+  incrementStoryView(id);
+  checkReadingGoal();
+  setTimeout(() => loadComments(id), 400);
+};
+
+// ── 21. HOOK closeStory TO STOP AUTO SCROLL ───────────────────
+const _prevClose = closeStory;
+closeStory = function() {
+  _prevClose();
+  stopAutoScroll();
+};
+
+// ── 22. SEARCH INPUT HOOK ─────────────────────────────────────
+(function hookSearchInput() {
+  const inp = document.getElementById('searchInput') || document.querySelector('.search-input');
+  if (!inp) return;
+  inp.addEventListener('focus', () => showSearchSuggestions(inp.value));
+  inp.addEventListener('input', () => showSearchSuggestions(inp.value));
+  const origSearch = inp.oninput;
+  inp.addEventListener('keydown', e => {
+    if (e.key === 'Enter') {
+      saveSearchTerm(inp.value.trim());
+      const box = document.getElementById('searchSuggBox');
+      if (box) box.style.display = 'none';
+    }
+  });
+})();
+
+// ── 23. SHOW WEEKLY BANNER + CATEGORY STATS ON LOAD ───────────
+setTimeout(() => {
+  showWeeklyBanner();
+  renderCategoryStats();
+}, 2000);
+
+// ── 24. SAVE FOR OFFLINE BUTTON IN PROFILE PANEL ──────────────
+(function addOfflineSaveBtn() {
+  const pnlmaPanel = document.getElementById('pnlmaOverlay');
+  if (!pnlmaPanel) return;
+  const existingBtn = pnlmaPanel.querySelector('.offline-save-btn');
+  if (existingBtn) return;
+  const btn = document.createElement('button');
+  btn.className = 'offline-save-btn';
+  btn.textContent = '📥 Save Bookmarks Offline';
+  btn.style.cssText = 'margin:8px 16px;padding:10px 16px;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:10px;font-family:"DM Sans",sans-serif;font-size:13px;cursor:pointer;width:calc(100% - 32px);transition:all 0.2s;text-align:left';
+  btn.onmouseover = () => { btn.style.borderColor='var(--border-gold)'; btn.style.color='var(--gold)'; };
+  btn.onmouseout = () => { btn.style.borderColor='var(--border)'; btn.style.color='var(--text)'; };
+  btn.onclick = cacheBookmarkedStories;
+  const closeBtn = pnlmaPanel.querySelector('button[onclick*="closePnlma"]');
+  if (closeBtn) closeBtn.parentElement?.insertBefore(btn, closeBtn);
+})();
+
+// ═══ END OF v2.0 FEATURES ═══════════════════════════════════════
+
+// ════════════════════════════════════════════════════════════════
+// ═══ v3.0 — ALL 16 NEW FEATURES ═════════════════════════════════
+// ════════════════════════════════════════════════════════════════
+
+// ── GLOBAL PROGRESS BAR ──────────────────────────────────────────
+(function() {
+  const bar = document.createElement('div');
+  bar.id = 'gProgressBar';
+  bar.style.cssText = 'position:fixed;top:60px;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--gold),#ff8c00);z-index:9999;transition:width 0.15s;box-shadow:0 0 6px rgba(245,166,35,0.5);pointer-events:none';
+  document.body.appendChild(bar);
+  window.addEventListener('scroll', () => {
+    const pct = document.documentElement.scrollTop / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = Math.min(100, pct) + '%';
+  });
+})();
+
+// ── CONFETTI ────────────────────────────────────────────────────
+function launchConfetti() {
+  const colors = ['#f5a623','#ff1744','#00e676','#7c4dff','#00bcd4','#ff9800'];
+  const style = document.createElement('style');
+  style.textContent = '@keyframes cfFall{to{transform:translateY(105vh) rotate(720deg);opacity:0}}';
+  document.head.appendChild(style);
+  for (let i = 0; i < 70; i++) {
+    const d = document.createElement('div');
+    const size = 5 + Math.random() * 7;
+    d.style.cssText = `position:fixed;top:-12px;left:${Math.random()*100}%;width:${size}px;height:${size}px;background:${colors[Math.floor(Math.random()*colors.length)]};border-radius:${Math.random()>.5?'50%':'2px'};z-index:99999;pointer-events:none;animation:cfFall ${1.4+Math.random()*2}s linear forwards`;
+    document.body.appendChild(d);
+    setTimeout(() => d.remove(), 4000);
+  }
+}
+
+// ════════════════════════
+// FEATURE 1: READING TIMER
+// ════════════════════════
+let _readTimerInterval = null;
+let _readTimerSeconds = 0;
+function startReadTimer() {
+  _readTimerSeconds = 0;
+  clearInterval(_readTimerInterval);
+  _readTimerInterval = setInterval(() => {
+    _readTimerSeconds++;
+    const el = document.getElementById('readTimerDisplay');
+    if (el) {
+      const m = Math.floor(_readTimerSeconds / 60), s = _readTimerSeconds % 60;
+      el.textContent = `⏱ ${m}:${s.toString().padStart(2,'0')}`;
+    }
+  }, 1000);
+}
+function stopReadTimer(storyId) {
+  clearInterval(_readTimerInterval);
+  if (_readTimerSeconds > 5 && storyId) {
+    const log = JSON.parse(localStorage.getItem('readTimeLog') || '{}');
+    log[storyId] = (log[storyId] || 0) + _readTimerSeconds;
+    localStorage.setItem('readTimeLog', JSON.stringify(log));
+  }
+}
+function injectReadTimer() {
+  if (document.getElementById('readTimerDisplay')) return;
+  const bar = document.createElement('div');
+  bar.style.cssText = 'display:flex;align-items:center;gap:10px;padding:8px 20px;background:rgba(0,0,0,0.2);border-bottom:1px solid var(--border)';
+  bar.innerHTML = `<span id="readTimerDisplay" style="font-size:12px;color:var(--gold);font-weight:700">⏱ 0:00</span><span style="font-size:11px;color:var(--text-muted)">Reading time</span>`;
+  const ttsBar = document.querySelector('.tts-bar');
+  if (ttsBar) ttsBar.after(bar);
+}
+
+// ═══════════════════════════════════
+// FEATURE 2: HIGHLIGHT & NOTES
+// ═══════════════════════════════════
+const hlStyle = document.createElement('style');
+hlStyle.textContent = `
+.hl-yellow { background:rgba(245,166,35,0.35); border-radius:3px; padding:1px 0; cursor:pointer; }
+.hl-pink   { background:rgba(233,30,99,0.25);  border-radius:3px; padding:1px 0; cursor:pointer; }
+.hl-green  { background:rgba(0,230,118,0.25);  border-radius:3px; padding:1px 0; cursor:pointer; }
+#hlToolbar { position:fixed;background:var(--bg3);border:1.5px solid var(--border-gold);border-radius:12px;padding:6px 10px;display:none;gap:6px;z-index:10000;box-shadow:0 8px 24px rgba(0,0,0,0.5);align-items:center; }
+#hlToolbar button { background:none;border:none;cursor:pointer;font-size:18px;padding:2px 4px;border-radius:6px;transition:background 0.15s; }
+#hlToolbar button:hover { background:var(--surface2); }
+#notesPanel { position:fixed;bottom:90px;right:16px;width:280px;background:var(--bg3);border:1.5px solid var(--border-gold);border-radius:16px;padding:16px;z-index:5000;display:none;box-shadow:0 16px 40px rgba(0,0,0,0.6); }
+`;
+document.head.appendChild(hlStyle);
+
+const hlToolbar = document.createElement('div');
+hlToolbar.id = 'hlToolbar';
+hlToolbar.innerHTML = `
+  <button title="Yellow" onclick="applyHighlight('hl-yellow')" style="background:rgba(245,166,35,0.5);width:22px;height:22px;border-radius:50%;border:none;cursor:pointer"></button>
+  <button title="Pink" onclick="applyHighlight('hl-pink')" style="background:rgba(233,30,99,0.5);width:22px;height:22px;border-radius:50%;border:none;cursor:pointer"></button>
+  <button title="Green" onclick="applyHighlight('hl-green')" style="background:rgba(0,230,118,0.5);width:22px;height:22px;border-radius:50%;border:none;cursor:pointer"></button>
+  <button title="Note" onclick="addNoteFromSelection()" style="font-size:15px">📝</button>
+  <button title="Close" onclick="document.getElementById('hlToolbar').style.display='none'" style="font-size:13px;color:var(--text-muted)">✕</button>`;
+document.body.appendChild(hlToolbar);
+
+document.addEventListener('mouseup', () => {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed || !sel.toString().trim()) { hlToolbar.style.display = 'none'; return; }
+  const modal = document.querySelector('.modal.open');
+  if (!modal) return;
+  const range = sel.getRangeAt(0);
+  const rect = range.getBoundingClientRect();
+  hlToolbar.style.cssText += `;display:flex;top:${rect.top + window.scrollY - 48}px;left:${rect.left + rect.width/2 - 80}px`;
+});
+
+function applyHighlight(cls) {
+  const sel = window.getSelection();
+  if (!sel || sel.isCollapsed) return;
+  const range = sel.getRangeAt(0);
+  const span = document.createElement('span');
+  span.className = cls;
+  span.title = 'Click to remove';
+  span.onclick = () => { const p = span.parentNode; while(span.firstChild) p.insertBefore(span.firstChild, span); p.removeChild(span); };
+  try { range.surroundContents(span); } catch(e) {}
+  sel.removeAllRanges();
+  hlToolbar.style.display = 'none';
+  showToast('✏️ Highlighted!');
+}
+
+const notesPanel = document.createElement('div');
+notesPanel.id = 'notesPanel';
+notesPanel.innerHTML = `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+    <span style="font-size:13px;font-weight:700;color:var(--gold)">📝 My Notes</span>
+    <button onclick="document.getElementById('notesPanel').style.display='none'" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px">✕</button>
+  </div>
+  <textarea id="noteTextarea" placeholder="கதை பற்றிய குறிப்புகளை எழுதுங்கள்..." style="width:100%;height:100px;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:8px;font-family:'Tiro Tamil',serif;font-size:13px;resize:none;outline:none"></textarea>
+  <button onclick="saveNote()" style="width:100%;margin-top:8px;background:var(--gold);color:#000;border:none;border-radius:8px;padding:8px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">💾 Save Note</button>
+  <div id="savedNotesList" style="margin-top:10px;max-height:120px;overflow-y:auto"></div>`;
+document.body.appendChild(notesPanel);
+
+function addNoteFromSelection() {
+  const sel = window.getSelection();
+  const text = sel ? sel.toString().trim() : '';
+  hlToolbar.style.display = 'none';
+  notesPanel.style.display = 'block';
+  if (text) document.getElementById('noteTextarea').value = `"${text}"\n\n`;
+}
+function saveNote() {
+  const text = document.getElementById('noteTextarea').value.trim();
+  if (!text) return;
+  const id = window._currentStoryId || 'general';
+  const notes = JSON.parse(localStorage.getItem('storyNotes') || '{}');
+  if (!notes[id]) notes[id] = [];
+  notes[id].unshift({ text, time: new Date().toLocaleDateString('ta-IN') });
+  localStorage.setItem('storyNotes', JSON.stringify(notes));
+  document.getElementById('noteTextarea').value = '';
+  renderNotes(id);
+  showToast('📝 Note saved!');
+}
+function renderNotes(id) {
+  const notes = JSON.parse(localStorage.getItem('storyNotes') || '{}');
+  const list = document.getElementById('savedNotesList');
+  if (!list) return;
+  const items = (notes[id] || []).slice(0, 5);
+  list.innerHTML = items.map(n => `<div style="border-top:1px solid var(--border);padding:6px 0;font-size:11px;color:var(--text-muted)">${n.text.substring(0,80)}${n.text.length>80?'...':''} <span style="color:var(--text-dim)">${n.time}</span></div>`).join('');
+}
+
+// ══════════════════════════════
+// FEATURE 3: MINI DICTIONARY
+// ══════════════════════════════
+const tamilDict = {
+  'அன்பு':'Love / Affection','காதல்':'Romantic Love','நட்பு':'Friendship','தைரியம்':'Courage / Bravery',
+  'நம்பிக்கை':'Hope / Trust / Faith','வலிமை':'Strength / Power','மகிழ்ச்சி':'Happiness / Joy',
+  'வருத்தம்':'Sorrow / Sadness','கோபம்':'Anger','அமைதி':'Peace / Calm','ஞானம்':'Wisdom',
+  'உண்மை':'Truth / Reality','நேர்மை':'Honesty / Integrity','தியாகம்':'Sacrifice',
+  'பொறுமை':'Patience','கனவு':'Dream','விடியல்':'Dawn / New beginning','மழை':'Rain',
+  'நிலவு':'Moon','கடல்':'Sea / Ocean','மலர்':'Flower','மரம்':'Tree','பறவை':'Bird',
+  'விண்மீன்':'Star','வானம்':'Sky','நிலம்':'Land / Earth','அம்மா':'Mother','அப்பா':'Father',
+  'பாட்டி':'Grandmother','தாத்தா':'Grandfather','மகன்':'Son','மகள்':'Daughter',
+};
+const dictPopup = document.createElement('div');
+dictPopup.id = 'dictPopup';
+dictPopup.style.cssText = 'position:fixed;display:none;background:var(--bg3);border:1.5px solid var(--border-gold);border-radius:12px;padding:10px 14px;z-index:10001;max-width:200px;box-shadow:0 8px 24px rgba(0,0,0,0.5)';
+document.body.appendChild(dictPopup);
+
+document.addEventListener('dblclick', e => {
+  const modal = document.querySelector('.modal.open');
+  if (!modal) return;
+  const sel = window.getSelection();
+  const word = sel ? sel.toString().trim() : '';
+  if (!word || word.length > 10) return;
+  const meaning = tamilDict[word];
+  if (!meaning) return;
+  dictPopup.innerHTML = `<div style="font-size:12px;color:var(--text-dim);margin-bottom:3px">📖 அகராதி</div><div style="font-size:14px;font-weight:700;color:var(--gold)">${word}</div><div style="font-size:13px;color:var(--text);margin-top:2px">${meaning}</div>`;
+  dictPopup.style.display = 'block';
+  dictPopup.style.top = (e.clientY + window.scrollY - 70) + 'px';
+  dictPopup.style.left = Math.min(e.clientX, window.innerWidth - 220) + 'px';
+  setTimeout(() => dictPopup.style.display = 'none', 3000);
+});
+
+// ══════════════════════════════
+// FEATURE 4: MORE LIKE THIS
+// ══════════════════════════════
+function injectMoreLikeThis(id) {
+  if (document.getElementById('moreLikeThis')) document.getElementById('moreLikeThis').remove();
+  const s = storiesDB.find(x => x.id == id);
+  if (!s) return;
+  const similar = storiesDB.filter(x => x.id != id && x.cat === s.cat).slice(0, 4);
+  if (!similar.length) return;
+  const wrap = document.createElement('div');
+  wrap.id = 'moreLikeThis';
+  wrap.style.cssText = 'padding:16px 20px;border-top:1px solid var(--border)';
+  wrap.innerHTML = `<div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:10px">✨ இதுபோன்ற கதைகள்</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+      ${similar.map(x => `<div onclick="closeStory();setTimeout(()=>openStory(${JSON.stringify(x.id)}),200)" style="background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:10px;cursor:pointer;transition:border-color 0.2s" onmouseover="this.style.borderColor='var(--border-gold)'" onmouseout="this.style.borderColor='var(--border)'">
+        <div style="font-size:20px;margin-bottom:4px">${x.emoji}</div>
+        <div style="font-size:12px;font-weight:700;color:var(--text);font-family:'Tiro Tamil',serif;line-height:1.4">${x.title}</div>
+        <div style="font-size:10px;color:var(--gold);margin-top:3px">${x.readTime}</div>
+      </div>`).join('')}
+    </div>`;
+  const commSec = document.getElementById('commentsSection');
+  if (commSec) commSec.before(wrap);
+}
+
+// ══════════════════════════════
+// FEATURE 5: EMOJI REACTIONS
+// ══════════════════════════════
+const reactions = ['❤️','😂','😢','😱','👏','🔥'];
+function injectReactions(id) {
+  if (document.getElementById('reactionsBar')) document.getElementById('reactionsBar').remove();
+  const stored = JSON.parse(localStorage.getItem('storyReactions') || '{}');
+  const myReaction = stored[id];
+  const counts = JSON.parse(localStorage.getItem('reactionCounts') || '{}');
+  if (!counts[id]) counts[id] = {};
+  const bar = document.createElement('div');
+  bar.id = 'reactionsBar';
+  bar.style.cssText = 'padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:6px;flex-wrap:wrap;align-items:center';
+  bar.innerHTML = `<span style="font-size:11px;color:var(--text-muted);font-weight:700;margin-right:4px">React:</span>` +
+    reactions.map(r => {
+      const cnt = counts[id][r] || 0;
+      const active = myReaction === r;
+      return `<button onclick="reactToStory(${JSON.stringify(id)},'${r}')" style="background:${active?'var(--gold-glow)':'var(--surface)'};border:1px solid ${active?'var(--border-gold)':'var(--border)'};border-radius:20px;padding:5px 10px;cursor:pointer;font-size:15px;display:flex;align-items:center;gap:4px;transition:all 0.15s" id="react_${id}_${r.codePointAt(0)}">
+        ${r} ${cnt > 0 ? `<span style="font-size:10px;color:var(--text-muted)">${cnt}</span>` : ''}
+      </button>`;
+    }).join('');
+  const moreLike = document.getElementById('moreLikeThis');
+  if (moreLike) moreLike.before(bar); else {
+    const commSec = document.getElementById('commentsSection');
+    if (commSec) commSec.before(bar);
+  }
+}
+function reactToStory(id, emoji) {
+  const stored = JSON.parse(localStorage.getItem('storyReactions') || '{}');
+  const counts = JSON.parse(localStorage.getItem('reactionCounts') || '{}');
+  if (!counts[id]) counts[id] = {};
+  const prev = stored[id];
+  if (prev) { counts[id][prev] = Math.max(0, (counts[id][prev]||1) - 1); }
+  if (prev === emoji) { delete stored[id]; } else {
+    stored[id] = emoji;
+    counts[id][emoji] = (counts[id][emoji] || 0) + 1;
+  }
+  localStorage.setItem('storyReactions', JSON.stringify(stored));
+  localStorage.setItem('reactionCounts', JSON.stringify(counts));
+  injectReactions(id);
+  if (!prev || prev !== emoji) showToast(`${emoji} Reacted!`);
+}
+
+// ══════════════════════════════
+// FEATURE 6: STAR RATING
+// ══════════════════════════════
+function injectStarRating(id) {
+  if (document.getElementById('starRatingBar')) document.getElementById('starRatingBar').remove();
+  const ratings = JSON.parse(localStorage.getItem('storyRatings') || '{}');
+  const cur = ratings[id] || 0;
+  const bar = document.createElement('div');
+  bar.id = 'starRatingBar';
+  bar.style.cssText = 'display:flex;align-items:center;gap:4px;padding:10px 20px;border-top:1px solid var(--border)';
+  bar.innerHTML = `<span style="font-size:11px;color:var(--text-muted);font-weight:700;margin-right:4px">Rate:</span>` +
+    [1,2,3,4,5].map(n => `<button onclick="rateStory(${JSON.stringify(id)},${n})" data-star="${n}" style="background:none;border:none;font-size:24px;cursor:pointer;color:${n<=cur?'#f5a623':'rgba(255,255,255,0.2)'};padding:0 2px;transition:transform 0.15s" onmouseover="hoverStars(${JSON.stringify(id)},${n})" onmouseout="resetStars(${JSON.stringify(id)})">★</button>`).join('') +
+    (cur ? `<span style="font-size:11px;color:var(--gold);margin-left:6px">${cur}.0 ★</span>` : '');
+  const reactBar = document.getElementById('reactionsBar');
+  if (reactBar) reactBar.before(bar);
+}
+function hoverStars(id, n) {
+  document.querySelectorAll('#starRatingBar button[data-star]').forEach((b,i) => {
+    b.style.color = i < n ? '#f5a623' : 'rgba(255,255,255,0.2)';
+    b.style.transform = i < n ? 'scale(1.2)' : '';
+  });
+}
+function resetStars(id) {
+  const ratings = JSON.parse(localStorage.getItem('storyRatings') || '{}');
+  const cur = ratings[id] || 0;
+  document.querySelectorAll('#starRatingBar button[data-star]').forEach((b,i) => {
+    b.style.color = i < cur ? '#f5a623' : 'rgba(255,255,255,0.2)';
+    b.style.transform = '';
+  });
+}
+function rateStory(id, stars) {
+  const ratings = JSON.parse(localStorage.getItem('storyRatings') || '{}');
+  ratings[id] = stars;
+  localStorage.setItem('storyRatings', JSON.stringify(ratings));
+  showToast(`⭐ ${'★'.repeat(stars)}${'☆'.repeat(5-stars)} — நன்றி!`);
+  injectStarRating(id);
+}
+
+// ══════════════════════════════
+// FEATURE 7: READING CHALLENGES
+// ══════════════════════════════
+const challengeStyle = document.createElement('style');
+challengeStyle.textContent = `
+#challengePanel { position:fixed;bottom:90px;left:16px;width:260px;background:var(--bg3);border:1.5px solid var(--border-gold);border-radius:16px;padding:16px;z-index:5000;display:none;box-shadow:0 16px 40px rgba(0,0,0,0.6); }
+.ch-prog-bg { height:6px;background:var(--surface);border-radius:10px;overflow:hidden;margin:6px 0 10px }
+.ch-prog-fill { height:100%;background:linear-gradient(90deg,var(--gold),#ff8c00);border-radius:10px;transition:width 0.5s ease }
+`;
+document.head.appendChild(challengeStyle);
+
+const CHALLENGES = [
+  { id:'wk_horror', label:'😱 5 Horror படியுங்கள்', cat:'horror', goal:5 },
+  { id:'wk_love',   label:'💕 5 காதல் படியுங்கள்', cat:'love',   goal:5 },
+  { id:'wk_comedy', label:'😂 5 நகைச்சுவை படியுங்கள்', cat:'comedy', goal:5 },
+  { id:'wk_kids',   label:'🧒 3 குழந்தை படியுங்கள்', cat:'kids', goal:3 },
+  { id:'wk_any10',  label:'📚 எந்த 10 கதையும் படியுங்கள்', cat:'all', goal:10 },
+];
+
+const challengePanel = document.createElement('div');
+challengePanel.id = 'challengePanel';
+challengePanel.innerHTML = `
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+    <span style="font-size:13px;font-weight:700;color:var(--gold)">🏆 Weekly Challenges</span>
+    <button onclick="document.getElementById('challengePanel').style.display='none'" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:16px">✕</button>
+  </div>
+  <div id="challengeList"></div>`;
+document.body.appendChild(challengePanel);
+
+function renderChallenges() {
+  const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
+  const list = document.getElementById('challengeList');
+  if (!list) return;
+  list.innerHTML = CHALLENGES.map(ch => {
+    const done = ch.cat === 'all'
+      ? history.length
+      : history.filter(h => { const s = storiesDB.find(x => x.id == h); return s && s.cat === ch.cat; }).length;
+    const pct = Math.min(100, done / ch.goal * 100);
+    const completed = done >= ch.goal;
+    return `<div style="margin-bottom:10px">
+      <div style="font-size:12px;color:${completed?'var(--green)':'var(--text)'};font-weight:${completed?'700':'400'}">${ch.label} ${completed?'✅':''}</div>
+      <div class="ch-prog-bg"><div class="ch-prog-fill" style="width:${pct}%"></div></div>
+      <div style="font-size:10px;color:var(--text-muted)">${Math.min(done,ch.goal)} / ${ch.goal}</div>
+    </div>`;
+  }).join('');
+}
+
+(function addChallengeNavBtn() {
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks) return;
+  const btn = document.createElement('a');
+  btn.href = '#'; btn.textContent = '🏆 Challenge';
+  btn.onclick = e => { e.preventDefault(); renderChallenges(); document.getElementById('challengePanel').style.display='block'; };
+  navLinks.appendChild(btn);
+})();
+
+// ══════════════════════════════════
+// FEATURE 8: STORY QUIZ
+// ══════════════════════════════════
+const quizStyle = document.createElement('style');
+quizStyle.textContent = `
+#quizPanel { padding:16px 20px;border-top:1px solid var(--border); }
+.quiz-opt { width:100%;text-align:left;padding:10px 14px;margin:6px 0;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);cursor:pointer;font-family:'Tiro Tamil',serif;font-size:13px;transition:all 0.2s }
+.quiz-opt:hover { border-color:var(--border-gold); }
+.quiz-opt.correct { background:rgba(0,230,118,0.15);border-color:var(--green);color:var(--green); }
+.quiz-opt.wrong   { background:rgba(255,23,68,0.12);border-color:#ff1744;color:#ff4b4b; }
+`;
+document.head.appendChild(quizStyle);
+
+function generateQuiz(storyId) {
+  const s = storiesDB.find(x => x.id == storyId);
+  if (!s) return null;
+  const sameCat = storiesDB.filter(x => x.id != storyId && x.cat === s.cat);
+  const wrong = sameCat.sort(() => Math.random()-.5).slice(0,3).map(x => x.title);
+  const options = [s.title, ...wrong].sort(() => Math.random()-.5);
+  return {
+    question: `இந்த கதை "${s.excerpt.substring(0,60)}..." — இந்த வரி எந்த கதையில் இருந்து வருகிறது?`,
+    answer: s.title,
+    options
+  };
+}
+
+function injectQuiz(id) {
+  if (document.getElementById('quizPanel')) document.getElementById('quizPanel').remove();
+  const quiz = generateQuiz(id);
+  if (!quiz || quiz.options.length < 4) return;
+  const panel = document.createElement('div');
+  panel.id = 'quizPanel';
+  panel.innerHTML = `
+    <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:10px">🧠 Quick Quiz</div>
+    <div style="font-size:12px;color:var(--text);margin-bottom:10px;font-family:'Tiro Tamil',serif;line-height:1.6">${quiz.question}</div>
+    ${quiz.options.map(opt => `<button class="quiz-opt" onclick="checkQuizAnswer(this,'${opt.replace(/'/g,"\\'")}','${quiz.answer.replace(/'/g,"\\'")}')"> ${opt}</button>`).join('')}
+    <div id="quizResult" style="font-size:12px;margin-top:8px;font-weight:700"></div>`;
+  const moreLike = document.getElementById('moreLikeThis');
+  if (moreLike) moreLike.before(panel);
+}
+function checkQuizAnswer(btn, chosen, answer) {
+  document.querySelectorAll('.quiz-opt').forEach(b => b.disabled = true);
+  if (chosen === answer) {
+    btn.classList.add('correct');
+    document.getElementById('quizResult').innerHTML = '<span style="color:var(--green)">✅ சரியான பதில்! நீங்கள் கவனமாக படித்தீர்கள்!</span>';
+    showToast('🎉 Correct! 10 points!');
+  } else {
+    btn.classList.add('wrong');
+    document.querySelectorAll('.quiz-opt').forEach(b => { if (b.textContent.trim() === answer) b.classList.add('correct'); });
+    document.getElementById('quizResult').innerHTML = `<span style="color:#ff4b4b">❌ தவறு. சரியான பதில்: "${answer}"</span>`;
+  }
+}
+
+// ══════════════════════════════════
+// FEATURE 9: SHAREABLE READING LIST
+// ══════════════════════════════════
+function shareReadingList() {
+  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
+  if (!bookmarks.length) { showToast('⚠️ Bookmark எதுவும் இல்லை!'); return; }
+  const ids = bookmarks.slice(0,10).join(',');
+  const url = `https://kathais.xyz?list=${btoa(ids)}`;
+  if (navigator.share) {
+    navigator.share({ title: 'என் Tamil கதை List', text: 'என் favorite Tamil கதைகள் படியுங்கள்!', url });
+  } else {
+    navigator.clipboard?.writeText(url).then(() => showToast('🔗 Reading list link copied!'));
+  }
+}
+(function addShareListBtn() {
+  setTimeout(() => {
+    const closeBtn = document.querySelector('.pnlma-logout-btn');
+    if (!closeBtn) return;
+    const btn = document.createElement('button');
+    btn.className = 'pnlma-logout-btn';
+    btn.style.cssText = 'background:linear-gradient(135deg,var(--purple),#651fff);margin-bottom:8px;';
+    btn.innerHTML = '🔗 Share Reading List';
+    btn.onclick = shareReadingList;
+    closeBtn.before(btn);
+  }, 1000);
+})();
+
+// ══════════════════════════════════
+// FEATURE 10: STORY ENDING CREATOR
+// ══════════════════════════════════
+const creatorStyle = document.createElement('style');
+creatorStyle.textContent = `
+#creativeEndingPanel { padding:16px 20px;border-top:1px solid var(--border); }
+#creativeEndingPanel textarea { width:100%;height:100px;background:var(--surface);border:1px solid var(--border);color:var(--text);border-radius:10px;padding:10px;font-family:'Tiro Tamil',serif;font-size:13px;resize:vertical;outline:none;transition:border-color 0.2s }
+#creativeEndingPanel textarea:focus { border-color:var(--border-gold); }
+`;
+document.head.appendChild(creatorStyle);
+
+function injectCreativeEnding(id) {
+  if (document.getElementById('creativeEndingPanel')) document.getElementById('creativeEndingPanel').remove();
+  const panel = document.createElement('div');
+  panel.id = 'creativeEndingPanel';
+  panel.innerHTML = `
+    <div style="font-size:13px;font-weight:700;color:var(--gold);margin-bottom:8px">✍️ உங்கள் முடிவு எழுதுங்கள்</div>
+    <div style="font-size:12px;color:var(--text-muted);margin-bottom:10px;font-family:'Tiro Tamil',serif">இந்த கதைக்கு நீங்கள் என்ன முடிவு எழுதுவீர்கள்?</div>
+    <textarea id="endingTextarea" placeholder="கதை இப்படியும் முடியலாம்..."></textarea>
+    <div style="display:flex;gap:8px;margin-top:8px">
+      <button onclick="saveCreativeEnding(${JSON.stringify(id)})" style="flex:1;background:var(--gold);color:#000;border:none;border-radius:8px;padding:9px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">💾 Save</button>
+      <button onclick="shareCreativeEnding()" style="flex:1;background:var(--surface2);border:1px solid var(--border);color:var(--text);border-radius:8px;padding:9px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif">📤 Share</button>
+    </div>
+    <div id="savedEndings" style="margin-top:10px"></div>`;
+  const quizPanel = document.getElementById('quizPanel');
+  if (quizPanel) quizPanel.before(panel);
+  loadSavedEndings(id);
+}
+function saveCreativeEnding(id) {
+  const text = document.getElementById('endingTextarea').value.trim();
+  if (!text) return;
+  const endings = JSON.parse(localStorage.getItem('creativeEndings') || '{}');
+  if (!endings[id]) endings[id] = [];
+  endings[id].unshift({ text, time: new Date().toLocaleDateString('ta-IN') });
+  localStorage.setItem('creativeEndings', JSON.stringify(endings));
+  document.getElementById('endingTextarea').value = '';
+  loadSavedEndings(id);
+  showToast('✍️ Ending saved!');
+}
+function loadSavedEndings(id) {
+  const el = document.getElementById('savedEndings'); if (!el) return;
+  const endings = JSON.parse(localStorage.getItem('creativeEndings') || '{}');
+  const items = (endings[id] || []).slice(0,3);
+  if (!items.length) return;
+  el.innerHTML = `<div style="font-size:11px;color:var(--text-dim);margin-bottom:6px;font-weight:700">உங்கள் endings:</div>` +
+    items.map(e => `<div style="background:var(--surface);border-radius:8px;padding:8px;margin-bottom:6px;font-family:'Tiro Tamil',serif;font-size:12px;color:var(--text-muted)">${e.text.substring(0,100)}... <span style="font-size:10px;color:var(--text-dim)">${e.time}</span></div>`).join('');
+}
+function shareCreativeEnding() {
+  const text = document.getElementById('endingTextarea')?.value || '';
+  if (!text) { showToast('முதலில் எழுதுங்கள்!'); return; }
+  if (navigator.share) navigator.share({ title: 'என் கதை முடிவு', text: text + '\n\nkathais.xyz' });
+  else navigator.clipboard?.writeText(text).then(() => showToast('📋 Copied!'));
+}
+
+// ══════════════════════════════════
+// FEATURE 11: DAILY WORDLE-STYLE GAME
+// ══════════════════════════════════
+(function addDailyWordleBtn() {
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks) return;
+  const btn = document.createElement('a');
+  btn.href = '#'; btn.textContent = '🎯 Daily';
+  btn.onclick = e => { e.preventDefault(); openDailyGame(); };
+  navLinks.appendChild(btn);
+})();
+
+const wordleStyle = document.createElement('style');
+wordleStyle.textContent = `
+#dailyGameOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#dailyGameOverlay.open { display:block }
+.wl-input { background:var(--surface);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:10px 14px;font-size:14px;font-family:'Tiro Tamil',serif;outline:none;width:100%;transition:border-color 0.2s }
+.wl-input:focus { border-color:var(--gold) }
+.wl-guess { background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:8px 12px;font-family:'Tiro Tamil',serif;font-size:13px;color:var(--text);margin-bottom:6px }
+`;
+document.head.appendChild(wordleStyle);
+
+const dailyOverlay = document.createElement('div');
+dailyOverlay.id = 'dailyGameOverlay';
+dailyOverlay.innerHTML = `
+  <div style="max-width:480px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:17px;font-weight:800;color:#1a1200">🎯 Daily Story Challenge</div>
+      <button onclick="closeDailyGame()" style="background:rgba(0,0,0,0.2);border:none;color:#1a1200;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
+    </div>
+    <div style="padding:20px">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-family:'Tiro Tamil',serif">இந்த வரி எந்த கதையில் இருந்து வருகிறது?</div>
+      <div id="wlExcerpt" style="background:var(--surface);border:1px solid var(--border-gold);border-radius:12px;padding:14px;font-family:'Tiro Tamil',serif;font-size:14px;color:var(--text);line-height:1.8;margin-bottom:16px"></div>
+      <div id="wlGuesses" style="margin-bottom:12px"></div>
+      <div style="display:flex;gap:8px">
+        <input id="wlInput" class="wl-input" placeholder="கதையின் பெயர்..." oninput="wlSuggest()" autocomplete="off">
+        <button onclick="wlSubmit()" style="background:var(--gold);color:#000;border:none;border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap">சமர்ப்பி</button>
+      </div>
+      <div id="wlSuggBox" style="background:var(--bg3);border:1px solid var(--border-gold);border-radius:10px;display:none;margin-top:4px;overflow:hidden"></div>
+      <div id="wlResult" style="margin-top:12px;font-size:14px;font-weight:700;text-align:center;font-family:'Tiro Tamil',serif"></div>
+      <div id="wlScore" style="text-align:center;margin-top:8px;font-size:12px;color:var(--text-muted)"></div>
+    </div>
+  </div>`;
+document.body.appendChild(dailyOverlay);
+
+let wlStory = null, wlAttempts = 0, wlDone = false;
+function openDailyGame() {
+  const today = new Date().toDateString();
+  const saved = localStorage.getItem('wlDate');
+  const savedScore = localStorage.getItem('wlScore_' + today);
+  const idx = new Date().getDate() % storiesDB.length;
+  wlStory = storiesDB[idx];
+  wlAttempts = 0; wlDone = false;
+  document.getElementById('wlExcerpt').textContent = '"' + wlStory.excerpt + '"';
+  document.getElementById('wlGuesses').innerHTML = '';
+  document.getElementById('wlResult').textContent = '';
+  document.getElementById('wlInput').value = '';
+  document.getElementById('wlSuggBox').style.display = 'none';
+  if (savedScore) {
+    document.getElementById('wlResult').innerHTML = `<span style="color:var(--green)">✅ இன்று விளையாடிவிட்டீர்கள்! Score: ${savedScore}/5</span>`;
+    wlDone = true;
+  }
+  document.getElementById('wlScore').textContent = saved === today ? `இன்று: ${3 - wlAttempts} tries left` : '';
+  dailyOverlay.classList.add('open');
+}
+function closeDailyGame() { dailyOverlay.classList.remove('open'); }
+function wlSuggest() {
+  const val = document.getElementById('wlInput').value.toLowerCase();
+  const box = document.getElementById('wlSuggBox');
+  if (!val) { box.style.display='none'; return; }
+  const matches = storiesDB.filter(s => s.title.toLowerCase().includes(val)).slice(0,5);
+  if (!matches.length) { box.style.display='none'; return; }
+  box.style.display='block';
+  box.innerHTML = matches.map(s => `<div onclick="document.getElementById('wlInput').value='${s.title.replace(/'/g,"\\'")}';document.getElementById('wlSuggBox').style.display='none'" style="padding:9px 14px;cursor:pointer;font-family:'Tiro Tamil',serif;font-size:13px;color:var(--text);border-bottom:1px solid var(--border)">${s.emoji} ${s.title}</div>`).join('');
+}
+function wlSubmit() {
+  if (wlDone) return;
+  const val = document.getElementById('wlInput').value.trim();
+  if (!val) return;
+  wlAttempts++;
+  const guessDiv = document.createElement('div');
+  guessDiv.className = 'wl-guess';
+  const correct = val === wlStory.title;
+  guessDiv.innerHTML = `<span style="color:${correct?'var(--green)':'#ff4b4b'}">${correct?'✅':'❌'}</span> ${val}`;
+  document.getElementById('wlGuesses').appendChild(guessDiv);
+  document.getElementById('wlInput').value = '';
+  document.getElementById('wlSuggBox').style.display = 'none';
+  if (correct) {
+    const score = Math.max(1, 5 - wlAttempts + 1);
+    document.getElementById('wlResult').innerHTML = `<span style="color:var(--green)">🎉 சரியான பதில்! Score: ${score}/5</span>`;
+    localStorage.setItem('wlScore_' + new Date().toDateString(), score);
+    wlDone = true; launchConfetti();
+  } else if (wlAttempts >= 3) {
+    document.getElementById('wlResult').innerHTML = `<span style="color:#ff4b4b">❌ 3 முயற்சிகளும் தவறு! சரி: "${wlStory.title}"</span>`;
+    localStorage.setItem('wlScore_' + new Date().toDateString(), 0);
+    wlDone = true;
+  } else {
+    document.getElementById('wlResult').innerHTML = `<span style="color:var(--text-muted)">தவறு! ${3 - wlAttempts} முயற்சிகள் மீதம்</span>`;
+  }
+}
+
+// ══════════════════════════════════
+// FEATURE 12: AI STORY GENERATOR
+// ══════════════════════════════════
+(function addAIGenBtn() {
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks) return;
+  const btn = document.createElement('a');
+  btn.href = '#'; btn.textContent = '✨ AI கதை';
+  btn.onclick = e => { e.preventDefault(); openAIGenerator(); };
+  navLinks.appendChild(btn);
+})();
+
+const aiGenStyle = document.createElement('style');
+aiGenStyle.textContent = `
+#aiGenOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#aiGenOverlay.open { display:block }
+.ai-cat-btn { padding:7px 16px;border:1.5px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all 0.2s }
+.ai-cat-btn.sel { background:var(--gold-glow);border-color:var(--border-gold);color:var(--gold);font-weight:700 }
+#aiStoryOutput { font-family:'Tiro Tamil',serif;font-size:15px;line-height:2;color:var(--text);white-space:pre-wrap;display:none }
+`;
+document.head.appendChild(aiGenStyle);
+
+const aiGenOverlay = document.createElement('div');
+aiGenOverlay.id = 'aiGenOverlay';
+aiGenOverlay.innerHTML = `
+  <div style="max-width:600px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,#7c4dff,#651fff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:17px;font-weight:800;color:#fff">✨ AI Tamil Story Generator</div>
+      <button onclick="closeAIGenerator()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
+    </div>
+    <div style="padding:20px">
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;font-weight:700">வகை தேர்வு செய்யுங்கள்:</div>
+      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
+        <button class="ai-cat-btn sel" onclick="selectAICat(this,'love')">💕 காதல்</button>
+        <button class="ai-cat-btn" onclick="selectAICat(this,'horror')">👻 பயம்</button>
+        <button class="ai-cat-btn" onclick="selectAICat(this,'comedy')">😂 நகைச்சுவை</button>
+        <button class="ai-cat-btn" onclick="selectAICat(this,'kids')">🧒 குழந்தை</button>
+        <button class="ai-cat-btn" onclick="selectAICat(this,'moral')">💡 நீதி</button>
+        <button class="ai-cat-btn" onclick="selectAICat(this,'devotion')">🙏 தெய்வீகம்</button>
+      </div>
+      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:700">கூடுதல் விவரம் (optional):</div>
+      <input id="aiPromptExtra" placeholder="e.g. கோவையில் நடக்கும் கதை, கல்லூரி காதல்..." style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:10px 14px;font-size:13px;font-family:'Tiro Tamil',serif;outline:none;margin-bottom:14px;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--border-gold)'" onblur="this.style.borderColor='var(--border)'">
+      <button onclick="generateAIStory()" id="aiGenBtn" style="width:100%;padding:12px;background:linear-gradient(135deg,#7c4dff,#651fff);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:16px;transition:opacity 0.2s">✨ கதை உருவாக்கு</button>
+      <div id="aiLoadingMsg" style="text-align:center;display:none;color:var(--text-muted);font-size:13px;padding:20px">
+        <div style="font-size:30px;margin-bottom:8px">✨</div>
+        <div>AI கதை எழுதுகிறது... சற்று நேரம் காத்திருங்கள்</div>
+      </div>
+      <div id="aiStoryOutput"></div>
+      <div id="aiStoryActions" style="display:none;margin-top:12px;display:none">
+        <button onclick="addAIStoryToFeed()" style="width:100%;padding:10px;background:var(--gold);color:#000;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif">📖 கதையை சேர்க்கவும்</button>
+      </div>
+    </div>
+  </div>`;
+document.body.appendChild(aiGenOverlay);
+
+let _aiSelectedCat = 'love', _aiGeneratedStory = null;
+function openAIGenerator() { aiGenOverlay.classList.add('open'); }
+function closeAIGenerator() { aiGenOverlay.classList.remove('open'); }
+function selectAICat(btn, cat) {
+  document.querySelectorAll('.ai-cat-btn').forEach(b => b.classList.remove('sel'));
+  btn.classList.add('sel');
+  _aiSelectedCat = cat;
+}
+async function generateAIStory() {
+  const extra = document.getElementById('aiPromptExtra').value;
+  const btn = document.getElementById('aiGenBtn');
+  const loading = document.getElementById('aiLoadingMsg');
+  const output = document.getElementById('aiStoryOutput');
+  const actions = document.getElementById('aiStoryActions');
+  btn.disabled = true; btn.style.opacity = '0.6';
+  loading.style.display = 'block';
+  output.style.display = 'none';
+  actions.style.display = 'none';
+  const catLabels = { love:'காதல்', horror:'பயம்/horror', comedy:'நகைச்சுவை', kids:'குழந்தைகளுக்கான', moral:'நீதி', devotion:'தெய்வீக' };
+  const prompt = `Write a short Tamil story (about 200-250 words) in the ${catLabels[_aiSelectedCat]} genre. ${extra ? 'Additional details: ' + extra : ''} 
+  
+Write ONLY in Tamil language. Format:
+Title: [Tamil title]
+Story: [Tamil story paragraphs]
+Moral: [Tamil moral lesson]
+
+Make it emotional, engaging and authentic Tamil style.`;
+  try {
+    const res = await fetch('https://api.anthropic.com/v1/messages', {
+      method:'POST',
+      headers:{ 'Content-Type':'application/json' },
+      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{ role:'user', content:prompt }] })
+    });
+    const data = await res.json();
+    const text = data.content?.[0]?.text || '';
+    _aiGeneratedStory = text;
+    output.textContent = text;
+    output.style.display = 'block';
+    actions.style.display = 'block';
+    showToast('✨ AI கதை தயார்!');
+  } catch(e) {
+    output.textContent = 'கதை உருவாக்க முடியவில்லை. Internet connection சரிபாருங்கள்.';
+    output.style.display = 'block';
+  }
+  btn.disabled = false; btn.style.opacity = '1';
+  loading.style.display = 'none';
+}
+function addAIStoryToFeed() {
+  if (!_aiGeneratedStory) return;
+  const lines = _aiGeneratedStory.split('\n').filter(l => l.trim());
+  const titleLine = lines.find(l => l.toLowerCase().startsWith('title:'));
+  const title = titleLine ? titleLine.replace(/^title:\s*/i,'').trim() : 'AI கதை ' + Date.now();
+  const catMetas = { love:{emoji:'💕',bg:'linear-gradient(135deg,#880e4f,#c2185b)',color:'#e91e63',label:'காதல்'}, horror:{emoji:'👻',bg:'linear-gradient(135deg,#1a1a2e,#4a148c)',color:'#7c4dff',label:'பயம்'}, comedy:{emoji:'😂',bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',color:'#00c853',label:'நகைச்சுவை'}, kids:{emoji:'🧒',bg:'linear-gradient(135deg,#0d47a1,#1976d2)',color:'#2196f3',label:'குழந்தை'}, moral:{emoji:'💡',bg:'linear-gradient(135deg,#4a148c,#7b1fa2)',color:'#9c27b0',label:'நீதி'}, devotion:{emoji:'🙏',bg:'linear-gradient(135deg,#bf360c,#e64a19)',color:'#ff6d00',label:'தெய்வீகம்'} };
+  const m = catMetas[_aiSelectedCat] || catMetas.moral;
+  const newStory = { id:'ai_'+Date.now(), cat:_aiSelectedCat, badge:'new', emoji:m.emoji, bg:m.bg, catLabel:m.label, catColor:m.color, title, excerpt: lines.slice(1,3).join(' ').substring(0,100)+'...', readTime:'5 நிமிஷம்', story:`<h3>${m.emoji} ${title}</h3><p>${_aiGeneratedStory}</p>` };
+  storiesDB.unshift(newStory);
+  filtered.unshift(newStory);
+  renderStories();
+  closeAIGenerator();
+  window.scrollTo({top:0, behavior:'smooth'});
+  showToast('✨ AI கதை சேர்க்கப்பட்டது!');
+}
+
+// ══════════════════════════════════
+// FEATURE 13: LEADERBOARD
+// ══════════════════════════════════
+(function addLeaderboardBtn() {
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks) return;
+  const btn = document.createElement('a');
+  btn.href = '#'; btn.textContent = '🏅 Top';
+  btn.onclick = e => { e.preventDefault(); openLeaderboard(); };
+  navLinks.appendChild(btn);
+})();
+
+const lbStyle = document.createElement('style');
+lbStyle.textContent = `
+#lbOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#lbOverlay.open { display:block }
+.lb-row { display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border);transition:background 0.15s }
+.lb-row:hover { background:var(--surface) }
+.lb-rank { font-size:20px;width:32px;text-align:center;flex-shrink:0 }
+.lb-name { flex:1;font-size:14px;color:var(--text) }
+.lb-score { font-size:13px;font-weight:700;color:var(--gold) }
+`;
+document.head.appendChild(lbStyle);
+
+const lbOverlay = document.createElement('div');
+lbOverlay.id = 'lbOverlay';
+lbOverlay.innerHTML = `
+  <div style="max-width:480px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:17px;font-weight:800;color:#1a1200">🏅 Leaderboard</div>
+      <button onclick="document.getElementById('lbOverlay').classList.remove('open')" style="background:rgba(0,0,0,0.2);border:none;color:#1a1200;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
+    </div>
+    <div style="display:flex;border-bottom:1px solid var(--border)">
+      <button onclick="switchLbTab('read',this)" class="lb-tab-btn" style="flex:1;padding:12px;background:var(--gold-glow);border:none;color:var(--gold);cursor:pointer;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px;border-bottom:2px solid var(--gold)">📚 Most Read</button>
+      <button onclick="switchLbTab('streak',this)" class="lb-tab-btn" style="flex:1;padding:12px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px">🔥 Streak</button>
+      <button onclick="switchLbTab('rated',this)" class="lb-tab-btn" style="flex:1;padding:12px;background:none;border:none;color:var(--text-muted);cursor:pointer;font-weight:700;font-family:'DM Sans',sans-serif;font-size:12px">⭐ Top Rated</button>
+    </div>
+    <div id="lbContent" style="min-height:200px"></div>
+    <div style="padding:16px;text-align:center">
+      <div id="myRankDisplay" style="font-size:13px;color:var(--text-muted)"></div>
+    </div>
+  </div>`;
+document.body.appendChild(lbOverlay);
+
+function openLeaderboard() { renderLeaderboard('read'); lbOverlay.classList.add('open'); }
+function switchLbTab(tab, btn) {
+  document.querySelectorAll('.lb-tab-btn').forEach(b => { b.style.background='none'; b.style.color='var(--text-muted)'; b.style.borderBottom='none'; });
+  btn.style.background='var(--gold-glow)'; btn.style.color='var(--gold)'; btn.style.borderBottom='2px solid var(--gold)';
+  renderLeaderboard(tab);
+}
+function renderLeaderboard(tab) {
+  const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
+  const ratings = JSON.parse(localStorage.getItem('storyRatings') || '{}');
+  const streak = parseInt(localStorage.getItem('readingStreak') || '1');
+  const user = (typeof currentUser !== 'undefined' && currentUser) ? (currentUser.displayName || currentUser.email || 'நீங்கள்') : 'நீங்கள்';
+  const MOCK = [
+    { name:'அர்ஜுன் R', read:245, streak:28, rated:67 },
+    { name:'மீனாட்சி S', read:198, streak:21, rated:54 },
+    { name:'கார்த்திக் M', read:167, streak:19, rated:48 },
+    { name:'தீபா V', read:134, streak:15, rated:41 },
+    { name:'ரமேஷ் K', read:112, streak:12, rated:35 },
+  ];
+  const myEntry = { name:'⭐ ' + user, read:history.length, streak, rated:Object.keys(ratings).length };
+  const all = [...MOCK, myEntry];
+  const sorted = all.sort((a,b) => b[tab] - a[tab]);
+  const medals = ['🥇','🥈','🥉','4️⃣','5️⃣','6️⃣'];
+  const lbl = { read:'கதைகள்', streak:'நாட்கள்', rated:'ratings' };
+  document.getElementById('lbContent').innerHTML = sorted.map((e,i) => {
+    const isMe = e === myEntry;
+    return `<div class="lb-row" style="${isMe?'background:var(--gold-glow);':''}">
+      <span class="lb-rank">${medals[i]||'🔸'}</span>
+      <span class="lb-name" style="${isMe?'color:var(--gold);font-weight:700':''}"> ${e.name}</span>
+      <span class="lb-score">${e[tab]} ${lbl[tab]}</span>
+    </div>`;
+  }).join('');
+  const myRank = sorted.findIndex(e => e === myEntry) + 1;
+  document.getElementById('myRankDisplay').textContent = `உங்கள் rank: #${myRank}`;
+}
+
+// ══════════════════════════════════
+// FEATURE 14: COLLECTIONS / PLAYLISTS
+// ══════════════════════════════════
+const COLLECTIONS = [
+  { id:'best_horror', label:'🏆 Best Horror 2024', cats:['horror'], badge:'horror', limit:6 },
+  { id:'top_love',    label:'💕 Top Love Stories', cats:['love'],   badge:'love',   limit:6 },
+  { id:'quick_reads', label:'⚡ Quick Reads (< 5 min)', filter: s => parseInt(s.readTime) < 5, limit:8 },
+  { id:'classics',    label:'📜 Classic Stories', filter: s => s.badge === 'classic', limit:6 },
+  { id:'kids_corner', label:'🧒 Kids Corner', cats:['kids'], limit:6 },
+  { id:'thrill_zone', label:'🔥 Thrill Zone', cats:['thriller','horror'], limit:6 },
+];
+
+(function addCollectionsNavBtn() {
+  const navLinks = document.querySelector('.nav-links');
+  if (!navLinks) return;
+  const btn = document.createElement('a');
+  btn.href = '#'; btn.textContent = '📂 Collections';
+  btn.onclick = e => { e.preventDefault(); openCollections(); };
+  navLinks.appendChild(btn);
+})();
+
+const collStyle = document.createElement('style');
+collStyle.textContent = `
+#collOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#collOverlay.open { display:block }
+.coll-card { background:var(--bg2);border:1.5px solid var(--border);border-radius:16px;padding:14px 16px;cursor:pointer;transition:all 0.2s;margin-bottom:10px }
+.coll-card:hover { border-color:var(--border-gold);transform:translateY(-2px) }
+.coll-story-chip { display:inline-flex;align-items:center;gap:4px;background:var(--surface);border:1px solid var(--border);border-radius:20px;padding:4px 10px;font-size:11px;font-family:'Tiro Tamil',serif;color:var(--text-muted);margin:3px;cursor:pointer }
+.coll-story-chip:hover { border-color:var(--border-gold);color:var(--gold) }
+`;
+document.head.appendChild(collStyle);
+
+const collOverlay = document.createElement('div');
+collOverlay.id = 'collOverlay';
+collOverlay.innerHTML = `
+  <div style="max-width:600px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
+    <div style="background:linear-gradient(135deg,var(--purple),#651fff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+      <div style="font-size:17px;font-weight:800;color:#fff">📂 Story Collections</div>
+      <button onclick="document.getElementById('collOverlay').classList.remove('open')" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
+    </div>
+    <div id="collList" style="padding:16px"></div>
+  </div>`;
+document.body.appendChild(collOverlay);
+
+function openCollections() {
+  const el = document.getElementById('collList');
+  el.innerHTML = COLLECTIONS.map(c => {
+    const stories = c.filter ? storiesDB.filter(c.filter) : storiesDB.filter(s => c.cats.includes(s.cat));
+    const limited = stories.slice(0, c.limit);
+    return `<div class="coll-card">
+      <div style="font-size:15px;font-weight:700;color:var(--text);margin-bottom:4px">${c.label}</div>
+      <div style="font-size:11px;color:var(--text-muted);margin-bottom:8px">${limited.length} கதைகள்</div>
+      <div>${limited.map(s => `<span class="coll-story-chip" onclick="document.getElementById('collOverlay').classList.remove('open');openStory(${JSON.stringify(s.id)})">${s.emoji} ${s.title}</span>`).join('')}</div>
+    </div>`;
+  }).join('');
+  collOverlay.classList.add('open');
+}
+
+// ══════════════════════════════════
+// FEATURE 15: NOTES PANEL TOGGLE BTN
+// ══════════════════════════════════
+(function addNotesToggle() {
+  const btn = document.createElement('button');
+  btn.id = 'notesToggleBtn';
+  btn.style.cssText = 'position:fixed;bottom:148px;right:16px;width:46px;height:46px;background:linear-gradient(135deg,var(--purple),#651fff);border:none;border-radius:50%;color:#fff;font-size:20px;cursor:pointer;z-index:4999;box-shadow:0 4px 16px rgba(124,77,255,0.4);display:none;align-items:center;justify-content:center;transition:all 0.2s';
+  btn.textContent = '📝';
+  btn.title = 'My Notes';
+  btn.onclick = () => {
+    const np = document.getElementById('notesPanel');
+    np.style.display = np.style.display === 'block' ? 'none' : 'block';
+    if (np.style.display === 'block') renderNotes(window._currentStoryId);
+  };
+  document.body.appendChild(btn);
+})();
+
+// ══════════════════════════════════
+// FEATURE 16: KEYBOARD SHORTCUTS
+// ══════════════════════════════════
+document.addEventListener('keydown', e => {
+  if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') return;
+  const modal = document.querySelector('.modal.open');
+  const isOpen = !!modal;
+  if (e.key === 'Escape') {
+    if (isOpen) closeStory && closeStory();
+    ['dailyGameOverlay','aiGenOverlay','lbOverlay','collOverlay'].forEach(id => document.getElementById(id)?.classList.remove('open'));
+    ['challengePanel','notesPanel'].forEach(id => { const el = document.getElementById(id); if(el) el.style.display='none'; });
+  }
+  if (!isOpen) {
+    if (e.key === 'r' || e.key === 'R') { openRandomStory && openRandomStory(); showToast('🎲 Random story!'); }
+    if (e.key === 'd' || e.key === 'D') openDailyGame();
+    if (e.key === 'l' || e.key === 'L') openLeaderboard();
+    if (e.key === 'g' || e.key === 'G') openAIGenerator();
+  }
+});
+if (!localStorage.getItem('v3kbHint')) {
+  setTimeout(() => {
+    showToast('⌨️ R=Random D=Daily L=Leaderboard G=AI Generator', 5000);
+    localStorage.setItem('v3kbHint','1');
+  }, 10000);
+}
+
+// ══════════════════════════════════
+// HOOK openStory — inject all new features
+// ══════════════════════════════════
+const _baseOpen = openStory;
+openStory = function(id) {
+  _baseOpen(id);
+  window._currentStoryId = id;
+  localStorage.setItem('lastReadStory', id);
+  setTimeout(() => {
+    injectReadTimer();
+    startReadTimer();
+    injectStarRating(id);
+    injectReactions(id);
+    injectMoreLikeThis(id);
+    injectCreativeEnding(id);
+    injectQuiz(id);
+    renderNotes(id);
+    document.getElementById('notesToggleBtn') && (document.getElementById('notesToggleBtn').style.display = 'flex');
+    updateChallengeOnRead(id);
+  }, 500);
+};
+
+const _baseClose = closeStory;
+closeStory = function() {
+  _baseClose && _baseClose();
+  stopReadTimer(window._currentStoryId);
+  document.getElementById('notesToggleBtn') && (document.getElementById('notesToggleBtn').style.display = 'none');
+  document.getElementById('notesPanel') && (document.getElementById('notesPanel').style.display = 'none');
+};
+
+function updateChallengeOnRead(id) {
+  const history = JSON.parse(localStorage.getItem('readHistory') || '[]');
+  if (!history.includes(id) && !history.includes(String(id))) {
+    history.push(id);
+    localStorage.setItem('readHistory', JSON.stringify(history));
+  }
+}
+
+// ══════════════════════════════════
+// LAST READ RESTORE PROMPT
+// ══════════════════════════════════
+(function lastReadRestore() {
+  const last = localStorage.getItem('lastReadStory');
+  if (!last) return;
+  const s = storiesDB.find(x => x.id == last || x.id === last);
+  if (!s) return;
+  const toast = document.createElement('div');
+  toast.style.cssText = 'position:fixed;bottom:90px;left:16px;right:16px;max-width:480px;margin:0 auto;background:var(--bg3);border:1.5px solid var(--border-gold);border-radius:16px;padding:12px 16px;z-index:8000;display:flex;align-items:center;gap:10px;box-shadow:0 8px 30px rgba(0,0,0,0.5)';
+  toast.innerHTML = `<span style="font-size:22px">${s.emoji}</span><div style="flex:1"><div style="font-size:11px;color:var(--gold);font-weight:700">கடைசியாக படித்தீர்கள்</div><div style="font-size:13px;color:var(--text);font-family:'Tiro Tamil',serif">${s.title}</div></div><button onclick="openStory(${JSON.stringify(s.id)});this.parentElement.remove()" style="background:var(--gold);color:#000;border:none;border-radius:8px;padding:6px 12px;font-size:12px;font-weight:700;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap">தொடர்</button><button onclick="this.parentElement.remove()" style="background:none;border:none;color:var(--text-muted);cursor:pointer;font-size:18px;padding:2px 6px">✕</button>`;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 9000);
+})();
+
+// ══════════════════════════════════
+// GLOBAL PROGRESS BAR ─ scroll
+// ══════════════════════════════════
+(function addScrollBar() {
+  const bar = document.createElement('div');
+  bar.style.cssText = 'position:fixed;top:60px;left:0;height:3px;width:0%;background:linear-gradient(90deg,var(--gold),#ff8c00);z-index:9998;transition:width 0.12s;pointer-events:none';
+  document.body.appendChild(bar);
+  window.addEventListener('scroll', () => {
+    const pct = document.documentElement.scrollTop / (document.documentElement.scrollHeight - window.innerHeight) * 100;
+    bar.style.width = Math.min(100, pct||0) + '%';
+  }, { passive:true });
+})();
+
+// ════════════════════════════════════════
+// ═══ END OF v3.0 — ALL 16 FEATURES ═════
+// ════════════════════════════════════════
 </script>
 </body>
 </html>
