@@ -2323,6 +2323,131 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   .splash-logo { font-size:22px; }
   .splash-otp-boxes { gap:5px; }
 }
+
+/* ═══ SPLASH — ENHANCED GOOGLE-ONLY STYLES ═══ */
+
+/* Re-style splash google button to be more impactful */
+.splash-google-btn {
+  position:relative; overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,0.08),rgba(255,255,255,0.04)) !important;
+  border:1.5px solid var(--border-gold) !important;
+  border-radius:14px !important;
+  padding:0 !important;
+  margin-bottom:0 !important;
+  flex-direction:column !important;
+  gap:0 !important;
+  height:64px;
+  transition:all 0.3s cubic-bezier(0.34,1.56,0.64,1) !important;
+}
+.splash-google-btn::before {
+  content:'';
+  position:absolute; top:0; left:-100%; width:100%; height:100%;
+  background:linear-gradient(90deg,transparent,rgba(245,166,35,0.08),transparent);
+  transition:left 0.5s;
+}
+.splash-google-btn:hover::before { left:100%; }
+.splash-google-btn:hover {
+  background:rgba(255,255,255,0.1) !important;
+  border-color:var(--gold) !important;
+  transform:translateY(-3px) scale(1.01) !important;
+  box-shadow:0 12px 36px rgba(0,0,0,0.35), 0 0 0 1px rgba(245,166,35,0.2) !important;
+}
+
+/* Wrapper for inner layout */
+.splash-google-btn { display:flex !important; flex-direction:row !important; align-items:center !important; gap:12px !important; padding:0 20px !important; height:60px !important; }
+.splash-g-logo-wrap {
+  width:36px; height:36px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:10px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+.splash-g-text { flex:1; font-size:15px; font-weight:700; text-align:left; }
+.splash-g-arrow { color:var(--gold); font-size:18px; transition:transform 0.2s; }
+.splash-google-btn:hover .splash-g-arrow { transform:translateX(3px); }
+
+/* Perks strip */
+.splash-perks {
+  display:flex; gap:6px; margin-bottom:22px; flex-wrap:wrap; justify-content:center;
+}
+.splash-perk {
+  display:flex; align-items:center; gap:5px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:20px; padding:5px 12px;
+  font-size:11px; font-weight:600; color:var(--text-muted);
+  transition:all 0.2s;
+}
+.splash-perk:hover { border-color:var(--border-gold); color:var(--gold); }
+
+/* Trust note */
+.splash-trust {
+  display:flex; align-items:center; justify-content:center; gap:5px;
+  margin:14px 0 10px;
+  font-size:10px; color:var(--text-dim); font-weight:500; letter-spacing:0.3px;
+}
+
+/* ═══ LUX MODAL — ENHANCED GOOGLE-ONLY STYLES ═══ */
+
+/* Perks grid 2x2 */
+.lux-perks-grid {
+  display:grid; grid-template-columns:1fr 1fr;
+  gap:8px; margin-bottom:22px;
+}
+.lux-perk {
+  display:flex; align-items:center; gap:8px;
+  background:rgba(255,255,255,0.03);
+  border:1px solid rgba(255,255,255,0.06);
+  border-radius:10px; padding:9px 12px;
+  font-size:11px; font-weight:600; color:rgba(240,236,228,0.5);
+  transition:all 0.2s;
+}
+.lux-perk:hover { border-color:rgba(201,147,58,0.25); color:rgba(240,236,228,0.75); }
+.lux-perk-icon { font-size:14px; }
+
+/* Enhanced google button icon ring */
+.lux-g-icon-ring {
+  width:34px; height:34px;
+  background:rgba(255,255,255,0.06);
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:9px;
+  display:flex; align-items:center; justify-content:center;
+  flex-shrink:0;
+}
+
+/* Bigger, bolder lux google button */
+.lux-btn-google {
+  height:58px !important;
+  border-radius:14px !important;
+  gap:14px !important;
+  font-size:14px !important;
+  font-weight:700 !important;
+  position:relative; overflow:hidden;
+  background:linear-gradient(135deg,rgba(255,255,255,0.06),rgba(255,255,255,0.03)) !important;
+  border:1.5px solid rgba(201,147,58,0.3) !important;
+  box-shadow:0 2px 16px rgba(0,0,0,0.2), inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.lux-btn-google::after {
+  content:'';
+  position:absolute; inset:0;
+  background:radial-gradient(circle at center, rgba(245,166,35,0.06) 0%, transparent 70%);
+  opacity:0; transition:opacity 0.3s;
+}
+.lux-btn-google:hover::after { opacity:1; }
+.lux-btn-google:hover {
+  border-color:rgba(201,147,58,0.6) !important;
+  transform:translateY(-2px) !important;
+  box-shadow:0 12px 32px rgba(0,0,0,0.3), 0 0 0 1px rgba(201,147,58,0.15) !important;
+}
+
+/* Trust line */
+.lux-trust-line {
+  display:flex; align-items:center; justify-content:center; gap:5px;
+  font-size:10px; color:rgba(240,236,228,0.25);
+  margin:12px 0 6px; font-weight:500;
+}
+
 </style>
 </head>
 <body>
@@ -2335,26 +2460,32 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <div class="splash-logo">📚 Tamil<span>கதைகள்</span></div>
     <div class="splash-tag">Premium Reading Experience</div>
 
-    <!-- Step 1: Phone / Google -->
+    <!-- Step 1: Google Sign-In -->
     <div class="splash-step active" id="splashStep1">
       <div class="splash-title">Welcome back</div>
-      <div class="splash-sub">Sign in to continue your reading journey</div>
+      <div class="splash-sub">Sign in to unlock your personalized reading journey</div>
 
-      <!-- Google -->
+      <!-- Feature perks strip -->
+      <div class="splash-perks">
+        <div class="splash-perk"><span>📚</span><span>1000+ Tamil Stories</span></div>
+        <div class="splash-perk"><span>🔖</span><span>Sync Bookmarks</span></div>
+        <div class="splash-perk"><span>🔥</span><span>Reading Streaks</span></div>
+      </div>
+
+      <!-- Premium Google Sign-In Button -->
       <button class="splash-google-btn" onclick="splashGoogleLogin()">
-        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        Continue with Google ›
+        <div class="splash-g-logo-wrap">
+          <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        </div>
+        <span class="splash-g-text">Continue with Google</span>
+        <span class="splash-g-arrow">›</span>
       </button>
 
-      <div class="splash-divider">or</div>
-
-      <div style="font-size:12px;font-weight:700;color:var(--text-muted);margin-bottom:8px">Mobile Number</div>
-      <div class="splash-phone-row">
-        <div class="splash-country-box">🇮🇳 +91</div>
-        <input class="splash-phone-input" id="splashPhoneInput" type="tel" maxlength="10" placeholder="Enter mobile number" oninput="splashPhoneChanged()">
+      <!-- Trust badge -->
+      <div class="splash-trust">
+        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+        <span>Secured by Google OAuth 2.0 — we never store your password</span>
       </div>
-      <div class="splash-hint">We'll send a 6-digit OTP to verify</div>
-      <button class="splash-otp-btn" id="splashSendOtpBtn" onclick="splashSendOtp()" disabled>Send OTP</button>
 
       <div id="splash-recaptcha-container"></div>
 
@@ -2363,28 +2494,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
       </div>
     </div>
 
-    <!-- Step 2: OTP -->
-    <div class="splash-step" id="splashStep2">
-      <button class="splash-back-btn" onclick="splashGoTo('splashStep1')">← Back</button>
-      <div class="splash-title" style="text-align:center">Enter OTP</div>
-      <div class="splash-sub" id="splashOtpSub">Sent to +91 <span id="splashOtpPhone"></span></div>
-      <div class="splash-otp-boxes" id="splashOtpBoxes">
-        <input class="splash-otp-box" id="sotp0" maxlength="6" type="tel" oninput="splashOtpIn(0)" onkeydown="splashOtpKey(event,0)">
-        <input class="splash-otp-box" id="sotp1" maxlength="1" type="tel" oninput="splashOtpIn(1)" onkeydown="splashOtpKey(event,1)">
-        <input class="splash-otp-box" id="sotp2" maxlength="1" type="tel" oninput="splashOtpIn(2)" onkeydown="splashOtpKey(event,2)">
-        <input class="splash-otp-box" id="sotp3" maxlength="1" type="tel" oninput="splashOtpIn(3)" onkeydown="splashOtpKey(event,3)">
-        <input class="splash-otp-box" id="sotp4" maxlength="1" type="tel" oninput="splashOtpIn(4)" onkeydown="splashOtpKey(event,4)">
-        <input class="splash-otp-box" id="sotp5" maxlength="1" type="tel" oninput="splashOtpIn(5)" onkeydown="splashOtpKey(event,5)">
-      </div>
-      <div class="splash-otp-err" id="splashOtpErr"></div>
-      <div class="splash-resend-row">
-        <span class="splash-timer" id="splashTimerWrap">Resend in <b id="splashTimerVal">30</b>s</span>
-        <button class="splash-resend-btn" id="splashResendBtn" disabled onclick="splashResend()">Resend OTP</button>
-      </div>
-      <button class="splash-verify-btn" id="splashVerifyBtn" onclick="splashVerify()" disabled>Verify & Sign In</button>
-    </div>
-
-    <!-- Step 3: Success -->
+    <!-- Step 2: Success -->
     <div class="splash-step" id="splashStep3">
       <div class="splash-success-icon">✓</div>
       <div class="splash-success-title" id="splashSuccessTitle">வணக்கம்! 🎉</div>
@@ -2444,73 +2554,45 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
       </div>
       <div class="lux-divider"></div>
 
-      <!-- STEP 1: CHOOSE -->
+      <!-- STEP 1: GOOGLE SIGN-IN -->
       <div class="lux-step active" id="luxStep1">
         <div class="lux-heading">Welcome back</div>
-        <div class="lux-sub">Sign in to continue your reading journey</div>
+        <div class="lux-sub">One tap to unlock your premium reading experience</div>
 
+        <!-- Perks grid -->
+        <div class="lux-perks-grid">
+          <div class="lux-perk"><span class="lux-perk-icon">⭐</span><span>Premium Features</span></div>
+          <div class="lux-perk"><span class="lux-perk-icon">🔖</span><span>Saved Stories</span></div>
+          <div class="lux-perk"><span class="lux-perk-icon">🏆</span><span>Leaderboard</span></div>
+          <div class="lux-perk"><span class="lux-perk-icon">🔥</span><span>Daily Streak</span></div>
+        </div>
+
+        <!-- Enhanced Google Button -->
         <button class="lux-btn-google" onclick="openLuxGooglePopup()">
-          <svg width="20" height="20" viewBox="0 0 48 48">
-            <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-            <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-            <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-            <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-          </svg>
+          <div class="lux-g-icon-ring">
+            <svg width="20" height="20" viewBox="0 0 48 48">
+              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
+              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
+              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
+              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
+            </svg>
+          </div>
           <span>Continue with Google</span>
           <span class="arr">›</span>
         </button>
 
-        <div class="lux-or"><div class="lux-or-line"></div><span class="lux-or-text">or</span><div class="lux-or-line"></div></div>
-
-        <div class="lux-label">Mobile Number</div>
-        <div class="lux-phone-row">
-          <div class="lux-country" id="luxCountryBtn" onclick="luxToggleDD()">
-            <span id="luxSelFlag">🇮🇳</span>
-            <span class="lux-country-code" id="luxSelCode">+91</span>
-            <svg width="9" height="5" viewBox="0 0 10 6" fill="none" style="opacity:0.35"><path d="M1 1l4 4 4-4" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            <div class="lux-country-dd" id="luxCountryDD">
-              <div class="lux-dd-item" onclick="luxSelectCountry('🇮🇳','+91','IN');event.stopPropagation()"><span>🇮🇳</span><span class="lux-dd-name">India</span><span class="lux-dd-code">+91</span></div>
-              <div class="lux-dd-item" onclick="luxSelectCountry('🇺🇸','+1','US');event.stopPropagation()"><span>🇺🇸</span><span class="lux-dd-name">United States</span><span class="lux-dd-code">+1</span></div>
-              <div class="lux-dd-item" onclick="luxSelectCountry('🇬🇧','+44','GB');event.stopPropagation()"><span>🇬🇧</span><span class="lux-dd-name">United Kingdom</span><span class="lux-dd-code">+44</span></div>
-              <div class="lux-dd-item" onclick="luxSelectCountry('🇸🇬','+65','SG');event.stopPropagation()"><span>🇸🇬</span><span class="lux-dd-name">Singapore</span><span class="lux-dd-code">+65</span></div>
-              <div class="lux-dd-item" onclick="luxSelectCountry('🇦🇪','+971','AE');event.stopPropagation()"><span>🇦🇪</span><span class="lux-dd-name">UAE</span><span class="lux-dd-code">+971</span></div>
-              <div class="lux-dd-item" onclick="luxSelectCountry('🇲🇾','+60','MY');event.stopPropagation()"><span>🇲🇾</span><span class="lux-dd-name">Malaysia</span><span class="lux-dd-code">+60</span></div>
-            </div>
-          </div>
-          <input type="tel" class="lux-phone-input" id="luxPhoneInput" placeholder="Enter mobile number" maxlength="15" inputmode="numeric" oninput="this.value=this.value.replace(/\D/g,'')" onkeydown="if(event.key==='Enter')luxSendOTP()">
+        <!-- Trust line -->
+        <div class="lux-trust-line">
+          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+          Secured by Google OAuth 2.0
         </div>
-        <div class="lux-hint" id="luxPhoneHint">We'll send a 6-digit OTP to verify</div>
-
-        <button class="lux-btn-primary" onclick="luxSendOTP()" id="luxOtpBtn">Send OTP</button>
 
         <div class="lux-privacy">
           By continuing, you accept our <a href="#">Privacy Policy</a> and <a href="#">Terms of Service</a>
         </div>
       </div>
 
-      <!-- STEP 2: OTP -->
-      <div class="lux-step" id="luxStep2">
-        <button class="lux-back" onclick="luxGoBack('luxStep1')">← Back</button>
-        <div class="lux-heading">Verify your number</div>
-        <div class="lux-otp-info">📱 OTP sent to <span class="lux-otp-num" id="luxOtpPhone"></span></div>
-        <div class="lux-label">Enter 6-digit OTP</div>
-        <div class="lux-otp-boxes">
-          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp0" oninput="luxOtpInput(0)" onkeydown="luxOtpKey(event,0)">
-          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp1" oninput="luxOtpInput(1)" onkeydown="luxOtpKey(event,1)">
-          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp2" oninput="luxOtpInput(2)" onkeydown="luxOtpKey(event,2)">
-          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp3" oninput="luxOtpInput(3)" onkeydown="luxOtpKey(event,3)">
-          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp4" oninput="luxOtpInput(4)" onkeydown="luxOtpKey(event,4)">
-          <input type="text" class="lux-otp-box" maxlength="1" inputmode="numeric" id="lotp5" oninput="luxOtpInput(5)" onkeydown="luxOtpKey(event,5)">
-        </div>
-        <div class="lux-resend-row">
-          <span class="lux-timer">Resend in <b id="luxTimerVal">30</b>s</span>
-          <button class="lux-resend-btn" id="luxResendBtn" disabled onclick="luxResendOTP()">Resend OTP</button>
-        </div>
-        <div class="lux-hint" id="luxOtpHint">Enter the code sent to your mobile</div>
-        <button class="lux-btn-primary" onclick="luxVerifyOTP()" id="luxVerifyBtn" disabled>Verify &amp; Sign In</button>
-      </div>
-
-      <!-- STEP 3: SUCCESS -->
+      <!-- STEP 2: SUCCESS -->
       <div class="lux-step" id="luxStep3">
         <div style="text-align:center">
           <div class="lux-success-icon">✓</div>
@@ -4581,6 +4663,412 @@ const storiesDB = [
 <p>அனியன்: "Aunty-கு வயசு எத்தனை?"</p>
 <p>HR அம்மா வயிறு வலிக்க சிரித்தாள். "நீயும் உன் தம்பியும் நாளை office வாங்க. இந்த interview முடிந்தது — நீ selected!" என்று சொன்னாள்.</p>
 <div class="moral">💡 நீதி: Authenticity எப்போதும் வெல்லும்! 😄</div>`
+  },
+  {
+    id:71, cat:'love', badge:'hot', emoji:'🌙',
+    bg:'linear-gradient(135deg,#880e4f,#c2185b)',
+    catLabel:'காதல்', catColor:'#e91e63',
+    title:'இரவின் ரகசியம்',
+    excerpt:'அவள் கண்கள் என்னோடு பேசின — வார்த்தைகளே தேவையில்லை என்று சொன்னது அந்த நிலவொளி இரவு...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🌙 இரவின் ரகசியம்</h3>
+<p>டெர்ரஸில் நாங்கள் இருவரும் நின்றோம். நகரத்தின் விளக்குகள் கீழே தெரிந்தன. நிலா மேலே ஒளிர்ந்தது.</p>
+<p>ஆறு மாதமாக ஒரே அலுவலகத்தில் வேலை செய்கிறோம். ஆனால் இன்றுதான் முதல்முறையாக இருவரும் தனியே இருக்கிறோம்.</p>
+<p>"குளிரா இருக்கு," என்று சொன்னாள் அவள். அவள் தோள்களை இறுக்கிக் கொண்டாள். நான் என் ஜாக்கெட்டை கழட்டி அவள் தோள்களில் போட்டேன்.</p>
+<p>அவள் என்னைப் பார்த்தாள். அந்த நொடியில் ஒரு மின்னல் பாய்ந்தது — இருவர் மனதிலும்.</p>
+<p>"நீங்க இப்படி பண்ணக்கூடாது," என்று சொன்னாள். குரல் நடுங்கியது.</p>
+<p>"ஏன்?" என்று கேட்டேன்.</p>
+<p>அவள் கண்கள் நனைந்தன. "நான் உங்களை விட்டு போக மனசு வராது என்று."</p>
+<p>நான் மெதுவாக அவள் கையை பிடித்தேன். நகரம் கீழே ஓடிக்கொண்டிருந்தது. நாங்கள் இருவரும் அப்படியே நின்றோம் — நேரம் நின்றுவிட்டது போல.</p>
+<p>"நீயும் போகவேண்டாம்," என்று சொன்னேன். அவள் என் தோளில் சாய்ந்தாள்.</p>
+<div class="moral">💡 சில இரவுகள் வாழ்நாள் முழுவதும் நினைவில் நிற்கும்!</div>`
+  },
+  {
+    id:72, cat:'love', badge:'new', emoji:'🔥',
+    bg:'linear-gradient(135deg,#b71c1c,#e53935)',
+    catLabel:'காதல்', catColor:'#ef5350',
+    title:'முதல் தொடுதல்',
+    excerpt:'அவன் கை என் கையை தொட்ட அந்த நொடி — உலகமே மாறிவிட்டது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🔥 முதல் தொடுதல்</h3>
+<p>திருவிழாவில் கூட்டம் அலையடித்தது. நாங்கள் இருவரும் பிரிந்துவிடாமல் இருக்க அவன் என் கையை பிடித்தான்.</p>
+<p>என் இதயம் ஒரு நொடி நின்றது. பிறகு இரட்டிப்பு வேகத்தில் ஓடியது.</p>
+<p>அவன் கை — வெப்பமாக, உறுதியாக இருந்தது. நான் விரல்களை நெருக்கினேன். அவனும் நெருக்கினான்.</p>
+<p>கூட்டத்தில் இருந்தோம். ஆனால் அந்த கணத்தில் நாங்கள் இருவரும் மட்டுமே இருந்தோம்.</p>
+<p>"திருவிழா எப்படி இருக்கு?" என்று கேட்டான் — சாதாரணமாக, ஆனால் அவன் குரல் நடுங்கியது.</p>
+<p>"தெரியல," என்று சொன்னேன். "கூட்டம் ஒன்னும் தெரியல."</p>
+<p>அவன் என்னை திரும்பி பார்த்தான். இருவர் கண்களிலும் ஒரு கேள்வி — ஒரே விடை.</p>
+<p>அன்று இரவு வீட்டில் உறங்காமல் கிடந்தேன். அவன் கையின் வெப்பம் இன்னும் என் விரல்களில் இருந்தது.</p>
+<div class="moral">💡 சில தொடுதல்கள் வாழ்நாளை மாற்றிவிடும்!</div>`
+  },
+  {
+    id:73, cat:'love', badge:'hot', emoji:'💋',
+    bg:'linear-gradient(135deg,#4a148c,#6a1b9a)',
+    catLabel:'காதல்', catColor:'#ab47bc',
+    title:'அந்த ஒரு இரவு',
+    excerpt:'மழையில் நனைந்த அந்த இரவு — அவள் கண்களில் தெரிந்தது என்னவென்று அப்போதுதான் புரிந்தது...',
+    readTime:'7 நிமிஷம்',
+    story:`<h3>💋 அந்த ஒரு இரவு</h3>
+<p>திடீர் மழை. அவளும் நானும் ஒரே கடை முன்பு தங்கினோம். குடை இல்லை. நின்றோம்.</p>
+<p>அவள் முடி நனைந்தது. கன்னங்களில் மழைத்துளிகள் ஓடின. அவள் அழகாக இருந்தாள் — மிகவும்.</p>
+<p>"இப்படி பாக்காதீங்க," என்று சொன்னாள், சிரித்துக்கொண்டே.</p>
+<p>"எப்படி பார்க்கிறேன்?" என்று கேட்டேன்.</p>
+<p>"தெரியாதா?" என்று சொல்லி என்னை நேராக பார்த்தாள்.</p>
+<p>மழை சத்தம். வெளியில் யாரும் இல்லை. ஒரு சின்ன கடை முன்பு இரண்டு உயிர்கள்.</p>
+<p>நான் அவள் கையை எடுத்தேன். அவள் விலகவில்லை.</p>
+<p>"இன்னைக்கு நான் சொல்லணும்னு நினைக்கிறேன்," என்று ஆரம்பித்தேன்.</p>
+<p>அவள் என்னை நிறுத்தினாள். "தெரியும். நானும் அதே நினைக்கிறேன்."</p>
+<p>மழை நின்றது. ஆனால் நாங்கள் நகரவில்லை. அந்த இரவு — வாழ்நாளில் மறக்க முடியாத ஒன்று.</p>
+<div class="moral">💡 மழை சில நேரம் காதலை கொண்டு வரும்!</div>`
+  },
+  {
+    id:74, cat:'love', badge:'new', emoji:'🌹',
+    bg:'linear-gradient(135deg,#880e4f,#ad1457)',
+    catLabel:'காதல்', catColor:'#e91e63',
+    title:'அவள் கடிதம்',
+    excerpt:'அவள் கொடுத்த அந்த மடிப்பான தாளில் என் வாழ்க்கை மாறியது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🌹 அவள் கடிதம்</h3>
+<p>கலை கல்லூரி இறுதி நாள். அவள் என் கையில் ஒரு மடித்த தாள் கொடுத்து விட்டு விரைந்து போனாள்.</p>
+<p>வீட்டில் தனியே திறந்தேன். அவள் கையெழுத்து — நேர்த்தியான, சிறிய எழுத்துகள்.</p>
+<p>"நீங்க என்னை பார்க்கும் விதம் — எனக்கு மட்டுமே தெரியும் அது என்னவென்று."</p>
+<p>"என்னை நேசிக்கிறீர்களா என்று கேட்கிறீர்கள் — பதில் சொல்லத் தெரியவில்லை. ஆனால் உங்களோடு இருக்கும்போது மட்டும் என் மனது நிறைகிறது."</p>
+<p>"நாளை காலை பூங்காவில் இருப்பேன். வருவீர்களா?"</p>
+<p>நான் அன்று இரவு தூங்கவில்லை. நாளை என்ன சொல்வது என்று யோசித்தேன்.</p>
+<p>காலை சூரியன் வரும்முன்னே பூங்காவில் இருந்தேன். அவளும் வந்தாள். இருவரும் பேசவில்லை.</p>
+<p>அவள் என் கையை பிடித்தாள். அதுவே பதில்.</p>
+<div class="moral">💡 சில வார்த்தைகளை மனசு சொல்லும் — வாய் வேண்டாம்!</div>`
+  },
+  {
+    id:75, cat:'love', badge:'hot', emoji:'🫦',
+    bg:'linear-gradient(135deg,#c62828,#d32f2f)',
+    catLabel:'காதல்', catColor:'#ef5350',
+    title:'திடீர் அணைப்பு',
+    excerpt:'அவன் திடீரென்று என்னை அணைத்தான் — அது காரணமில்லாத அணைப்பு. மிகவும் தேவைப்பட்டது...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>🫦 திடீர் அணைப்பு</h3>
+<p>அன்று நான் மிகவும் களைத்திருந்தேன். அலுவலகம், வீடு, எல்லாம் அழுத்திக்கொண்டு இருந்தன.</p>
+<p>அவன் வீட்டுக்கு வந்தான். என் முகம் பார்த்து எதுவும் கேட்காமல் என்னை கட்டிப்பிடித்தான்.</p>
+<p>அந்த அணைப்பில் ஏதோ இருந்தது. என் கண்கள் கலங்கின.</p>
+<p>"என்னாச்சு?" என்று கேட்டான் — என் தலைமுடியில் கை வைத்தபடி.</p>
+<p>"ஒண்ணும் இல்லை," என்று சொன்னேன். ஆனால் குரல் நடுங்கியது.</p>
+<p>"பரவாயில்ல," என்று சொன்னான். "இருக்கேன்."</p>
+<p>அந்த இரண்டு வார்த்தைகள் போதும். எல்லா வலியும் கரைந்தது.</p>
+<p>சில நேரம் வார்த்தை வேண்டாம். ஒரு அணைப்பு மட்டும் போதும்.</p>
+<div class="moral">💡 காதல் என்பது சொல்வது மட்டுமல்ல — உணர்வதும்தான்!</div>`
+  },
+  {
+    id:76, cat:'love', badge:'new', emoji:'🌊',
+    bg:'linear-gradient(135deg,#01579b,#0277bd)',
+    catLabel:'காதல்', catColor:'#29b6f6',
+    title:'கடல் கரை இரவு',
+    excerpt:'கடல் அலைகள் வரும்போது அவள் என் தோளில் சாய்ந்தாள் — அந்த தருணம் போதும் என் வாழ்க்கைக்கு...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🌊 கடல் கரை இரவு</h3>
+<p>நள்ளிரவு. கடல் கரையில் நாங்கள் இருவரும். அலைகள் பேசிக்கொண்டிருந்தன.</p>
+<p>அவள் மணலில் படுத்தாள். வானம் பார்த்தாள். "இந்த நட்சத்திரங்கள் பேசுகிறதா?" என்று கேட்டாள்.</p>
+<p>"ஆமா," என்று சொன்னேன். அவளுக்கு அருகே படுத்தேன்.</p>
+<p>"என்ன சொல்கின்றன?"</p>
+<p>"இப்போது என்ன நினைக்கிறாய் என்று கேட்கின்றன."</p>
+<p>அவள் திரும்பி என்னை பார்த்தாள். கண்கள் நட்சத்திர வெளிச்சத்தில் மின்னின.</p>
+<p>"நீ என்னோட அருகே இருக்கே — அது மட்டும் நினைக்கிறேன்," என்று சொன்னாள்.</p>
+<p>கடல் அலைகள் கரையை தொட்டன. நான் அவள் கையை பிடித்தேன். அவள் என் தோளில் தலை வைத்தாள்.</p>
+<p>அந்த இரவு முழுவதும் நாங்கள் அப்படியே இருந்தோம். சொல்வதற்கு ஒன்றும் இல்லை. சொல்லி முடிக்க முடியாத அளவு இருந்தது.</p>
+<div class="moral">💡 சில இரவுகள் — ஆயிரம் வார்த்தைகளை விட சொல்லும்!</div>`
+  },
+  {
+    id:77, cat:'love', badge:'hot', emoji:'💏',
+    bg:'linear-gradient(135deg,#4a148c,#7b1fa2)',
+    catLabel:'காதல்', catColor:'#ce93d8',
+    title:'ஒரு பார்வை போதும்',
+    excerpt:'கடையில் முதன்முதலில் பார்த்தேன் — அந்த ஒரு பார்வை என் வாழ்வை மாற்றியது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>💏 ஒரு பார்வை போதும்</h3>
+<p>புத்தகக் கடையில் நின்றிருந்தேன். அவள் எதிர் அலமாரியில் புத்தகம் தேடினாள்.</p>
+<p>தினேஷ் கருப்பியில் இருந்த புத்தகம் எடுக்க கை நீட்டினாள். கால் அடிக்கு போதவில்லை. தத்தளித்தாள்.</p>
+<p>நான் சென்று எட்டி எடுத்துக் கொடுத்தேன். அவள் திரும்பினாள்.</p>
+<p>அந்த பார்வை — முதல் பார்வை. ஒரு வினாடி நீடித்தது. ஆனால் ஆயிரம் வாக்கியங்கள் பேசின.</p>
+<p>"நன்றி," என்று சொன்னாள். மெல்லிய குரல்.</p>
+<p>"அந்த புத்தகம் நல்லா இருக்கு," என்று சொன்னேன். பேச ஒரு காரணம் தேடி.</p>
+<p>"படிச்சீங்களா?" என்று கேட்டாள்.</p>
+<p>அன்று ஒரு மணி நேரம் கடையிலேயே பேசினோம். புத்தகங்கள், வாழ்க்கை, கனவுகள்.</p>
+<p>திரும்பும்போது அவள் எண் கொடுத்தாள். "வேற ஏதாவது புத்தகம் recommend பண்ண."</p>
+<p>நான் சிரித்தேன். புத்தகம் recommend பண்ணவில்லை — அன்று இரவே அழைத்தேன்.</p>
+<div class="moral">💡 காதல் எங்கும் ஆரம்பிக்கலாம் — ஒரு பார்வையில் கூட!</div>`
+  },
+  {
+    id:78, cat:'love', badge:'new', emoji:'🎵',
+    bg:'linear-gradient(135deg,#1a237e,#283593)',
+    catLabel:'காதல்', catColor:'#7986cb',
+    title:'பாடல் உன்னை சொல்கிறது',
+    excerpt:'அவள் பாடிய பாடல் — என்னை பற்றியதே என்று தெரிந்தது மிகவும் தாமதமாக...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🎵 பாடல் உன்னை சொல்கிறது</h3>
+<p>அவள் இசைக்கலைஞர். நான் கேட்பவன். எங்கள் நட்பு இப்படித்தான் ஆரம்பித்தது.</p>
+<p>ஒரு நாள் அவள் புதிய பாடல் பாடினாள். "இது யாரைப் பத்தி?" என்று கேட்டேன்.</p>
+<p>அவள் சிரித்தாள். "கண்டுபிடிக்கணும்னா கண்டுபிடி."</p>
+<p>பாடல் கேட்டேன் மீண்டும். "என் கண்களில் உலகை பார்க்கிறாய்... என் சிரிப்பில் வெயில் தேடுகிறாய்..."</p>
+<p>நான் திடுக்கிட்டேன். "இது... என்னைப் பத்தியா?"</p>
+<p>அவள் என்னை பார்க்காமல் கிட்டாரை மீட்டினாள். "ஆறு மாதமாக உன்னை பாத்துட்டே பாடினேன். புரியல."</p>
+<p>என் மனம் ஓடியது. நானும் ஆறு மாதமாக அவளை காத்திருந்தேன். இருவரும் சொல்லவில்லை.</p>
+<p>"அடுத்த பாடல் இருவரையும் பத்தி பாடலாமா?" என்று கேட்டேன்.</p>
+<p>அவள் திரும்பி பார்த்தாள். "ஆமா," என்று சொன்னாள். கண்கள் நிறைந்தன.</p>
+<div class="moral">💡 காதலை சொல்ல பல வழிகள் உள்ளன — தைரியம் மட்டும் வேண்டும்!</div>`
+  },
+  {
+    id:79, cat:'love', badge:'hot', emoji:'🌺',
+    bg:'linear-gradient(135deg,#880e4f,#c2185b)',
+    catLabel:'காதல்', catColor:'#f48fb1',
+    title:'அவளின் புன்னகை',
+    excerpt:'அவள் ஒரு முறை சிரித்தால் போதும் — என் நாள் முழுவதும் அழகாகிவிடும்...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>🌺 அவளின் புன்னகை</h3>
+<p>காலை அலுவலகம் வரும்போது அவளை பார்ப்பேன். அவள் சிரிப்பார். நான் உலகை மறந்துவிடுவேன்.</p>
+<p>ஒரு நாள் அவள் வரவில்லை. அன்று நாள் முழுவதும் ஏதோ இல்லாதது போல இருந்தது.</p>
+<p>மாலை அவளுக்கு Message அனுப்பினேன்: "இன்று fine-ஆ இருக்கீங்களா?"</p>
+<p>"தலைவலி. வர முடியல. நீங்க கேக்கறீங்களா?" என்று பதில் வந்தது.</p>
+<p>"ஆமா. நீங்க இல்லாம office boring-ஆ இருந்துச்சு."</p>
+<p>சில நிமிடம் பதில் வரவில்லை. பிறகு: "நான் இல்லன்னு நினைக்கீங்களா?"</p>
+<p>"ஆமா. எப்பவும்."</p>
+<p>அடுத்த நாள் அவள் வந்தாள். என்னை பார்த்து ஒரு விதமாக சிரித்தாள். வேற மாதிரி சிரிப்பு.</p>
+<p>அந்த சிரிப்பு — என்னையே சொன்னது.</p>
+<div class="moral">💡 சிறிய கவலைகள் பெரிய காதலை வெளிப்படுத்தும்!</div>`
+  },
+  {
+    id:80, cat:'love', badge:'new', emoji:'🫀',
+    bg:'linear-gradient(135deg,#b71c1c,#c62828)',
+    catLabel:'காதல்', catColor:'#ef9a9a',
+    title:'இதயத்தின் மொழி',
+    excerpt:'அவன் மருத்துவமனையில் படுத்திருந்தான். அப்போதுதான் புரிந்தது — அவன் இல்லாமல் இந்த உலகம் வேண்டாம் என்று...',
+    readTime:'7 நிமிஷம்',
+    story:`<h3>🫀 இதயத்தின் மொழி</h3>
+<p>அவன் விபத்தில் காயப்பட்டான். மருத்துவமனை. நான் ஓடினேன்.</p>
+<p>அவன் படுக்கையில் — வலியில், ஆனால் என்னை பார்த்து சிரித்தான். "நீ வருவே என்று தெரியும்," என்று சொன்னான்.</p>
+<p>என் கண்கள் நிரம்பின. "முட்டாள் மாதிரி பேசாதே," என்று சொன்னேன்.</p>
+<p>"பயப்பட்டீயா?" என்று கேட்டான்.</p>
+<p>"ஆமா," என்று சொன்னேன். வேறு என்ன சொல்வது.</p>
+<p>அவன் என் கையை பிடித்தான். "நான் போகல. இக்கே இருக்கேன்."</p>
+<p>அன்று இரவு முழுவதும் அவன் அருகே உட்கார்ந்திருந்தேன். அவன் தூங்கும்போது பார்த்தேன்.</p>
+<p>ஒரு விஷயம் புரிந்தது — நான் இவனை நேசிக்கிறேன். இவன் இல்லாத ஒரு நாளும் வேண்டாம்.</p>
+<p>அவன் கண் விழித்தபோது சொன்னேன். அவன் மெதுவாக சிரித்தான். "நான் நண்பா என்று நினைச்சேன். இப்ப என்னாகிறேன்?"</p>
+<p>"தெரியல. ஆனால் போகாதே," என்று சொன்னேன்.</p>
+<div class="moral">💡 இழக்கும் பயம் தான் காதலை வெளிப்படுத்தும்!</div>`
+  },
+  {
+    id:81, cat:'love', badge:'hot', emoji:'🌛',
+    bg:'linear-gradient(135deg,#37474f,#546e7a)',
+    catLabel:'காதல்', catColor:'#b0bec5',
+    title:'நள்ளிரவு அழைப்பு',
+    excerpt:'இரவு 2 மணிக்கு அவள் அழைத்தாள். "தூக்கம் வரல" என்று சொன்னாள். இருவருக்கும் தெரியும் — அது காரணமில்லை என்று...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🌛 நள்ளிரவு அழைப்பு</h3>
+<p>இரவு 2 மணி. Phone அடித்தது. அவள் பெயர் தெரிந்தது. உடனே எடுத்தேன்.</p>
+<p>"தூக்கம் வரல," என்று சொன்னாள்.</p>
+<p>"நானும் விழித்திருக்கேன்," என்று சொன்னேன்.</p>
+<p>"ஏன்?"</p>
+<p>"உன்னை நினைச்சு."</p>
+<p>அவள் சிரித்தாள். "நான்?"</p>
+<p>"ஆமா. ஏன் அழைத்தாய்?"</p>
+<p>நீண்ட நிசப்தம். பிறகு: "உன்ன பார்க்கணும் போல இருந்துச்சு."</p>
+<p>"நாளை பார்க்கலாம்."</p>
+<p>"நாளைக்கு wait பண்ண மனசு இல்லை."</p>
+<p>நான் ஒரு வினாடி யோசித்தேன். "வெளியே வா."</p>
+<p>"இப்பவா?"</p>
+<p>"ஆமா."</p>
+<p>அரை மணி நேரத்தில் அவள் வந்தாள். இருவரும் தெருவில் நடந்தோம். நகரம் தூங்கியது. நாங்கள் விழிப்பாக இருந்தோம் — ஒருவருக்கொருவர் காரணத்தால்.</p>
+<div class="moral">💡 காதலுக்கு நேரமோ, காரணமோ தேவையில்லை!</div>`
+  },
+  {
+    id:82, cat:'love', badge:'new', emoji:'🍷',
+    bg:'linear-gradient(135deg,#4e342e,#6d4c41)',
+    catLabel:'காதல்', catColor:'#bcaaa4',
+    title:'கடைசி சந்திப்பு',
+    excerpt:'அவள் வேற நகரம் போகிறாள். கடைசியாக சந்திக்கிறோம் — இருவருக்கும் சொல்ல நிறைய இருந்தது...',
+    readTime:'8 நிமிஷம்',
+    story:`<h3>🍷 கடைசி சந்திப்பு</h3>
+<p>அவள் வேற நகரம் போகிறாள். நாளை. கடைசியாக சந்திக்கிறோம்.</p>
+<p>ஒரு சின்னக் கடையில் உட்கார்ந்தோம். கஃபி வந்தது. இருவரும் குடிக்கவில்லை.</p>
+<p>"போறதுக்கு சந்தோஷமா?" என்று கேட்டேன்.</p>
+<p>"தெரியல," என்று சொன்னாள்.</p>
+<p>"ஏன்?"</p>
+<p>அவள் என்னை பார்த்தாள். "இங்க விட்டுட்டு போவேன். இங்க... நிறைய இருக்கு."</p>
+<p>நான் ஒரு கணம் யோசித்தேன். "என்னையும் விட்டுட்டு போற?"</p>
+<p>அவள் கண்கள் நனைந்தன. "நீ வரமாட்டியா?"</p>
+<p>நான் எதிர்பார்க்கவில்லை அந்த கேள்வி. என் இதயம் ஒடுங்கியது.</p>
+<p>"வருவேன்," என்று சொன்னேன். "ஆனால் நீ கேட்கணும்."</p>
+<p>"கேட்கிறேன்," என்று சொன்னாள். "வா."</p>
+<p>அன்று கஃபி குடிக்கவில்லை. வேற பல விஷயங்கள் பேசினோம். இரவு முழுவதும்.</p>
+<p>நாளை நான் அவளோடு போகிறேன். ஒரு நகரம் இழந்தேன். ஒரு வாழ்க்கை கிடைத்தது.</p>
+<div class="moral">💡 சரியான நேரத்தில் சரியான வார்த்தை — எல்லாவற்றையும் மாற்றும்!</div>`
+  },
+  {
+    id:83, cat:'love', badge:'hot', emoji:'🧣',
+    bg:'linear-gradient(135deg,#1a237e,#1565c0)',
+    catLabel:'காதல்', catColor:'#90caf9',
+    title:'குளிரில் ஒரு கணம்',
+    excerpt:'அவள் குளிரில் நடுங்கினாள். நான் என் மேலாடையை போர்த்தினேன் — அந்த ஒரு செயல் எல்லாவற்றையும் சொன்னது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🧣 குளிரில் ஒரு கணம்</h3>
+<p>மலை நகரம். குளிர் காற்று வீசியது. அவள் குளிரில் நடுங்கினாள்.</p>
+<p>"ஒரு ஜாக்கெட் கூட போட்டுக்கல," என்று சொன்னேன்.</p>
+<p>"தெரியல குளிர் இவ்வளவு இருக்கும்னு," என்று சொன்னாள், பற்கள் கடகடக்க.</p>
+<p>நான் என் ஜாக்கெட்டை கழட்டினேன். அவள் தோள்களில் போட்டேன்.</p>
+<p>"இல்ல வேண்டாம்," என்று சொல்ல முயற்சித்தாள்.</p>
+<p>"போடு," என்று சொன்னேன். "உனக்குத்தான் குளிர் ஆகுது."</p>
+<p>அவள் ஜாக்கெட்டை கட்டிக்கொண்டாள். என் மணம் இருந்தது அதில். அவள் முகம் சிவந்தது — குளிரால் மட்டுமல்ல.</p>
+<p>"நீங்க குளிரா?"</p>
+<p>"நீ இருக்கே," என்று சொன்னேன். "குளிர் தெரியல."</p>
+<p>அவள் என்னை நோக்கி வந்தாள். என் கையை பிடித்தாள். "நான் warm பண்றேன்," என்று சொன்னாள்.</p>
+<p>மலை குளிர் இருந்தது. இருவருக்கும் வெப்பமாக இருந்தது.</p>
+<div class="moral">💡 சின்ன அக்கறைகளில் பெரிய காதல் மறைந்திருக்கும்!</div>`
+  },
+  {
+    id:84, cat:'love', badge:'new', emoji:'🌸',
+    bg:'linear-gradient(135deg,#880e4f,#ad1457)',
+    catLabel:'காதல்', catColor:'#f48fb1',
+    title:'விரல் பின்னல்',
+    excerpt:'தியேட்டர் இருளில் அவன் கை என் கையை தேடியது — விரல்கள் பின்னிக்கொண்டன...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>🌸 விரல் பின்னல்</h3>
+<p>திரைப்படம் பார்க்கச் சென்றோம். நட்பாக மட்டும் என்று நினைத்தோம் — இருவரும்.</p>
+<p>தியேட்டர் இருண்டது. படம் ஆரம்பித்தது. நாங்கள் அருகருகே உட்கார்ந்தோம்.</p>
+<p>ஒரு கணம் — அவன் கை என் கையின் அருகே வந்தது. தவறுதலாக தொட்டது.</p>
+<p>நான் விலகவில்லை. அவனும் விலகவில்லை.</p>
+<p>மெதுவாக அவன் விரல்கள் என் விரல்களை தேடின. பின்னிக்கொண்டன.</p>
+<p>படம் என்னவென்று தெரியவில்லை. அவன் கையின் வெப்பம் மட்டும் தெரிந்தது.</p>
+<p>படம் முடிந்தது. வெளிச்சம் வந்தது. இருவரும் கைகளை விடவில்லை.</p>
+<p>"படம் எப்படி?" என்று கேட்டான்.</p>
+<p>"தெரியல," என்று சொன்னேன்.</p>
+<p>அவன் சிரித்தான். "நானும் பார்க்கல."</p>
+<div class="moral">💡 சிலர் பக்கத்தில் இருக்கும்போது — வேறெதுவும் தெரியாது!</div>`
+  },
+  {
+    id:85, cat:'love', badge:'hot', emoji:'🌅',
+    bg:'linear-gradient(135deg,#e65100,#f57c00)',
+    catLabel:'காதல்', catColor:'#ffcc02',
+    title:'விடியல் வரை',
+    excerpt:'நாங்கள் பேசி பேசி விடிந்தோம். தூக்கம் தேவையில்லை என்று தோன்றியது — அவன் பேச்சை கேட்கும்போது...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🌅 விடியல் வரை</h3>
+<p>இரவு 10 மணிக்கு அழைத்தான். "பேசலாமா?" என்று கேட்டான்.</p>
+<p>"ஆமா," என்று சொன்னேன்.</p>
+<p>கனவுகள் பேசினோம். கஷ்டங்கள் சொன்னோம். சிரித்தோம். அழுதோம்.</p>
+<p>இரவு 2 மணி. "தூக்கம் வருதா?" என்று கேட்டான்.</p>
+<p>"வரல. நீ?"</p>
+<p>"வரல."</p>
+<p>இரவு 4 மணி. "சூரியன் வர போகுது," என்று சொன்னேன்.</p>
+<p>"பார்க்கணும்னு இருக்கியா?" என்று கேட்டான்.</p>
+<p>"ஆமா. உன்னோட."</p>
+<p>இருவரும் phone வைக்காமல் விடியும் வரை பேசினோம். சூரியன் வந்தான்.</p>
+<p>"Good Morning," என்று சொன்னான்.</p>
+<p>"இன்று முதல் Good Morning சொல்லும் ஒருவன் கிடைச்சான்," என்று சொன்னேன்.</p>
+<p>அவன் சிரித்தான். "தினமும் சொல்வேன்."</p>
+<div class="moral">💡 சரியானவர் கிட்ட தூக்கமும் தேவையில்லை — பேச்சு போதும்!</div>`
+  },
+  {
+    id:86, cat:'love', badge:'new', emoji:'🎠',
+    bg:'linear-gradient(135deg,#6a1b9a,#8e24aa)',
+    catLabel:'காதல்', catColor:'#e040fb',
+    title:'அம்யூஸ்மெண்ட் பார்க் காதல்',
+    excerpt:'ரோலர் கோஸ்டரில் பயந்து அவள் என்னை இறுக்கமாக பிடித்துக்கொண்டாள் — அந்த கணம் வாழ்நாள் முழுவதும் மறக்கமாட்டேன்...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🎠 அம்யூஸ்மெண்ட் பார்க் காதல்</h3>
+<p>நண்பர்களோடு அம்யூஸ்மெண்ட் பார்க் சென்றோம். அவளும் வந்தாள்.</p>
+<p>ரோலர் கோஸ்டர் முன்பு நின்றோம். அவள் முகம் வெளுத்தது.</p>
+<p>"பயமா?" என்று கேட்டேன்.</p>
+<p>"இல்லை," என்று பொய் சொன்னாள்.</p>
+<p>நாங்கள் ஒரே seat-ல் உட்கார்ந்தோம். ரோலர் கோஸ்டர் ஆரம்பித்தது.</p>
+<p>முதல் வளைவில் — அவள் என்னை இறுக்கமாக பிடித்துக்கொண்டாள். என் தோளில் தலை புதைத்தாள்.</p>
+<p>நான் சிரிக்கவில்லை. அவளை தொட்டு "பரவாயில்ல" என்று சொன்னேன்.</p>
+<p>ரோலர் கோஸ்டர் முடிந்தது. அவள் என் தோளிலிருந்து தலை தூக்கினாள். கன்னம் சிவந்திருந்தது.</p>
+<p>"பயந்துட்டேன்," என்று சொன்னாள், வெட்கத்தில்.</p>
+<p>"தெரியும்," என்று சொன்னேன். "ஆனால் விடல."</p>
+<p>அவள் என்னை பார்த்தாள். "நீயும் விடல."</p>
+<p>இருவரும் புரிந்துகொண்டோம் — ரோலர் கோஸ்டர் பத்தி மட்டுமல்ல என்று.</p>
+<div class="moral">💡 பயத்திலும் ஒருவர் பக்கத்தில் இருக்கும்போது — எல்லாம் சுலபமாகும்!</div>`
+  },
+  {
+    id:87, cat:'love', badge:'hot', emoji:'🌃',
+    bg:'linear-gradient(135deg,#0d1b2a,#1b2838)',
+    catLabel:'காதல்', catColor:'#90a4ae',
+    title:'நகரத்தின் மேல்',
+    excerpt:'அவள் என் கையை பிடித்தாள். கீழே நகரம் மின்னியது. நாங்கள் இருவரும் மேலே — நட்சத்திரங்களுக்கு அருகே...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>🌃 நகரத்தின் மேல்</h3>
+<p>உயர்ந்த கட்டடத்தின் மேல்தட்டு. கண்ணாடி வழியே நகரம் மின்னியது.</p>
+<p>அவளும் நானும் நின்றோம். இருவரும் பேசவில்லை.</p>
+<p>"அழகா இருக்கு," என்று சொன்னாள் — நகரத்தை பார்த்து.</p>
+<p>"ஆமா," என்று சொன்னேன் — அவளை பார்த்து.</p>
+<p>அவள் என்னை பார்த்தாள். "நகரத்தை பார்க்கல?"</p>
+<p>"நீ இருக்கும்போது வேற எதுவும் பார்க்க மனசில்லை."</p>
+<p>அவள் கண்கள் தெளிந்தன. கையை என் கையில் வைத்தாள்.</p>
+<p>"இனி இப்படியே இருக்கலாமா?" என்று கேட்டாள்.</p>
+<p>"எப்போதும்," என்று சொன்னேன்.</p>
+<p>நகரம் கீழே ஓடியது. நாங்கள் மேலே நின்றோம் — ஒருவருக்கொருவர் இருந்தோம்.</p>
+<div class="moral">💡 காதலில் — நீ இருந்தால் உலகம் சிறியதாக தெரியும்!</div>`
+  },
+  {
+    id:88, cat:'love', badge:'new', emoji:'📝',
+    bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',
+    catLabel:'காதல்', catColor:'#a5d6a7',
+    title:'குறிப்பு புத்தகத்தில் காதல்',
+    excerpt:'அவள் குறிப்பு புத்தகத்தில் என் பெயர் எழுதியிருந்தாள் — அதை தவறுதலாக பார்த்தேன். வாழ்க்கை மாறியது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>📝 குறிப்பு புத்தகத்தில் காதல்</h3>
+<p>Library-ல் அவள் புத்தகம் கீழே விழுந்தது. எடுத்துக் கொடுத்தேன். ஒரு பக்கம் திறந்தது.</p>
+<p>என் பெயர். பல முறை எழுதியிருந்தாள். "கார்த்திக்... கார்த்திக்... கார்த்திக்..."</p>
+<p>அவள் புத்தகத்தை பறித்துக்கொண்டாள். முகம் சிவந்தது.</p>
+<p>"நான் பார்க்கல," என்று சொன்னேன்.</p>
+<p>"பொய்," என்று சொன்னாள், கண்கள் கலங்க.</p>
+<p>"பார்த்தேன்," என்று ஒப்புக்கொண்டேன். "என் பெயர் பார்த்தேன். ஆனால் ஒன்றும் சொல்ல மாட்டேன்."</p>
+<p>அவள் ஓட முயற்சித்தாள். நான் தடுத்தேன்.</p>
+<p>"நானும் ஒரு விஷயம் சொல்லணும்," என்று சொன்னேன். என் phone எடுத்தேன். Contact list திறந்தேன். அவள் பெயர் — Stars ⭐ என்று save செய்திருந்தது.</p>
+<p>அவள் பார்த்தாள். சிரித்தாள். கண்கள் நனைந்தன.</p>
+<p>"இருவரும் முட்டாள்கள்," என்று சொன்னாள்.</p>
+<p>"ஆமா," என்று சொன்னேன். "இனி சொல்லிக்கலாம்."</p>
+<div class="moral">💡 காதல் இரகசியமாக இருக்கும் — ஆனால் ஒருநாள் வெளிப்படும்!</div>`
+  },
+  {
+    id:89, cat:'love', badge:'hot', emoji:'💫',
+    bg:'linear-gradient(135deg,#0d47a1,#1565c0)',
+    catLabel:'காதல்', catColor:'#82b1ff',
+    title:'தூரத்தில் உன் நினைவு',
+    excerpt:'வேற நகரம் வந்தேன். தனிமை வலித்தது. அவளை நினைத்தேன் — அவளும் அதே நேரம் அழைத்தாள்...',
+    readTime:'6 நிமிஷம்',
+    story:`<h3>💫 தூரத்தில் உன் நினைவு</h3>
+<p>வேலைக்காக வேற நகரம் வந்தேன். ஒரே அறை. தனிமை.</p>
+<p>இரவு சாப்பிட தெரு கடையில் உட்கார்ந்தேன். ஒரே கஃபி குடிக்கிறேன்.</p>
+<p>அவள் நினைவு வந்தது. அவள் சிரிப்பு. அவள் குரல். அவள் வார்த்தைகள்.</p>
+<p>Phone எடுக்க நினைத்தேன். வேண்டாம் என்று வைத்தேன். அவள் பிஸியாக இருப்பாள்.</p>
+<p>அப்போது Phone அடித்தது. அவளே.</p>
+<p>"என்ன பண்ற?" என்று கேட்டாள்.</p>
+<p>"உன்னை நினைக்கிறேன்," என்று சொன்னேன் — நேரடியாக.</p>
+<p>நிசப்தம். பிறகு: "நானும்."</p>
+<p>"ஏன் இப்போது அழைத்தாய்?"</p>
+<p>"தெரியல. மனசு சொன்னது."</p>
+<p>இரவு முழுவதும் பேசினோம். நகரம் தூங்கியது. தனிமை தெரியவில்லை.</p>
+<p>"நீ இருக்கே — தூரம் தெரியல," என்று சொன்னேன்.</p>
+<p>"விரைவில் வா," என்று சொன்னாள். "நான் காத்திருக்கேன்."</p>
+<div class="moral">💡 உண்மையான காதல் தூரத்தை மறைக்கும்!</div>`
+  },
+  {
+    id:90, cat:'love', badge:'new', emoji:'🎁',
+    bg:'linear-gradient(135deg,#880e4f,#c2185b)',
+    catLabel:'காதல்', catColor:'#f48fb1',
+    title:'பிறந்தநாள் ஆச்சரியம்',
+    excerpt:'என் பிறந்த நாள் என்று கூட தெரியாது அவனுக்கு என்று நினைத்தேன் — ஆனால் அவன் செய்தது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🎁 பிறந்தநாள் ஆச்சரியம்</h3>
+<p>என் பிறந்த நாள். யாரும் சொல்லவில்லை. சாதாரண நாள் என்று நினைத்தேன்.</p>
+<p>அலுவலகத்திலிருந்து வீட்டுக்கு வருகிறேன். அவன் வாசலில் நின்றான்.</p>
+<p>கையில் ஒரு சின்ன பொதி. ஒரு பூ.</p>
+<p>"இன்று உன் பிறந்தநாள்," என்று சொன்னான்.</p>
+<p>"உனக்கு தெரியுமா?" என்று ஆச்சரியமாக கேட்டேன்.</p>
+<p>"3 மாதம் முன்னே நீ ஒரு நிமிஷம் சொன்னது நினைவில் வச்சுக்கிட்டேன்."</p>
+<p>என் கண்கள் நிரம்பின. "ஒரு நிமிஷம் சொன்னது நினைவில் வைத்தாயா?"</p>
+<p>"நீ சொன்ன எல்லாம் நினைவில் வைத்திருக்கேன்," என்று சொன்னான்.</p>
+<p>அந்த பூவை வாங்கினேன். அவனை பார்த்தேன். அன்று மிக்க ஆழமான பிறந்தநாள் பரிசு கிடைத்தது — ஒருவன் என்னை கவனிக்கிறான் என்று.</p>
+<div class="moral">💡 சின்ன விஷயங்களை நினைவில் வைப்பவன் — மிகவும் நேசிப்பவன்!</div>`
   }
 ];
 
