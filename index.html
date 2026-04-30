@@ -479,26 +479,27 @@ nav {
 .share-copy { background:var(--surface2); color:var(--text); border:1.5px solid var(--border); }
 .share-close-btn { width:100%; margin-top:10px; background:var(--surface); border:1px solid var(--border); color:var(--text-muted); padding:8px; border-radius:8px; cursor:pointer; font-family:'DM Sans',sans-serif; font-size:12px; }
 
-/* ─── MODAL ─── */
+/* ─── MODAL — FULL SCREEN APP STYLE ─── */
 .modal {
   display:none; position:fixed;
   top:0; left:0; right:0; bottom:0;
-  background:rgba(5,5,12,0.96);
-  z-index:1000; overflow-y:auto; padding:16px;
-  backdrop-filter:blur(4px);
+  background:var(--bg);
+  z-index:1000; overflow-y:auto; padding:0;
 }
-.modal.open { display:block; }
+.modal.open { display:flex; flex-direction:column; }
 .modal-inner {
-  max-width:720px; margin:0 auto;
+  width:100%; min-height:100%;
   background:var(--bg2);
-  border:1.5px solid var(--border-gold);
-  border-radius:var(--radius); overflow:hidden;
-  box-shadow:0 32px 80px rgba(0,0,0,0.7);
+  border:none;
+  border-radius:0; overflow:visible;
+  box-shadow:none;
+  display:flex; flex-direction:column;
 }
 .modal-header {
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   padding:16px 20px;
   display:flex; justify-content:space-between; align-items:center;
+  position:sticky; top:0; z-index:10;
 }
 .modal-header h2 { font-family:'Tiro Tamil',serif; font-size:17px; color:#1a1200; font-weight:800; }
 .close-btn {
@@ -510,11 +511,12 @@ nav {
 .close-btn:hover { background:rgba(0,0,0,0.4); }
 
 .modal-story {
-  padding:28px 30px;
+  padding:28px 24px;
   font-family:'Tiro Tamil',serif;
   font-size:16px; line-height:2.1;
   color:rgba(232,230,240,0.88);
   background:var(--bg2);
+  max-width:760px; margin:0 auto; width:100%;
 }
 .modal-story h3 {
   font-size:21px; color:var(--gold);
@@ -814,23 +816,21 @@ footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
 }
 .bn-item:hover { color:var(--gold); }
 
-/* ─── UPLOAD MODAL ─── */
+/* ─── UPLOAD MODAL — FULL SCREEN ─── */
 .upload-overlay {
   position:fixed; inset:0; z-index:5000;
-  background:rgba(0,0,0,0.8);
-  backdrop-filter:blur(8px);
-  display:none; align-items:center; justify-content:center;
-  padding:16px;
+  background:var(--bg);
+  display:none; overflow-y:auto;
 }
-.upload-overlay.show { display:flex; }
+.upload-overlay.show { display:block; }
 .upload-modal {
   background:var(--bg2);
-  border:1.5px solid var(--border-gold);
-  border-radius:20px;
-  width:100%; max-width:560px;
-  max-height:88vh; overflow-y:auto;
-  animation:uploadModalIn 0.3s cubic-bezier(.34,1.2,.64,1);
-  box-shadow:0 24px 80px rgba(0,0,0,0.7), 0 0 0 1px var(--border-gold);
+  border:none;
+  border-radius:0;
+  width:100%; min-height:100%;
+  max-height:none; overflow-y:visible;
+  animation:none;
+  box-shadow:none;
 }
 @keyframes uploadModalIn {
   from{opacity:0;transform:scale(0.94) translateY(12px)}
@@ -841,7 +841,7 @@ footer p { font-size:12px; color:var(--text-dim); line-height:1.9; }
   border-bottom:1px solid var(--border);
   position:sticky; top:0;
   background:var(--bg2); z-index:2;
-  border-radius:20px 20px 0 0;
+  border-radius:0;
 }
 .upload-title {
   font-family:'DM Serif Display',serif;
@@ -1367,22 +1367,22 @@ body.light .upload-input, body.light .upload-textarea { background:#fff; border-
 .games-modal {
   display:none; position:fixed;
   top:0; left:0; right:0; bottom:0;
-  background:rgba(5,5,12,0.97);
-  z-index:2000; overflow-y:auto; padding:16px;
-  backdrop-filter:blur(4px);
+  background:var(--bg);
+  z-index:2000; overflow-y:auto; padding:0;
 }
 .games-modal.open { display:block; }
 .games-modal-inner {
-  max-width:760px; margin:0 auto;
+  width:100%; min-height:100%;
   background:var(--bg2);
-  border:1.5px solid rgba(0,230,118,0.3);
-  border-radius:var(--radius); overflow:hidden;
-  box-shadow:0 32px 80px rgba(0,0,0,0.7);
+  border:none;
+  border-radius:0; overflow:visible;
+  box-shadow:none;
 }
 .games-modal-header {
   background:linear-gradient(135deg,var(--green2),var(--green));
   padding:16px 22px;
   display:flex; justify-content:space-between; align-items:center;
+  position:sticky; top:0; z-index:10;
 }
 .games-modal-header h2 { font-size:17px; font-weight:900; color:#001a0a; font-family:'DM Sans',sans-serif; }
 .games-modal-close {
@@ -8815,7 +8815,7 @@ function shareCreativeEnding() {
 
 const wordleStyle = document.createElement('style');
 wordleStyle.textContent = `
-#dailyGameOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#dailyGameOverlay { position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;overflow-y:auto;padding:0 }
 #dailyGameOverlay.open { display:block }
 .wl-input { background:var(--surface);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:10px 14px;font-size:14px;font-family:'Tiro Tamil',serif;outline:none;width:100%;transition:border-color 0.2s }
 .wl-input:focus { border-color:var(--gold) }
@@ -8826,8 +8826,8 @@ document.head.appendChild(wordleStyle);
 const dailyOverlay = document.createElement('div');
 dailyOverlay.id = 'dailyGameOverlay';
 dailyOverlay.innerHTML = `
-  <div style="max-width:480px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
-    <div style="background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+  <div style="width:100%;min-height:100vh;background:var(--bg2)">
+    <div style="background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10">
       <div style="font-size:17px;font-weight:800;color:#1a1200">🎯 Daily Story Challenge</div>
       <button onclick="closeDailyGame()" style="background:rgba(0,0,0,0.2);border:none;color:#1a1200;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
     </div>
@@ -8916,7 +8916,7 @@ function wlSubmit() {
 
 const aiGenStyle = document.createElement('style');
 aiGenStyle.textContent = `
-#aiGenOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#aiGenOverlay { position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;overflow-y:auto;padding:0 }
 #aiGenOverlay.open { display:block }
 .ai-cat-btn { padding:7px 16px;border:1.5px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all 0.2s }
 .ai-cat-btn.sel { background:var(--gold-glow);border-color:var(--border-gold);color:var(--gold);font-weight:700 }
@@ -8927,8 +8927,8 @@ document.head.appendChild(aiGenStyle);
 const aiGenOverlay = document.createElement('div');
 aiGenOverlay.id = 'aiGenOverlay';
 aiGenOverlay.innerHTML = `
-  <div style="max-width:600px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
-    <div style="background:linear-gradient(135deg,#7c4dff,#651fff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+  <div style="width:100%;min-height:100vh;background:var(--bg2)">
+    <div style="background:linear-gradient(135deg,#7c4dff,#651fff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10">
       <div style="font-size:17px;font-weight:800;color:#fff">✨ AI Tamil Story Generator</div>
       <button onclick="closeAIGenerator()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
     </div>
@@ -9034,7 +9034,7 @@ function addAIStoryToFeed() {
 
 const lbStyle = document.createElement('style');
 lbStyle.textContent = `
-#lbOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#lbOverlay { position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;overflow-y:auto;padding:0 }
 #lbOverlay.open { display:block }
 .lb-row { display:flex;align-items:center;gap:12px;padding:10px 16px;border-bottom:1px solid var(--border);transition:background 0.15s }
 .lb-row:hover { background:var(--surface) }
@@ -9047,8 +9047,8 @@ document.head.appendChild(lbStyle);
 const lbOverlay = document.createElement('div');
 lbOverlay.id = 'lbOverlay';
 lbOverlay.innerHTML = `
-  <div style="max-width:480px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
-    <div style="background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+  <div style="width:100%;min-height:100vh;background:var(--bg2)">
+    <div style="background:linear-gradient(135deg,var(--gold),#ff8c00);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10">
       <div style="font-size:17px;font-weight:800;color:#1a1200">🏅 Leaderboard</div>
       <button onclick="document.getElementById('lbOverlay').classList.remove('open')" style="background:rgba(0,0,0,0.2);border:none;color:#1a1200;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
     </div>
@@ -9122,7 +9122,7 @@ const COLLECTIONS = [
 
 const collStyle = document.createElement('style');
 collStyle.textContent = `
-#collOverlay { position:fixed;inset:0;background:rgba(5,5,12,0.96);z-index:2000;display:none;overflow-y:auto;padding:20px }
+#collOverlay { position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;overflow-y:auto;padding:0 }
 #collOverlay.open { display:block }
 .coll-card { background:var(--bg2);border:1.5px solid var(--border);border-radius:16px;padding:14px 16px;cursor:pointer;transition:all 0.2s;margin-bottom:10px }
 .coll-card:hover { border-color:var(--border-gold);transform:translateY(-2px) }
@@ -9134,8 +9134,8 @@ document.head.appendChild(collStyle);
 const collOverlay = document.createElement('div');
 collOverlay.id = 'collOverlay';
 collOverlay.innerHTML = `
-  <div style="max-width:600px;margin:0 auto;background:var(--bg2);border:1.5px solid var(--border-gold);border-radius:20px;overflow:hidden">
-    <div style="background:linear-gradient(135deg,var(--purple),#651fff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center">
+  <div style="width:100%;min-height:100vh;background:var(--bg2)">
+    <div style="background:linear-gradient(135deg,var(--purple),#651fff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10">
       <div style="font-size:17px;font-weight:800;color:#fff">📂 Story Collections</div>
       <button onclick="document.getElementById('collOverlay').classList.remove('open')" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
     </div>
