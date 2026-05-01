@@ -7,8 +7,19 @@
 
 <!-- ═══ SEO & OG META TAGS ═══ -->
 <meta name="description" content="Tamilகதைகள் — 1000+ Tamil stories free forever. காதல், நகைச்சுவை, பயம், நீதி கதைகள். Read Tamil stories online.">
-<meta name="keywords" content="Tamil stories, தமிழ் கதைகள், Tamil kathaigal, Tamil moral stories, Tamil comedy stories">
+<meta name="keywords" content="Tamil stories, தமிழ் கதைகள், Tamil kathaigal, Tamil moral stories, Tamil comedy stories, Tamil horror stories, Tamil love stories">
 <meta name="author" content="Tamilகதைகள்">
+<meta name="robots" content="index, follow">
+<link rel="canonical" href="https://kathais.xyz">
+
+<!-- ═══ FAVICON ═══ -->
+<link rel="icon" href="/favicon.ico" type="image/x-icon">
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+<link rel="apple-touch-icon" href="/favicon.ico">
+
+<!-- ═══ GOOGLE SITE VERIFICATION ═══ -->
+<!-- ⚠️ Replace YOUR_VERIFICATION_CODE with actual code from Google Search Console → Settings → Ownership verification → HTML tag -->
+<!-- <meta name="google-site-verification" content="YOUR_VERIFICATION_CODE"> -->
 <meta property="og:title" content="Tamilகதைகள் | படித்து மகிளுங்கள்">
 <meta property="og:description" content="1000+ Free Tamil Stories — காதல், நகைச்சுவை, பயம், நீதி கதைகள் எல்லாம் ஒரே இடத்தில்!">
 <meta property="og:image" content="https://kathais.xyz/og-image.png">
@@ -2637,6 +2648,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <a href="#" onclick="showPage('about');return false">📖 About</a>
     <a href="#" onclick="showPage('contact');return false">📬 Contact</a>
     <a href="#" onclick="showPage('privacy');return false">🔒 Privacy</a>
+    <a href="#" onclick="showPage('disclaimer');return false">📋 Disclaimer</a>
   </div>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Light</button>
   <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
@@ -2882,12 +2894,13 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 </div>
 
 <!-- ADSENSE TOP BANNER -->
+<!-- ⚠️ IMPORTANT: Replace data-ad-slot with your REAL slot ID from AdSense dashboard → Ads → By ad unit -->
 <div style="max-width:1072px;margin:0 auto 16px;padding:0 24px">
   <div class="adsense-label">Advertisement</div>
   <ins class="adsbygoogle adsense-unit"
        style="display:block"
        data-ad-client="ca-pub-7030593982977288"
-       data-ad-slot="1234567890"
+       data-ad-slot="REPLACE_WITH_REAL_SLOT_ID_1"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -3211,12 +3224,13 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 <div class="pagination" id="pagination"></div>
 
 <!-- ADSENSE BOTTOM BANNER -->
+<!-- ⚠️ IMPORTANT: Replace data-ad-slot with your REAL slot ID from AdSense dashboard → Ads → By ad unit -->
 <div style="max-width:1072px;margin:0 auto 16px;padding:0 24px">
   <div class="adsense-label">Advertisement</div>
   <ins class="adsbygoogle adsense-unit"
        style="display:block"
        data-ad-client="ca-pub-7030593982977288"
-       data-ad-slot="0987654321"
+       data-ad-slot="REPLACE_WITH_REAL_SLOT_ID_2"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -3234,6 +3248,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <a href="#" onclick="showPage('about');return false">📖 About Us</a>
     <a href="#" onclick="showPage('contact');return false">📬 Contact</a>
     <a href="#" onclick="showPage('privacy');return false">🔒 Privacy Policy</a>
+    <a href="#" onclick="showPage('disclaimer');return false">📋 Disclaimer</a>
     <a href="#" onclick="filterCat('all',document.querySelector('.cat-tab'))">🏠 Home</a>
     <a href="mailto:hello@kathais.xyz">✉️ hello@kathais.xyz</a>
   </div>
@@ -7615,11 +7630,39 @@ switchGame = function(id, el) {
   }
   window.splashVerify = splashVerify;
 
-  function splashGoogleLogin() {
-    const auth = getFirebaseAuth();
-    if (!auth) { if(window.showToast) showToast('⚠️ Firebase not loaded. Reload page.'); return; }
-    const provider = new firebase.auth.GoogleAuthProvider();
-    auth.signInWithPopup(provider).then(result => {
+  async function splashGoogleLogin() {
+    // Show loading state
+    const btn = document.querySelector('.splash-google-btn');
+    if (btn) { btn.disabled = true; btn.style.opacity = '0.7'; }
+    try {
+      // Wait for Firebase SDK to be ready (up to 5 seconds)
+      await new Promise((resolve, reject) => {
+        if (typeof firebase !== 'undefined') { resolve(); return; }
+        let tries = 0;
+        const interval = setInterval(() => {
+          if (typeof firebase !== 'undefined') { clearInterval(interval); resolve(); }
+          else if (++tries > 25) { clearInterval(interval); reject(new Error('Firebase SDK not loaded')); }
+        }, 200);
+      });
+      // Ensure Firebase app is initialised (reuse splash's init)
+      if (!window._tkFirebase) {
+        window._tkFirebase = firebase.apps.length
+          ? firebase.apps[0]
+          : firebase.initializeApp({
+              apiKey: "AIzaSyDXsFk6LbxRS76Efl3bNxckjo_i2JyTQPQ",
+              authDomain: "tamilkathaigal-4e5f9.firebaseapp.com",
+              projectId: "tamilkathaigal-4e5f9",
+              storageBucket: "tamilkathaigal-4e5f9.firebasestorage.app",
+              messagingSenderId: "686419126311",
+              appId: "1:686419126311:web:63bed331b9e8c6a2968602"
+            });
+      }
+      const auth = window._tkFirebase.auth();
+      auth.languageCode = 'ta';
+      const provider = new firebase.auth.GoogleAuthProvider();
+      provider.addScope('email');
+      provider.addScope('profile');
+      const result = await auth.signInWithPopup(provider);
       const fbUser = result.user;
       const user = {
         name: fbUser.displayName || fbUser.email || 'User',
@@ -7635,10 +7678,19 @@ switchGame = function(id, el) {
       document.getElementById('splashSuccessTitle').textContent = 'வணக்கம்! 🎉';
       document.getElementById('splashSuccessMsg').textContent = `Signed in as ${fbUser.displayName || fbUser.email}. Welcome to your personalized reading experience!`;
       splashGoTo('splashStep3');
-    }).catch(err => {
-      if (err.code !== 'auth/popup-closed-by-user')
-        if (window.showToast) showToast('⚠️ Google login தவறு. மீண்டும் முயற்சி செய்யுங்கள்.');
-    });
+    } catch(err) {
+      console.error('splashGoogleLogin error:', err);
+      if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+        const msg = err.code === 'auth/popup-blocked'
+          ? '⚠️ Popup blocked by browser. Please allow popups for this site.'
+          : err.code === 'auth/network-request-failed'
+          ? '⚠️ Network error. Check your internet connection.'
+          : '⚠️ Google login தவறு. மீண்டும் முயற்சி செய்யுங்கள்.';
+        if (window.showToast) showToast(msg, 5000);
+      }
+    } finally {
+      if (btn) { btn.disabled = false; btn.style.opacity = ''; }
+    }
   }
   window.splashGoogleLogin = splashGoogleLogin;
 
@@ -7944,10 +7996,39 @@ async function luxVerifyOTP() {
 
 // ── REAL Google Login ──
 async function openLuxGooglePopup() {
-  initFirebase();
+  // Show loading indicator
+  luxShowLoad();
   try {
+    // Await Firebase init — initFirebase() is synchronous only if SDK is already loaded
+    await new Promise((resolve, reject) => {
+      if (typeof firebase !== 'undefined') { initFirebase(); resolve(); return; }
+      let tries = 0;
+      const interval = setInterval(() => {
+        if (typeof firebase !== 'undefined') {
+          clearInterval(interval);
+          initFirebase();
+          resolve();
+        } else if (++tries > 25) {
+          clearInterval(interval);
+          reject(new Error('Firebase SDK not loaded'));
+        }
+      }, 200);
+    });
+    // Safety check — fbAuth must be set after initFirebase()
+    if (!fbAuth) {
+      // One more attempt: directly construct from app
+      if (window._tkFirebase) {
+        fbAuth = window._tkFirebase.auth();
+        fbAuth.languageCode = 'ta';
+      } else {
+        throw new Error('Firebase Auth unavailable. Please reload the page.');
+      }
+    }
     const provider = new firebase.auth.GoogleAuthProvider();
+    provider.addScope('email');
+    provider.addScope('profile');
     const result = await fbAuth.signInWithPopup(provider);
+    luxHideLoad();
     if (result && result.user) {
       const fbUser = result.user;
       const user = {
@@ -7964,8 +8045,15 @@ async function openLuxGooglePopup() {
     closeLoginModal();
     try { const s=document.getElementById('splashLogin'); if(s) s.style.display='none'; } catch(e){}
   } catch(err) {
-    if (err.code !== 'auth/popup-closed-by-user') {
-      showToast('❌ Google login failed: ' + err.message, 5000);
+    luxHideLoad();
+    console.error('openLuxGooglePopup error:', err);
+    if (err.code !== 'auth/popup-closed-by-user' && err.code !== 'auth/cancelled-popup-request') {
+      const msg = err.code === 'auth/popup-blocked'
+        ? '❌ Popup blocked. Please allow popups for this site and try again.'
+        : err.code === 'auth/network-request-failed'
+        ? '❌ Network error. Check your internet connection.'
+        : '❌ Google login failed: ' + (err.message || err.code);
+      showToast(msg, 5000);
     }
   }
 }
@@ -9624,7 +9712,7 @@ function showPage(page) {
   // Hide all main content
   const mainSections = ['mainContent','historySection','sotdSection','searchWrap','moodStrip','mainFooter'];
   const adUnits = document.querySelectorAll('.adsense-unit');
-  const pageIds = ['aboutPage','contactPage','privacyPage'];
+  const pageIds = ['aboutPage','contactPage','privacyPage','disclaimerPage'];
   const hero = document.querySelector('.hero');
   const pagination = document.getElementById('pagination');
 
@@ -9650,7 +9738,7 @@ function showPage(page) {
   document.getElementById('mainContent').style.display = 'none';
   pageIds.forEach(id => { const el = document.getElementById(id); if(el) el.style.display='none'; });
 
-  const target = page === 'about' ? 'aboutPage' : page === 'contact' ? 'contactPage' : 'privacyPage';
+  const target = page === 'about' ? 'aboutPage' : page === 'contact' ? 'contactPage' : page === 'disclaimer' ? 'disclaimerPage' : 'privacyPage';
   const el = document.getElementById(target);
   if(el) { el.style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
   
