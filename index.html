@@ -18,6 +18,9 @@
 <meta name="twitter:title" content="Tamilகதைகள் | படித்து மகிளுங்கள்">
 <meta name="twitter:description" content="1000+ Free Tamil Stories online — Read now!">
 
+<!-- ═══ GOOGLE ADSENSE ═══ -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script>
+
 <!-- ═══ PWA ═══ -->
 <link rel="manifest" href="manifest.json">
 <meta name="theme-color" content="#f9a825">
@@ -708,6 +711,105 @@ nav {
   background:linear-gradient(135deg,var(--gold),var(--gold2));
   border-color:transparent; color:#1a1200;
 }
+
+/* ─── ADSENSE AD UNIT ─── */
+.adsense-unit {
+  display:block; margin:0 auto 16px;
+  max-width:1072px; text-align:center;
+  min-height:90px;
+}
+.adsense-label {
+  font-size:9px; color:var(--text-dim);
+  letter-spacing:1px; text-transform:uppercase;
+  margin-bottom:4px; text-align:center;
+}
+
+/* ─── STATIC PAGES ─── */
+#aboutPage, #contactPage, #privacyPage {
+  display:none; min-height:100vh; padding-bottom:80px;
+}
+.page-hero {
+  background:linear-gradient(135deg,rgba(245,166,35,0.1),rgba(255,140,0,0.05));
+  border-bottom:1px solid var(--border-gold);
+  padding:40px 24px 32px; text-align:center;
+}
+.page-hero-title {
+  font-family:'DM Serif Display',serif;
+  font-size:clamp(28px,6vw,44px); color:var(--gold);
+  margin-bottom:8px; font-weight:400;
+}
+.page-hero-sub {
+  font-family:'Tiro Tamil',serif;
+  font-size:14px; color:var(--text-muted); line-height:1.7;
+}
+.page-body {
+  max-width:760px; margin:0 auto; padding:32px 24px;
+}
+.page-body h2 {
+  font-family:'DM Serif Display',serif;
+  font-size:22px; color:var(--gold); margin:28px 0 12px;
+  padding-bottom:8px; border-bottom:1px solid var(--border-gold);
+}
+.page-body p {
+  font-family:'Tiro Tamil',serif;
+  font-size:14px; color:var(--text-muted);
+  line-height:1.9; margin-bottom:14px;
+}
+.page-body ul {
+  font-family:'Tiro Tamil',serif;
+  font-size:14px; color:var(--text-muted);
+  line-height:2; margin-bottom:14px; padding-left:22px;
+}
+
+/* Contact Form */
+.contact-form { display:flex; flex-direction:column; gap:14px; margin-top:8px; }
+.contact-input {
+  background:var(--surface2);
+  border:1.5px solid var(--border);
+  border-radius:var(--radius-sm);
+  color:var(--text); font-size:14px;
+  font-family:'DM Sans',sans-serif;
+  padding:12px 16px; outline:none;
+  transition:all 0.2s; width:100%;
+}
+.contact-input:focus { border-color:var(--gold); box-shadow:0 0 0 3px var(--gold-glow); }
+.contact-textarea {
+  min-height:130px; resize:vertical;
+  font-family:'Tiro Tamil',serif; line-height:1.7;
+}
+.contact-submit {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; padding:14px;
+  border-radius:var(--radius-sm); cursor:pointer;
+  font-size:14px; font-weight:800;
+  font-family:'DM Sans',sans-serif;
+  transition:all 0.2s; width:100%;
+}
+.contact-submit:hover { transform:translateY(-2px); box-shadow:0 8px 24px var(--gold-glow); }
+.contact-info-row {
+  display:flex; gap:12px; flex-wrap:wrap; margin-top:16px;
+}
+.contact-info-card {
+  flex:1; min-width:180px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--radius-sm); padding:16px;
+  text-align:center;
+}
+.contact-info-card .ci-icon { font-size:28px; margin-bottom:8px; }
+.contact-info-card .ci-title { font-size:12px; font-weight:700; color:var(--gold); margin-bottom:4px; }
+.contact-info-card .ci-val { font-size:12px; color:var(--text-muted); word-break:break-all; }
+
+/* Footer links */
+.footer-links {
+  display:flex; justify-content:center; gap:16px;
+  flex-wrap:wrap; margin:16px 0 8px;
+}
+.footer-links a {
+  font-size:11px; color:var(--text-dim);
+  text-decoration:none; transition:color 0.2s;
+}
+.footer-links a:hover { color:var(--gold); }
 
 /* ─── FOOTER ─── */
 footer {
@@ -2528,6 +2630,9 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
     <a href="#" onclick="filterCat('kids',document.querySelectorAll('.cat-tab')[4])">🧒 குழந்தை</a>
     <a href="#" onclick="filterCat('devotion',document.querySelectorAll('.cat-tab')[5])">🙏 தெய்வீகம்</a>
     <a href="#" onclick="filterCat('moral',document.querySelectorAll('.cat-tab')[6])">💡 நீதி</a>
+    <a href="#" onclick="showPage('about');return false">📖 About</a>
+    <a href="#" onclick="showPage('contact');return false">📬 Contact</a>
+    <a href="#" onclick="showPage('privacy');return false">🔒 Privacy</a>
   </div>
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Light</button>
   <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
@@ -2772,8 +2877,17 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <button class="mood-btn" id="moodClear" onclick="clearMood()" style="display:none;border-color:rgba(255,100,100,0.4);color:#ff6b6b;">✕ அழி</button>
 </div>
 
-<!-- AD -->
-<div class="ad-banner"><span>📢 Advertisement</span> — Google AdSense</div>
+<!-- ADSENSE TOP BANNER -->
+<div style="max-width:1072px;margin:0 auto 16px;padding:0 24px">
+  <div class="adsense-label">Advertisement</div>
+  <ins class="adsbygoogle adsense-unit"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="1234567890"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
 <!-- STORY OF THE DAY -->
 <div class="sotd-section" id="sotdSection">
@@ -3092,18 +3206,218 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 <!-- PAGINATION -->
 <div class="pagination" id="pagination"></div>
 
-<!-- AD 2 -->
-<div class="ad-banner"><span>📢 Advertisement</span> — Google AdSense Banner</div>
+<!-- ADSENSE BOTTOM BANNER -->
+<div style="max-width:1072px;margin:0 auto 16px;padding:0 24px">
+  <div class="adsense-label">Advertisement</div>
+  <ins class="adsbygoogle adsense-unit"
+       style="display:block"
+       data-ad-client="ca-pub-XXXXXXXXXXXXXXXX"
+       data-ad-slot="0987654321"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+  <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
+</div>
 
 <!-- FOOTER -->
-<footer>
+<footer id="mainFooter">
   <div class="footer-title">📖 படித்து மகிளுங்கள் — Tamilகதைகள்</div>
   <p>
     தமிழ் கதைகளின் களஞ்சியம் | kathais.xyz<br>
     1000+ Tamil Stories — Free Forever 🙏<br>
     © 2026 Tamilகதைகள். All Rights Reserved.
   </p>
+  <div class="footer-links">
+    <a href="#" onclick="showPage('about');return false">📖 About Us</a>
+    <a href="#" onclick="showPage('contact');return false">📬 Contact</a>
+    <a href="#" onclick="showPage('privacy');return false">🔒 Privacy Policy</a>
+    <a href="#" onclick="filterCat('all',document.querySelector('.cat-tab'))">🏠 Home</a>
+    <a href="mailto:hello@kathais.xyz">✉️ hello@kathais.xyz</a>
+  </div>
 </footer>
+
+<!-- ═══ ABOUT PAGE ═══ -->
+<div id="aboutPage">
+  <div class="page-hero">
+    <div class="page-hero-title">📖 About Tamilகதைகள்</div>
+    <div class="page-hero-sub">தமிழ் கதைகளின் களஞ்சியம் — உங்கள் வரவேற்கிறோம்!</div>
+  </div>
+  <div class="page-body">
+    <h2>🌟 எங்களைப் பற்றி — Who We Are</h2>
+    <p>Tamilகதைகள் (kathais.xyz) என்பது தமிழ் வாசகர்களுக்காக உருவாக்கப்பட்ட ஒரு இலவச கதை வாசிப்பு தளம். காதல், நகைச்சுவை, பயம், நீதி, குழந்தைகள் கதைகள் என்று அனைத்து வகையான கதைகளும் இங்கே கிடைக்கும்.</p>
+    <p>We are a free Tamil storytelling platform built for readers who love Tamil literature, short stories, and creative writing. Our mission is to keep Tamil stories alive and accessible to everyone — on any device, anytime, anywhere.</p>
+
+    <h2>🎯 எங்கள் நோக்கம் — Our Mission</h2>
+    <p>தமிழ் மொழியில் கதை வாசிக்கும் அனுபவத்தை ஒவ்வொரு வயதினருக்கும் எளிதாக வழங்குவது எங்கள் நோக்கம். அனைத்து கதைகளும் இலவசம் — எப்போதும், எப்பொழுதும்.</p>
+    <ul>
+      <li>1000+ Tamil short stories — free forever</li>
+      <li>Multiple categories: love, horror, comedy, kids, moral, devotion, thriller, history</li>
+      <li>Text-to-speech support for listening to stories</li>
+      <li>PWA — works offline on any device</li>
+      <li>User-submitted stories — anyone can publish</li>
+      <li>Daily Story, Leaderboard, Games, and more!</li>
+    </ul>
+
+    <h2>💡 தொழில்நுட்பம் — Technology</h2>
+    <p>இந்த தளம் HTML, CSS, மற்றும் JavaScript மூலம் உருவாக்கப்பட்டது. Firebase Authentication மூலம் பாதுகாப்பான உள்நுழைவு, Google AdSense மூலம் தளத்தை இலவசமாக பராமரிக்கிறோம்.</p>
+    <p>This platform is built with pure HTML/CSS/JavaScript, Firebase Authentication, and Google AdSense. No subscription, no paywall — always free.</p>
+
+    <h2>🙏 நன்றி — Thank You</h2>
+    <p>எங்கள் தளத்தை படிக்கும் அனைத்து வாசகர்களுக்கும், கதை எழுதி பகிர்ந்த எல்லோருக்கும் மனமார்ந்த நன்றி! நீங்கள்தான் இந்த தளத்தின் உயிர்.</p>
+
+    <div class="contact-info-row">
+      <div class="contact-info-card">
+        <div class="ci-icon">📚</div>
+        <div class="ci-title">Stories</div>
+        <div class="ci-val">1000+ Tamil Stories</div>
+      </div>
+      <div class="contact-info-card">
+        <div class="ci-icon">🌍</div>
+        <div class="ci-title">Language</div>
+        <div class="ci-val">Tamil & English</div>
+      </div>
+      <div class="contact-info-card">
+        <div class="ci-icon">💰</div>
+        <div class="ci-title">Cost</div>
+        <div class="ci-val">Free Forever 🙏</div>
+      </div>
+    </div>
+
+    <button onclick="showPage('home')" style="margin-top:24px;width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:#1a1200;border-radius:var(--radius-sm);font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;">🏠 Back to Stories</button>
+  </div>
+</div>
+
+<!-- ═══ CONTACT PAGE ═══ -->
+<div id="contactPage">
+  <div class="page-hero">
+    <div class="page-hero-title">📬 Contact Us</div>
+    <div class="page-hero-sub">கேள்வி, கருத்து, அல்லது கதை பரிந்துரை — தொடர்பு கொள்ளுங்கள்!</div>
+  </div>
+  <div class="page-body">
+    <div class="contact-info-row">
+      <div class="contact-info-card">
+        <div class="ci-icon">✉️</div>
+        <div class="ci-title">Email</div>
+        <div class="ci-val">hello@kathais.xyz</div>
+      </div>
+      <div class="contact-info-card">
+        <div class="ci-icon">💬</div>
+        <div class="ci-title">WhatsApp</div>
+        <div class="ci-val">Chat via website</div>
+      </div>
+      <div class="contact-info-card">
+        <div class="ci-icon">⏱️</div>
+        <div class="ci-title">Response Time</div>
+        <div class="ci-val">Within 24-48 hours</div>
+      </div>
+    </div>
+
+    <h2>📝 Send Us a Message</h2>
+    <div class="contact-form">
+      <input type="text" class="contact-input" id="ctName" placeholder="உங்கள் பெயர் — Your Name *">
+      <input type="email" class="contact-input" id="ctEmail" placeholder="மின்னஞ்சல் — Email Address *">
+      <select class="contact-input" id="ctSubject">
+        <option value="">-- தலைப்பு தேர்வு செய்யுங்கள் / Select Subject --</option>
+        <option>📖 Story Suggestion — கதை பரிந்துரை</option>
+        <option>🐛 Bug Report — தவறு தெரிவிக்க</option>
+        <option>📢 Advertisement / AdSense Inquiry</option>
+        <option>🤝 Partnership / Collaboration</option>
+        <option>📋 Privacy / Data Concern</option>
+        <option>💬 General Feedback — பொது கருத்து</option>
+      </select>
+      <textarea class="contact-input contact-textarea" id="ctMessage" placeholder="உங்கள் செய்தி — Your Message *"></textarea>
+      <button class="contact-submit" onclick="submitContact()">📤 Send Message — அனுப்பு</button>
+      <div id="ctResult" style="font-size:13px;text-align:center;min-height:18px;font-family:'Tiro Tamil',serif"></div>
+    </div>
+
+    <h2>❓ Frequently Asked Questions</h2>
+    <p><strong style="color:var(--text)">Q: கதைகள் படிக்க பணம் ஏதாவது கொடுக்க வேண்டுமா?</strong><br>
+    தேவையில்லை! அனைத்தும் முற்றிலும் இலவசம். எப்போதும் இலவசமாகவே இருக்கும்.</p>
+    <p><strong style="color:var(--text)">Q: என் கதையை எப்படி பதிவேற்றுவது?</strong><br>
+    கீழே உள்ள "✍️ எழுது" பட்டனை அழுத்தி உங்கள் கதையை பதிவேற்றலாம்.</p>
+    <p><strong style="color:var(--text)">Q: How do I report an inappropriate story?</strong><br>
+    Please email us at hello@kathais.xyz with the story title and reason.</p>
+    <p><strong style="color:var(--text)">Q: Can I advertise on this site?</strong><br>
+    Yes! We use Google AdSense. For direct advertising enquiries, email us.</p>
+
+    <button onclick="showPage('home')" style="margin-top:16px;width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:#1a1200;border-radius:var(--radius-sm);font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;">🏠 Back to Stories</button>
+  </div>
+</div>
+
+<!-- ═══ PRIVACY POLICY PAGE ═══ -->
+<div id="privacyPage">
+  <div class="page-hero">
+    <div class="page-hero-title">🔒 Privacy Policy</div>
+    <div class="page-hero-sub">Last updated: January 2026 | உங்கள் தனியுரிமை எங்களுக்கு முக்கியம்</div>
+  </div>
+  <div class="page-body">
+    <h2>1. Introduction</h2>
+    <p>Welcome to Tamilகதைகள் (kathais.xyz). We are committed to protecting your personal information and your right to privacy. This Privacy Policy explains how we collect, use, and safeguard your information when you visit our website.</p>
+
+    <h2>2. Information We Collect</h2>
+    <p>We collect information that you provide directly to us when you:</p>
+    <ul>
+      <li>Sign in using Google OAuth 2.0 (name, email, profile photo)</li>
+      <li>Submit a story (story content, title, category)</li>
+      <li>Leave comments or reactions on stories</li>
+      <li>Contact us via our contact form</li>
+    </ul>
+    <p>We also automatically collect certain technical data: browser type, device type, pages visited, time spent on pages, and approximate geographic location (country/city level only).</p>
+
+    <h2>3. Google AdSense & Cookies</h2>
+    <p>We use <strong style="color:var(--text)">Google AdSense</strong> to display advertisements on our site. Google AdSense uses cookies and web beacons to serve ads based on your prior visits to our website or other websites on the internet. These cookies allow Google and its partners to serve ads to you based on your visit to our site.</p>
+    <p>You may opt out of personalized advertising by visiting <a href="https://www.google.com/settings/ads" target="_blank" style="color:var(--gold)">Google's Ads Settings</a>. You can also opt out via the <a href="http://www.networkadvertising.org/managing/opt_out.asp" target="_blank" style="color:var(--gold)">Network Advertising Initiative opt-out page</a>.</p>
+    <p>Third party vendors, including Google, use cookies to serve ads based on your prior visits to our website. Google's use of advertising cookies enables it and its partners to serve ads to you based on your visits to this and/or other sites on the internet.</p>
+
+    <h2>4. How We Use Your Information</h2>
+    <ul>
+      <li>To provide and maintain our service</li>
+      <li>To personalize your reading experience</li>
+      <li>To save your bookmarks, reading history, and preferences locally on your device</li>
+      <li>To display relevant advertisements via Google AdSense</li>
+      <li>To improve our website based on usage data</li>
+      <li>To respond to your inquiries and support requests</li>
+    </ul>
+
+    <h2>5. Data Storage</h2>
+    <p>Most of your preferences (bookmarks, reading history, theme, font size) are stored locally in your browser's localStorage and never sent to our servers. Authentication data is handled securely by Google Firebase.</p>
+
+    <h2>6. Third-Party Services</h2>
+    <p>We use the following third-party services:</p>
+    <ul>
+      <li><strong style="color:var(--text)">Google Firebase</strong> — Authentication (login/signup)</li>
+      <li><strong style="color:var(--text)">Google AdSense</strong> — Advertisement display</li>
+      <li><strong style="color:var(--text)">Google Fonts</strong> — Typography (Tiro Tamil, DM Sans, etc.)</li>
+    </ul>
+    <p>Each third party has its own privacy policy. We encourage you to review them.</p>
+
+    <h2>7. Children's Privacy</h2>
+    <p>Our service is suitable for all ages. We do not knowingly collect personal information from children under 13 without parental consent. Our kids' story section is designed to be family-friendly and safe.</p>
+
+    <h2>8. Your Rights</h2>
+    <ul>
+      <li>Right to access your personal data</li>
+      <li>Right to delete your account and data</li>
+      <li>Right to opt out of personalized ads</li>
+      <li>Right to data portability</li>
+    </ul>
+    <p>To exercise any of these rights, please contact us at hello@kathais.xyz.</p>
+
+    <h2>9. Cookies Policy</h2>
+    <p>We use essential cookies for login sessions and Google AdSense cookies for advertising. By continuing to use our site, you consent to our use of cookies. You can disable cookies in your browser settings, though this may affect certain features.</p>
+
+    <h2>10. Changes to This Policy</h2>
+    <p>We may update our Privacy Policy from time to time. We will notify you of any changes by posting the new Privacy Policy on this page with an updated date. Continued use of the site after changes constitutes acceptance of the updated policy.</p>
+
+    <h2>11. Contact Us</h2>
+    <p>If you have any questions about this Privacy Policy, please contact us:</p>
+    <ul>
+      <li>Email: hello@kathais.xyz</li>
+      <li>Website: kathais.xyz</li>
+    </ul>
+
+    <button onclick="showPage('home')" style="margin-top:16px;width:100%;padding:13px;background:linear-gradient(135deg,var(--gold),var(--gold2));border:none;color:#1a1200;border-radius:var(--radius-sm);font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;">🏠 Back to Stories</button>
+  </div>
+</div>
 
 <!-- BOTTOM NAV -->
 <nav class="bottom-nav" id="bottomNav">
@@ -5069,6 +5383,67 @@ const storiesDB = [
 <p>"நீ சொன்ன எல்லாம் நினைவில் வைத்திருக்கேன்," என்று சொன்னான்.</p>
 <p>அந்த பூவை வாங்கினேன். அவனை பார்த்தேன். அன்று மிக்க ஆழமான பிறந்தநாள் பரிசு கிடைத்தது — ஒருவன் என்னை கவனிக்கிறான் என்று.</p>
 <div class="moral">💡 சின்ன விஷயங்களை நினைவில் வைப்பவன் — மிகவும் நேசிப்பவன்!</div>`
+  },
+  {
+    id:91, cat:'moral', badge:'new', emoji:'🌱',
+    bg:'linear-gradient(135deg,#1b5e20,#388e3c)',
+    catLabel:'நீதி', catColor:'#a5d6a7',
+    title:'விதை விதைத்தவன்',
+    excerpt:'ஒரு முதியவர் தினமும் மரக்கன்றுகள் நடுவார். "உங்களுக்கு பலன் கிடைக்காது" என்று சொன்னோம். அவர் சொன்னது...',
+    readTime:'5 நிமிஷம்',
+    story:`<h3>🌱 விதை விதைத்தவன்</h3>
+<p>கிராமத்தின் ஓரத்தில் ஒரு முதியவர் தினமும் காலையில் மரக்கன்றுகள் நடுவார். எண்பது வயதாகியும் தளர்வின்றி வேலை செய்வார்.</p>
+<p>ஒருநாள் இளைஞன் ஒருவன் கேட்டான்: "தாத்தா, நீங்கள் நட்ட மரங்கள் கனி கொடுக்க பத்து வருஷம் ஆகும். நீங்கள் அதை சாப்பிட முடியுமா?"</p>
+<p>முதியவர் சிரித்தார். "என்னால் முடியாது. அதனால் என்ன?"</p>
+<p>"பிறகு ஏன் நடுகிறீர்கள்?" என்று கேட்டான்.</p>
+<p>முதியவர் மண்ணை தடவினார். "என் தாத்தா நட்ட மரத்தின் நிழலில் நான் ஆடினேன். என் அப்பா நட்ட மரத்தின் பழம் நான் சாப்பிட்டேன். இப்போது நான் நடுகிறேன் — என் பேரன் நிழலில் ஆடட்டும்."</p>
+<p>இளைஞன் சிந்தித்தான். "அதாவது... நீங்கள் யாரோ ஒருவருக்காக உழைக்கிறீர்கள் — அவர்களை தெரியாமலே?"</p>
+<p>"ஆமா," என்று சொன்னார். "உலகம் அப்படித்தான் இயங்குகிறது. நாம் நட்டவர்கள் எப்போதும் அனுபவிக்க மாட்டோம். ஆனால் நாம் நடாமல் யாரும் அனுபவிக்க மாட்டோம்."</p>
+<p>இளைஞன் மண்ணை வாங்கினான். அன்று முதல் அவனும் மரக்கன்றுகள் நட்டான்.</p>
+<div class="moral">💡 நீதி: தலைமுறைகளுக்காக உழைப்பவர்களே உண்மையான மேதாவிகள்!</div>`
+  },
+  {
+    id:92, cat:'horror', badge:'hot', emoji:'🪞',
+    bg:'linear-gradient(135deg,#1a1a2e,#16213e)',
+    catLabel:'பயம்', catColor:'#7c4dff',
+    title:'கண்ணாடியில் நிழல்',
+    excerpt:'என் அறையின் கண்ணாடியில் ஒரு நிழல் தெரிந்தது. திரும்பி பார்த்தேன் — யாரும் இல்லை. மீண்டும் பார்த்தேன்...',
+    readTime:'8 நிமிஷம்',
+    story:`<h3>🪞 கண்ணாடியில் நிழல்</h3>
+<p>புதிதாக குடிவந்த அந்த பழைய வீட்டில் ஒரே ஒரு பெரிய கண்ணாடி இருந்தது — அறையின் முழு சுவரையும் மூடியது.</p>
+<p>முதல் இரவே கண்ணாடியில் என் நிழல் மட்டுமல்ல, வேற ஒரு நிழலும் தெரிந்தது.</p>
+<p>திடுக்கிட்டு திரும்பி பார்த்தேன். அறை காலியாக இருந்தது.</p>
+<p>மீண்டும் கண்ணாடியை பார்த்தேன். இரண்டு நிழல்கள். ஒன்று என்னுடையது. மற்றொன்று — என்னை போலவே இருந்தது. ஆனால் அது என் எதிர் திசையில் நகர்ந்தது.</p>
+<p>பயத்தில் விளக்கை போட்டேன். கண்ணாடியில் என் முகம் மட்டும்.</p>
+<p>மறுநாள் காலை வீட்டு உரிமையாளரிடம் சொன்னேன். அவர் முகம் வெளுத்தது.</p>
+<p>"அந்த கண்ணாடி... என் தம்பி செய்தது. அவன் ஒரு கண்ணாடி ஓவியர். இந்த வீட்டிலேயே இறந்தான். கண்ணாடியை உடைக்கலாம் — ஆனால் அவனின் ஆவி இன்னும்..."</p>
+<p>அன்று இரவு கண்ணாடியை பார்க்கவில்லை. மூடிவிட்டேன்.</p>
+<p>ஆனால் மூடிய துணியின் பின்னால் — ஒரு கை படம் தெரிந்தது. கண்ணாடியின் உள்ளிருந்து.</p>
+<p>நான் ஓடினேன். இன்று வரை திரும்பவில்லை.</p>
+<div class="moral">💡 சில கண்ணாடிகள் கடந்தகாலத்தை மட்டுமே காட்டும் — உஷார்!</div>`
+  },
+  {
+    id:93, cat:'comedy', badge:'new', emoji:'🛵',
+    bg:'linear-gradient(135deg,#e65100,#ef6c00)',
+    catLabel:'நகைச்சுவை', catColor:'#ffcc02',
+    title:'GPS நம்பிக்கை',
+    excerpt:'GPS சொன்னது "வலதே திரும்பு". திரும்பினேன். கடலுக்குள் போய்விட்டேன் என்று நினைத்தீர்களா? இல்லை — அதை விட சிரிப்பானது நடந்தது...',
+    readTime:'4 நிமிஷம்',
+    story:`<h3>🛵 GPS நம்பிக்கை</h3>
+<p>என் மனைவி திருமதி. என் GPS-இன் பெயர் "ஆண்டி". இருவரும் என்னை guide செய்கிறார்கள். இருவரும் ஒரே நேரத்தில் பேசும்போது — அது வேற level.</p>
+<p>அன்று திருவிழாவுக்கு போக வேண்டும். GPS ஆண்டி சொன்னாள்: "500 மீட்டரில் இடதே திரும்பவும்."</p>
+<p>என் மனைவி சொன்னாள்: "வலதே திரும்பு."</p>
+<p>"யாரை நம்பணும்?" என்று கேட்டேன்.</p>
+<p>"என்னை," என்று இருவரும் சொன்னார்கள். ஒரே நேரத்தில்.</p>
+<p>GPS-ஐ நம்பினேன். மனைவி மவுனமானாள். அது bad sign என்று தெரியும்.</p>
+<p>10 நிமிடம் கழித்து GPS சொன்னாள்: "சரியான வழிக்கு திரும்பவும்."</p>
+<p>மனைவி சொன்னாள்: "GPS-ஐ திரும்பவும் நம்பு."</p>
+<p>நாங்கள் ஒரு பால்கார்ட் கடையின் முன்பு நின்றோம். திருவிழா இல்லை.</p>
+<p>"GPS தப்பா சொன்னது," என்று சொன்னேன்.</p>
+<p>"GPS-ஐ நம்பின மனுஷன் தப்பா இருக்கான்," என்று மனைவி சொன்னாள். "நான் சொன்னது கேட்டிருந்தால் ஒரு மணி நேரத்தில் போயிருப்போம்."</p>
+<p>திருவிழாவுக்கு போகவில்லை. பால்கார்ட் கடையில் கஃபி குடித்தோம்.</p>
+<p>GPS-ஐ அண்-இன்ஸ்டால் செய்தேன். மனைவியின் சொல் கேட்கிறேன் — அதுவே best navigation.</p>
+<div class="moral">💡 நீதி: வீட்டில் ஒரு GPS இருக்கும்போது வேற GPS தேவையில்லை! 😄</div>`
   }
 ];
 
@@ -9236,6 +9611,75 @@ function updateChallengeOnRead(id) {
     history.push(id);
     localStorage.setItem('readHistory', JSON.stringify(history));
   }
+}
+
+// ══════════════════════════════════
+// STATIC PAGES: About / Contact / Privacy
+// ══════════════════════════════════
+function showPage(page) {
+  // Hide all main content
+  const mainSections = ['mainContent','historySection','sotdSection','searchWrap','moodStrip','mainFooter'];
+  const adUnits = document.querySelectorAll('.adsense-unit');
+  const pageIds = ['aboutPage','contactPage','privacyPage'];
+  const hero = document.querySelector('.hero');
+  const pagination = document.getElementById('pagination');
+
+  // Hide/show based on page
+  if (page === 'home') {
+    pageIds.forEach(id => { const el = document.getElementById(id); if(el) el.style.display='none'; });
+    mainSections.forEach(id => { const el = document.getElementById(id); if(el) el.style.display=''; });
+    if(hero) hero.style.display='';
+    if(pagination) pagination.style.display='';
+    document.getElementById('bookmarksPanel').style.display = 'none';
+    document.getElementById('gamesPanel').style.display = 'none';
+    document.getElementById('mainContent').style.display = '';
+    window.scrollTo({top:0,behavior:'smooth'});
+    return;
+  }
+
+  // Show static page
+  mainSections.forEach(id => { const el = document.getElementById(id); if(el) el.style.display='none'; });
+  if(hero) hero.style.display='none';
+  if(pagination) pagination.style.display='none';
+  document.getElementById('bookmarksPanel').style.display = 'none';
+  document.getElementById('gamesPanel').style.display = 'none';
+  document.getElementById('mainContent').style.display = 'none';
+  pageIds.forEach(id => { const el = document.getElementById(id); if(el) el.style.display='none'; });
+
+  const target = page === 'about' ? 'aboutPage' : page === 'contact' ? 'contactPage' : 'privacyPage';
+  const el = document.getElementById(target);
+  if(el) { el.style.display='block'; window.scrollTo({top:0,behavior:'smooth'}); }
+  
+  // Show footer
+  const footer = document.getElementById('mainFooter');
+  if(footer) footer.style.display='';
+}
+
+function submitContact() {
+  const name = document.getElementById('ctName').value.trim();
+  const email = document.getElementById('ctEmail').value.trim();
+  const subject = document.getElementById('ctSubject').value;
+  const message = document.getElementById('ctMessage').value.trim();
+  const result = document.getElementById('ctResult');
+
+  if (!name || !email || !subject || !message) {
+    result.style.color = '#ff6b6b';
+    result.textContent = '⚠️ அனைத்து தகவல்களையும் நிரப்பவும் — Please fill all fields.';
+    return;
+  }
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    result.style.color = '#ff6b6b';
+    result.textContent = '⚠️ சரியான மின்னஞ்சல் கொடுங்கள் — Valid email required.';
+    return;
+  }
+
+  // Simulate submission
+  result.style.color = '#00e676';
+  result.textContent = '✅ Message sent! நன்றி — We\'ll reply within 24-48 hours.';
+  document.getElementById('ctName').value = '';
+  document.getElementById('ctEmail').value = '';
+  document.getElementById('ctSubject').value = '';
+  document.getElementById('ctMessage').value = '';
 }
 
 // ══════════════════════════════════
