@@ -2263,16 +2263,10 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 
 /* ═══ SPLASH LOGIN PAGE ═══ */
 #splashLogin {
-  position:fixed; inset:0; z-index:9999;
-  background:var(--bg);
-  display:flex; flex-direction:column;
-  align-items:center; justify-content:center;
-  overflow-y:auto;
-  padding:20px 0;
-  transition:opacity 0.5s ease, transform 0.5s ease;
+  display:none !important;
 }
 #splashLogin.hide {
-  opacity:0; pointer-events:none; transform:scale(1.04);
+  display:none !important;
 }
 .splash-bg-glow {
   position:fixed; inset:0; pointer-events:none;
@@ -2570,7 +2564,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 <body>
 
 <!-- ═══ SPLASH LOGIN PAGE ═══ -->
-<div id="splashLogin">
+<div id="splashLogin" style="display:none!important">
   <div class="splash-bg-glow"></div>
   <div class="splash-noise"></div>
   <div class="splash-inner">
@@ -7389,14 +7383,13 @@ switchGame = function(id, el) {
 };
 
 // ═══════════════════════════════════════
-// SPLASH LOGIN PAGE — REAL FIREBASE AUTH
+// SPLASH LOGIN PAGE — DISABLED (Public Access Mode)
 // ═══════════════════════════════════════
 (function() {
-  // If user already logged in, hide splash immediately
-  try {
-    const saved = JSON.parse(localStorage.getItem('tk_user') || 'null');
-    if (saved) { document.getElementById('splashLogin').style.display = 'none'; return; }
-  } catch(e) {}
+  // Public mode: always hide splash, no login required
+  const el = document.getElementById('splashLogin');
+  if (el) el.style.display = 'none';
+  return; // Skip all auth logic below
 
   let splashPhone = '', splashTimer = null, splashSecs = 30;
   let splashRecaptcha = null, splashConfirmResult = null;
@@ -8139,7 +8132,10 @@ function showToast(msg, duration) {
   t._timer = setTimeout(() => { t.style.opacity='0'; t.style.transform='translateX(-50%) translateY(20px)'; }, duration);
 }
 
-// Initialize nav state on load
+// Initialize nav state on load — Public Mode: set guest user
+if (!currentUser) {
+  currentUser = { name: 'Guest', email: '', avatar: '', isGuest: true };
+}
 if (currentUser) updateNavForUser(currentUser);
 
 // ═══ UPLOAD STORY ═══
