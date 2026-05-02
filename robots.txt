@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.kathais.xyz/sitemap.xml
+Sitemap: https://kathais.xyz/sitemap.xml
