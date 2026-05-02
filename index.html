@@ -241,6 +241,12 @@ nav {
 .hero-stats {
   display:flex; justify-content:center; gap:12px;
   flex-wrap:wrap; margin-top:8px;
+  padding:0 12px;
+}
+@media(max-width:480px){
+  .hero-stats { gap:8px; }
+  .stat { padding:10px 14px; }
+  .stat .num { font-size:18px; }
 }
 .stat {
   background:var(--surface);
@@ -837,8 +843,13 @@ nav {
 
 /* Footer links */
 .footer-links {
-  display:flex; justify-content:center; gap:16px;
+  display:flex; justify-content:center; gap:12px;
   flex-wrap:wrap; margin:16px 0 8px;
+  padding:0 16px;
+}
+@media(max-width:480px){
+  .footer-links { gap:8px; }
+  .footer-links a { font-size:12px; }
 }
 .footer-links a {
   font-size:11px; color:var(--text-dim);
@@ -2839,8 +2850,9 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
       <span class="pnlma-menu-arrow">→</span>
     </div>
 
-    <button class="pnlma-logout-btn" onclick="doLogout()">
-      <span>🚪</span> Sign Out
+    <button class="pnlma-logout-btn" id="pnlmaSignBtn" 
+      onclick="(currentUser && !currentUser.isGuest) ? doLogout() : (closePnlma(), openLoginModal())">
+      <span>🚪</span> <span id="pnlmaSignText">Sign Out</span>
     </button>
 
     <div style="text-align:center;padding:20px 24px 0;font-size:10px;color:var(--text-dim)">
@@ -2853,7 +2865,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 <div class="hero">
   <div class="hero-eyebrow">📖 FREE FOREVER</div>
   <h1>Tamil<span>கதைகள்</span></h1>
-  <h2>படித்து மகிளுங்கள் --- Tamil Stories Collection</h2>
+  <h2>படித்து மகிளுங்கள் — Tamil Stories Collection</h2>
   <div class="hero-stats">
     <div class="stat"><div class="num">1000+</div><div class="lbl">கதைகள் Stories</div></div>
     <div class="stat"><div class="num">15+</div><div class="lbl">வகைகள் Categories</div></div>
@@ -2930,7 +2942,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <ins class="adsbygoogle adsense-unit"
        style="display:block"
        data-ad-client="ca-pub-7030593982977288"
-       data-ad-slot="auto"
+       data-ad-slot=""
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -3258,7 +3270,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <ins class="adsbygoogle adsense-unit"
        style="display:block"
        data-ad-client="ca-pub-7030593982977288"
-       data-ad-slot="auto"
+       data-ad-slot=""
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -8134,17 +8146,16 @@ function updateNavForUser(user) {
 
 function doLogout() {
   if (fbAuth) fbAuth.signOut();
-  currentUser = null;
   localStorage.removeItem('tk_user');
+  currentUser = { name: 'Guest', email: '', avatar: '', isGuest: true };
   closePnlma();
-  updateNavForUser(null);
-  showToast('👋 Signed out! Bye!');
-  setTimeout(() => { openLoginModal(); }, 600);
+  updateNavForUser(currentUser);
+  showToast('👋 Signed out! Guest mode-ல் தொடர்ந்து படிக்கலாம்!');
 }
 
 // ── PNLMA Panel ──
 function openPnlma() {
-  if (!currentUser) { openLoginModal(); return; }
+  if (!currentUser) { currentUser = { name: 'Guest', email: '', avatar: '', isGuest: true }; }
   document.getElementById('pnlmaAvatar').src = currentUser.avatar || `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(currentUser.name)}&backgroundColor=c9933a&textColor=1a0d00&fontSize=40`;
   document.getElementById('pnlmaName').textContent = currentUser.name;
   document.getElementById('pnlmaEmail').textContent = currentUser.email || currentUser.phone || '';
@@ -8164,6 +8175,9 @@ function openPnlma() {
   if (readCount >= 20) badges.push('📚 BOOKWORM');
   badges.push('⭐ FREE MEMBER');
   document.getElementById('pnlmaBadges').innerHTML = badges.map(b => `<span class="pnlma-badge">${b}</span>`).join('');
+  // Update sign button for guest vs logged-in user
+  const signText = document.getElementById('pnlmaSignText');
+  if (signText) signText.textContent = (currentUser && !currentUser.isGuest) ? 'Sign Out' : '🔐 Sign In';
   document.getElementById('pnlmaOverlay').classList.add('show');
 }
 function closePnlma() { document.getElementById('pnlmaOverlay').classList.remove('show'); }
@@ -8188,17 +8202,16 @@ function showToast(msg, duration) {
 }
 
 // Initialize nav state on load — Public Mode: set guest user
-if (!currentUser) {
+if (!currentUser || (currentUser && currentUser.isGuest && false)) {
   currentUser = { name: 'Guest', email: '', avatar: '', isGuest: true };
 }
 if (currentUser) updateNavForUser(currentUser);
 
 // ═══ UPLOAD STORY ═══
 function openUploadModal() {
+  // Allow opening upload form for all users (guests prompted to login only on submit)
   if (!currentUser) {
-    showToast('⚠️ முதலில் Login செய்யுங்கள்!');
-    setTimeout(() => openLoginModal(), 600);
-    return;
+    currentUser = { name: 'Guest', email: '', avatar: '', isGuest: true };
   }
   document.getElementById('uploadOverlay').classList.add('show');
   // reset form
@@ -8291,6 +8304,10 @@ async function submitStory() {
   const emoji   = document.getElementById('upEmoji').value.trim() || '📖';
   const errEl   = document.getElementById('upError');
 
+  if (!currentUser || currentUser.isGuest) {
+    errEl.textContent = '⚠️ Submit செய்ய Login வேண்டும்!'; errEl.style.display='';
+    setTimeout(() => { closeUploadModal(); openLoginModal(); }, 1000); return;
+  }
   if (!title)   { errEl.textContent = '⚠️ கதை தலைப்பு இல்லை!'; errEl.style.display=''; return; }
   if (!cat)     { errEl.textContent = '⚠️ வகை தேர்வு செய்யுங்கள்!'; errEl.style.display=''; return; }
   if (!excerpt) { errEl.textContent = '⚠️ சுருக்கம் எழுதுங்கள்!'; errEl.style.display=''; return; }
