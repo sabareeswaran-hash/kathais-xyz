@@ -2,15 +2,28 @@
 <html lang="ta">
 <head>
 <meta charset="UTF-8">
+<!-- ═══ CONSENT MODE v2 (GDPR) ═══ -->
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('consent', 'default', {
+  'analytics_storage': 'denied',
+  'ad_storage': 'denied',
+  'wait_for_update': 500
+});
+</script>
+
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Tamilகதைகள் - Free Tamil Stories Collection</title>
 
 <!-- ═══ SEO & OG META TAGS ═══ -->
-<meta name="description" content="1000+ free Tamil stories including காதல் கதைகள், பயம் கதைகள், நகைச்சுவை கதைகள், குழந்தை கதைகள் மற்றும் பல. Read free Tamil stories on kathais.xyz">
+<meta name="description" content="படிக்கவும் மகிழுங்கள்! 1000+ இலவச தமிழ் கதைகள் — காதல், பயம், நகைச்சுவை, குழந்தை, நீதி கதைகள். Free Tamil short stories online at kathais.xyz.">
 <meta name="keywords" content="Tamil stories, தமிழ் கதைகள், காதல் கதைகள், பயம் கதைகள், comedy stories, kids stories, Tamil short stories">
 <meta name="author" content="Sabareeswaran M">
 <meta name="robots" content="index, follow">
 <link rel="canonical" href="https://kathais.xyz/">
+<link rel="alternate" hreflang="ta" href="https://kathais.xyz/">
+<link rel="alternate" hreflang="x-default" href="https://kathais.xyz/">
 
 <!-- ═══ FAVICON ═══ -->
 <link rel="icon" href="/favicon.ico" type="image/x-icon">
@@ -27,14 +40,28 @@
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Tamilகதைகள்">
-<meta name="twitter:description" content="Free Tamil stories collection">
+<meta name="twitter:description" content="1000+ Free Tamil stories — காதல், பயம், நகைச்சுவை, குழந்தை கதைகள். Read online at kathais.xyz">
+<meta name="twitter:image" content="https://kathais.xyz/logo.png">
+<meta name="twitter:site" content="@kathaisxyz">
 
 <!-- ═══ SITEMAP ═══ -->
-<link rel="sitemap" type="application/xml" title="Sitemap" href="https://kathais.xyz/sitemap.xml">
+<link rel="sitemap" type="application/xml" title="Sitemap" href="https://kathais.xyz/sitemap.xml?page=2">
 
 <!-- ═══ GOOGLE ADSENSE ═══ -->
 <meta name="google-adsense-account" content="ca-pub-7030593982977288">
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7030593982977288" crossorigin="anonymous"></script>
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7030593982977288" crossorigin="anonymous" data-overlays="bottom"></script>
+
+<!-- ═══ GOOGLE ANALYTICS GA4 ═══ -->
+<!-- ✅ STEP: Replace G-XXXXXXXXXX with your GA4 Measurement ID from analytics.google.com -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-XXXXXXXXXX');
+</script>
+
+
 
 <!-- ═══ PWA ═══ -->
 <link rel="manifest" href="manifest.json">
@@ -45,17 +72,45 @@
 
 <!-- ═══ JSON-LD SCHEMA ═══ -->
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "WebSite",
-  "name": "Tamilகதைகள்",
-  "url": "https://kathais.xyz/",
-  "description": "Free Tamil stories collection",
-  "publisher": {
-    "@type": "Organization",
-    "name": "Tamilகதைகள்"
+[
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Tamilகதைகள்",
+    "url": "https://kathais.xyz/",
+    "description": "1000+ free Tamil stories including காதல், பயம், நகைச்சுவை, குழந்தை கதைகள். Read free Tamil short stories online.",
+    "inLanguage": "ta",
+    "publisher": {
+      "@type": "Organization",
+      "name": "Tamilகதைகள்",
+      "url": "https://kathais.xyz/",
+      "logo": {
+        "@type": "ImageObject",
+        "url": "https://kathais.xyz/logo.png"
+      }
+    },
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://kathais.xyz/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Tamil Stories Collection",
+    "description": "1000+ free Tamil short stories in multiple categories",
+    "url": "https://kathais.xyz/",
+    "inLanguage": "ta",
+    "breadcrumb": {
+      "@type": "BreadcrumbList",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://kathais.xyz/" },
+        { "@type": "ListItem", "position": 2, "name": "Tamil Stories", "item": "https://kathais.xyz/#stories" }
+      ]
+    }
   }
-}
+]
 </script>
 
 <!-- ═══ PERFORMANCE PRECONNECT ═══ -->
@@ -64,56 +119,6 @@
 <link rel="dns-prefetch" href="//pagead2.googlesyndication.com">
 
 <link href="https://fonts.googleapis.com/css2?family=Tiro+Tamil:ital@0;1&family=DM+Sans:wght@400;500;600;700;800&family=Noto+Serif+Tamil:wght@400;700&family=Catamaran:wght@400;700&family=DM+Serif+Display&display=swap" rel="stylesheet">
-<!-- Firebase: jsDelivr primary, unpkg fallback (avoids gstatic ad-blocker blocks) -->
-<script>
-(function() {
-  var FB_VER = '9.23.0';
-  var pending = 2;
-  var anyFailed = false;
-
-  function onLoad() {
-    pending--;
-  }
-
-  function firebaseUnavailable() {
-    window._firebaseLoadFailed = true;
-    window.addEventListener('load', function() {
-      var btn = document.getElementById('splashSendOtpBtn');
-      if (btn) { btn.disabled = true; btn.textContent = 'Login unavailable'; }
-      var luxBtn = document.getElementById('luxOtpBtn');
-      if (luxBtn) { luxBtn.disabled = true; luxBtn.textContent = 'Login unavailable'; }
-      if (window.showToast) showToast('⚠️ Login unavailable. Check your internet connection and reload.', 8000);
-    });
-  }
-
-  function loadScript(src, onload, onerror) {
-    var s = document.createElement('script');
-    s.src = src;
-    s.onload = onload;
-    s.onerror = onerror;
-    document.head.appendChild(s);
-  }
-
-  function loadWithFallback(primary, fallback) {
-    loadScript(primary, onLoad, function() {
-      console.warn('jsDelivr blocked, trying unpkg for: ' + primary);
-      loadScript(fallback, onLoad, function() {
-        console.error('All CDNs failed for Firebase script: ' + fallback);
-        firebaseUnavailable();
-      });
-    });
-  }
-
-  loadWithFallback(
-    'https://cdn.jsdelivr.net/npm/firebase@' + FB_VER + '/firebase-app-compat.min.js',
-    'https://unpkg.com/firebase@' + FB_VER + '/firebase-app-compat.js'
-  );
-  loadWithFallback(
-    'https://cdn.jsdelivr.net/npm/firebase@' + FB_VER + '/firebase-auth-compat.min.js',
-    'https://unpkg.com/firebase@' + FB_VER + '/firebase-auth-compat.js'
-  );
-})();
-</script>
 <style>
 :root {
   --gold: #f5a623;
@@ -2590,61 +2595,48 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   margin:12px 0 6px; font-weight:500;
 }
 
+
+/* ─── COOKIE CONSENT ─── */
+#cookieBanner {
+  position:fixed; bottom:0; left:0; right:0;
+  background:rgba(11,12,20,0.97);
+  border-top:1.5px solid var(--border-gold);
+  backdrop-filter:blur(20px);
+  padding:14px 20px;
+  display:flex; align-items:center; gap:12px; flex-wrap:wrap;
+  z-index:9999;
+  box-shadow:0 -8px 30px rgba(0,0,0,0.4);
+  transform:translateY(100%);
+  transition:transform 0.4s cubic-bezier(0.34,1.56,0.64,1);
+}
+#cookieBanner.visible { transform:translateY(0); }
+.cookie-text {
+  flex:1; font-size:12px; color:var(--text-muted);
+  font-family:'DM Sans',sans-serif; line-height:1.5;
+  min-width:220px;
+}
+.cookie-text a { color:var(--gold); text-decoration:none; }
+.cookie-accept {
+  background:linear-gradient(135deg,var(--gold),var(--gold2));
+  border:none; color:#1a1200; padding:9px 20px;
+  border-radius:var(--radius-sm); cursor:pointer;
+  font-size:12px; font-weight:800;
+  font-family:'DM Sans',sans-serif; white-space:nowrap;
+  flex-shrink:0;
+}
+.cookie-decline {
+  background:var(--surface2); border:1px solid var(--border);
+  color:var(--text-muted); padding:9px 14px;
+  border-radius:var(--radius-sm); cursor:pointer;
+  font-size:12px; font-weight:700;
+  font-family:'DM Sans',sans-serif; white-space:nowrap;
+  flex-shrink:0;
+}
 </style>
 </head>
 <body>
 
-<!-- ═══ SPLASH LOGIN PAGE ═══ -->
-<div id="splashLogin" style="display:none!important">
-  <div class="splash-bg-glow"></div>
-  <div class="splash-noise"></div>
-  <div class="splash-inner">
-    <div class="splash-logo">📚 Tamil<span>கதைகள்</span></div>
-    <div class="splash-tag">Premium Reading Experience</div>
 
-    <!-- Step 1: Google Sign-In -->
-    <div class="splash-step active" id="splashStep1">
-      <div class="splash-title">Welcome back</div>
-      <div class="splash-sub">Sign in to unlock your personalized reading journey</div>
-
-      <!-- Feature perks strip -->
-      <div class="splash-perks">
-        <div class="splash-perk"><span>📚</span><span>1000+ Tamil Stories</span></div>
-        <div class="splash-perk"><span>🔖</span><span>Sync Bookmarks</span></div>
-        <div class="splash-perk"><span>🔥</span><span>Reading Streaks</span></div>
-      </div>
-
-      <!-- Premium Google Sign-In Button -->
-      <button class="splash-google-btn" onclick="splashGoogleLogin()">
-        <div class="splash-g-logo-wrap">
-          <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-        </div>
-        <span class="splash-g-text">Continue with Google</span>
-        <span class="splash-g-arrow">›</span>
-      </button>
-
-      <!-- Trust badge -->
-      <div class="splash-trust">
-        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" style="opacity:0.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-        <span>Secured by Google OAuth 2.0 — we never store your password</span>
-      </div>
-
-      <div id="splash-recaptcha-container"></div>
-
-      <div class="splash-terms">
-        By continuing, you accept our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Service</a>
-      </div>
-    </div>
-
-    <!-- Step 2: Success -->
-    <div class="splash-step" id="splashStep3">
-      <div class="splash-success-icon">✓</div>
-      <div class="splash-success-title" id="splashSuccessTitle">வணக்கம்! 🎉</div>
-      <div class="splash-success-msg" id="splashSuccessMsg">You're signed in. Welcome to your personalized reading experience!</div>
-      <button class="splash-continue-btn" onclick="splashDismiss()">📚 Start Reading →</button>
-    </div>
-  </div>
-</div>
 
 <!-- Reading progress bar -->
 <div id="readingProgressBar"></div>
@@ -2662,7 +2654,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 
 <!-- NAV -->
 <nav>
-  <div class="logo">📖 Tamil<span>கதைகள்</span></div>
+  <div class="logo">Tamil<span>கதைகள்</span></div>
   <div class="nav-links">
     <a href="#" onclick="filterCat('love',document.querySelectorAll('.cat-tab')[1])">💕 காதல்</a>
     <a href="#" onclick="filterCat('horror',document.querySelectorAll('.cat-tab')[2])">👻 பயம்</a>
@@ -2679,100 +2671,6 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <button class="theme-toggle" onclick="toggleTheme()" id="themeBtn">☀️ Light</button>
   <button class="hamburger-btn" id="hamburgerBtn" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
 </nav>
-
-<!-- ═══ LUXURY LOGIN MODAL ═══ -->
-<div id="recaptcha-container"></div>
-<div class="login-overlay" id="loginOverlay" onclick="handleLoginOverlayClick(event)">
-  <div class="login-card-wrap">
-    <div class="login-card">
-      <div class="lux-corner tl"></div>
-      <div class="lux-corner br"></div>
-
-      <div class="lux-loading" id="luxLoading">
-        <div class="lux-dot"></div><div class="lux-dot"></div><div class="lux-dot"></div>
-      </div>
-
-      <button class="login-close" onclick="closeLoginModal()">✕</button>
-
-      <div class="lux-brand">
-        <div class="lux-brand-icon">📚</div>
-        <div class="lux-brand-title">Tamil<span>கதைகள்</span></div>
-        <div class="lux-brand-sub">Premium Reading Experience</div>
-      </div>
-      <div class="lux-divider"></div>
-
-      <!-- STEP 1: GOOGLE SIGN-IN -->
-      <div class="lux-step active" id="luxStep1">
-        <div class="lux-heading">Welcome back</div>
-        <div class="lux-sub">One tap to unlock your premium reading experience</div>
-
-        <!-- Perks grid -->
-        <div class="lux-perks-grid">
-          <div class="lux-perk"><span class="lux-perk-icon">⭐</span><span>Premium Features</span></div>
-          <div class="lux-perk"><span class="lux-perk-icon">🔖</span><span>Saved Stories</span></div>
-          <div class="lux-perk"><span class="lux-perk-icon">🏆</span><span>Leaderboard</span></div>
-          <div class="lux-perk"><span class="lux-perk-icon">🔥</span><span>Daily Streak</span></div>
-        </div>
-
-        <!-- Enhanced Google Button -->
-        <button class="lux-btn-google" onclick="openLuxGooglePopup()">
-          <div class="lux-g-icon-ring">
-            <svg width="20" height="20" viewBox="0 0 48 48">
-              <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
-              <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
-              <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>
-              <path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/>
-            </svg>
-          </div>
-          <span>Continue with Google</span>
-          <span class="arr">›</span>
-        </button>
-
-        <!-- Trust line -->
-        <div class="lux-trust-line">
-          <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
-          Secured by Google OAuth 2.0
-        </div>
-
-        <div class="lux-privacy">
-          By continuing, you accept our <a href="/privacy-policy.html">Privacy Policy</a> and <a href="/terms.html">Terms of Service</a>
-        </div>
-      </div>
-
-      <!-- STEP 2: SUCCESS -->
-      <div class="lux-step" id="luxStep3">
-        <div style="text-align:center">
-          <div class="lux-success-icon">✓</div>
-          <div class="lux-success-name" id="luxSuccessName">வணக்கம்!</div>
-          <div class="lux-success-msg" id="luxSuccessMsg">You're signed in. Enjoy your personalized Tamil stories!</div>
-          <button class="lux-btn-primary" onclick="luxFinishLogin()" style="max-width:200px;margin:0 auto">Start Reading →</button>
-        </div>
-      </div>
-
-    </div>
-  </div>
-</div>
-
-<!-- GOOGLE ACCOUNT CHOOSER -->
-<div class="lux-gpopup" id="luxGPopup" onclick="if(event.target===this)closeLuxGooglePopup()">
-  <div class="lux-gbox">
-    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
-      <svg width="20" height="20" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.36-8.16 2.36-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
-      <span style="font-size:14px;color:#5f6368;font-weight:300">Google</span>
-    </div>
-    <div class="lux-gbox-title">Choose an account</div>
-    <div class="lux-gbox-sub">to continue to Tamilகதைகள்</div>
-    <div class="lux-g-account" onclick="luxSignInWithGoogle('Tamil Reader','tamilreader2024@gmail.com')">
-      <div class="lux-g-avatar" style="background:linear-gradient(135deg,#ea4335,#fbbc05)">T</div>
-      <div><div class="lux-g-name">Tamil Reader</div><div class="lux-g-email">tamilreader2024@gmail.com</div></div>
-    </div>
-    <div class="lux-g-add" onclick="closeLuxGooglePopup();showToast('Real OAuth needs backend setup.')">
-      <div class="lux-g-add-icon">+</div>
-      <span class="lux-g-add-text">Use another account</span>
-    </div>
-    <div class="lux-g-footer"><a href="/privacy-policy.html">Privacy Policy</a><a href="/terms.html">Terms of Service</a></div>
-  </div>
-</div>
 
 <!-- ═══ PNLMA — USER PANEL ═══ -->
 <div class="pnlma-overlay" id="pnlmaOverlay" onclick="handlePnlmaOverlayClick(event)">
@@ -2826,34 +2724,7 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
       <span class="pnlma-menu-arrow" id="pnlmaLikeCount">0 ❤️</span>
     </div>
 
-    <p class="pnlma-section-title">அமைப்புகள்</p>
-    <div class="pnlma-menu-item" onclick="toggleTheme();closePnlma()">
-      <span class="pnlma-menu-icon">🎨</span>
-      <span class="pnlma-menu-label">Theme மாற்று</span>
-      <span class="pnlma-menu-arrow">→</span>
-    </div>
-    <div class="pnlma-menu-item" onclick="closePnlma()">
-      <span class="pnlma-menu-icon">🔔</span>
-      <span class="pnlma-menu-label">Notifications</span>
-      <span class="pnlma-menu-arrow">→</span>
-    </div>
-    <div class="pnlma-menu-item" onclick="installPWA();closePnlma()">
-      <span class="pnlma-menu-icon">📱</span>
-      <span class="pnlma-menu-label">App Install</span>
-      <span class="pnlma-menu-arrow">→</span>
-    </div>
 
-    <p class="pnlma-section-title">Account</p>
-    <div class="pnlma-menu-item" onclick="copyProfileLink()">
-      <span class="pnlma-menu-icon">🔗</span>
-      <span class="pnlma-menu-label">Share Profile</span>
-      <span class="pnlma-menu-arrow">→</span>
-    </div>
-
-    <button class="pnlma-logout-btn" id="pnlmaSignBtn" 
-      onclick="(currentUser && !currentUser.isGuest) ? doLogout() : (closePnlma(), openLoginModal())">
-      <span>🚪</span> <span id="pnlmaSignText">Sign Out</span>
-    </button>
 
     <div style="text-align:center;padding:20px 24px 0;font-size:10px;color:var(--text-dim)">
       Tamilகதைகள் · Free Forever · kathais.xyz
@@ -2939,10 +2810,11 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 
 <!-- ADSENSE TOP BANNER -->
 <div style="max-width:1072px;margin:0 auto 16px;padding:0 24px">
+  <!-- ✅ STEP: Replace data-ad-slot="" with your real Ad Unit ID from adsense.google.com → Ads → By ad unit → Display ads -->
   <ins class="adsbygoogle adsense-unit"
        style="display:block"
        data-ad-client="ca-pub-7030593982977288"
-       data-ad-slot=""
+       data-ad-slot="YOUR_AD_SLOT_ID"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -3008,269 +2880,16 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
 </div>
 
 <!-- GAMES PANEL — REDESIGNED -->
-<div id="gamesPanel" style="display:none">
-
-  <!-- Hero Banner -->
-  <div class="gp-hero">
-    <div class="gp-hero-eyebrow">🎮 GAME ZONE</div>
-    <div class="gp-hero-title">Fun <span>Games</span></div>
-    <div class="gp-hero-sub">விளையாட்டு நேரம் — 16 Games உள்ளன!</div>
-    <div class="gp-hero-stats">
-      <div class="gp-stat-pill"><span class="sp-num">16</span><span class="sp-lbl">GAMES</span></div>
-      <div class="gp-stat-pill"><span class="sp-num">∞</span><span class="sp-lbl">FREE</span></div>
-      <div class="gp-stat-pill"><span class="sp-num">🏆</span><span class="sp-lbl">SCORES</span></div>
-    </div>
-  </div>
-
-  <!-- Category Filter -->
-  <div class="gp-cats">
-    <button class="gp-cat-btn active" onclick="gpFilter('all',this)">🎮 அனைத்தும்</button>
-    <button class="gp-cat-btn" onclick="gpFilter('brain',this)">🧠 Brain</button>
-    <button class="gp-cat-btn" onclick="gpFilter('action',this)">⚡ Action</button>
-    <button class="gp-cat-btn" onclick="gpFilter('puzzle',this)">🧩 Puzzle</button>
-    <button class="gp-cat-btn" onclick="gpFilter('tamil',this)">🔤 Tamil</button>
-    <button class="gp-cat-btn" onclick="gpFilter('classic',this)">♟️ Classic</button>
-  </div>
-
-  <!-- Featured Game -->
-  <div class="gp-featured" onclick="openGame('flappy')">
-    <div class="gp-featured-inner">
-      <div class="gp-featured-emoji">🐤</div>
-      <div class="gp-featured-info">
-        <div class="gp-featured-tag">⭐ FEATURED GAME</div>
-        <div class="gp-featured-name">Flappy Bird</div>
-        <div class="gp-featured-desc">Tap செய்து பறக்கவிடு! Beat your high score!</div>
-        <button class="gp-featured-play">▶ இப்போதே விளையாடு</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Section Label -->
-  <div class="gp-section-label"><span>ALL GAMES</span></div>
-
-  <!-- Game Cards Grid -->
-  <div class="gp-grid" id="gpGrid">
-
-    <div class="gp-card theme-orange" data-cat="tamil" onclick="openGame('wordguess')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🔤</div>
-        <div class="gp-card-name">சொல் யூகம்</div>
-        <div class="gp-card-tamil">Tamil Word Guess</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">HOT 🔥</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-purple" data-cat="brain" onclick="openGame('quiz')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🧠</div>
-        <div class="gp-card-name">கதை Quiz</div>
-        <div class="gp-card-tamil">Story Knowledge</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">NEW ✨</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-green" data-cat="action" onclick="openGame('snake')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🐍</div>
-        <div class="gp-card-name">Snake</div>
-        <div class="gp-card-tamil">பாம்பு விளையாட்டு</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">CLASSIC</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-orange" data-cat="action" onclick="openGame('racing')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🏎️</div>
-        <div class="gp-card-name">Car Racing</div>
-        <div class="gp-card-tamil">வேக ஓட்டம்</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">SPEED 💨</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-teal" data-cat="classic" onclick="openGame('chess')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">♟️</div>
-        <div class="gp-card-name">Chess</div>
-        <div class="gp-card-tamil">சதுரங்கம்</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">VS AI 🤖</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-red" data-cat="action" onclick="openGame('birds')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🐦</div>
-        <div class="gp-card-name">Angry Birds</div>
-        <div class="gp-card-tamil">பறவை விளையாட்டு</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">FUN 😄</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-purple" data-cat="classic" onclick="openGame('tictactoe')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">⭕</div>
-        <div class="gp-card-name">Tic Tac Toe</div>
-        <div class="gp-card-tamil">புள்ளி விளையாட்டு</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">VS AI 🤖</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-pink" data-cat="brain" onclick="openGame('memory')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🃏</div>
-        <div class="gp-card-name">Memory Match</div>
-        <div class="gp-card-tamil">நினைவு சோதனை</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">BRAIN 🧩</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-blue" data-cat="tamil" onclick="openGame('typing')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">⌨️</div>
-        <div class="gp-card-name">Typing Speed</div>
-        <div class="gp-card-tamil">தட்டச்சு வேகம்</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">WPM ⚡</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-green" data-cat="brain" onclick="openGame('math')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">➕</div>
-        <div class="gp-card-name">Math Blitz</div>
-        <div class="gp-card-tamil">கணித சவால்</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">FAST 🔥</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-orange" data-cat="brain" onclick="openGame('color')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🎨</div>
-        <div class="gp-card-name">Color Match</div>
-        <div class="gp-card-tamil">வண்ண சோதனை</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">EYE 👁</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-red" data-cat="action" onclick="openGame('reaction')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">⚡</div>
-        <div class="gp-card-name">Reaction Time</div>
-        <div class="gp-card-tamil">எதிர்வினை வேகம்</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">REFLEX ⚡</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-teal" data-cat="tamil" onclick="openGame('hangman')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🪢</div>
-        <div class="gp-card-name">Hangman</div>
-        <div class="gp-card-tamil">தமிழ் சொல் புதிர்</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">GUESS 🤔</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-blue" data-cat="brain" onclick="openGame('simon')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🔵</div>
-        <div class="gp-card-name">Simon Says</div>
-        <div class="gp-card-tamil">நினைவு ஆட்டம்</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">MEMORY 🧩</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-yellow" data-cat="puzzle" onclick="openGame('2048')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🔢</div>
-        <div class="gp-card-name">2048</div>
-        <div class="gp-card-tamil">எண் விளையாட்டு</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">LOGIC 💡</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="gp-card theme-blue" data-cat="action" onclick="openGame('flappy')">
-      <div class="gp-card-bg"></div><div class="gp-card-shine"></div>
-      <div class="gp-card-body">
-        <div class="gp-card-icon-wrap">🐤</div>
-        <div class="gp-card-name">Flappy Bird</div>
-        <div class="gp-card-tamil">பறக்கும் பறவை</div>
-        <div class="gp-card-footer">
-          <div class="gp-card-badge">⭐ TOP</div>
-          <div class="gp-card-arrow">▶</div>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /gp-grid -->
-</div>
-
 <!-- PAGINATION -->
 <div class="pagination" id="pagination"></div>
 
 <!-- ADSENSE BOTTOM BANNER -->
 <div style="max-width:1072px;margin:0 auto 16px;padding:0 24px">
+  <!-- ✅ STEP: Replace data-ad-slot="" with your real Ad Unit ID from adsense.google.com → Ads → By ad unit → Display ads -->
   <ins class="adsbygoogle adsense-unit"
        style="display:block"
        data-ad-client="ca-pub-7030593982977288"
-       data-ad-slot=""
+       data-ad-slot="YOUR_AD_SLOT_ID"
        data-ad-format="auto"
        data-full-width-responsive="true"></ins>
   <script>(adsbygoogle = window.adsbygoogle || []).push({});</script>
@@ -3513,12 +3132,8 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   <button class="bn-item" id="bn-bookmarks" onclick="showTab('bookmarks',this)">
     <span class="bn-icon">🔖</span>Saved
   </button>
-  <button class="bn-item bn-games" id="bn-games" onclick="openGamesModal(); document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active')); this.classList.add('active');">
-    <span class="bn-icon">🎮</span>Games
-  </button>
-  <button class="bn-item" id="bn-profile" onclick="openPnlma()">
-    <span class="bn-icon">👤</span>Profile
-  </button>
+
+
 </nav>
 
 <!-- SHARE POPUP -->
@@ -3597,288 +3212,83 @@ body.night .hero { background:radial-gradient(ellipse 80% 50% at 50% -10%,rgba(2
   </div>
 </div>
 
-<!-- GAMES MODAL -->
-<div class="games-modal" id="gamesModal">
-  <div class="games-modal-inner">
-    <div class="games-modal-header">
-      <h2>🎮 Fun Games — விளையாட்டு நேரம்!</h2>
-      <button class="games-modal-close" onclick="closeGamesModal()">✕</button>
-    </div>
-    <div class="games-nav" style="overflow-x:auto;display:flex;flex-wrap:nowrap">
-      <button class="game-tab-btn active" onclick="switchGame('wordguess',this)">🔤 சொல்</button>
-      <button class="game-tab-btn" onclick="switchGame('quiz',this)">🧠 குவிஸ்</button>
-      <button class="game-tab-btn" onclick="switchGame('snake',this)">🐍 Snake</button>
-      <button class="game-tab-btn" onclick="switchGame('racing',this)">🏎️ Racing</button>
-      <button class="game-tab-btn" onclick="switchGame('chess',this)">♟️ Chess</button>
-      <button class="game-tab-btn" onclick="switchGame('birds',this)">🐦 Birds</button>
-      <button class="game-tab-btn" onclick="switchGame('leaderboard',this)">🏆 Board</button>
-      <button class="game-tab-btn" onclick="switchGame('tictactoe',this)">⭕ TicTacToe</button>
-      <button class="game-tab-btn" onclick="switchGame('memory',this)">🃏 Memory</button>
-      <button class="game-tab-btn" onclick="switchGame('typing',this)">⌨️ Typing</button>
-      <button class="game-tab-btn" onclick="switchGame('math',this)">➕ Math</button>
-      <button class="game-tab-btn" onclick="switchGame('color',this)">🎨 Color</button>
-      <button class="game-tab-btn" onclick="switchGame('reaction',this)">⚡ React</button>
-      <button class="game-tab-btn" onclick="switchGame('hangman',this)">🪢 Hangman</button>
-      <button class="game-tab-btn" onclick="switchGame('simon',this)">🔵 Simon</button>
-      <button class="game-tab-btn" onclick="switchGame('2048',this)">🔢 2048</button>
-      <button class="game-tab-btn" onclick="switchGame('flappy',this)">🐤 Flappy</button>
+<!-- SHARE POPUP -->
+<div class="share-popup" id="sharePopup">
+  <div class="share-popup-title">📤 SHARE THIS STORY</div>
+  <div class="share-btns">
+    <button class="share-btn share-wa" onclick="shareWhatsApp()">💬 WhatsApp</button>
+    <button class="share-btn share-copy" onclick="copyLink()">🔗 Copy Link</button>
+  </div>
+  <button class="share-close-btn" onclick="closeShare()">✕ Close</button>
+</div>
+
+<!-- UPLOAD STORY MODAL -->
+<div class="upload-overlay" id="uploadOverlay" onclick="if(event.target===this)closeUploadModal()">
+  <div class="upload-modal">
+    <div class="upload-header">
+      <div class="upload-title">✍️ உங்கள் கதை எழுதுங்கள்</div>
+      <div class="upload-sub">Your story will appear in the feed for everyone to read</div>
+      <button class="upload-close" onclick="closeUploadModal()">✕</button>
     </div>
 
-    <!-- GAME 1: Tamil Word Guess -->
-    <div class="game-panel active" id="game-wordguess">
-      <div class="word-guess-area">
-        <div class="game-score">
-          <div class="score-chip">மதிப்பெண்: <span id="wg-score">0</span></div>
-          <div class="score-chip">சுற்று: <span id="wg-round">1</span>/5</div>
-          <div class="score-chip">வாய்ப்புகள்: <span id="wg-lives">❤️❤️❤️❤️❤️</span></div>
-        </div>
-        <div class="hint-text" id="wg-hint">குறிப்பு ஏற்றுகிறது...</div>
-        <div class="word-display" id="wg-word-display"></div>
-        <div class="game-msg" id="wg-msg"></div>
-        <div class="tamil-keyboard" id="wg-keyboard"></div>
-        <button class="game-action-btn" id="wg-next-btn" onclick="nextWordGuess()" style="display:none">அடுத்த சொல் →</button>
-        <button class="game-action-btn" onclick="startWordGuess()" id="wg-restart-btn" style="display:none">மீண்டும் விளையாடு 🔄</button>
+    <div class="upload-body">
+      <!-- Title -->
+      <div class="upload-field">
+        <label class="upload-label">📌 கதை தலைப்பு <span>*</span></label>
+        <input type="text" id="upTitle" class="upload-input" placeholder="உங்கள் கதையின் தலைப்பு..." maxlength="80" oninput="upCount('upTitle','upTitleCount',80)">
+        <div class="upload-counter"><span id="upTitleCount">0</span>/80</div>
       </div>
-    </div>
 
-    <!-- GAME 2: Story Quiz -->
-    <div class="game-panel" id="game-quiz">
-      <div id="quiz-area">
-        <div class="quiz-progress">
-          <span id="quiz-q-num">கேள்வி 1/8</span>
-          <span id="quiz-score-display">மதிப்பெண்: 0</span>
+      <!-- Category + Emoji row -->
+      <div class="upload-row">
+        <div class="upload-field" style="flex:1">
+          <label class="upload-label">🗂️ வகை <span>*</span></label>
+          <select id="upCat" class="upload-input upload-select">
+            <option value="">-- தேர்வு செய்யுங்கள் --</option>
+            <option value="love">💕 காதல்</option>
+            <option value="horror">👻 பயம்</option>
+            <option value="comedy">😂 நகைச்சுவை</option>
+            <option value="kids">🧒 குழந்தை</option>
+            <option value="devotion">🙏 தெய்வீகம்</option>
+            <option value="moral">💡 நீதி</option>
+          </select>
         </div>
-        <div class="quiz-progress-bar">
-          <div class="quiz-progress-fill" id="quiz-prog-fill" style="width:0%"></div>
+        <div class="upload-field" style="flex:1">
+          <label class="upload-label">🎭 Emoji</label>
+          <input type="text" id="upEmoji" class="upload-input" placeholder="📖" maxlength="2" style="font-size:22px;text-align:center">
         </div>
-        <div class="quiz-question" id="quiz-question">குவிஸ் ஏற்றுகிறது...</div>
-        <div class="quiz-options" id="quiz-options"></div>
-        <div class="game-msg" id="quiz-msg"></div>
       </div>
-    </div>
-    <!-- GAME 3: Snake -->
-    <div class="game-panel" id="game-snake">
-      <div style="text-align:center">
-        <div class="game-score" style="margin-bottom:12px">
-          <div class="score-chip">மதிப்பெண்: <span id="snake-score">0</span></div>
-          <div class="score-chip">சாதனை: <span id="snake-best">0</span></div>
-        </div>
-        <canvas id="snakeCanvas" width="300" height="300" style="border:2px solid rgba(0,230,118,0.4);border-radius:10px;background:#0a0f0a;display:block;margin:0 auto"></canvas>
-        <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4)">Arrow keys / WASD / Swipe to move</div>
-        <div class="game-msg" id="snake-msg" style="margin-top:8px"></div>
-        <button class="game-action-btn" id="snake-start-btn" onclick="startSnake()" style="margin-top:10px">▶ ஆரம்பி</button>
-      </div>
-    </div>
 
-    <!-- GAME 4: Racing -->
-    <div class="game-panel" id="game-racing">
-      <div style="text-align:center">
-        <div class="game-score" style="margin-bottom:12px">
-          <div class="score-chip">Score: <span id="race-score">0</span></div>
-          <div class="score-chip">Speed: <span id="race-speed">1</span>x</div>
-          <div class="score-chip">Best: <span id="race-best">0</span></div>
-        </div>
-        <canvas id="raceCanvas" width="300" height="400" style="border:2px solid rgba(249,168,37,0.4);border-radius:10px;background:#1a1a1a;display:block;margin:0 auto"></canvas>
-        <div style="margin-top:10px;font-size:12px;color:rgba(255,255,255,0.4)">← → Arrow / A D to steer | Avoid cars!</div>
-        <div class="game-msg" id="race-msg" style="margin-top:8px"></div>
-        <button class="game-action-btn" id="race-start-btn" onclick="startRacing()" style="margin-top:10px">🏎️ Race Start!</button>
+      <!-- Excerpt -->
+      <div class="upload-field">
+        <label class="upload-label">📝 சுருக்கம் (One line) <span>*</span></label>
+        <input type="text" id="upExcerpt" class="upload-input" placeholder="கதையின் சுருக்கமான விவரம்..." maxlength="120" oninput="upCount('upExcerpt','upExcerptCount',120)">
+        <div class="upload-counter"><span id="upExcerptCount">0</span>/120</div>
       </div>
-    </div>
 
-    <!-- GAME 5: Chess -->
-    <div class="game-panel" id="game-chess">
-      <div style="text-align:center">
-        <div style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px">நீங்கள் வெள்ளை ♙ | AI கருப்பு ♟</div>
-        <div id="chessBoard" style="display:inline-grid;grid-template-columns:repeat(8,38px);border:2px solid rgba(255,255,255,0.2);border-radius:6px;overflow:hidden;margin:0 auto"></div>
-        <div class="game-msg" id="chess-msg" style="margin-top:10px;font-family:'Tiro Tamil',serif"></div>
-        <div style="display:flex;gap:8px;justify-content:center;margin-top:10px">
-          <button class="game-action-btn" onclick="resetChess()">🔄 New Game</button>
-          <button class="game-action-btn" onclick="chessUndo()" style="background:rgba(255,255,255,0.1);color:#fff">↩ Undo</button>
-        </div>
+      <!-- Story content -->
+      <div class="upload-field">
+        <label class="upload-label">📖 கதை முழுவதும் <span>*</span></label>
+        <textarea id="upStory" class="upload-textarea" placeholder="உங்கள் கதையை இங்கே எழுதுங்கள்..." maxlength="5000" oninput="upCount('upStory','upStoryCount',5000)"></textarea>
+        <div class="upload-counter"><span id="upStoryCount">0</span>/5000</div>
       </div>
-    </div>
 
-    <!-- GAME 6: Angry Birds style (Slingshot) -->
-    <div class="game-panel" id="game-birds">
-      <div style="text-align:center">
-        <div class="game-score" style="margin-bottom:12px">
-          <div class="score-chip">Score: <span id="birds-score">0</span></div>
-          <div class="score-chip">Birds: <span id="birds-left">5</span></div>
-          <div class="score-chip">Best: <span id="birds-best">0</span></div>
-        </div>
-        <canvas id="birdsCanvas" width="500" height="300" style="border:2px solid rgba(255,100,0,0.4);border-radius:10px;background:linear-gradient(180deg,#1a3a6b 0%,#2d5a27 75%,#2d5a27 100%);display:block;margin:0 auto;max-width:100%;cursor:crosshair"></canvas>
-        <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4)">Click & drag on bird to aim and shoot!</div>
-        <div class="game-msg" id="birds-msg" style="margin-top:6px"></div>
-        <button class="game-action-btn" onclick="resetBirds()" style="margin-top:8px">🐦 New Round</button>
+      <!-- Moral (optional) -->
+      <div class="upload-field">
+        <label class="upload-label">💡 நீதி / Moral <span style="color:var(--text-dim);font-weight:400">(optional)</span></label>
+        <input type="text" id="upMoral" class="upload-input" placeholder="கதையின் நீதி..." maxlength="150">
       </div>
-    </div>
 
-    <!-- GAME 7: Tic Tac Toe -->
-    <div class="game-panel" id="game-tictactoe">
-      <div style="text-align:center">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">நீங்கள்: <span id="ttt-you">0</span></div>
-          <div class="score-chip">AI: <span id="ttt-ai">0</span></div>
-          <div class="score-chip">Draw: <span id="ttt-draw">0</span></div>
-        </div>
-        <div id="ttt-board" style="display:inline-grid;grid-template-columns:repeat(3,80px);gap:6px;margin:0 auto 12px"></div>
-        <div class="game-msg" id="ttt-msg" style="margin:8px 0;font-family:'Tiro Tamil',serif"></div>
-        <button class="game-action-btn" onclick="resetTTT()">🔄 புதிய ஆட்டம்</button>
-      </div>
-    </div>
+      <div id="upError" class="up-error" style="display:none"></div>
 
-    <!-- GAME 8: Memory Card Match -->
-    <div class="game-panel" id="game-memory">
-      <div style="text-align:center">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">Moves: <span id="mem-moves">0</span></div>
-          <div class="score-chip">Pairs: <span id="mem-pairs">0</span>/8</div>
-          <div class="score-chip">Best: <span id="mem-best">-</span></div>
-        </div>
-        <div id="mem-board" style="display:inline-grid;grid-template-columns:repeat(4,62px);gap:6px;margin:0 auto"></div>
-        <div class="game-msg" id="mem-msg" style="margin-top:10px"></div>
-        <button class="game-action-btn" onclick="startMemory()" style="margin-top:10px">🔄 புதிய ஆட்டம்</button>
-      </div>
-    </div>
-
-    <!-- GAME 9: Tamil Typing Speed -->
-    <div class="game-panel" id="game-typing">
-      <div style="text-align:center;padding:8px">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">WPM: <span id="typ-wpm">0</span></div>
-          <div class="score-chip">Accuracy: <span id="typ-acc">100</span>%</div>
-          <div class="score-chip">Time: <span id="typ-time">30</span>s</div>
-        </div>
-        <div id="typ-text" style="background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.1);border-radius:10px;padding:14px;font-family:'Tiro Tamil',serif;font-size:15px;line-height:1.8;margin-bottom:10px;text-align:left;min-height:60px"></div>
-        <input id="typ-input" placeholder="இங்கே தட்டச்சு செய்யுங்கள்..." style="width:100%;padding:10px 14px;background:rgba(255,255,255,0.07);border:1.5px solid rgba(245,166,35,0.4);border-radius:10px;color:#fff;font-size:14px;font-family:'Tiro Tamil',serif;outline:none" oninput="checkTyping()" disabled>
-        <div class="game-msg" id="typ-msg" style="margin-top:8px"></div>
-        <button class="game-action-btn" onclick="startTyping()" style="margin-top:10px" id="typ-btn">▶ ஆரம்பி</button>
-      </div>
-    </div>
-
-    <!-- GAME 10: Math Challenge -->
-    <div class="game-panel" id="game-math">
-      <div style="text-align:center;padding:8px">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">Score: <span id="math-score">0</span></div>
-          <div class="score-chip">Time: <span id="math-time">30</span>s</div>
-          <div class="score-chip">Best: <span id="math-best">0</span></div>
-        </div>
-        <div id="math-question" style="font-size:38px;font-weight:900;color:var(--gold);margin:16px 0;letter-spacing:2px">? + ? = ?</div>
-        <div id="math-options" style="display:grid;grid-template-columns:1fr 1fr;gap:10px;max-width:280px;margin:0 auto"></div>
-        <div class="game-msg" id="math-msg" style="margin-top:10px;font-family:'Tiro Tamil',serif"></div>
-        <button class="game-action-btn" onclick="startMath()" id="math-btn" style="margin-top:12px">▶ ஆரம்பி</button>
-      </div>
-    </div>
-
-    <!-- GAME 11: Color Match -->
-    <div class="game-panel" id="game-color">
-      <div style="text-align:center;padding:8px">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">Score: <span id="col-score">0</span></div>
-          <div class="score-chip">Time: <span id="col-time">20</span>s</div>
-          <div class="score-chip">Best: <span id="col-best">0</span></div>
-        </div>
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">இந்த வண்ணத்தை தேர்வு செய்யுங்கள்:</div>
-        <div id="col-target" style="width:100px;height:100px;border-radius:50%;margin:0 auto 16px;border:3px solid rgba(255,255,255,0.2);box-shadow:0 4px 20px rgba(0,0,0,0.4)"></div>
-        <div id="col-options" style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;max-width:260px;margin:0 auto"></div>
-        <div class="game-msg" id="col-msg" style="margin-top:10px"></div>
-        <button class="game-action-btn" onclick="startColor()" id="col-btn" style="margin-top:12px">▶ ஆரம்பி</button>
-      </div>
-    </div>
-
-    <!-- GAME 12: Reaction Time -->
-    <div class="game-panel" id="game-reaction">
-      <div style="text-align:center;padding:8px">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">Best: <span id="rct-best">-</span>ms</div>
-          <div class="score-chip">Last: <span id="rct-last">-</span>ms</div>
-          <div class="score-chip">Avg: <span id="rct-avg">-</span>ms</div>
-        </div>
-        <div id="rct-box" onclick="handleReaction()" style="width:220px;height:220px;border-radius:20px;background:#1a1a2e;border:2px solid rgba(255,255,255,0.1);margin:0 auto;display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:15px;font-weight:700;color:rgba(255,255,255,0.4);transition:all 0.2s;user-select:none">
-          தயாராக இருங்கள்...
-        </div>
-        <div class="game-msg" id="rct-msg" style="margin-top:10px;font-family:'Tiro Tamil',serif"></div>
-        <button class="game-action-btn" onclick="startReaction()" id="rct-btn" style="margin-top:12px">▶ ஆரம்பி</button>
-      </div>
-    </div>
-
-    <!-- GAME 13: Hangman (Tamil words) -->
-    <div class="game-panel" id="game-hangman">
-      <div style="text-align:center;padding:8px">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">Score: <span id="hm-score">0</span></div>
-          <div class="score-chip">தவறுகள்: <span id="hm-wrong">0</span>/6</div>
-        </div>
-        <div id="hm-drawing" style="font-size:52px;margin:8px 0;line-height:1">🙂</div>
-        <div id="hm-hint" style="font-size:12px;color:rgba(255,255,255,0.5);margin-bottom:8px;font-family:'Tiro Tamil',serif"></div>
-        <div id="hm-word" style="font-size:22px;letter-spacing:10px;margin:10px 0;font-family:'Tiro Tamil',serif;color:var(--gold)"></div>
-        <div id="hm-letters" style="display:flex;flex-wrap:wrap;gap:5px;justify-content:center;max-width:300px;margin:0 auto"></div>
-        <div class="game-msg" id="hm-msg" style="margin-top:8px;font-family:'Tiro Tamil',serif"></div>
-        <button class="game-action-btn" onclick="startHangman()" style="margin-top:10px">🔄 புதிய சொல்</button>
-      </div>
-    </div>
-
-    <!-- GAME 14: Simon Says -->
-    <div class="game-panel" id="game-simon">
-      <div style="text-align:center;padding:8px">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">Round: <span id="sim-round">0</span></div>
-          <div class="score-chip">Best: <span id="sim-best">0</span></div>
-        </div>
-        <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;width:220px;margin:0 auto 12px">
-          <div id="sim-0" onclick="simonPress(0)" style="height:90px;border-radius:14px 3px 3px 3px;background:#c0392b;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
-          <div id="sim-1" onclick="simonPress(1)" style="height:90px;border-radius:3px 14px 3px 3px;background:#27ae60;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
-          <div id="sim-2" onclick="simonPress(2)" style="height:90px;border-radius:3px 3px 3px 14px;background:#2980b9;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
-          <div id="sim-3" onclick="simonPress(3)" style="height:90px;border-radius:3px 3px 14px 3px;background:#f39c12;cursor:pointer;transition:all 0.1s;opacity:0.5"></div>
-        </div>
-        <div class="game-msg" id="sim-msg" style="font-family:'Tiro Tamil',serif;margin-bottom:8px"></div>
-        <button class="game-action-btn" onclick="startSimon()" id="sim-btn">▶ ஆரம்பி</button>
-      </div>
-    </div>
-
-    <!-- GAME 15: 2048 -->
-    <div class="game-panel" id="game-2048">
-      <div style="text-align:center;padding:4px">
-        <div class="game-score" style="margin-bottom:8px">
-          <div class="score-chip">Score: <span id="g2048-score">0</span></div>
-          <div class="score-chip">Best: <span id="g2048-best">0</span></div>
-        </div>
-        <div id="g2048-board" style="display:inline-grid;grid-template-columns:repeat(4,62px);gap:6px;background:rgba(255,255,255,0.05);padding:8px;border-radius:12px;touch-action:none"></div>
-        <div class="game-msg" id="g2048-msg" style="margin:8px 0;font-family:'Tiro Tamil',serif"></div>
-        <div style="font-size:11px;color:rgba(255,255,255,0.3);margin-bottom:6px">Arrow keys / Swipe to move</div>
-        <button class="game-action-btn" onclick="start2048()">🔄 புதிய ஆட்டம்</button>
-      </div>
-    </div>
-
-    <!-- GAME 16: Flappy Bird -->
-    <div class="game-panel" id="game-flappy">
-      <div style="text-align:center">
-        <div class="game-score" style="margin-bottom:10px">
-          <div class="score-chip">Score: <span id="flp-score">0</span></div>
-          <div class="score-chip">Best: <span id="flp-best">0</span></div>
-        </div>
-        <canvas id="flappyCanvas" width="300" height="350" style="border:2px solid rgba(100,200,255,0.4);border-radius:10px;background:linear-gradient(180deg,#1a1a3e 0%,#2a2a5e 100%);display:block;margin:0 auto;cursor:pointer"></canvas>
-        <div style="margin-top:8px;font-size:12px;color:rgba(255,255,255,0.4)">Tap / Space / Click to flap!</div>
-        <div class="game-msg" id="flp-msg" style="margin-top:6px"></div>
-        <button class="game-action-btn" onclick="startFlappy()" style="margin-top:8px" id="flp-btn">▶ ஆரம்பி</button>
-      </div>
-    </div>
-
-    <!-- LEADERBOARD -->
-    <div class="game-panel" id="game-leaderboard">
-      <div style="text-align:center;margin-bottom:16px">
-        <div style="font-size:13px;color:rgba(255,255,255,0.5);margin-bottom:8px">உங்கள் பெயர் சேர்க்க:</div>
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap">
-          <input id="lb-name-input" class="comment-input" placeholder="பெயர் எழுதுங்கள்..." style="max-width:180px">
-          <button class="game-action-btn" onclick="saveToLeaderboard()">சேர்க்க ✓</button>
-        </div>
-      </div>
-      <div class="leaderboard-list" id="lbList"></div>
+      <button class="upload-submit-btn" onclick="submitStory()">
+        🚀 கதை பதிவேற்று — Publish Story
+      </button>
     </div>
   </div>
 </div>
 
+<!-- GAMES MODAL -->
 <!-- STORY READER MODAL -->
 <div class="modal" id="storyModal">
   <div class="modal-inner">
@@ -9258,29 +8668,6 @@ function checkQuizAnswer(btn, chosen, answer) {
 // ══════════════════════════════════
 // FEATURE 9: SHAREABLE READING LIST
 // ══════════════════════════════════
-function shareReadingList() {
-  const bookmarks = JSON.parse(localStorage.getItem('bookmarks') || '[]');
-  if (!bookmarks.length) { showToast('⚠️ Bookmark எதுவும் இல்லை!'); return; }
-  const ids = bookmarks.slice(0,10).join(',');
-  const url = `https://kathais.xyz?list=${btoa(ids)}`;
-  if (navigator.share) {
-    navigator.share({ title: 'என் Tamil கதை List', text: 'என் favorite Tamil கதைகள் படியுங்கள்!', url });
-  } else {
-    navigator.clipboard?.writeText(url).then(() => showToast('🔗 Reading list link copied!'));
-  }
-}
-(function addShareListBtn() {
-  setTimeout(() => {
-    const closeBtn = document.querySelector('.pnlma-logout-btn');
-    if (!closeBtn) return;
-    const btn = document.createElement('button');
-    btn.className = 'pnlma-logout-btn';
-    btn.style.cssText = 'background:linear-gradient(135deg,var(--purple),#651fff);margin-bottom:8px;';
-    btn.innerHTML = '🔗 Share Reading List';
-    btn.onclick = shareReadingList;
-    closeBtn.before(btn);
-  }, 1000);
-})();
 
 // ══════════════════════════════════
 // FEATURE 10: STORY ENDING CREATOR
@@ -9435,124 +8822,6 @@ function wlSubmit() {
   } else {
     document.getElementById('wlResult').innerHTML = `<span style="color:var(--text-muted)">தவறு! ${3 - wlAttempts} முயற்சிகள் மீதம்</span>`;
   }
-}
-
-// ══════════════════════════════════
-// FEATURE 12: AI STORY GENERATOR
-// ══════════════════════════════════
-(function addAIGenBtn() {
-  const navLinks = document.querySelector('.nav-links');
-  if (!navLinks) return;
-  const btn = document.createElement('a');
-  btn.href = '#'; btn.textContent = '✨ AI கதை';
-  btn.onclick = e => { e.preventDefault(); openAIGenerator(); };
-  navLinks.appendChild(btn);
-})();
-
-const aiGenStyle = document.createElement('style');
-aiGenStyle.textContent = `
-#aiGenOverlay { position:fixed;inset:0;background:var(--bg);z-index:2000;display:none;overflow-y:auto;padding:0 }
-#aiGenOverlay.open { display:block }
-.ai-cat-btn { padding:7px 16px;border:1.5px solid var(--border);border-radius:20px;background:var(--surface);color:var(--text-muted);cursor:pointer;font-size:12px;font-family:'DM Sans',sans-serif;transition:all 0.2s }
-.ai-cat-btn.sel { background:var(--gold-glow);border-color:var(--border-gold);color:var(--gold);font-weight:700 }
-#aiStoryOutput { font-family:'Tiro Tamil',serif;font-size:15px;line-height:2;color:var(--text);white-space:pre-wrap;display:none }
-`;
-document.head.appendChild(aiGenStyle);
-
-const aiGenOverlay = document.createElement('div');
-aiGenOverlay.id = 'aiGenOverlay';
-aiGenOverlay.innerHTML = `
-  <div style="width:100%;min-height:100vh;background:var(--bg2)">
-    <div style="background:linear-gradient(135deg,#7c4dff,#651fff);padding:16px 20px;display:flex;justify-content:space-between;align-items:center;position:sticky;top:0;z-index:10">
-      <div style="font-size:17px;font-weight:800;color:#fff">✨ AI Tamil Story Generator</div>
-      <button onclick="closeAIGenerator()" style="background:rgba(255,255,255,0.2);border:none;color:#fff;width:32px;height:32px;border-radius:50%;cursor:pointer;font-size:16px;font-weight:900">✕</button>
-    </div>
-    <div style="padding:20px">
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:8px;font-weight:700">வகை தேர்வு செய்யுங்கள்:</div>
-      <div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px">
-        <button class="ai-cat-btn sel" onclick="selectAICat(this,'love')">💕 காதல்</button>
-        <button class="ai-cat-btn" onclick="selectAICat(this,'horror')">👻 பயம்</button>
-        <button class="ai-cat-btn" onclick="selectAICat(this,'comedy')">😂 நகைச்சுவை</button>
-        <button class="ai-cat-btn" onclick="selectAICat(this,'kids')">🧒 குழந்தை</button>
-        <button class="ai-cat-btn" onclick="selectAICat(this,'moral')">💡 நீதி</button>
-        <button class="ai-cat-btn" onclick="selectAICat(this,'devotion')">🙏 தெய்வீகம்</button>
-      </div>
-      <div style="font-size:12px;color:var(--text-muted);margin-bottom:6px;font-weight:700">கூடுதல் விவரம் (optional):</div>
-      <input id="aiPromptExtra" placeholder="e.g. கோவையில் நடக்கும் கதை, கல்லூரி காதல்..." style="width:100%;background:var(--surface);border:1.5px solid var(--border);color:var(--text);border-radius:10px;padding:10px 14px;font-size:13px;font-family:'Tiro Tamil',serif;outline:none;margin-bottom:14px;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--border-gold)'" onblur="this.style.borderColor='var(--border)'">
-      <button onclick="generateAIStory()" id="aiGenBtn" style="width:100%;padding:12px;background:linear-gradient(135deg,#7c4dff,#651fff);color:#fff;border:none;border-radius:10px;font-size:14px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif;margin-bottom:16px;transition:opacity 0.2s">✨ கதை உருவாக்கு</button>
-      <div id="aiLoadingMsg" style="text-align:center;display:none;color:var(--text-muted);font-size:13px;padding:20px">
-        <div style="font-size:30px;margin-bottom:8px">✨</div>
-        <div>AI கதை எழுதுகிறது... சற்று நேரம் காத்திருங்கள்</div>
-      </div>
-      <div id="aiStoryOutput"></div>
-      <div id="aiStoryActions" style="display:none;margin-top:12px;display:none">
-        <button onclick="addAIStoryToFeed()" style="width:100%;padding:10px;background:var(--gold);color:#000;border:none;border-radius:10px;font-weight:800;cursor:pointer;font-family:'DM Sans',sans-serif">📖 கதையை சேர்க்கவும்</button>
-      </div>
-    </div>
-  </div>`;
-document.body.appendChild(aiGenOverlay);
-
-let _aiSelectedCat = 'love', _aiGeneratedStory = null;
-function openAIGenerator() { aiGenOverlay.classList.add('open'); }
-function closeAIGenerator() { aiGenOverlay.classList.remove('open'); }
-function selectAICat(btn, cat) {
-  document.querySelectorAll('.ai-cat-btn').forEach(b => b.classList.remove('sel'));
-  btn.classList.add('sel');
-  _aiSelectedCat = cat;
-}
-async function generateAIStory() {
-  const extra = document.getElementById('aiPromptExtra').value;
-  const btn = document.getElementById('aiGenBtn');
-  const loading = document.getElementById('aiLoadingMsg');
-  const output = document.getElementById('aiStoryOutput');
-  const actions = document.getElementById('aiStoryActions');
-  btn.disabled = true; btn.style.opacity = '0.6';
-  loading.style.display = 'block';
-  output.style.display = 'none';
-  actions.style.display = 'none';
-  const catLabels = { love:'காதல்', horror:'பயம்/horror', comedy:'நகைச்சுவை', kids:'குழந்தைகளுக்கான', moral:'நீதி', devotion:'தெய்வீக' };
-  const prompt = `Write a short Tamil story (about 200-250 words) in the ${catLabels[_aiSelectedCat]} genre. ${extra ? 'Additional details: ' + extra : ''} 
-  
-Write ONLY in Tamil language. Format:
-Title: [Tamil title]
-Story: [Tamil story paragraphs]
-Moral: [Tamil moral lesson]
-
-Make it emotional, engaging and authentic Tamil style.`;
-  try {
-    const res = await fetch('https://api.anthropic.com/v1/messages', {
-      method:'POST',
-      headers:{ 'Content-Type':'application/json' },
-      body: JSON.stringify({ model:'claude-sonnet-4-20250514', max_tokens:1000, messages:[{ role:'user', content:prompt }] })
-    });
-    const data = await res.json();
-    const text = data.content?.[0]?.text || '';
-    _aiGeneratedStory = text;
-    output.textContent = text;
-    output.style.display = 'block';
-    actions.style.display = 'block';
-    showToast('✨ AI கதை தயார்!');
-  } catch(e) {
-    output.textContent = 'கதை உருவாக்க முடியவில்லை. Internet connection சரிபாருங்கள்.';
-    output.style.display = 'block';
-  }
-  btn.disabled = false; btn.style.opacity = '1';
-  loading.style.display = 'none';
-}
-function addAIStoryToFeed() {
-  if (!_aiGeneratedStory) return;
-  const lines = _aiGeneratedStory.split('\n').filter(l => l.trim());
-  const titleLine = lines.find(l => l.toLowerCase().startsWith('title:'));
-  const title = titleLine ? titleLine.replace(/^title:\s*/i,'').trim() : 'AI கதை ' + Date.now();
-  const catMetas = { love:{emoji:'💕',bg:'linear-gradient(135deg,#880e4f,#c2185b)',color:'#e91e63',label:'காதல்'}, horror:{emoji:'👻',bg:'linear-gradient(135deg,#1a1a2e,#4a148c)',color:'#7c4dff',label:'பயம்'}, comedy:{emoji:'😂',bg:'linear-gradient(135deg,#1b5e20,#2e7d32)',color:'#00c853',label:'நகைச்சுவை'}, kids:{emoji:'🧒',bg:'linear-gradient(135deg,#0d47a1,#1976d2)',color:'#2196f3',label:'குழந்தை'}, moral:{emoji:'💡',bg:'linear-gradient(135deg,#4a148c,#7b1fa2)',color:'#9c27b0',label:'நீதி'}, devotion:{emoji:'🙏',bg:'linear-gradient(135deg,#bf360c,#e64a19)',color:'#ff6d00',label:'தெய்வீகம்'} };
-  const m = catMetas[_aiSelectedCat] || catMetas.moral;
-  const newStory = { id:'ai_'+Date.now(), cat:_aiSelectedCat, badge:'new', emoji:m.emoji, bg:m.bg, catLabel:m.label, catColor:m.color, title, excerpt: lines.slice(1,3).join(' ').substring(0,100)+'...', readTime:'5 நிமிஷம்', story:`<h3>${m.emoji} ${title}</h3><p>${_aiGeneratedStory}</p>` };
-  storiesDB.unshift(newStory);
-  filtered.unshift(newStory);
-  renderStories();
-  closeAIGenerator();
-  window.scrollTo({top:0, behavior:'smooth'});
-  showToast('✨ AI கதை சேர்க்கப்பட்டது!');
 }
 
 // ══════════════════════════════════
@@ -9718,19 +8987,18 @@ document.addEventListener('keydown', e => {
   const isOpen = !!modal;
   if (e.key === 'Escape') {
     if (isOpen) closeStory && closeStory();
-    ['dailyGameOverlay','aiGenOverlay','lbOverlay','collOverlay'].forEach(id => document.getElementById(id)?.classList.remove('open'));
+    ['dailyGameOverlay','lbOverlay','collOverlay'].forEach(id => document.getElementById(id)?.classList.remove('open'));
     ['challengePanel','notesPanel'].forEach(id => { const el = document.getElementById(id); if(el) el.style.display='none'; });
   }
   if (!isOpen) {
     if (e.key === 'r' || e.key === 'R') { openRandomStory && openRandomStory(); showToast('🎲 Random story!'); }
     if (e.key === 'd' || e.key === 'D') openDailyGame();
     if (e.key === 'l' || e.key === 'L') openLeaderboard();
-    if (e.key === 'g' || e.key === 'G') openAIGenerator();
   }
 });
 if (!localStorage.getItem('v3kbHint')) {
   setTimeout(() => {
-    showToast('⌨️ R=Random D=Daily L=Leaderboard G=AI Generator', 5000);
+    showToast('⌨️ R=Random D=Daily L=Leaderboard', 5000);
     localStorage.setItem('v3kbHint','1');
   }, 10000);
 }
@@ -9863,5 +9131,35 @@ function submitContact() {
 // ═══ END OF v3.0 — ALL 16 FEATURES ═════
 // ════════════════════════════════════════
 </script>
+
+<!-- ═══ COOKIE CONSENT BANNER ═══ -->
+<div id="cookieBanner" role="dialog" aria-label="Cookie consent">
+  <div class="cookie-text">
+    🍪 நாங்கள் Google AdSense விளம்பரங்களுக்காக cookies பயன்படுத்துகிறோம். 
+    தொடர்ந்து பயன்படுத்துவதன் மூலம் நீங்கள் ஒப்புக்கொள்கிறீர்கள்.
+    <a href="/privacy-policy.html">Privacy Policy</a>
+  </div>
+  <button class="cookie-decline" onclick="dismissCookie(false)">நிராகரி</button>
+  <button class="cookie-accept" onclick="dismissCookie(true)">✓ ஒப்புக்கொள்</button>
+</div>
+<script>
+(function(){
+  if (!localStorage.getItem('cookieConsent')) {
+    setTimeout(() => {
+      const b = document.getElementById('cookieBanner');
+      if(b) b.classList.add('visible');
+    }, 1500);
+  }
+})();
+function dismissCookie(accepted) {
+  localStorage.setItem('cookieConsent', accepted ? 'accepted' : 'declined');
+  const b = document.getElementById('cookieBanner');
+  if(b) { b.style.transition = 'transform 0.3s ease'; b.style.transform = 'translateY(100%)'; setTimeout(() => b.remove(), 350); }
+  if(accepted && typeof gtag !== 'undefined') {
+    gtag('consent', 'update', { 'analytics_storage': 'granted', 'ad_storage': 'granted' });
+  }
+}
+</script>
+
 </body>
 </html>
